@@ -1,0 +1,179 @@
+{
+  "passed": true,
+  "method": "Four isolated processes; distinct mutual-TLS identities; distributed triple-seed commit/reveal; owner0 inputs, owner1 weights and biases; compact exact truncation; checked final opening.",
+  "device": "cuda",
+  "bits": 64,
+  "fused": false,
+  "width": 8,
+  "hidden": 8,
+  "out": 4,
+  "batch": 2,
+  "device_protocol": true,
+  "optimized": true,
+  "gpu_open": true,
+  "online_prg": "chacha20",
+  "online_hash": "blake3",
+  "staging": "host",
+  "fractional_bits": 12,
+  "maximum_accumulator": 19435999,
+  "range_validated": true,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "timed_out": false,
+  "exact_integer_match": true,
+  "expected": [
+    [
+      1114,
+      -111,
+      471,
+      411
+    ],
+    [
+      373,
+      492,
+      182,
+      421
+    ]
+  ],
+  "parties": [
+    {
+      "party": 0,
+      "passed": true,
+      "device": "cuda",
+      "bits": 64,
+      "device_protocol": true,
+      "optimized": true,
+      "gpu_open": true,
+      "authenticated_tls": true,
+      "distributed_setup": true,
+      "handshake_ms": 20.31152800009295,
+      "correlated_setup_ms": 499.87324199992145,
+      "input_ms": 1347.6367889998073,
+      "checked_inference_ms": 2507.2527120000814,
+      "payload_bytes": 6438,
+      "rounds": 48,
+      "inference_payload_bytes": 5056,
+      "inference_rounds": 27,
+      "output": [
+        [
+          1114,
+          -111,
+          471,
+          411
+        ],
+        [
+          373,
+          492,
+          182,
+          421
+        ]
+      ]
+    },
+    {
+      "party": 1,
+      "passed": true,
+      "device": "cuda",
+      "bits": 64,
+      "device_protocol": true,
+      "optimized": true,
+      "gpu_open": true,
+      "authenticated_tls": true,
+      "distributed_setup": true,
+      "handshake_ms": 39.08533899993927,
+      "correlated_setup_ms": 496.821815999283,
+      "input_ms": 1273.2598000002326,
+      "checked_inference_ms": 2586.5886470000987,
+      "payload_bytes": 6950,
+      "rounds": 48,
+      "inference_payload_bytes": 4288,
+      "inference_rounds": 27,
+      "output": [
+        [
+          1114,
+          -111,
+          471,
+          411
+        ],
+        [
+          373,
+          492,
+          182,
+          421
+        ]
+      ]
+    },
+    {
+      "party": 2,
+      "passed": true,
+      "device": "cuda",
+      "bits": 64,
+      "device_protocol": true,
+      "optimized": true,
+      "gpu_open": true,
+      "authenticated_tls": true,
+      "distributed_setup": true,
+      "handshake_ms": 25.073673999941093,
+      "correlated_setup_ms": 496.01496099967335,
+      "input_ms": 1310.7385249995787,
+      "checked_inference_ms": 2543.1571919998532,
+      "payload_bytes": 5094,
+      "rounds": 48,
+      "inference_payload_bytes": 3968,
+      "inference_rounds": 27,
+      "output": [
+        [
+          1114,
+          -111,
+          471,
+          411
+        ],
+        [
+          373,
+          492,
+          182,
+          421
+        ]
+      ]
+    },
+    {
+      "party": 3,
+      "passed": true,
+      "device": "cuda",
+      "bits": 64,
+      "device_protocol": true,
+      "optimized": true,
+      "gpu_open": true,
+      "authenticated_tls": true,
+      "distributed_setup": true,
+      "handshake_ms": 37.87869400002819,
+      "correlated_setup_ms": 456.3333629994304,
+      "input_ms": 1350.078831999781,
+      "checked_inference_ms": 2583.894591999524,
+      "payload_bytes": 4134,
+      "rounds": 48,
+      "inference_payload_bytes": 3200,
+      "inference_rounds": 27,
+      "output": [
+        [
+          1114,
+          -111,
+          471,
+          411
+        ],
+        [
+          373,
+          492,
+          182,
+          421
+        ]
+      ]
+    }
+  ],
+  "total_wall_ms": 6353.680303999681,
+  "global_payload_bytes": 22616,
+  "global_inference_payload_bytes": 16512
+}

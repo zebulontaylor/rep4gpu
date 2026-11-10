@@ -1,0 +1,16 @@
+{"party": 0, "bits": 32, "count": 8192, "backend": "separate", "cold_ms": 0.030446666448066633, "graph_ms": 0.020411914614488453, "wall_ms": 0.12580105500001082}
+{"party": 0, "bits": 32, "count": 8192, "backend": "batched", "cold_ms": 0.00877828583387392, "graph_ms": 0.004878700123383449, "wall_ms": 0.028064291999726265}
+{"party": 0, "bits": 32, "count": 262144, "backend": "separate", "cold_ms": 0.14497333516677222, "graph_ms": 0.12482335740241451, "wall_ms": 0.13060502916459882}
+{"party": 0, "bits": 32, "count": 262144, "backend": "batched", "cold_ms": 0.12537984043359757, "graph_ms": 0.10578609899426183, "wall_ms": 0.10773363957325961}
+{"party": 0, "bits": 64, "count": 8192, "backend": "separate", "cold_ms": 0.01991703651017613, "graph_ms": 0.011679442103849639, "wall_ms": 0.12852163900060987}
+{"party": 0, "bits": 64, "count": 8192, "backend": "batched", "cold_ms": 0.008001142863317259, "graph_ms": 0.004257601884781404, "wall_ms": 0.027510472999892954}
+{"party": 0, "bits": 64, "count": 262144, "backend": "separate", "cold_ms": 0.12118656158447266, "graph_ms": 0.10805197184896234, "wall_ms": 0.13587335740178882}
+{"party": 0, "bits": 64, "count": 262144, "backend": "batched", "cold_ms": 0.08460553735494614, "graph_ms": 0.06496927436468915, "wall_ms": 0.06696435140992614}
+{"party": 1, "bits": 32, "count": 8192, "backend": "separate", "cold_ms": 0.025418666294879384, "graph_ms": 0.016861445641298906, "wall_ms": 0.12745688099948893}
+{"party": 1, "bits": 32, "count": 8192, "backend": "batched", "cold_ms": 0.008238857129721769, "graph_ms": 0.004641103517711517, "wall_ms": 0.02848604299924773}
+{"party": 1, "bits": 32, "count": 262144, "backend": "separate", "cold_ms": 0.14540533411006132, "graph_ms": 0.1264838608614917, "wall_ms": 0.13257471729903889}
+{"party": 1, "bits": 32, "count": 262144, "backend": "batched", "cold_ms": 0.12821248233318328, "graph_ms": 0.10576371230264575, "wall_ms": 0.10871371024759452}
+{"party": 1, "bits": 64, "count": 8192, "backend": "separate", "cold_ms": 0.020738370026703232, "graph_ms": 0.011500254174544347, "wall_ms": 0.12688926699956937}
+{"party": 1, "bits": 64, "count": 8192, "backend": "batched", "cold_ms": 0.008006857225804456, "graph_ms": 0.004222377577674723, "wall_ms": 0.028891414000099758}
+{"party": 1, "bits": 64, "count": 262144, "backend": "separate", "cold_ms": 0.11859072238206864, "graph_ms": 0.1087676010131836, "wall_ms": 0.1406821854569981}
+{"party": 1, "bits": 64, "count": 262144, "backend": "batched", "cold_ms": 0.08801723071015798, "graph_ms": 0.0693948884010315, "wall_ms": 0.07089059027765432}

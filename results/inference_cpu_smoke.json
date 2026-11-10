@@ -1,0 +1,44 @@
+{
+  "torch": "2.13.0+cu130",
+  "numpy": "2.2.6",
+  "threads": 1,
+  "gpu": null,
+  "results": [
+    {
+      "batch": 1,
+      "width": 8,
+      "hidden": 8,
+      "out": 4,
+      "device": "cpu",
+      "fractional_bits": 12,
+      "prepared_weights": false,
+      "exact_integer_match": true,
+      "max_logit_error": 0.0001674443483352661,
+      "max_logprob_error": 7.49826431274414e-05,
+      "setup_all_parties_ms": 3.2565279998379992,
+      "local_four_party_ms": 73.97155899991503,
+      "local_samples_ms": [
+        73.62059599995519,
+        74.32252199987488
+      ],
+      "replay_party_ms": [
+        6.770092499891689,
+        6.151838499931728,
+        5.9591425003873155,
+        5.947557500462608
+      ],
+      "ideal_network_phase_max_ms": 6.969606499865222,
+      "rounds": 27,
+      "payload_bytes": 105664,
+      "baselines": {
+        "fp32_eager_ms": 0.00629199996637908,
+        "numpy_cpu_ms": 0.004047500056003628
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 1107.6933466476305,
+        "numpy_cpu_ms": 1721.9534041827262
+      },
+      "methodology": "Fresh-mask checked four-party colocated execution; fixed-fixture per-party replay with real SHAKE, BLAKE2b, host staging, and checked output. Ideal time sums per-phase maxima; no network latency/bandwidth. Sharing/setup reported separately."
+    }
+  ]
+}

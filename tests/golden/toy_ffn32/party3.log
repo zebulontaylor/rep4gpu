@@ -1,0 +1,21 @@
+Trying to run 32-bit computation
+Truncation error probability 2^-40
+Using statistical security parameter 40
+Setup took 0.0307994 seconds.
+Compiler: /home/zeb/Desktop/SIV/work/mpspdz32/compile.py -R 32 -Z 4 toy_ffn_reference
+Detailed costs:
+        809984 ANDs
+Spent 0.0191049 seconds (0.135072 MB, 54 rounds, 0.0173603 CPU seconds, 0.0140316 communication seconds) on the online phase and 0.010317 seconds (0.3696 MB, 30 rounds, 0.017548 CPU seconds, 0.00336008 communication seconds) on the preprocessing/offline phase.
+Communication details:
+Passing around 0.013792 MB in 24 rounds, taking 0.00125808 seconds
+Receiving directly 0.00016 MB in 10 rounds, taking 0.000315452 seconds
+Sending/receiving 0.49088 MB in 51 rounds, taking 0.0158857 seconds
+CPU time = 0.0187627
+The following benchmarks are including preprocessing (offline phase).
+Time = 0.0310946 seconds 
+Data sent = 0.504672 MB in ~85 rounds (party 3 only)
+Global data sent = 3.75149 MB (all parties)
+Actual preprocessing cost of program:
+  Type int
+         92160         daBits
+Command line: /home/zeb/Desktop/SIV/work/mpspdz32/rep4-ring-party.x 3 toy_ffn_reference -R 32 -v -pn 18932

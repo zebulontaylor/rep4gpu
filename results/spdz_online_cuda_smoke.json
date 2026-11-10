@@ -1,0 +1,25 @@
+{
+  "implementation": "centralized trusted-dealer prime-field online simulator",
+  "full_malicious_majority_protocol": false,
+  "device": "cuda",
+  "shape": [
+    1,
+    256,
+    256
+  ],
+  "parties": 4,
+  "prime": 2147483647,
+  "mac_keys": 5,
+  "repeats": 3,
+  "setup_ms": 7.580175999919447,
+  "preprocessing_ms": 71.78457099996649,
+  "online_with_output_check_ms": 10.656164000010904,
+  "preprocessing_plus_online_ms": 82.4407349999774,
+  "clear_fp32_matmul_ms": 0.07724500005679147,
+  "online_over_clear_fp32": 137.95279943266698,
+  "opened_elements": 66048,
+  "mac_residual_contributions": 1320960,
+  "logical_field_contribution_bytes": 6340608,
+  "network_ms": null,
+  "correct": true
+}

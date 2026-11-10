@@ -1,0 +1,54 @@
+{
+  "torch": "2.13.0+cu130",
+  "numpy": "2.2.6",
+  "threads": 1,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "results": [
+    {
+      "batch": 16,
+      "width": 512,
+      "hidden": 2048,
+      "out": 512,
+      "device": "cuda",
+      "fractional_bits": 12,
+      "prepared_weights": false,
+      "exact_integer_match": true,
+      "max_logit_error": 0.005257129669189453,
+      "max_logprob_error": 0.005269050598144531,
+      "setup_all_parties_ms": 411.05070100002195,
+      "local_four_party_ms": 2729.4016420000844,
+      "local_samples_ms": [
+        2676.408489000096,
+        2782.394795000073
+      ],
+      "replay_party_ms": [
+        910.3339629999709,
+        824.9323834999132,
+        870.3646255005424,
+        934.2750200003138
+      ],
+      "ideal_network_phase_max_ms": 1014.9675275002892,
+      "rounds": 27,
+      "payload_bytes": 343937856,
+      "baselines": {
+        "fp32_eager_ms": 0.05399100007252855,
+        "fp32_graph_ms": 0.04188960075378418,
+        "fp32_graph_wall_ms": 0.046692000069015194,
+        "fp16_eager_ms": 0.039639499959776,
+        "fp16_graph_ms": 0.022156798839569093,
+        "fp16_graph_wall_ms": 0.027076000037595804,
+        "numpy_cpu_ms": 1.2510185000564888
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 18798.828066471033,
+        "fp32_graph_ms": 24229.582264724737,
+        "fp32_graph_wall_ms": 21737.50376938386,
+        "fp16_eager_ms": 25604.952850823614,
+        "fp16_graph_ms": 45808.4010623273,
+        "fp16_graph_wall_ms": 37485.87406156661,
+        "numpy_cpu_ms": 811.3129641603693
+      },
+      "methodology": "Fresh-mask checked four-party colocated execution; fixed-fixture per-party replay with real SHAKE, BLAKE2b, host staging, and checked output. Ideal time sums per-phase maxima; no network latency/bandwidth. Sharing/setup reported separately."
+    }
+  ]
+}

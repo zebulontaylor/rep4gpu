@@ -1,0 +1,20 @@
+Default bit length for compilation: 63
+Default security parameter for compilation: 40
+Compiling file Programs/Source/rep4_reference.mpc
+Writing to Programs/Schedules/rep4_reference.sch
+Writing to Programs/Bytecode/rep4_reference-0.bc
+Hash: fc2d4b91371cc73b108707b19519ba9db78950a572fc8671fee66a838424172f
+Program requires at most:
+          14 integer inputs from player 0
+           6 integer inputs from player 1
+          12 integer triples
+           1 matrix multiplications (2x3 * 3x2)
+           4 integer dot products
+          20 integer opens
+          24 integer 4-way splits
+           3 integer 4-way split rounds
+          16 integer cut randoms
+          80 integer dabits
+        9816 bit triples
+         912 bit opens
+          34 virtual machine rounds

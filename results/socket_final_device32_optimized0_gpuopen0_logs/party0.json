@@ -1,0 +1,33 @@
+{
+  "party": 0,
+  "passed": true,
+  "device": "cuda",
+  "bits": 32,
+  "device_protocol": true,
+  "optimized": false,
+  "gpu_open": false,
+  "authenticated_tls": true,
+  "distributed_setup": true,
+  "handshake_ms": 22.724786000253516,
+  "correlated_setup_ms": 496.03806599952804,
+  "input_ms": 1389.9831890003043,
+  "checked_inference_ms": 2301.8403360001685,
+  "payload_bytes": 4102,
+  "rounds": 46,
+  "inference_payload_bytes": 2848,
+  "inference_rounds": 25,
+  "output": [
+    [
+      1114,
+      -111,
+      471,
+      411
+    ],
+    [
+      373,
+      492,
+      182,
+      421
+    ]
+  ]
+}

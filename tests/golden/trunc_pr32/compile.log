@@ -1,0 +1,11 @@
+Default bit length for compilation: 31
+Default security parameter for compilation: 40
+Compiling file Programs/Source/trunc_pr_reference.mpc
+Writing to Programs/Schedules/trunc_pr_reference.sch
+Writing to Programs/Bytecode/trunc_pr_reference-0.bc
+Hash: bbfe1952503333c8c87bd3ff249d3ad5ed84ef60c590db369f5afbfbf89e5676
+Program requires at most:
+         304 integer inputs from player 0
+         304 integer probabilistic truncations
+         304 integer opens
+           3 virtual machine rounds

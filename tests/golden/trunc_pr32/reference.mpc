@@ -1,0 +1,11 @@
+from Compiler.types import sint
+from Compiler.instructions import trunc_pr
+from Compiler.library import print_ln, check_point
+x = sint.get_input_from(0, size=304)
+y = sint(size=304)
+# Direct opcode selects Rep4<T>::trunc_pr, including its signed small-gap bias.
+trunc_pr(y, x, 31, 12)
+revealed = y.reveal()
+check_point()
+for index in range(304):
+    print_ln('TRUNC %s %s', index, revealed[index])

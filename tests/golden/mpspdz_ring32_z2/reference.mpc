@@ -1,0 +1,22 @@
+from Compiler.types import sint
+from Compiler.library import print_ln, check_point
+
+# The first party supplies row-major A; the second supplies row-major B.
+a = sint.Matrix(2, 3)
+b = sint.Matrix(2, 3)
+a.input_from(0)
+b.input_from(1)
+c = a.direct_mul_trans(b)
+for i in range(2):
+    for j in range(2):
+        print_ln('MAT %s %s %s', i, j, c[i * 2 + j].reveal())
+# Exercise the 64-bit binary split, carry circuit, sign, and recomposition.
+x = sint.get_input_from(0, size=8)
+shifted = x + 2048
+bits = shifted.bit_decompose(32, maybe_mixed=True)[12:]
+scaled = sint.bit_compose([sint.conv(bit) for bit in bits], signed=True)
+positive = bits[-1].bit_not()
+relu = sint.bit_compose([sint.conv(bit & positive) for bit in bits], signed=True)
+for i in range(8):
+    print_ln('Q12 %s %s %s', i, scaled[i].reveal(), relu[i].reveal())
+check_point()

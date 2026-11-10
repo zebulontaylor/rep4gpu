@@ -1,0 +1,21 @@
+Trying to run 64-bit computation
+Truncation error probability 2^-40
+Using statistical security parameter 40
+Setup took 0.0386299 seconds.
+Compiler: /home/zeb/Desktop/mp-spdz-toy/MP-SPDZ/compile.py -R 64 -Z 4 toy_ffn_reference
+Detailed costs:
+       3650560 ANDs
+Spent 0.02851 seconds (0.533888 MB, 89 rounds, 0.0235016 CPU seconds, 0.0153085 communication seconds) on the online phase and 0.00341795 seconds (0.36888 MB, 9 rounds, 0.0236382 CPU seconds, 0.00118665 communication seconds) on the preprocessing/offline phase.
+Communication details:
+Passing around 0.037376 MB in 32 rounds, taking 0.00321821 seconds
+Sending directly 4.8e-05 MB in 3 rounds, taking 8.9308e-05 seconds
+Sending/receiving 0.865344 MB in 64 rounds, taking 0.0132209 seconds
+CPU time = 0.024956
+The following benchmarks are including preprocessing (offline phase).
+Time = 0.0336223 seconds 
+Data sent = 0.902768 MB in ~99 rounds (party 2 only)
+Global data sent = 4.63574 MB (all parties)
+Actual preprocessing cost of program:
+  Type int
+         23040         daBits
+Command line: /home/zeb/Desktop/mp-spdz-toy/MP-SPDZ/rep4-ring-party.x 2 toy_ffn_reference -R 64 -v -pn 18964

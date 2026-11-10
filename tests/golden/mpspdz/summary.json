@@ -1,0 +1,59 @@
+{
+  "traffic": {
+    "party0_sent_mb": 0.005878,
+    "global_sent_mb": 0.020742
+  },
+  "executable": "/home/zeb/Desktop/mp-spdz-toy/MP-SPDZ/rep4-ring-party.x",
+  "executable_sha256": "b8fe4ea6151d0c24bd60d6062f3e0ba9fc0501647bc78da9ac0eaf0029b10ad9",
+  "source_sha256": {
+    "Protocols/Rep4.hpp": "8ed8a0f927773d2929995ac515ec0b7b61dc7c81d470acabb5d76aaea06c9b33",
+    "Protocols/Rep4Input.hpp": "c94de4200194ded142cc54220c4d46e5f8b527b788523098e06e67be39429861",
+    "Protocols/Rep4MC.hpp": "064473b1cebcd287600d5f869019765ecd3743df46464133707ea002eb18f69b",
+    "Protocols/Rep4Share.h": "d98766c67770abc18e71073556885fa352c1a3f64970daaa66d5aefea42d8243",
+    "GC/Rep4Secret.h": "9a83cde6c44c0012afa8046cc8d257c53f9a28fda58b5b8b6e6ef8d729b1d382"
+  },
+  "compile_command": [
+    "/home/zeb/.pyenv/versions/3.10.13/bin/python3",
+    "/home/zeb/Desktop/mp-spdz-toy/MP-SPDZ/compile.py",
+    "-R",
+    "64",
+    "-Z",
+    "2",
+    "rep4_reference"
+  ],
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "expected": [
+    "MAT 0 0 -9223372036837996512",
+    "MAT 0 1 9223372006722887681",
+    "MAT 1 0 9223372036846364672",
+    "MAT 1 1 -9223354444635168768",
+    "Q12 0 -1 0",
+    "Q12 1 -1 0",
+    "Q12 2 0 0",
+    "Q12 3 0 0",
+    "Q12 4 0 0",
+    "Q12 5 1 1",
+    "Q12 6 -2251799813685248 0",
+    "Q12 7 -2251799813685248 0"
+  ],
+  "observed": [
+    "MAT 0 0 -9223372036837996512",
+    "MAT 0 1 9223372006722887681",
+    "MAT 1 0 9223372036846364672",
+    "MAT 1 1 -9223354444635168768",
+    "Q12 0 -1 0",
+    "Q12 1 -1 0",
+    "Q12 2 0 0",
+    "Q12 3 0 0",
+    "Q12 4 0 0",
+    "Q12 5 1 1",
+    "Q12 6 -2251799813685248 0",
+    "Q12 7 -2251799813685248 0"
+  ],
+  "passed": true
+}

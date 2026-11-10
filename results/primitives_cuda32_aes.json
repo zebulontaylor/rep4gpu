@@ -1,0 +1,1758 @@
+{
+  "provenance": {
+    "python": "3.10.13 (main, Oct  3 2025, 10:18:08) [GCC 14.2.1 20250110 (Red Hat 14.2.1-7)]",
+    "platform": "Linux-6.12.0-211.74.1.el10_2.x86_64-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.13.0",
+      "numpy": "2.2.6",
+      "triton": "3.7.1",
+      "threadpoolctl": "3.6.0",
+      "cryptography": "50.0.2"
+    },
+    "cuda_runtime": "13.0",
+    "source_sha256": {
+      "benchmarks/inference.py": "0e8ecb4d91ab63ef1ae0879c06cf94f119efc5a48ecf0a58ad674639bdcd5310",
+      "rep4gpu/__init__.py": "2928ddf58a570311e6b6db4ebfc34876be8a8970050576e444bbeda7ba24281a",
+      "rep4gpu/activations.py": "9429203efb4ebc54aa4f0dee2c358afe9e8eb37c6c4522f46c09470cc2188c76",
+      "rep4gpu/conversion.py": "23b3af14a3717b8e1ee1c4327809b8a6a1438251e154a3c405aa335af2a7fb4a",
+      "rep4gpu/exact_truncation.py": "fd27e0feac2cc55caf9434e96cfe04eeb271d23eb8de7cc97b947be6bd85db14",
+      "rep4gpu/fused_runtime.py": "46182bf072dd5a7cecf5bce2474011cbfe22cc0826a7485ff034b367f420d173",
+      "rep4gpu/kernels.py": "eba3ba2833de000cd6742a0b4825541d801e3118ea9bb4aabe1095d80fd19b27",
+      "rep4gpu/packed_kernels.py": "96cca224bee35dcc5db037884b9b80ee60b072a670616fa57a54d31e4efec86a",
+      "rep4gpu/prg.py": "be3963e28c244d818faa04cc9494f94545a436cd75531297fef97a395134606e",
+      "rep4gpu/probabilistic.py": "0fc6672e3fcf58f80aa68db05112e83ef05b7dbd0f0e917389f72a2e94bed566",
+      "rep4gpu/runtime.py": "7b059bfdba170fbc70d10d4c30a2be4bae08d65481f64fedeb0b5a6d10fc8111",
+      "rep4gpu/setup.py": "52ee5986a701d99a34ee37bf89243cc73e74155776a19c69c77dab90e30b6521",
+      "rep4gpu/simt_kernels.py": "a58e0c534ee9850cb29ba5b8926816651580fa9abe788d0f1590aaf53944840b",
+      "rep4gpu/spdz.py": "c9b23d53d20b7ed7a64f9124acebc05c7ee8199e9d11bc111152fde36e14a395",
+      "rep4gpu/transport.py": "b77776ceaf8a2ce263fc58b9b10bcd8766b09ee2cbab1c12e72a000201fe8585",
+      "rep4gpu/warp_mma_kernels.py": "246d9804b92628ed769afa230166bf617fb20d7849cc3575448cfbdc92532679",
+      "benchmarks/primitives.py": "d64bd4e67590de5b197cd486bb22a7ccdc36e305a0995ebfcc7df9dfa9592b0d"
+    }
+  },
+  "blas_threadpools": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "/home/zeb/.pyenv/versions/3.10.13/lib/python3.10/site-packages/numpy.libs/libscipy_openblas64_-56d6093b.so",
+      "version": "0.3.29",
+      "threading_layer": "pthreads",
+      "architecture": "SkylakeX"
+    },
+    {
+      "user_api": "openmp",
+      "internal_api": "openmp",
+      "num_threads": 1,
+      "prefix": "libgomp",
+      "filepath": "/home/zeb/.pyenv/versions/3.10.13/lib/python3.10/site-packages/torch/lib/libgomp.so.1",
+      "version": null
+    }
+  ],
+  "torch_threads": 1,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "results": [
+    {
+      "maximum_accumulator_before_ring_wrap": 26422569,
+      "minimum_accumulator_before_ring_wrap": -26422569,
+      "maximum_signed_accumulator_before_ring_wrap": 24067211,
+      "accumulator_fits_signed_ring": true,
+      "operation": "matmul",
+      "m": 1,
+      "k": 512,
+      "n": 512,
+      "device": "cuda",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "prg": "aes",
+      "fused_runtime": true,
+      "fractional_bits": 12,
+      "integer_reference_contract": "signed modular ring product; truncation and ReLU follow ring wrapping",
+      "exact_integer_match": true,
+      "max_float_error": 0.002109020948410034,
+      "setup_all_parties_ms": 111.93611499993494,
+      "local_four_party_ms": 1.5839220000088972,
+      "local_samples_ms": [
+        1.7809819996728038,
+        1.5252819998750056,
+        1.5839220000088972,
+        1.669882999976835,
+        1.5804350000507839
+      ],
+      "verification_opening_samples_ms": [
+        1.427568000053725,
+        0.6672419999631529,
+        0.8545540003979113,
+        0.7695740000599471,
+        0.7035309999992023,
+        0.7910139997875376
+      ],
+      "replay_party_samples_ms": [
+        [
+          0.32303600028171786,
+          0.30760700019527576,
+          0.32737499986978946,
+          0.3980659998887859,
+          0.3457490001892438
+        ],
+        [
+          0.30696699968757457,
+          0.3039099997295125,
+          0.29976299992995337,
+          0.31765599987920723,
+          0.295635000384209
+        ],
+        [
+          0.3022670002792438,
+          0.2946519998658914,
+          0.3051319995392987,
+          0.2918670002145518,
+          0.34988700008398155
+        ],
+        [
+          0.2919479998126917,
+          0.33059999987017363,
+          0.2965670000776299,
+          0.30596499982493697,
+          0.299090999760665
+        ]
+      ],
+      "replay_phase_samples_seconds": [
+        [
+          [
+            0.00023469100005968357,
+            8.834500022203429e-05
+          ],
+          [
+            0.00022236699987843167,
+            8.524000031684409e-05
+          ],
+          [
+            0.00024136299998644972,
+            8.601199988333974e-05
+          ],
+          [
+            0.00028172800011816435,
+            0.00011633799977062154
+          ],
+          [
+            0.0002582750003057299,
+            8.74739998835139e-05
+          ]
+        ],
+        [
+          [
+            0.00021615599962387932,
+            9.081100006369525e-05
+          ],
+          [
+            0.00022018299978299183,
+            8.372699994652066e-05
+          ],
+          [
+            0.0002147029999832739,
+            8.505999994667945e-05
+          ],
+          [
+            0.00023267699998541502,
+            8.49789998937922e-05
+          ],
+          [
+            0.00021428200034279143,
+            8.135300004141754e-05
+          ]
+        ],
+        [
+          [
+            0.0002147930003957299,
+            8.74739998835139e-05
+          ],
+          [
+            0.0002077999997709412,
+            8.68520000949502e-05
+          ],
+          [
+            0.0002172679996874649,
+            8.78639998518338e-05
+          ],
+          [
+            0.00020571599998220336,
+            8.615100023234845e-05
+          ],
+          [
+            0.0002583649998086912,
+            9.152200027529034e-05
+          ]
+        ],
+        [
+          [
+            0.00020570600008795736,
+            8.624199972473434e-05
+          ],
+          [
+            0.00023446000022886437,
+            9.613999964130926e-05
+          ],
+          [
+            0.00020964400027878582,
+            8.69229997988441e-05
+          ],
+          [
+            0.00021866099996259436,
+            8.730399986234261e-05
+          ],
+          [
+            0.00021182699993005372,
+            8.726399983061128e-05
+          ]
+        ]
+      ],
+      "ideal_network_phase_max_ms": 0.3288369998699636,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "rounds": 1,
+      "payload_bytes": 12480,
+      "baselines": {
+        "fp32_eager_ms": 0.014327000144476187,
+        "fp32_graph_ms": 0.003511359989643097,
+        "fp32_graph_wall_ms": 0.00972349994299293,
+        "fp16_eager_ms": 0.017498000033810968,
+        "fp16_graph_ms": 0.0038070398569107055,
+        "fp16_graph_wall_ms": 0.009808499953578576,
+        "numpy_cpu_ms": 0.011721999953806517
+      },
+      "baseline_max_float_errors": {
+        "fp32": 1.0728836059570312e-06,
+        "fp16": 0.0005861520767211914
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 22.95225773392259,
+        "fp32_graph_ms": 93.64946939074379,
+        "fp32_graph_wall_ms": 33.8187897154187,
+        "fp16_eager_ms": 18.792833422937463,
+        "fp16_graph_ms": 86.37603288367058,
+        "fp16_graph_wall_ms": 33.525717635344364,
+        "numpy_cpu_ms": 28.052977407083123
+      },
+      "samples": 5,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "timing_boundary": "operation entry through final protocol consistency check and GPU synchronization; no output opening",
+      "methodology": "Fresh-mask checked four-party execution; isolated fixed-fixture replay retains PRG, hashes and host staging; warmup also checks outgoing transcript bytes. Sharing and output opening are excluded from operation latency and reported separately. No network latency or bandwidth cost. Float baselines perform the corresponding clear operation; the truncation baseline rounds decoded values down to Q12."
+    },
+    {
+      "maximum_accumulator_before_ring_wrap": 28409388,
+      "minimum_accumulator_before_ring_wrap": -27461595,
+      "maximum_signed_accumulator_before_ring_wrap": 28409388,
+      "accumulator_fits_signed_ring": true,
+      "operation": "matmul",
+      "m": 1,
+      "k": 1024,
+      "n": 1024,
+      "device": "cuda",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "prg": "aes",
+      "fused_runtime": true,
+      "fractional_bits": 12,
+      "integer_reference_contract": "signed modular ring product; truncation and ReLU follow ring wrapping",
+      "exact_integer_match": true,
+      "max_float_error": 0.004040807485580444,
+      "setup_all_parties_ms": 62.33685200004402,
+      "local_four_party_ms": 1.6440449999208795,
+      "local_samples_ms": [
+        1.8807389997164137,
+        1.719536000109656,
+        1.6440449999208795,
+        1.5562000003228604,
+        1.6017150001061964
+      ],
+      "verification_opening_samples_ms": [
+        0.9871829997791792,
+        0.8299469996018161,
+        0.7182279996413854,
+        0.7254610000018147,
+        0.6796460002078675,
+        0.7819669999662437
+      ],
+      "replay_party_samples_ms": [
+        [
+          0.35781199994744384,
+          0.3369520004525839,
+          0.32443899999634596,
+          0.3307000001768756,
+          0.33463799991295673
+        ],
+        [
+          0.3245989996685239,
+          0.33799299990278087,
+          0.3180769995196897,
+          0.31866800054558553,
+          0.32209500022872817
+        ],
+        [
+          0.33584999982849695,
+          0.32413799954156275,
+          0.33302599968010327,
+          0.32300600014423253,
+          0.3249699998377764
+        ],
+        [
+          0.3353699999024684,
+          0.3435640001043794,
+          0.3240279997953621,
+          0.33178300009240047,
+          0.32102199975270196
+        ]
+      ],
+      "replay_phase_samples_seconds": [
+        [
+          [
+            0.00025003000018841703,
+            0.0001077819997590268
+          ],
+          [
+            0.00024297600020872778,
+            9.39760002438561e-05
+          ],
+          [
+            0.00023291699972105562,
+            9.152200027529034e-05
+          ],
+          [
+            0.00023955899996508379,
+            9.114100021179183e-05
+          ],
+          [
+            0.00024433899989162455,
+            9.029900002133218e-05
+          ]
+        ],
+        [
+          [
+            0.00023336799995377078,
+            9.123099971475312e-05
+          ],
+          [
+            0.00024503900021954905,
+            9.295399968323181e-05
+          ],
+          [
+            0.00022891899971000385,
+            8.915799980968586e-05
+          ],
+          [
+            0.0002262040002278809,
+            9.246400031770463e-05
+          ],
+          [
+            0.00023439000005964772,
+            8.770500016908045e-05
+          ]
+        ],
+        [
+          [
+            0.00023559200008094194,
+            0.000100257999747555
+          ],
+          [
+            0.0002278269998896576,
+            9.631099965190515e-05
+          ],
+          [
+            0.0002240109997728723,
+            0.00010901499990723096
+          ],
+          [
+            0.0002251020000585413,
+            9.790400008569122e-05
+          ],
+          [
+            0.00022719599974152516,
+            9.777400009625126e-05
+          ]
+        ],
+        [
+          [
+            0.0002262849998260208,
+            0.00010908500007644761
+          ],
+          [
+            0.0002432559999760997,
+            0.00010030800012827967
+          ],
+          [
+            0.0002264350000587001,
+            9.759299973666202e-05
+          ],
+          [
+            0.0002246620001642441,
+            0.00010712099992815638
+          ],
+          [
+            0.0002239699997517164,
+            9.705200000098557e-05
+          ]
+        ]
+      ],
+      "ideal_network_phase_max_ms": 0.34328400033700746,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "rounds": 1,
+      "payload_bytes": 24768,
+      "baselines": {
+        "fp32_eager_ms": 0.030687999924339238,
+        "fp32_graph_ms": 0.02151423931121826,
+        "fp32_graph_wall_ms": 0.026174500135311973,
+        "fp16_eager_ms": 0.017909000007421128,
+        "fp16_graph_ms": 0.008048639893531799,
+        "fp16_graph_wall_ms": 0.012753999953929451,
+        "numpy_cpu_ms": 0.04241000010551943
+      },
+      "baseline_max_float_errors": {
+        "fp32": 1.9073486328125e-06,
+        "fp16": 0.0007252693176269531
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 11.18626176953104,
+        "fp32_graph_ms": 15.95613004815873,
+        "fp32_graph_wall_ms": 13.115207494407262,
+        "fp16_eager_ms": 19.168239443562314,
+        "fp16_graph_ms": 42.65118142667606,
+        "fp16_graph_wall_ms": 26.915791248003192,
+        "numpy_cpu_ms": 8.094411683161749
+      },
+      "samples": 5,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "timing_boundary": "operation entry through final protocol consistency check and GPU synchronization; no output opening",
+      "methodology": "Fresh-mask checked four-party execution; isolated fixed-fixture replay retains PRG, hashes and host staging; warmup also checks outgoing transcript bytes. Sharing and output opening are excluded from operation latency and reported separately. No network latency or bandwidth cost. Float baselines perform the corresponding clear operation; the truncation baseline rounds decoded values down to Q12."
+    },
+    {
+      "maximum_accumulator_before_ring_wrap": 30351455,
+      "minimum_accumulator_before_ring_wrap": -30351455,
+      "maximum_signed_accumulator_before_ring_wrap": 24077603,
+      "accumulator_fits_signed_ring": true,
+      "operation": "matmul",
+      "m": 1,
+      "k": 2048,
+      "n": 2048,
+      "device": "cuda",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "prg": "aes",
+      "fused_runtime": true,
+      "fractional_bits": 12,
+      "integer_reference_contract": "signed modular ring product; truncation and ReLU follow ring wrapping",
+      "exact_integer_match": true,
+      "max_float_error": 0.005558669567108154,
+      "setup_all_parties_ms": 193.65562400025738,
+      "local_four_party_ms": 2.6478790000510344,
+      "local_samples_ms": [
+        2.7526149997356697,
+        2.8902829999424284,
+        2.5652939998508373,
+        2.5778159997571493,
+        2.6478790000510344
+      ],
+      "verification_opening_samples_ms": [
+        1.0060069998871768,
+        0.714230000085081,
+        0.7378949999292672,
+        0.7277559998328798,
+        0.748204000046826,
+        0.7222850003927306
+      ],
+      "replay_party_samples_ms": [
+        [
+          0.6707080001433496,
+          0.6974180000725028,
+          0.6833919997006888,
+          0.6621020002057776,
+          0.6667010002274765
+        ],
+        [
+          0.7392259999505768,
+          0.776846999542613,
+          0.6973089998609794,
+          0.6554500000675034,
+          0.6577139997716586
+        ],
+        [
+          0.6841339995844464,
+          0.6801660001656273,
+          0.7265730000654003,
+          0.6818389997533814,
+          0.6941509996067907
+        ],
+        [
+          0.668754999878729,
+          0.6863789999442815,
+          0.6825699997534684,
+          0.7135790001484565,
+          0.6979490003686806
+        ]
+      ],
+      "replay_phase_samples_seconds": [
+        [
+          [
+            0.0005671540002367692,
+            0.00010355399990658043
+          ],
+          [
+            0.0005917200001022138,
+            0.00010569799997028895
+          ],
+          [
+            0.0005785449998256809,
+            0.0001048469998750079
+          ],
+          [
+            0.0005626860001939349,
+            9.94160000118427e-05
+          ],
+          [
+            0.0005675350003002677,
+            9.916599992720876e-05
+          ]
+        ],
+        [
+          [
+            0.0006291199997576769,
+            0.00011010600019289996
+          ],
+          [
+            0.0005850279999322083,
+            0.00019181899961040472
+          ],
+          [
+            0.0005847779998475744,
+            0.00011253100001340499
+          ],
+          [
+            0.000558106999960728,
+            9.734300010677543e-05
+          ],
+          [
+            0.0005613929997707601,
+            9.63210000008985e-05
+          ]
+        ],
+        [
+          [
+            0.0005694779997611477,
+            0.00011465599982329877
+          ],
+          [
+            0.0005670139998983359,
+            0.00011315200026729144
+          ],
+          [
+            0.0006053960000826919,
+            0.00012117699998270837
+          ],
+          [
+            0.000571922999824892,
+            0.00010991599992848933
+          ],
+          [
+            0.0005808889995932986,
+            0.00011326200001349207
+          ]
+        ],
+        [
+          [
+            0.000560521999886987,
+            0.00010823299999174196
+          ],
+          [
+            0.0005742180001107045,
+            0.00011216099983357708
+          ],
+          [
+            0.0005694879996553937,
+            0.00011308200009807479
+          ],
+          [
+            0.0005955980000180716,
+            0.00011798100013038493
+          ],
+          [
+            0.0005758400002378039,
+            0.00012210900013087667
+          ]
+        ]
+      ],
+      "ideal_network_phase_max_ms": 0.6980399998610665,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "rounds": 1,
+      "payload_bytes": 49344,
+      "baselines": {
+        "fp32_eager_ms": 0.07939400006762298,
+        "fp32_graph_ms": 0.07015391826629638,
+        "fp32_graph_wall_ms": 0.07588699986627034,
+        "fp16_eager_ms": 0.048200499804806896,
+        "fp16_graph_ms": 0.03783679962158203,
+        "fp16_graph_wall_ms": 0.0426500000685337,
+        "numpy_cpu_ms": 0.2303124999798456
+      },
+      "baseline_max_float_errors": {
+        "fp32": 2.7418136596679688e-06,
+        "fp16": 0.0006301999092102051
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 8.792100149463668,
+        "fp32_graph_ms": 9.95012134905117,
+        "fp32_graph_wall_ms": 9.198413444874182,
+        "fp16_eager_ms": 14.482007503819554,
+        "fp16_graph_ms": 18.44870620249039,
+        "fp16_graph_wall_ms": 16.366705714874456,
+        "numpy_cpu_ms": 3.030838534261715
+      },
+      "samples": 5,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "timing_boundary": "operation entry through final protocol consistency check and GPU synchronization; no output opening",
+      "methodology": "Fresh-mask checked four-party execution; isolated fixed-fixture replay retains PRG, hashes and host staging; warmup also checks outgoing transcript bytes. Sharing and output opening are excluded from operation latency and reported separately. No network latency or bandwidth cost. Float baselines perform the corresponding clear operation; the truncation baseline rounds decoded values down to Q12."
+    },
+    {
+      "maximum_accumulator_before_ring_wrap": 39140349,
+      "minimum_accumulator_before_ring_wrap": -37396406,
+      "maximum_signed_accumulator_before_ring_wrap": 39140349,
+      "accumulator_fits_signed_ring": true,
+      "operation": "matmul",
+      "m": 16,
+      "k": 512,
+      "n": 512,
+      "device": "cuda",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "prg": "aes",
+      "fused_runtime": true,
+      "fractional_bits": 12,
+      "integer_reference_contract": "signed modular ring product; truncation and ReLU follow ring wrapping",
+      "exact_integer_match": true,
+      "max_float_error": 0.003868579864501953,
+      "setup_all_parties_ms": 8.710504000191577,
+      "local_four_party_ms": 2.3454700003640028,
+      "local_samples_ms": [
+        2.3444990001735277,
+        2.972797999973409,
+        2.3454700003640028,
+        2.4089509997793357,
+        2.0573900001181755
+      ],
+      "verification_opening_samples_ms": [
+        1.9767290000345383,
+        0.9568450000188022,
+        1.0459529999025108,
+        0.9160390000033658,
+        0.9544210001877218,
+        0.8296460000565276
+      ],
+      "replay_party_samples_ms": [
+        [
+          0.5151959999238898,
+          0.48815599984664004,
+          0.532779999957711,
+          0.519734999670618,
+          0.5233120000411873
+        ],
+        [
+          0.5203670002629224,
+          0.5793659997834766,
+          0.5087649997221888,
+          0.48786600018502213,
+          0.5382800004554156
+        ],
+        [
+          0.5146459998286446,
+          0.5189650005377189,
+          0.5237419995864911,
+          0.5798080001113703,
+          0.5208870002206822
+        ],
+        [
+          0.5073319998700754,
+          0.5106990001877421,
+          0.5166589999134885,
+          0.5051789999015455,
+          0.5243939999672875
+        ]
+      ],
+      "replay_phase_samples_seconds": [
+        [
+          [
+            0.0003782290000344801,
+            0.00013696699988940964
+          ],
+          [
+            0.0003503670000100101,
+            0.00013778899983662996
+          ],
+          [
+            0.0003805139999712992,
+            0.00015226599998641177
+          ],
+          [
+            0.0003719880000971898,
+            0.00014774699957342818
+          ],
+          [
+            0.00037311999994926737,
+            0.0001501920000919199
+          ]
+        ],
+        [
+          [
+            0.0003825580001830531,
+            0.0001378090000798693
+          ],
+          [
+            0.0004230529998494603,
+            0.00015631299993401626
+          ],
+          [
+            0.0003761059997486882,
+            0.0001326589999735006
+          ],
+          [
+            0.00034616000039022765,
+            0.00014170599979479448
+          ],
+          [
+            0.00040930800014393753,
+            0.00012897200031147804
+          ]
+        ],
+        [
+          [
+            0.00034663099995668745,
+            0.00016801499987195712
+          ],
+          [
+            0.0003493460003483051,
+            0.00016961900018941378
+          ],
+          [
+            0.00035494599978846963,
+            0.0001687959997980215
+          ],
+          [
+            0.0003414910001993121,
+            0.00023831699991205824
+          ],
+          [
+            0.000356589000148233,
+            0.0001642980000724492
+          ]
+        ],
+        [
+          [
+            0.0003408500001569337,
+            0.0001664819997131417
+          ],
+          [
+            0.00034427600030539907,
+            0.000166422999882343
+          ],
+          [
+            0.00035095799967166386,
+            0.00016570100024182466
+          ],
+          [
+            0.00033855599986054585,
+            0.00016662300004099961
+          ],
+          [
+            0.0003561979997357412,
+            0.00016819600023154635
+          ]
+        ]
+      ],
+      "ideal_network_phase_max_ms": 0.5513539999810746,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "rounds": 1,
+      "payload_bytes": 196800,
+      "baselines": {
+        "fp32_eager_ms": 0.015568999970128061,
+        "fp32_graph_ms": 0.007270399928092957,
+        "fp32_graph_wall_ms": 0.011872999721163069,
+        "fp16_eager_ms": 0.015684500112911337,
+        "fp16_graph_ms": 0.004177919924259186,
+        "fp16_graph_wall_ms": 0.009503000001132023,
+        "numpy_cpu_ms": 0.12145800019425224
+      },
+      "baseline_max_float_errors": {
+        "fp32": 5.960464477539062e-07,
+        "fp16": 0.0009523630142211914
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 35.41357833123173,
+        "fp32_graph_ms": 75.83544308898782,
+        "fp32_graph_wall_ms": 46.43763269010373,
+        "fp16_eager_ms": 35.152793905570825,
+        "fp16_graph_ms": 131.96854175677834,
+        "fp16_graph_wall_ms": 58.018941378027556,
+        "numpy_cpu_ms": 4.539462193509475
+      },
+      "samples": 5,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "timing_boundary": "operation entry through final protocol consistency check and GPU synchronization; no output opening",
+      "methodology": "Fresh-mask checked four-party execution; isolated fixed-fixture replay retains PRG, hashes and host staging; warmup also checks outgoing transcript bytes. Sharing and output opening are excluded from operation latency and reported separately. No network latency or bandwidth cost. Float baselines perform the corresponding clear operation; the truncation baseline rounds decoded values down to Q12."
+    },
+    {
+      "maximum_accumulator_before_ring_wrap": 37228531,
+      "minimum_accumulator_before_ring_wrap": -37228531,
+      "maximum_signed_accumulator_before_ring_wrap": 29999220,
+      "accumulator_fits_signed_ring": true,
+      "operation": "matmul",
+      "m": 16,
+      "k": 1024,
+      "n": 1024,
+      "device": "cuda",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "prg": "aes",
+      "fused_runtime": true,
+      "fractional_bits": 12,
+      "integer_reference_contract": "signed modular ring product; truncation and ReLU follow ring wrapping",
+      "exact_integer_match": true,
+      "max_float_error": 0.004873096942901611,
+      "setup_all_parties_ms": 27.42634000014732,
+      "local_four_party_ms": 2.1774159999949916,
+      "local_samples_ms": [
+        2.9196180003054906,
+        2.2821719999228662,
+        2.107034000346175,
+        2.1774159999949916,
+        2.0613769997908094
+      ],
+      "verification_opening_samples_ms": [
+        1.145838999946136,
+        1.1298099998384714,
+        0.8874050004124001,
+        0.8652630003780359,
+        1.0597089999464515,
+        0.9350239997729659
+      ],
+      "replay_party_samples_ms": [
+        [
+          0.6350809999275953,
+          0.6117080001786235,
+          0.6062870002097043,
+          0.5969200001345598,
+          0.5820919996040175
+        ],
+        [
+          0.6174990003273706,
+          0.5869010005881137,
+          0.5761510001320858,
+          0.5907789995944768,
+          0.5870010004400683
+        ],
+        [
+          0.7314420004149724,
+          0.7322240003304614,
+          0.7286079999175854,
+          0.7334570000239182,
+          0.7326649997594359
+        ],
+        [
+          0.7269539996741514,
+          0.7512789998145308,
+          0.7566389995190548,
+          2.1543920001931838,
+          0.7468310000149359
+        ]
+      ],
+      "replay_phase_samples_seconds": [
+        [
+          [
+            0.0004538510002021212,
+            0.00018122999972547404
+          ],
+          [
+            0.000443783000264375,
+            0.00016792499991424847
+          ],
+          [
+            0.00044115700029578875,
+            0.00016512999991391553
+          ],
+          [
+            0.0004311790003157512,
+            0.00016574099981880863
+          ],
+          [
+            0.000422021999838762,
+            0.0001600699997652555
+          ]
+        ],
+        [
+          [
+            0.0004536410001492186,
+            0.000163858000178152
+          ],
+          [
+            0.0004170020001765806,
+            0.00016989900041153305
+          ],
+          [
+            0.0004148779999013641,
+            0.00016127300023072166
+          ],
+          [
+            0.00042701099982878077,
+            0.000163767999765696
+          ],
+          [
+            0.00041414700035602436,
+            0.00017285400008404395
+          ]
+        ],
+        [
+          [
+            0.0004890070003966684,
+            0.00024243500001830398
+          ],
+          [
+            0.0004923540000163484,
+            0.00023987000031411299
+          ],
+          [
+            0.00048719500000515836,
+            0.00024141299991242704
+          ],
+          [
+            0.00048774600008982816,
+            0.00024571099993409007
+          ],
+          [
+            0.00048085199978231685,
+            0.00025181299997711903
+          ]
+        ],
+        [
+          [
+            0.0004813729997295013,
+            0.0002455809999446501
+          ],
+          [
+            0.0004983849999007361,
+            0.0002528939999137947
+          ],
+          [
+            0.0004973329996573739,
+            0.0002593059998616809
+          ],
+          [
+            0.0007628110001860477,
+            0.001391581000007136
+          ],
+          [
+            0.0004977040002813737,
+            0.0002491269997335621
+          ]
+        ]
+      ],
+      "ideal_network_phase_max_ms": 0.7505980001951684,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "rounds": 1,
+      "payload_bytes": 393408,
+      "baselines": {
+        "fp32_eager_ms": 0.027842000008604373,
+        "fp32_graph_ms": 0.01879040002822876,
+        "fp32_graph_wall_ms": 0.02431100006106135,
+        "fp16_eager_ms": 0.016535999748157337,
+        "fp16_graph_ms": 0.007135679721832275,
+        "fp16_graph_wall_ms": 0.01185699989036948,
+        "numpy_cpu_ms": 0.49438300015935965
+      },
+      "baseline_max_float_errors": {
+        "fp32": 6.854534149169922e-07,
+        "fp16": 0.0008196830749511719
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 26.959198332131365,
+        "fp32_graph_ms": 39.94582334955868,
+        "fp32_graph_wall_ms": 30.874830254202198,
+        "fp16_eager_ms": 45.3917520335479,
+        "fp16_graph_ms": 105.18941845142574,
+        "fp16_graph_wall_ms": 63.3042090862142,
+        "numpy_cpu_ms": 1.5182520433615645
+      },
+      "samples": 5,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "timing_boundary": "operation entry through final protocol consistency check and GPU synchronization; no output opening",
+      "methodology": "Fresh-mask checked four-party execution; isolated fixed-fixture replay retains PRG, hashes and host staging; warmup also checks outgoing transcript bytes. Sharing and output opening are excluded from operation latency and reported separately. No network latency or bandwidth cost. Float baselines perform the corresponding clear operation; the truncation baseline rounds decoded values down to Q12."
+    },
+    {
+      "maximum_accumulator_before_ring_wrap": 34915065,
+      "minimum_accumulator_before_ring_wrap": -34915065,
+      "maximum_signed_accumulator_before_ring_wrap": 33222370,
+      "accumulator_fits_signed_ring": true,
+      "operation": "matmul",
+      "m": 16,
+      "k": 2048,
+      "n": 2048,
+      "device": "cuda",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "prg": "aes",
+      "fused_runtime": true,
+      "fractional_bits": 12,
+      "integer_reference_contract": "signed modular ring product; truncation and ReLU follow ring wrapping",
+      "exact_integer_match": true,
+      "max_float_error": 0.00632399320602417,
+      "setup_all_parties_ms": 167.01458799980173,
+      "local_four_party_ms": 5.856717999904504,
+      "local_samples_ms": [
+        6.673802000022988,
+        5.6613019996802905,
+        5.833055000039167,
+        5.858453000200825,
+        5.856717999904504
+      ],
+      "verification_opening_samples_ms": [
+        1.4351330000863527,
+        1.8135220002477581,
+        1.2913139999000123,
+        1.2775570003213943,
+        1.2531809998108656,
+        1.3300460000209569
+      ],
+      "replay_party_samples_ms": [
+        [
+          1.6264820001197222,
+          1.6242479996435577,
+          1.6202390002035827,
+          1.6534019996470306,
+          1.6649849999339494
+        ],
+        [
+          1.6161119997377682,
+          1.7102100000556675,
+          1.620068999727664,
+          1.64766200032318,
+          1.607645999683882
+        ],
+        [
+          1.910765000502579,
+          1.921895000123186,
+          3.3913129996108182,
+          1.9691249999596039,
+          1.9889519999196636
+        ],
+        [
+          2.0113139999011764,
+          1.9588249997468665,
+          1.9030100002055406,
+          1.8847460005417815,
+          1.8880120001085743
+        ]
+      ],
+      "replay_phase_samples_seconds": [
+        [
+          [
+            0.001380199999857723,
+            0.0002462820002619992
+          ],
+          [
+            0.0013691589997506526,
+            0.0002550889998929051
+          ],
+          [
+            0.00137792499981515,
+            0.00024231400038843276
+          ],
+          [
+            0.0014018699998814554,
+            0.00025153199976557516
+          ],
+          [
+            0.0013957289997961198,
+            0.0002692560001378297
+          ]
+        ],
+        [
+          [
+            0.0013728959997933998,
+            0.00024321599994436838
+          ],
+          [
+            0.0014626850002059655,
+            0.000247524999849702
+          ],
+          [
+            0.001373957999931008,
+            0.00024611099979665596
+          ],
+          [
+            0.0013809510001010494,
+            0.0002667110002221307
+          ],
+          [
+            0.001364579999972193,
+            0.00024306599971168907
+          ]
+        ],
+        [
+          [
+            0.0015145420002227183,
+            0.00039622300027986057
+          ],
+          [
+            0.001502428000094369,
+            0.000419467000028817
+          ],
+          [
+            0.0027106459997412458,
+            0.0006806669998695725
+          ],
+          [
+            0.0015317639999921084,
+            0.00043736099996749545
+          ],
+          [
+            0.0015709169997535355,
+            0.00041803500016612816
+          ]
+        ],
+        [
+          [
+            0.0015742139999019855,
+            0.0004370999999991909
+          ],
+          [
+            0.0015505589999520453,
+            0.00040826599979482125
+          ],
+          [
+            0.0014992330002314702,
+            0.00040377699997407035
+          ],
+          [
+            0.0014872300002934935,
+            0.00039751600024828804
+          ],
+          [
+            0.0014921500001037202,
+            0.00039586200000485405
+          ]
+        ]
+      ],
+      "ideal_network_phase_max_ms": 1.9512310000209254,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "rounds": 1,
+      "payload_bytes": 786624,
+      "baselines": {
+        "fp32_eager_ms": 0.07383850015685312,
+        "fp32_graph_ms": 0.06407040119171142,
+        "fp32_graph_wall_ms": 0.06901949996063195,
+        "fp16_eager_ms": 0.04608149993146071,
+        "fp16_graph_ms": 0.03615744113922119,
+        "fp16_graph_wall_ms": 0.04133700008424057,
+        "numpy_cpu_ms": 2.453348500239372
+      },
+      "baseline_max_float_errors": {
+        "fp32": 6.556510925292969e-07,
+        "fp16": 0.0008596181869506836
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 26.42565864523221,
+        "fp32_graph_ms": 30.454483875985932,
+        "fp32_graph_wall_ms": 28.270720609884,
+        "fp16_eager_ms": 42.34304445217902,
+        "fp16_graph_ms": 53.964853113025185,
+        "fp16_graph_wall_ms": 47.203014153047306,
+        "numpy_cpu_ms": 0.7953338059515576
+      },
+      "samples": 5,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "timing_boundary": "operation entry through final protocol consistency check and GPU synchronization; no output opening",
+      "methodology": "Fresh-mask checked four-party execution; isolated fixed-fixture replay retains PRG, hashes and host staging; warmup also checks outgoing transcript bytes. Sharing and output opening are excluded from operation latency and reported separately. No network latency or bandwidth cost. Float baselines perform the corresponding clear operation; the truncation baseline rounds decoded values down to Q12."
+    },
+    {
+      "maximum_accumulator_before_ring_wrap": 36467434,
+      "minimum_accumulator_before_ring_wrap": -35352672,
+      "maximum_signed_accumulator_before_ring_wrap": 36467434,
+      "accumulator_fits_signed_ring": true,
+      "operation": "matmul",
+      "m": 128,
+      "k": 512,
+      "n": 512,
+      "device": "cuda",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "prg": "aes",
+      "fused_runtime": true,
+      "fractional_bits": 12,
+      "integer_reference_contract": "signed modular ring product; truncation and ReLU follow ring wrapping",
+      "exact_integer_match": true,
+      "max_float_error": 0.0033033788204193115,
+      "setup_all_parties_ms": 9.646709999742598,
+      "local_four_party_ms": 4.182076999768469,
+      "local_samples_ms": [
+        4.182076999768469,
+        6.213809000200854,
+        4.0663900003892195,
+        5.809150000004593,
+        4.150828000092588
+      ],
+      "verification_opening_samples_ms": [
+        2.0512680002866546,
+        1.9217859999116627,
+        1.8277090002811747,
+        1.8114580002475122,
+        1.938667000104033,
+        1.849500999924203
+      ],
+      "replay_party_samples_ms": [
+        [
+          1.6011749994504498,
+          1.417579999724694,
+          1.3971509997645626,
+          1.385459000175615,
+          1.3869429999431304
+        ],
+        [
+          1.3992250001138018,
+          1.373276000322221,
+          1.3776060000054713,
+          1.3628270003209764,
+          1.3765630001216778
+        ],
+        [
+          1.9383160001780197,
+          1.8977609997818945,
+          1.9048739995923825,
+          1.8936229998871568,
+          1.9126589995721588
+        ],
+        [
+          1.9316240000080143,
+          1.9841530001940555,
+          2.092146999984834,
+          2.092755999910878,
+          2.1214790003796224
+        ]
+      ],
+      "replay_phase_samples_seconds": [
+        [
+          [
+            0.0011928989997613826,
+            0.00040827599968906725
+          ],
+          [
+            0.00103232699984801,
+            0.00038525299987668404
+          ],
+          [
+            0.0010111669998877915,
+            0.0003859839998767711
+          ],
+          [
+            0.0010041040000032808,
+            0.00038135500017233426
+          ],
+          [
+            0.0010024709999925108,
+            0.00038447199995061965
+          ]
+        ],
+        [
+          [
+            0.0010133509999832313,
+            0.0003858740001305705
+          ],
+          [
+            0.0009936240003298735,
+            0.00037965199999234756
+          ],
+          [
+            0.0009937250001712528,
+            0.00038388099983421853
+          ],
+          [
+            0.0009843470002124377,
+            0.00037848000010853866
+          ],
+          [
+            0.000982894000117085,
+            0.0003936690000045928
+          ]
+        ],
+        [
+          [
+            0.0012408180000420543,
+            0.0006974980001359654
+          ],
+          [
+            0.0012030580001010094,
+            0.0006947029996808851
+          ],
+          [
+            0.0012118329996155808,
+            0.0006930409999768017
+          ],
+          [
+            0.0012024470001961163,
+            0.0006911759996910405
+          ],
+          [
+            0.0012214619996484544,
+            0.0006911969999237044
+          ]
+        ],
+        [
+          [
+            0.0012221729998600495,
+            0.0007094510001479648
+          ],
+          [
+            0.0012544740002340404,
+            0.0007296789999600151
+          ],
+          [
+            0.0013666549998561095,
+            0.0007254920001287246
+          ],
+          [
+            0.0013572359998761385,
+            0.0007355200000347395
+          ],
+          [
+            0.0013761110003542854,
+            0.0007453680000253371
+          ]
+        ]
+      ],
+      "ideal_network_phase_max_ms": 2.0869149998361536,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "rounds": 1,
+      "payload_bytes": 1573056,
+      "baselines": {
+        "fp32_eager_ms": 0.025127000071734074,
+        "fp32_graph_ms": 0.016424959897994994,
+        "fp32_graph_wall_ms": 0.021019500081820297,
+        "fp16_eager_ms": 0.015434000033565098,
+        "fp16_graph_ms": 0.006737920045852661,
+        "fp16_graph_wall_ms": 0.011392000033083605,
+        "numpy_cpu_ms": 0.5481590001181758
+      },
+      "baseline_max_float_errors": {
+        "fp32": 9.5367431640625e-07,
+        "fp16": 0.0008634328842163086
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 83.05468197072085,
+        "fp32_graph_ms": 127.05754003642376,
+        "fp32_graph_wall_ms": 99.28471142094955,
+        "fp16_eager_ms": 135.21543315392213,
+        "fp16_graph_ms": 309.72688687819857,
+        "fp16_graph_wall_ms": 183.19127403226176,
+        "numpy_cpu_ms": 3.8071344252055384
+      },
+      "samples": 5,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "timing_boundary": "operation entry through final protocol consistency check and GPU synchronization; no output opening",
+      "methodology": "Fresh-mask checked four-party execution; isolated fixed-fixture replay retains PRG, hashes and host staging; warmup also checks outgoing transcript bytes. Sharing and output opening are excluded from operation latency and reported separately. No network latency or bandwidth cost. Float baselines perform the corresponding clear operation; the truncation baseline rounds decoded values down to Q12."
+    },
+    {
+      "maximum_accumulator_before_ring_wrap": 45783416,
+      "minimum_accumulator_before_ring_wrap": -35437760,
+      "maximum_signed_accumulator_before_ring_wrap": 45783416,
+      "accumulator_fits_signed_ring": true,
+      "operation": "matmul",
+      "m": 128,
+      "k": 1024,
+      "n": 1024,
+      "device": "cuda",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "prg": "aes",
+      "fused_runtime": true,
+      "fractional_bits": 12,
+      "integer_reference_contract": "signed modular ring product; truncation and ReLU follow ring wrapping",
+      "exact_integer_match": true,
+      "max_float_error": 0.00497862696647644,
+      "setup_all_parties_ms": 32.305634999829635,
+      "local_four_party_ms": 9.761395000168704,
+      "local_samples_ms": [
+        9.761395000168704,
+        10.031261000222003,
+        9.558675000334915,
+        9.760514000390685,
+        9.906999000122596
+      ],
+      "verification_opening_samples_ms": [
+        3.5988519998682023,
+        3.589906000343035,
+        3.5134419999849342,
+        3.3831680002549547,
+        3.32241400019484,
+        3.337252000164881
+      ],
+      "replay_party_samples_ms": [
+        [
+          3.103123000528285,
+          3.100787999755994,
+          2.9737700001533085,
+          2.9736699998466065,
+          3.209782999874733
+        ],
+        [
+          3.553436999936821,
+          3.2156429997485247,
+          3.2258319997708895,
+          3.172391999669344,
+          3.0799390001448046
+        ],
+        [
+          4.512707000230876,
+          4.186855999705585,
+          4.1801749994192505,
+          4.236979999859614,
+          4.782492999765964
+        ],
+        [
+          4.4822299996667425,
+          4.4622429995797575,
+          4.405025000323803,
+          4.7480789999099215,
+          5.137719999765977
+        ]
+      ],
+      "replay_phase_samples_seconds": [
+        [
+          [
+            0.00238208000018858,
+            0.000721043000339705
+          ],
+          [
+            0.0023788230000718613,
+            0.0007219649996841326
+          ],
+          [
+            0.0022913200000402867,
+            0.0006824500001130218
+          ],
+          [
+            0.0022651399999631394,
+            0.0007085299998834671
+          ],
+          [
+            0.002436492000015278,
+            0.000773290999859455
+          ]
+        ],
+        [
+          [
+            0.002521249999972497,
+            0.001032186999964324
+          ],
+          [
+            0.0024355089999517077,
+            0.0007801339997968171
+          ],
+          [
+            0.002453162999699998,
+            0.0007726690000708913
+          ],
+          [
+            0.0024255909997918934,
+            0.0007468009998774505
+          ],
+          [
+            0.0023534259998996276,
+            0.000726513000245177
+          ]
+        ],
+        [
+          [
+            0.0030459350000455743,
+            0.0014667720001853013
+          ],
+          [
+            0.002853804999631393,
+            0.0013330510000741924
+          ],
+          [
+            0.002837975999682385,
+            0.0013421989997368655
+          ],
+          [
+            0.0028381449997141317,
+            0.001398835000145482
+          ],
+          [
+            0.002882036999835691,
+            0.0019004559999302728
+          ]
+        ],
+        [
+          [
+            0.0030048079997868626,
+            0.0014774219998798799
+          ],
+          [
+            0.003004116999818507,
+            0.0014581259997612506
+          ],
+          [
+            0.0029654640002263477,
+            0.0014395610000974557
+          ],
+          [
+            0.0030957479998505733,
+            0.0016523310000593483
+          ],
+          [
+            0.0031748769997648196,
+            0.0019628430000011576
+          ]
+        ]
+      ],
+      "ideal_network_phase_max_ms": 4.4822299996667425,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "rounds": 1,
+      "payload_bytes": 3145920,
+      "baselines": {
+        "fp32_eager_ms": 0.06389000031958858,
+        "fp32_graph_ms": 0.053698558807373044,
+        "fp32_graph_wall_ms": 0.05930099996476201,
+        "fp16_eager_ms": 0.028051999834133312,
+        "fp16_graph_ms": 0.018810880184173585,
+        "fp16_graph_wall_ms": 0.023102999875845853,
+        "numpy_cpu_ms": 2.4092200001177844
+      },
+      "baseline_max_float_errors": {
+        "fp32": 9.08970832824707e-07,
+        "fp16": 0.0011684894561767578
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 70.15542302779575,
+        "fp32_graph_ms": 83.4702103597483,
+        "fp32_graph_wall_ms": 75.58439153353542,
+        "fp16_eager_ms": 159.78290411269796,
+        "fp16_graph_ms": 238.2785896131452,
+        "fp16_graph_wall_ms": 194.01073556481754,
+        "numpy_cpu_ms": 1.8604486096942623
+      },
+      "samples": 5,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "timing_boundary": "operation entry through final protocol consistency check and GPU synchronization; no output opening",
+      "methodology": "Fresh-mask checked four-party execution; isolated fixed-fixture replay retains PRG, hashes and host staging; warmup also checks outgoing transcript bytes. Sharing and output opening are excluded from operation latency and reported separately. No network latency or bandwidth cost. Float baselines perform the corresponding clear operation; the truncation baseline rounds decoded values down to Q12."
+    },
+    {
+      "maximum_accumulator_before_ring_wrap": 39784591,
+      "minimum_accumulator_before_ring_wrap": -39784591,
+      "maximum_signed_accumulator_before_ring_wrap": 38636525,
+      "accumulator_fits_signed_ring": true,
+      "operation": "matmul",
+      "m": 128,
+      "k": 2048,
+      "n": 2048,
+      "device": "cuda",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "prg": "aes",
+      "fused_runtime": true,
+      "fractional_bits": 12,
+      "integer_reference_contract": "signed modular ring product; truncation and ReLU follow ring wrapping",
+      "exact_integer_match": true,
+      "max_float_error": 0.0070609450340271,
+      "setup_all_parties_ms": 157.17713999993066,
+      "local_four_party_ms": 28.121775000272464,
+      "local_samples_ms": [
+        28.273269000237633,
+        28.16784100014047,
+        27.406252000218956,
+        27.819688000363385,
+        28.121775000272464
+      ],
+      "verification_opening_samples_ms": [
+        6.613800000195624,
+        6.311591999747179,
+        6.0989630001131445,
+        6.204301000252599,
+        6.183882000186713,
+        6.23514900007649
+      ],
+      "replay_party_samples_ms": [
+        [
+          8.59865299980811,
+          8.644088000437478,
+          8.757420999700116,
+          8.618821000254684,
+          8.715542000118148
+        ],
+        [
+          8.524104000116495,
+          8.476245000110794,
+          7.55935299957855,
+          7.50534200005859,
+          7.624436000241985
+        ],
+        [
+          9.813092000058532,
+          9.823621999657917,
+          10.302900999704434,
+          9.829904000525858,
+          9.898832999624574
+        ],
+        [
+          10.152840000046126,
+          10.019769999871642,
+          10.137251000287506,
+          9.96046899990688,
+          10.073431000364508
+        ]
+      ],
+      "replay_phase_samples_seconds": [
+        [
+          [
+            0.007215007000013429,
+            0.0013836459997946804
+          ],
+          [
+            0.007190171000274859,
+            0.001453917000162619
+          ],
+          [
+            0.007268567999744846,
+            0.0014888529999552702
+          ],
+          [
+            0.007227150000289839,
+            0.0013916709999648447
+          ],
+          [
+            0.007253169000250637,
+            0.0014623729998675117
+          ]
+        ],
+        [
+          [
+            0.00712321500031976,
+            0.0014008889997967344
+          ],
+          [
+            0.007102336000116338,
+            0.0013739089999944554
+          ],
+          [
+            0.006158805999803008,
+            0.0014005469997755426
+          ],
+          [
+            0.006089685999995709,
+            0.0014156560000628815
+          ],
+          [
+            0.006172380999942106,
+            0.0014520550002998789
+          ]
+        ],
+        [
+          [
+            0.007094530999893323,
+            0.0027185610001652094
+          ],
+          [
+            0.007096434999766643,
+            0.0027271869998912734
+          ],
+          [
+            0.007556497999757994,
+            0.00274640299994644
+          ],
+          [
+            0.007114238000212936,
+            0.002715666000312922
+          ],
+          [
+            0.007205048999821884,
+            0.0026937839998026902
+          ]
+        ],
+        [
+          [
+            0.00736354599985134,
+            0.0027892940001947863
+          ],
+          [
+            0.007227750999845739,
+            0.0027920190000259026
+          ],
+          [
+            0.0071818860001258145,
+            0.0029553650001616916
+          ],
+          [
+            0.007204016999821761,
+            0.002756452000085119
+          ],
+          [
+            0.007168380000166508,
+            0.002905051000198
+          ]
+        ]
+      ],
+      "ideal_network_phase_max_ms": 10.019169000315742,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "rounds": 1,
+      "payload_bytes": 6291648,
+      "baselines": {
+        "fp32_eager_ms": 0.13486300008480612,
+        "fp32_graph_ms": 0.12513279914855957,
+        "fp32_graph_wall_ms": 0.13127199986229243,
+        "fp16_eager_ms": 0.05310500000632601,
+        "fp16_graph_ms": 0.043683838844299314,
+        "fp16_graph_wall_ms": 0.048355999979321496,
+        "numpy_cpu_ms": 9.52381500019328
+      },
+      "baseline_max_float_errors": {
+        "fp32": 1.1026859283447266e-06,
+        "fp16": 0.0020508766174316406
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 74.29145869523421,
+        "fp32_graph_ms": 80.06828799874309,
+        "fp32_graph_wall_ms": 76.32373248542032,
+        "fp16_eager_ms": 188.66714996934812,
+        "fp16_graph_ms": 229.3564225439686,
+        "fp16_graph_wall_ms": 207.19598404748623,
+        "numpy_cpu_ms": 1.0520121401048224
+      },
+      "samples": 5,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "timing_boundary": "operation entry through final protocol consistency check and GPU synchronization; no output opening",
+      "methodology": "Fresh-mask checked four-party execution; isolated fixed-fixture replay retains PRG, hashes and host staging; warmup also checks outgoing transcript bytes. Sharing and output opening are excluded from operation latency and reported separately. No network latency or bandwidth cost. Float baselines perform the corresponding clear operation; the truncation baseline rounds decoded values down to Q12."
+    }
+  ]
+}

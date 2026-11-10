@@ -1,0 +1,12 @@
+{
+  "compiler": "clang version 21.1.8 (AlmaLinux OS Foundation 21.1.8-1.el10.alma.1)",
+  "configuration": "MY_CFLAGS += -DRING_SIZE=32\nUSE_KOS = 1\nUSE_LIBOTE2 = 0\nGDEBUG =\nOPTIM = -O2\n",
+  "libsodium_headers": {
+    "url": "https://download.libsodium.org/libsodium/releases/libsodium-1.0.20.tar.gz",
+    "sha256": "ebb65ef6ca439333c2bb41a0c1990587288da07f6c7fd07cb3a18cc18d30ce19"
+  },
+  "libsodium_shared_library": "/usr/lib64/libsodium.so.26.4.0",
+  "build_command": "make -j4 rep4-ring-party.x",
+  "source_tree": "/home/zeb/Desktop/mp-spdz-toy/MP-SPDZ",
+  "isolated_copy": "/home/zeb/Desktop/SIV/work/mpspdz32"
+}

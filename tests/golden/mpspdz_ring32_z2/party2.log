@@ -1,0 +1,21 @@
+Trying to run 32-bit computation
+Truncation error probability 2^-40
+Using statistical security parameter 40
+Setup took 0.0321486 seconds.
+Compiler: /home/zeb/Desktop/SIV/work/mpspdz32/compile.py -R 32 -Z 2 rep4_reference
+Detailed costs:
+           912 ANDs
+Spent 0.003999 seconds (0.001458 MB, 33 rounds, 0.00266287 CPU seconds, 0.00379239 communication seconds) on the online phase and 0.000286961 seconds (0.00264 MB, 3 rounds, 0.00283139 CPU seconds, 0.000140963 communication seconds) on the preprocessing/offline phase.
+Communication details:
+Passing around 0.000592 MB in 14 rounds, taking 0.000451146 seconds
+Sending directly 1.6e-05 MB in 1 rounds, taking 2.2652e-05 seconds
+Sending/receiving 0.00349 MB in 22 rounds, taking 0.00364006 seconds
+CPU time = 0.00351199
+The following benchmarks are including preprocessing (offline phase).
+Time = 0.00717648 seconds 
+Data sent = 0.004098 MB in ~37 rounds (party 2 only)
+Global data sent = 0.016204 MB (all parties)
+Actual preprocessing cost of program:
+  Type int
+           320         daBits
+Command line: /home/zeb/Desktop/SIV/work/mpspdz32/rep4-ring-party.x 2 rep4_reference -R 32 -v -pn 18652

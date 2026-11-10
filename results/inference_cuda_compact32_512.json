@@ -1,0 +1,59 @@
+{
+  "torch": "2.13.0+cu130",
+  "numpy": "2.2.6",
+  "threads": 1,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "results": [
+    {
+      "batch": 16,
+      "width": 512,
+      "hidden": 2048,
+      "out": 512,
+      "device": "cuda",
+      "fractional_bits": 12,
+      "ring_bits": 32,
+      "truncation": "compact",
+      "fused_runtime": true,
+      "prepared_weights": false,
+      "maximum_accumulator": 35568315,
+      "rounding_bound_validated": true,
+      "exact_integer_match": true,
+      "max_logit_error": 0.005257129669189453,
+      "max_logprob_error": 0.005269050598144531,
+      "setup_all_parties_ms": 291.2530829999014,
+      "local_four_party_ms": 292.7481425000451,
+      "local_samples_ms": [
+        292.8632939999716,
+        292.63299100011864
+      ],
+      "replay_party_ms": [
+        77.3599085001706,
+        79.32350699968538,
+        76.59578550044444,
+        80.13036649992955
+      ],
+      "ideal_network_phase_max_ms": 82.58474699982798,
+      "rounds": 25,
+      "payload_bytes": 33361856,
+      "baselines": {
+        "fp32_eager_ms": 0.05350599997200334,
+        "fp32_graph_ms": 0.04149087905883789,
+        "fp32_graph_wall_ms": 0.04673749992889498,
+        "fp16_eager_ms": 0.03834200003893784,
+        "fp16_graph_ms": 0.022067201137542725,
+        "fp16_graph_wall_ms": 0.02660000006926566,
+        "numpy_cpu_ms": 1.0264159999451294
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 1543.4670325391528,
+        "fp32_graph_ms": 1990.4313640285907,
+        "fp32_graph_wall_ms": 1766.9911126070058,
+        "fp16_eager_ms": 2153.897733972142,
+        "fp16_graph_ms": 3742.4205491709286,
+        "fp16_graph_wall_ms": 3104.689728751113,
+        "numpy_cpu_ms": 80.45933325692783
+      },
+      "methodology": "Fresh-mask checked four-party colocated execution; fixed-fixture per-party replay with real SHAKE, BLAKE2b, host staging, and checked output. Ideal time sums per-phase maxima; no network latency/bandwidth. Sharing/setup reported separately."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+Trying to run 64-bit computation
+Truncation error probability 2^-40
+Using statistical security parameter 40
+Setup took 0.0330037 seconds.
+Compiler: /home/zeb/Desktop/mp-spdz-toy/MP-SPDZ/compile.py -R 64 -Z 4 rep4_reference
+Detailed costs:
+          9816 ANDs
+Spent 0.00376548 seconds (0.004347 MB, 52 rounds, 0.00362385 CPU seconds, 0.00329801 communication seconds) on the online phase and 0.000161904 seconds (0.000736 MB, 3 rounds, 0.00374477 CPU seconds, 7.8747e-05 communication seconds) on the preprocessing/offline phase.
+Communication details:
+Passing around 0.00136 MB in 18 rounds, taking 0.000577482 seconds
+Receiving directly 1.6e-05 MB in 1 rounds, taking 1.7653e-05 seconds
+Sending/receiving 0.003723 MB in 37 rounds, taking 0.00599382 seconds
+CPU time = 0.00447571
+The following benchmarks are including preprocessing (offline phase).
+Time = 0.00832244 seconds 
+Data sent = 0.005083 MB in ~56 rounds (party 3 only)
+Global data sent = 0.023778 MB (all parties)
+Actual preprocessing cost of program:
+  Type int
+            80         daBits
+Command line: /home/zeb/Desktop/mp-spdz-toy/MP-SPDZ/rep4-ring-party.x 3 rep4_reference -R 64 -v -pn 18644

@@ -1,0 +1,49 @@
+{
+  "torch": "2.13.0+cu130",
+  "numpy": "2.2.6",
+  "threads": 1,
+  "gpu": null,
+  "results": [
+    {
+      "batch": 1,
+      "width": 8,
+      "hidden": 8,
+      "out": 4,
+      "device": "cpu",
+      "fractional_bits": 12,
+      "ring_bits": 32,
+      "truncation": "probabilistic",
+      "fused_runtime": false,
+      "prepared_weights": false,
+      "maximum_accumulator": 10387476,
+      "rounding_bound_validated": true,
+      "exact_integer_match": false,
+      "max_logit_error": 0.00022458285093307495,
+      "max_logprob_error": 0.0002562999725341797,
+      "setup_all_parties_ms": 3.983025000025009,
+      "local_four_party_ms": 61.40767349995713,
+      "local_samples_ms": [
+        62.9854289998093,
+        59.82991800010495
+      ],
+      "replay_party_ms": [
+        5.047225999760485,
+        5.162306000215722,
+        4.904167499375944,
+        5.049880000001394
+      ],
+      "ideal_network_phase_max_ms": 5.435643999703643,
+      "rounds": 21,
+      "payload_bytes": 10720,
+      "baselines": {
+        "fp32_eager_ms": 0.005825999892294931,
+        "numpy_cpu_ms": 0.00384199995551171
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 932.9976141764874,
+        "numpy_cpu_ms": 1414.7954353580096
+      },
+      "methodology": "Fresh-mask checked four-party colocated execution; fixed-fixture per-party replay with real SHAKE, BLAKE2b, host staging, and checked output. Ideal time sums per-phase maxima; no network latency/bandwidth. Sharing/setup reported separately."
+    }
+  ]
+}

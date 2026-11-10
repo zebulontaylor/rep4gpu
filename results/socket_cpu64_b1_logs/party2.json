@@ -1,0 +1,24 @@
+{
+  "party": 2,
+  "passed": true,
+  "device": "cpu",
+  "bits": 64,
+  "authenticated_tls": true,
+  "distributed_setup": true,
+  "handshake_ms": 20.487931000161552,
+  "correlated_setup_ms": 42.82241900000372,
+  "input_ms": 4.940016000091418,
+  "checked_inference_ms": 18.303780000223924,
+  "payload_bytes": 4998,
+  "rounds": 48,
+  "inference_payload_bytes": 3872,
+  "inference_rounds": 27,
+  "output": [
+    [
+      12,
+      115,
+      196,
+      218
+    ]
+  ]
+}
