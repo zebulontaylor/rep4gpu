@@ -1,0 +1,20 @@
+{
+  "party": 0,
+  "passed": true,
+  "output": [
+    26468635,
+    60537524,
+    -3805610,
+    -40648386,
+    29847998,
+    3126244,
+    15623602,
+    -91149508
+  ],
+  "checked_query_ms": 12.821613003325183,
+  "input_sharing_ms": 3.57712999539217,
+  "role_setup_ms": 100.93596200022148,
+  "online_payload_bytes": 15912,
+  "online_rounds": 24,
+  "authenticated_tls": true
+}

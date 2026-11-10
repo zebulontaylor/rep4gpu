@@ -1,4 +1,4 @@
-"""Run the trained micro model with role-local q256 preprocessing over TLS.
+"""Run the trained micro model with native 256-bit field preprocessing over TLS.
 
 This is a CPU bigint reference, not a GPU timing result. Each worker loads only
 its own one-use preprocessing and owner-assigned plaintext fixture inputs.
@@ -24,6 +24,15 @@ OWNERS=(0,1,1,1,1)
 PRIME=2**256-189
 
 
+def native_backend(name):
+    if name=='mascot':
+        from rep4gpu.preprocessing_mascot_direct import load_role,PRIME
+    elif name=='lowgear':
+        from rep4gpu.preprocessing_lowgear import load_role,PRIME
+    else:raise ValueError('preprocessing backend must be mascot or lowgear')
+    return load_role,PRIME
+
+
 def fingerprints():
     paths=[Path(__file__),*Path('rep4gpu').glob('*.py'),*Path('benchmarks').glob('spdz*.py'),Path('benchmarks/socket_inference.py'),Path('examples/spdz_micro_toy.py')]
     return {str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
@@ -44,7 +53,7 @@ def worker(config_path,result_path):
     config=json.loads(Path(config_path).read_text());p=config['party'];transport=None;party=None
     try:
         from rep4gpu.spdz_prime256 import Prime256Party,QShare
-        from rep4gpu.preprocessing_mascot_direct import load_role
+        load_role,prime=native_backend(config.get('preprocessing_backend','mascot'))
         started=time.perf_counter();material=load_role(Path(config['bundle'])/f'party{p}',p)
         load_ms=(time.perf_counter()-started)*1000
         own=json.loads(Path(config['inputs']).read_text())
@@ -55,7 +64,7 @@ def worker(config_path,result_path):
         client.load_cert_chain(config['identity']['certificate'],config['identity']['key'])
         transport=MeteredTransport(p,[tuple(a) for a in config['addresses']],timeout=config['timeout'],
             server_context=server,client_context=client,peer_hostnames={q:f'party{q}' for q in range(4)})
-        party=Prime256Party(p,transport,material['alpha_share'],session=material['session'])
+        party=Prime256Party(p,transport,material['alpha_share'],session=material['session'],field_prime=prime)
         values=[];input_times={}
         for name in NAMES:
             started=time.perf_counter();values.append(party.input(material['input_masks'][name],own.get(name)))
@@ -69,7 +78,7 @@ def worker(config_path,result_path):
         if bias.shape[0]==1 and result.shape[0]!=1:bias=QShare(bias.values*result.shape[0],bias.macs*result.shape[0],result.shape)
         result=party.add(result,bias)
         opened=party.open(result);online_ms=(time.perf_counter()-started)*1000
-        signed=[v-PRIME if v>PRIME//2 else v for v in opened]
+        signed=[v-prime if v>prime//2 else v for v in opened]
         report=dict(party=p,passed=True,output=signed,preprocessing_load_ms=load_ms,input_protocol_by_name_ms=input_times,
                     checked_online_ms=online_ms,online_payload_bytes=transport.bytes_sent-before_bytes,
                     online_rounds=transport.rounds-before_rounds,authenticated_tls=transport.authenticated,
@@ -82,9 +91,10 @@ def worker(config_path,result_path):
         if transport is not None:transport.close()
 
 
-def run(bundle,output,checkpoint='results/spdz_micro_toy/model.pt',batch=1,timeout=120):
+def run(bundle,output,checkpoint='results/spdz_micro_toy/model.pt',batch=1,timeout=120,preprocessing_backend='mascot'):
     from examples import spdz_micro_toy as api
     if type(batch) is not int or batch<1:raise ValueError('batch must be positive')
+    _,prime=native_backend(preprocessing_backend)
     torch.set_num_threads(1);bundle=Path(bundle).resolve();output=Path(output).resolve()
     public=json.loads((bundle/'public-manifest.json').read_text());before=fingerprints()
     model=api.train(1);model.load_state_dict(torch.load(checkpoint,map_location='cpu',weights_only=True))
@@ -97,10 +107,10 @@ def run(bundle,output,checkpoint='results/spdz_micro_toy/model.pt',batch=1,timeo
         directory=Path(temporary);directory.chmod(0o700);ca,identities=certificates(directory);addresses=reserve_addresses()
         try:
             for p in range(4):
-                own={name:[int(v)%PRIME for row in value for v in row] for name,value,owner in zip(NAMES,values,OWNERS) if owner==p}
+                own={name:[int(v)%prime for row in value for v in row] for name,value,owner in zip(NAMES,values,OWNERS) if owner==p}
                 inputs=directory/f'inputs-P{p}.json';inputs.write_text(json.dumps(own));inputs.chmod(0o600)
                 config=directory/f'party{p}.json';config.write_text(json.dumps(dict(party=p,bundle=str(bundle),inputs=str(inputs),
-                   ca=ca,identity=identities[p],addresses=addresses,timeout=timeout)));config.chmod(0o600)
+                   ca=ca,identity=identities[p],addresses=addresses,timeout=timeout,preprocessing_backend=preprocessing_backend)));config.chmod(0o600)
                 result=logs/f'party{p}.json';result.unlink(missing_ok=True);handle=(logs/f'party{p}.log').open('w');handles.append(handle)
                 processes.append(subprocess.Popen([sys.executable,'-m','scripts.run_spdz_prime256','--worker',str(config),'--result',str(result)],stdout=handle,stderr=subprocess.STDOUT))
             deadline=time.monotonic()+timeout
@@ -118,7 +128,8 @@ def run(bundle,output,checkpoint='results/spdz_micro_toy/model.pt',batch=1,timeo
     exact=all(p.get('passed') and p.get('output')==expected_flat for p in parties);after=fingerprints()
     online=max((p.get('checked_online_ms',0) for p in parties),default=0)
     report=dict(passed=codes==[0]*4 and exact and before==after,return_codes=codes,timed_out=timed_out,
-       exact_integer_match=exact,expected=expected,parties=parties,prime=PRIME,mac_keys=1,device='cpu',batch=batch,
+       exact_integer_match=exact,expected=expected,parties=parties,prime=prime,mac_keys=1,device='cpu',batch=batch,
+       preprocessing_backend=preprocessing_backend,
        runtime='CPU bigint Prime256Party; four real TLS roles',trusted_dealer=False,privacy_audit_status='pending',security_target_met=False,
        checked_online_ms=online,public_preprocessing_manifest=public,numerical=api.numerical_report(model,fixture),
        source_stable_during_run=before==after,source_sha256_before=before,source_sha256=after,
@@ -146,11 +157,12 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--bundle',type=Path)
     parser.add_argument('--checkpoint',default='results/spdz_micro_toy/model.pt');parser.add_argument('--batch',type=int,default=1)
     parser.add_argument('--timeout',type=float,default=120);parser.add_argument('--output',type=Path,default=Path('results/spdz_prime256_micro.json'))
+    parser.add_argument('--preprocessing-backend',choices=('mascot','lowgear'),default='mascot')
     parser.add_argument('--worker',type=Path);parser.add_argument('--result',type=Path);args=parser.parse_args()
     if args.worker:worker(args.worker,args.result)
     else:
         if args.bundle is None:parser.error('--bundle is required')
-        report=run(args.bundle,args.output,args.checkpoint,args.batch,args.timeout)
+        report=run(args.bundle,args.output,args.checkpoint,args.batch,args.timeout,args.preprocessing_backend)
         print(json.dumps({k:report[k] for k in ('passed','exact_integer_match','checked_online_ms','security_target_met')}));raise SystemExit(0 if report['passed'] else 1)
 
 

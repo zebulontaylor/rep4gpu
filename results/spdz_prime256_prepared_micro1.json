@@ -1,0 +1,525 @@
+{
+  "passed": true,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "timed_out": false,
+  "exact_integer_match": true,
+  "expected": [
+    [
+      26468635,
+      60537524,
+      -3805610,
+      -40648386,
+      29847998,
+      3126244,
+      15623602,
+      -91149508
+    ]
+  ],
+  "parties": [
+    {
+      "party": 0,
+      "passed": true,
+      "output": [
+        26468635,
+        60537524,
+        -3805610,
+        -40648386,
+        29847998,
+        3126244,
+        15623602,
+        -91149508
+      ],
+      "checked_query_ms": 12.821613003325183,
+      "input_sharing_ms": 3.57712999539217,
+      "role_setup_ms": 100.93596200022148,
+      "online_payload_bytes": 15912,
+      "online_rounds": 24,
+      "authenticated_tls": true
+    },
+    {
+      "party": 1,
+      "passed": true,
+      "output": [
+        26468635,
+        60537524,
+        -3805610,
+        -40648386,
+        29847998,
+        3126244,
+        15623602,
+        -91149508
+      ],
+      "checked_query_ms": 12.802837001800071,
+      "input_sharing_ms": 2.388761000474915,
+      "role_setup_ms": 103.7900669980445,
+      "online_payload_bytes": 15912,
+      "online_rounds": 24,
+      "authenticated_tls": true
+    },
+    {
+      "party": 2,
+      "passed": true,
+      "output": [
+        26468635,
+        60537524,
+        -3805610,
+        -40648386,
+        29847998,
+        3126244,
+        15623602,
+        -91149508
+      ],
+      "checked_query_ms": 12.788170002750121,
+      "input_sharing_ms": 1.4145940003800206,
+      "role_setup_ms": 83.70771299814805,
+      "online_payload_bytes": 15912,
+      "online_rounds": 24,
+      "authenticated_tls": true
+    },
+    {
+      "party": 3,
+      "passed": true,
+      "output": [
+        26468635,
+        60537524,
+        -3805610,
+        -40648386,
+        29847998,
+        3126244,
+        15623602,
+        -91149508
+      ],
+      "checked_query_ms": 12.775977003911976,
+      "input_sharing_ms": 1.8000069976551458,
+      "role_setup_ms": 62.24378699698718,
+      "online_payload_bytes": 15912,
+      "online_rounds": 24,
+      "authenticated_tls": true
+    }
+  ],
+  "native": {
+    "format": "mascot256-prepared-right-role-v1",
+    "ready": true,
+    "return_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "prime": 115792089237316195423570985008687907853269984665640564039457584007913129639747,
+    "mac_keys": 1,
+    "security_parameter": 128,
+    "request": {
+      "models": [
+        {
+          "name": "first",
+          "owner": 1,
+          "k": 8,
+          "n": 2,
+          "rows": 1,
+          "model_id": "bd1745095a398b1052845a7188f01948df9fcdd3780e01dbf5950be32de689c9"
+        },
+        {
+          "name": "second",
+          "owner": 1,
+          "k": 2,
+          "n": 8,
+          "rows": 1,
+          "model_id": "56c03b5a423f8c716f430e9e6d00193af5891e566f9712bc9d33f0e9f2f6874c"
+        }
+      ],
+      "static_inputs": [
+        {
+          "name": "b1",
+          "owner": 1,
+          "shape": [
+            1,
+            2
+          ]
+        },
+        {
+          "name": "b2",
+          "owner": 1,
+          "shape": [
+            1,
+            8
+          ]
+        }
+      ],
+      "squares": [
+        {
+          "name": "hidden",
+          "shape": [
+            1,
+            2
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "name": "query",
+          "owner": 0,
+          "shape": [
+            1,
+            8
+          ]
+        }
+      ]
+    },
+    "session": "580d3d562262bf32b7c9d1acc0607846775675baca05331f5d9433884d3f1041",
+    "records": [
+      {
+        "kind": "prepared",
+        "name": "first",
+        "component": "weights",
+        "shape": [
+          8,
+          2
+        ],
+        "count": 16,
+        "offset": 1,
+        "identifier": "7b9c313c9f7390d17ae65b5715658fc490389eb54989340a7a99039d9d7a5f54",
+        "model_id": "bd1745095a398b1052845a7188f01948df9fcdd3780e01dbf5950be32de689c9"
+      },
+      {
+        "kind": "prepared",
+        "name": "first",
+        "component": "a",
+        "shape": [
+          1,
+          8
+        ],
+        "count": 8,
+        "offset": 17,
+        "identifier": "7b9c313c9f7390d17ae65b5715658fc490389eb54989340a7a99039d9d7a5f54",
+        "model_id": "bd1745095a398b1052845a7188f01948df9fcdd3780e01dbf5950be32de689c9"
+      },
+      {
+        "kind": "prepared",
+        "name": "first",
+        "component": "factor",
+        "shape": [
+          1,
+          2
+        ],
+        "count": 2,
+        "offset": 25,
+        "identifier": "7b9c313c9f7390d17ae65b5715658fc490389eb54989340a7a99039d9d7a5f54",
+        "model_id": "bd1745095a398b1052845a7188f01948df9fcdd3780e01dbf5950be32de689c9"
+      },
+      {
+        "kind": "prepared",
+        "name": "second",
+        "component": "weights",
+        "shape": [
+          2,
+          8
+        ],
+        "count": 16,
+        "offset": 27,
+        "identifier": "7c90ce20ae7e0cd3f8c41bdcfde02feda0d8f720606246c9cff2ce29cf9d8351",
+        "model_id": "56c03b5a423f8c716f430e9e6d00193af5891e566f9712bc9d33f0e9f2f6874c"
+      },
+      {
+        "kind": "prepared",
+        "name": "second",
+        "component": "a",
+        "shape": [
+          1,
+          2
+        ],
+        "count": 2,
+        "offset": 43,
+        "identifier": "7c90ce20ae7e0cd3f8c41bdcfde02feda0d8f720606246c9cff2ce29cf9d8351",
+        "model_id": "56c03b5a423f8c716f430e9e6d00193af5891e566f9712bc9d33f0e9f2f6874c"
+      },
+      {
+        "kind": "prepared",
+        "name": "second",
+        "component": "factor",
+        "shape": [
+          1,
+          8
+        ],
+        "count": 8,
+        "offset": 45,
+        "identifier": "7c90ce20ae7e0cd3f8c41bdcfde02feda0d8f720606246c9cff2ce29cf9d8351",
+        "model_id": "56c03b5a423f8c716f430e9e6d00193af5891e566f9712bc9d33f0e9f2f6874c"
+      },
+      {
+        "kind": "static",
+        "name": "b1",
+        "component": "share",
+        "shape": [
+          1,
+          2
+        ],
+        "count": 2,
+        "offset": 53,
+        "identifier": "b8f1cef3557767282e97d39fa850126d68df4970206ee3c234c39618736b03a1"
+      },
+      {
+        "kind": "static",
+        "name": "b2",
+        "component": "share",
+        "shape": [
+          1,
+          8
+        ],
+        "count": 8,
+        "offset": 55,
+        "identifier": "d74e0f4a1080b369ea2468d9db362ab075d910f1efa26b0c4bc3d8f26ec14f94"
+      },
+      {
+        "kind": "squares",
+        "name": "hidden",
+        "component": "a",
+        "shape": [
+          1,
+          2
+        ],
+        "count": 2,
+        "offset": 63,
+        "identifier": "44a0dae9fc2bfc694013a921140827ee9deb4ad3d5f9ad0ffa6e304a4b5870d2"
+      },
+      {
+        "kind": "squares",
+        "name": "hidden",
+        "component": "a_squared",
+        "shape": [
+          1,
+          2
+        ],
+        "count": 2,
+        "offset": 65,
+        "identifier": "44a0dae9fc2bfc694013a921140827ee9deb4ad3d5f9ad0ffa6e304a4b5870d2"
+      },
+      {
+        "kind": "inputs",
+        "name": "query",
+        "component": "share",
+        "shape": [
+          1,
+          8
+        ],
+        "count": 8,
+        "offset": 67,
+        "identifier": "2d759b2d219fcd52d394bd6992fb76063693d0f95edd8243494648514791e3a3",
+        "owner": 0,
+        "clear_offset": 0
+      }
+    ],
+    "share_count": 75,
+    "owner_input_plan": [
+      [],
+      [
+        {
+          "name": "first",
+          "shape": [
+            8,
+            2
+          ],
+          "count": 16
+        },
+        {
+          "name": "second",
+          "shape": [
+            2,
+            8
+          ],
+          "count": 16
+        },
+        {
+          "name": "b1",
+          "shape": [
+            1,
+            2
+          ],
+          "count": 2
+        },
+        {
+          "name": "b2",
+          "shape": [
+            1,
+            8
+          ],
+          "count": 8
+        }
+      ],
+      [],
+      []
+    ],
+    "clear_counts": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "native_binary": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/mascot-party.x",
+    "native_binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+    "native_policy": {
+      "format": "mascot256-tau4-fresh-sacrifice-build-v2",
+      "internal_prime": "115792089237316195423570985008687907853269984665640564039457584007913129639747",
+      "field_bits": 256,
+      "runtime_security": 128,
+      "compiler_security": 176,
+      "compiler_bit_length": 78,
+      "amplification": 4,
+      "check": true,
+      "post_authentication_sacrifice_coin": true,
+      "native_mac_keys": 1,
+      "application_prime": 2147483647,
+      "application_mac_keys": 7,
+      "ot": "SoftSpokenMalOt",
+      "binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+      "source_sha256": {
+        "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+        "Makefile": "72994e5606079c197e5a6cdab4019a54f42d7e0a5895a7c82941aa2b3eda8ea9",
+        "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+        "Machines/SPDZ.cpp": "261923e251e85ff1e44a332316e99e0d819096e2eaa81786537c6b8080d7394f",
+        "Processor/FieldMachine.hpp": "cb16cf24589a59fba6461106450d3885399707b9a0643c344af9358ea3721623",
+        "Math/gfp.h": "3b9af0a4a83abeda72d8e48a5c90f88b2497368d964b829d50f6ef8e0092e912",
+        "Math/Zp_Data.h": "1e300c058fda86edfb964e9dd8b97e99cbd14eb6491293b9c0597c2d898a77a4",
+        "Protocols/MascotPrep.hpp": "5b33a46627bca22393f85153d8b8dc42c9c0e3568b3c51049125a5445f309946",
+        "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+        "Protocols/Share.h": "e657f7d39b6d9bf8f5b4e07123157c0d34b02619f162104801da00b9ea136520",
+        "OT/NPartyTripleGenerator.h": "c333b57c983d54d361d66697d18508c14a20783597b1e8ad5ee8fae3e0d83abe",
+        "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+        "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+        "OT/MascotParams.cpp": "60a19a941e1131a825e87e9836b724b017aba5f4ae52f4badef54bb766946a70",
+        "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c",
+        "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+        "GC/TinierShare.h": "5a0e71c2017149f1c834615ea32673483f5ca6fdb6c317bcacd27640cce5101e",
+        "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+        "Compiler/comparison.py": "7ae17ea0ef7713fa9b69646653192f068bab38c668363afc97d819ae4c1cd1bb",
+        "Compiler/floatingpoint.py": "287903b999b5a0eafc39092bd2d8954cf108c8b8a74372de7187e15e6af907d8",
+        "Compiler/non_linear.py": "26c1d4697da156ec7319d05a02e6d56132a3b573113bec11ebeb96627b1a9dba",
+        "Compiler/types.py": "e5d107b1351db6258c81a70cd8295d802fc19babff1c75a8b94f0a51157a481a",
+        "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829"
+      },
+      "dependency_sha256": {
+        "local/lib/liblibOTe.a": "bff4475f26c3648209a65ea20bb02ad17a14a8cf148af70d8fe242384e598720",
+        "local/lib/libcryptoTools.a": "4121c2d8166a1a8a1254e75cc6dc4c46fba8517554656cda2eeeab88809b2ffd",
+        "deps/SimpleOT/libsimpleot.a": "be743eccb974391c6160edc385d52d7d3acb97fbad12c4236e07b10f905bf311",
+        "deps/SimplestOT_C/ref10/libSimplestOT.a": "a035cde324bc012d0b270c8d73d3cc050669125d116a0595137809d2e35338fa",
+        "libSPDZ.so": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122",
+        "local/lib/libsodium.so": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+      },
+      "source_lock_sha256": "21de4b3da0f07a86eb133cfc8b49efb73b111f083d3fffb58359c3f61786a527",
+      "reviewed_patch_sha256": "2ffdd3ffb5f50f5ca4a1ed96a0300dea8f7d8ef17df118a0083affca23e2a781",
+      "fresh_sacrifice_patch_sha256": "5073dc640c9348c8331d00084dd5e448684e00f4908cb41f381e27eb5b5f0b70",
+      "build_properties": {
+        "LONG_BIT_MAC_KEY": true,
+        "USE_KOS": 0,
+        "USE_LIBOTE2": 0,
+        "INSECURE": false
+      }
+    },
+    "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+    "native_loaded_libraries": {
+      "libSPDZ.so": {
+        "path": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/libSPDZ.so",
+        "sha256": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122"
+      },
+      "libgmpxx.so.4": {
+        "path": "/usr/lib64/libgmpxx.so.4.6.1",
+        "sha256": "7c7b62a1e89474977ec8dfa295fd7fa094c64fb3671fdc15ccde11f013ba667f"
+      },
+      "libgmp.so.10": {
+        "path": "/usr/lib64/libgmp.so.10.4.1",
+        "sha256": "1119b8f422ba480b04452d6bd427a091633e64c987a53bb11d03655d2c766c8a"
+      },
+      "libsodium.so.26": {
+        "path": "/usr/lib64/libsodium.so.26.4.0",
+        "sha256": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+      },
+      "libssl.so.3": {
+        "path": "/usr/lib64/libssl.so.3.5.8",
+        "sha256": "5f39428765cf3be435e7777ac106e8bae98598d07ce9635e4750a8ba8962f711"
+      },
+      "libcrypto.so.3": {
+        "path": "/usr/lib64/libcrypto.so.3.5.8",
+        "sha256": "d1a2e98f2d6cea1e1c7905f82214305a63d22773f0024d6ccd6e4a2f18c3628b"
+      },
+      "libboost_filesystem.so.1.83.0": {
+        "path": "/usr/lib64/libboost_filesystem.so.1.83.0",
+        "sha256": "6e6a109cfff8f687bbcd68050cea98b99e1340dc4c8583dbce1f10cbbd1db746"
+      },
+      "libboost_iostreams.so.1.83.0": {
+        "path": "/usr/lib64/libboost_iostreams.so.1.83.0",
+        "sha256": "448ba1c0a403715eca32c82a4a24d1445ef2788ded47755ad7909399f8ea9c86"
+      },
+      "libstdc++.so.6": {
+        "path": "/usr/lib64/libstdc++.so.6.0.33",
+        "sha256": "895f92d1ffca3941e747009e079b1a0fb69e7a0883f58513892cbc46374ea140"
+      },
+      "libm.so.6": {
+        "path": "/usr/lib64/libm.so.6",
+        "sha256": "febbfa979117086ff669a97acc68d578e98c2064f782987a9daf2e96cabf4f87"
+      },
+      "libgcc_s.so.1": {
+        "path": "/usr/lib64/libgcc_s-14-20251022.so.1",
+        "sha256": "a171f0e03a2b4181c299e8a532f23a2ba802e96549892c0a7a73d293e02206ff"
+      },
+      "libc.so.6": {
+        "path": "/usr/lib64/libc.so.6",
+        "sha256": "2c4c4856030a9af10dcbec8f799f463124036c25fa0e4a7e9dfcec76444d0593"
+      },
+      "libz.so.1": {
+        "path": "/usr/lib64/libz.so.1.3.1.zlib-ng",
+        "sha256": "502367e59fbbb3ec65c2c7c31f8ad1b47df7a6b4a6b7d283e0556def8ce6bf42"
+      },
+      "libboost_atomic.so.1.83.0": {
+        "path": "/usr/lib64/libboost_atomic.so.1.83.0",
+        "sha256": "5a080d78d4cc9be37a272042883060728f358967da3308875b9af64ea4ac79e0"
+      },
+      "libbz2.so.1": {
+        "path": "/usr/lib64/libbz2.so.1.0.8",
+        "sha256": "237eb6f00023f0d0cf1e512c80fe1e1ccfcab6d133f65ded2b335cc3836a7ef8"
+      },
+      "liblzma.so.5": {
+        "path": "/usr/lib64/liblzma.so.5.6.2",
+        "sha256": "6e9166c7bcc54ead0f3d810ec18a805ad38230246e802dd9f3b782f5320242e5"
+      },
+      "libzstd.so.1": {
+        "path": "/usr/lib64/libzstd.so.1.5.5",
+        "sha256": "94af4a706493a5d0821482afbefa0f05d0e98ad7cda4c50bcab23c0e67ce3f12"
+      }
+    },
+    "export_source_sha256": "5ee9aa005912dc428313c87155ab4a693b33fc40623ed2e7041385b428d7c826",
+    "trusted_dealer": false,
+    "security_target_met": false,
+    "privacy_audit_status": "conditional_native_fixed_model_experiment",
+    "compile_ms": 314.8031599994283,
+    "passed": true,
+    "native_preprocessing_ms": 1719.6418999956222,
+    "preprocessing_including_compile_ms": 2071.9188500006567,
+    "measurement": "Fresh native generation including isolated owner provisioning and worker startup; shared-host contended functional run."
+  },
+  "checked_query_ms": 12.821613003325183,
+  "new_input_sharing_ms": 3.57712999539217,
+  "fresh_preprocessing_ms": 1719.6418999956222,
+  "fresh_preprocessing_query_capacity": 1,
+  "inclusive_per_query_ms": 1736.0406429943396,
+  "compile_ms": 314.8031599994283,
+  "source_stable": true,
+  "source_sha256": {
+    "/home/zeb/Desktop/SIV/scripts/run_spdz_prime256_prepared.py": "0127d0564e74b1ec7d1f131a19e4b633cf60ec897a38e33ea8f124b155667449",
+    "scripts/preprocess_mascot_prepared.py": "814062652f0932916057662b5e4fa999e26ef4d365c9be444c5a1b55822fe182",
+    "rep4gpu/preprocessing_mascot_prepared.py": "d87d2a685753c998c31bd71becb7ee906e7b90f3a4ed6dd46d5e22f8aba7549d",
+    "rep4gpu/spdz_prime256_prepared.py": "0e13cfb2f244ab27a40cc79b7b4d015c59a9bc6301f27073d2275d25bd3fa1f8",
+    "rep4gpu/spdz_prime256.py": "0913a06f538e5a8068f2572eccc6846d2e07577ffbe7ffa80ef2aa311c1309d0",
+    "rep4gpu/spdz_distributed.py": "2e0e2097da8699f740521071106bd3cd0f5b988e1b9a61615e6243145ce74759"
+  },
+  "trusted_dealer": false,
+  "device": "cpu",
+  "security_target_met": false,
+  "privacy_audit_status": "conditional_native_fixed_model_experiment",
+  "measurement": "Staged shared-host contended functional run; fresh native fixed-W preparation plus four-process CPU bigint/TLS checks; no GPU, perfect-network, or latency-target claim.",
+  "provisioning": "Public checkpoint fixture. Each native owner reads only its assigned private model file; each online worker loads only its own role bundle. Same-user processes are not separate security domains."
+}

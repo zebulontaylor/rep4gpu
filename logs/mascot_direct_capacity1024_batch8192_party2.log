@@ -1,0 +1,278 @@
+Using statistical security parameter 128
+Trying to run 256-bit computation (256-bit representation)
+No proper key material found in Player-Data//Mascot-Secrets-p-256-f966418a2b6df5eb0e7bafc7d4d8907388d4c200-P2-4, generating from scratch (cannot read from Player-Data//Mascot-Secrets-p-256-f966418a2b6df5eb0e7bafc7d4d8907388d4c200-P2-4)
+256 OTs as sender (malicious)
+256 OTs as receiver
+256 OTs as sender (malicious)
+256 OTs as receiver
+256 OTs as sender (malicious)
+256 OTs as receiver
+No proper key material found in Player-Data//Mascot-Secrets-2-128-9a50bc35c6c9cc217be9a7ddd86266d523b22990-P2-4, generating from scratch (cannot read from Player-Data//Mascot-Secrets-2-128-9a50bc35c6c9cc217be9a7ddd86266d523b22990-P2-4)
+128 OTs as sender (malicious)
+128 OTs as receiver
+128 OTs as sender (malicious)
+128 OTs as receiver
+128 OTs as sender (malicious)
+128 OTs as receiver
+No proper key material found in Player-Data//Mascot-Secrets-B-64-fe9921394c99b45129ac41210fecc46e6277d1ca-P2-4, generating from scratch (cannot read from Player-Data//Mascot-Secrets-B-64-fe9921394c99b45129ac41210fecc46e6277d1ca-P2-4)
+128 OTs as sender (malicious)
+128 OTs as receiver
+128 OTs as sender (malicious)
+128 OTs as receiver
+128 OTs as sender (malicious)
+128 OTs as receiver
+OT batch size 8192 (share size 24)
+OT batch size 8192 (share size 24)
+OT batch size 4340 (share size 48)
+OT batch size 1929 (share size 72)
+Setup took 0.211806 seconds.
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Triples SPDZ gfp res=8192 n=32768 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=0 fallback=0
+Squares SPDZ gfp res=2048 n=2048 n_opts=8192 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+scope batch_size=2048
+batch_size buffer_size=2048 fallback=0
+Triples SPDZ gfp res=2048 n=2048 n_opts=2048 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+batch_size buffer_size=2048 fallback=0
+Triples SPDZ gfp res=2048 n=2048 n_opts=2048 buffer_size=0 bits/dabits=0/0 has_program=1 program=native_q_export-0
+OT batch size 1929 (share size 72)
+1975296 OTs as sender (malicious)
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as sender (malicious)
+1975296 OTs as receiver
+1975296 OTs as receiver
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+OT batch size 1929 (share size 72)
+Compiler: /home/zeb/Desktop/SIV/work/mascot256-fresh-build/compile.py -F 64 native_q_export
+	1835 triples of SPDZ gfp left
+Detailed costs:
+         10240 integer dot products
+         32768 integer multiplications
+         67584 integer openings
+Spent 0.0551531 seconds (2.09862 MB, 20 rounds, 86.6373 CPU seconds, 0.0134727 communication seconds) on the online phase and 48.2832 seconds (9293.77 MB, 1064 rounds, 86.6375 CPU seconds, 33.7465 communication seconds) on the preprocessing/offline phase.
+Communication details:
+Broadcasting 0.003528 MB in 104 rounds, taking 0.015526 seconds
+Exchanging one-to-one 8106.61 MB in 234 rounds, taking 31.6478 seconds
+Partial broadcasting 0.006032 MB in 232 rounds, taking 0.973389 seconds
+Receiving directly 3.33642 MB in 50 rounds, taking 0.0234379 seconds
+Receiving one-to-one 1249.13 MB in 196 rounds, taking 0.82911 seconds
+Sending directly 3.33642 MB in 50 rounds, taking 0.00494944 seconds
+Sending one-to-one 1185.88 MB in 190 rounds, taking 0.261698 seconds
+Sending/receiving 0.001344 MB in 28 rounds, taking 0.00410541 seconds
+CPU time = 86.7694
+The following benchmarks are including preprocessing (offline phase).
+Time = 48.4764 seconds 
+Data sent = 9295.87 MB in ~1084 rounds (party 2 only)
+Global data sent = 37379.9 MB (all parties)
+Actual preprocessing cost of program:
+  Type int
+         32768        Triples
+          2048        Squares
+         10272        Randoms
+          8234   Input tuples (8192 42 0 0)
+Coordination took 0.00584535 seconds
+Command line: /home/zeb/Desktop/SIV/work/mascot256-fresh-build/mascot-party.x -p 2 -N 4 -P 115792089237316195423570985008687907853269984665640564039457584007913129639747 -lgp 256 -S 128 -e -pn 37225 -b 8192 -v -o verbose_ot,debug_batch_size native_q_export

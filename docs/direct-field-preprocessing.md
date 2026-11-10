@@ -49,6 +49,36 @@ before use and authenticates the final output. Correlation identifiers and
 whole-bundle consumption markers prevent a second live use. After a failure,
 retire the material and keys; do not delete a marker to retry.
 
+## Prepare a fixed private model
+
+The native fixed-model provider authenticates the model owner's weights once
+per pool. For each future query it creates a fresh authenticated mask `A` and
+product `F = A @ W`. Online evaluation checks the opening `D = X - A`, then
+computes `F + D @ W`. Each row handle is consumed once; sharing immutable
+weights across handles does not permit reusing their masks.
+
+Run a fresh one-query fixture from the repository root:
+
+```sh
+python -m scripts.run_spdz_prime256_prepared \
+  --native-root work/mascot256-fresh-build \
+  --bundle work/fixed-model-query-1 \
+  --output results/fixed-model-query-1.json
+```
+
+The runner uses the existing micro checkpoint, gives its plaintext weights
+only to the assigned native model owner, and compares every opened integer
+logit with the clear reference. The bundle directory must be new. This provider
+supports only `2**256 - 189`; it rejects other fields before consuming handles
+or communicating. Native generation still uses scalar MASCOT products, so this
+change reduces online work without reducing the asymptotic preprocessing cost.
+
+The [dependent-stream runner and measurements](../results/autoregressive_benchmark_design.md)
+serve successive tokens using disjoint rows from a fresh pool. Its plaintext
+comparators also execute dependent steps; batching future plaintext inputs
+would measure a different workload. Compilation, process provisioning, and
+the measured staged costs are identified separately in each report.
+
 ## Measured costs and limits
 
 [Actual direct-field inference](../results/spdz_prime256_micro2.json) completed
