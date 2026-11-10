@@ -1,0 +1,67 @@
+results/spdz_prime256_prepared_gpu_micro1_logs/party0.json
+  s_75c4c68a72508c::t_cf4f2610ab7aad 1-23
+rep4gpu/spdz_prime256_gpu.py
+  s_75c4c68a72508c::t_18d9cb26ffc9b4 1-58,60,65-87,93-100,112-121,125,127,130-134,138
+  s_75c4c68a72508c::t_6822503df4882c 61-64,122-124,126,129,135-137
+  s_75c4c68a72508c::t_d697c30bba019e 128
+  s_75c4c68a72508c::t_cac0a95a40b94d 59,88-92,101-111
+tests/test_field_fp127.py
+  s_75c4c68a72508c::t_2ea9562d3e7560 1-107
+benchmarks/field_fp127_bench.py
+  s_75c4c68a72508c::t_2391fcc12f111e 1-91
+rep4gpu/spdz_prime256_prepared.py
+  s_75c4c68a72508c::t_18d9cb26ffc9b4 108-110
+results/spdz_prime256_prepared_gpu_micro1.json
+  s_75c4c68a72508c::t_cf4f2610ab7aad 1-556
+scripts/run_spdz_prime256_prepared.py
+  s_75c4c68a72508c::t_6822503df4882c 79-81,148
+  s_75c4c68a72508c::t_0e19f15d5a8d63 32-34,53-57,60,76-78,90,118,144-147,150,161,165
+  s_75c4c68a72508c::t_0a294e8d64ca1f 135,139,141,151
+  s_75c4c68a72508c::t_04a42e92a00f60 149
+README.md
+  s_75c4c68a72508c::t_fef856688d4dea 183-184,190-191
+rep4gpu/field_fp127.py
+  s_75c4c68a72508c::t_e525190201bd87 1-212
+results/spdz_prime256_prepared_gpu_micro1_logs/party2.json
+  s_75c4c68a72508c::t_cf4f2610ab7aad 1-23
+tests/test_spdz_prime256_gpu.py
+  s_75c4c68a72508c::t_d697c30bba019e 33-97
+  s_75c4c68a72508c::t_a62ee766b1462a 1-32
+results/spdz_prime256_prepared_gpu_micro1_logs/party3.json
+  s_75c4c68a72508c::t_cf4f2610ab7aad 1-23
+results/spdz_prime256_prepared_gpu_micro1_logs/party1.json
+  s_75c4c68a72508c::t_cf4f2610ab7aad 1-23
+docs/field-fp127.md
+  s_75c4c68a72508c::t_b299c0f3701446 1-101
+docs/direct-field-preprocessing.md
+  s_75c4c68a72508c::t_fef856688d4dea 9-12,77-84
+  s_75c4c68a72508c::t_7a83d02662043f 85
+artifacts/field_fp127_bench.json
+  s_75c4c68a72508c::t_605dab61890835 1-1027
+results/spdz_prime256_prepared_gpu_micro2.json
+  s_75c4c68a72508c::t_fa194c6a443ec1 1-641
+results/spdz_prime256_prepared_gpu_micro2_logs/party0.json
+  s_75c4c68a72508c::t_775f687a4a36ed 1-44
+results/spdz_prime256_prepared_gpu_micro2_logs/party1.json
+  s_75c4c68a72508c::t_1d29c13246ca27 1-44
+results/spdz_prime256_prepared_gpu_micro2_logs/party2.json
+  s_75c4c68a72508c::t_8e4480a11be1b1 1-44
+results/spdz_prime256_prepared_gpu_micro2_logs/party3.json
+  s_75c4c68a72508c::t_d93d59e907bed0 1-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ee0b18fd2445e1ef049119b49bda4ecd604f54c9",
+  "prompts": {},
+  "sessions": {
+    "s_75c4c68a72508c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1c38d-f7bc-7d91-9747-09bc5f7b0dcf",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Zeb Taylor <zceboys@gmail.com>"
+    }
+  }
+}
