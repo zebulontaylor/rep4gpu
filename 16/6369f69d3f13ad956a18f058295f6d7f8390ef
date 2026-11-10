@@ -1,0 +1,102 @@
+rep4gpu/preprocessing_lowgear.py
+  s_75c4c68a72508c::t_802229245a484f 109
+  s_75c4c68a72508c::t_dbc7e500c0ec89 138-211
+  s_75c4c68a72508c::t_3f9ada00c30991 23-24
+  s_75c4c68a72508c::t_db14166e0e9269 1-22,25-108,110-137
+rep4gpu/preprocessing_mascot_prepared.py
+  s_75c4c68a72508c::t_70aadc98916163 1-159
+results/spdz_prime256_autoregressive32_logs/party3.json
+  s_75c4c68a72508c::t_1555923f33fc0d 1-404
+rep4gpu/spdz_prime256.py
+  s_75c4c68a72508c::t_e020257ab0461b 1,15-16,26-27,30-31,35,38,42,45,50,54-56,61,63-72
+  s_75c4c68a72508c::t_96e6ca8c0e7f70 81,89,95-98,101,109-110,123-124,130,136-138,156-162,170-171,179,181-182,189
+results/spdz_prime256_autoregressive32.context.json
+  s_75c4c68a72508c::t_e33e72c93259a4 1-15
+results/mascot_direct_batching_review.md
+  s_75c4c68a72508c::t_26f8ddefa90d7c 1-78
+results/mascot_direct_capacity1024_batch8192.json
+  s_75c4c68a72508c::t_26f8ddefa90d7c 122-141
+  s_75c4c68a72508c::t_f02175309fce62 1-121,142-143
+logs/mascot_direct_capacity1024_batch8192_party2.log
+  s_75c4c68a72508c::t_26f8ddefa90d7c 1-278
+results/spdz_prime256_autoregressive32_logs/party1.json
+  s_75c4c68a72508c::t_1555923f33fc0d 1-404
+rep4gpu/spdz_prime256_prepared.py
+  s_75c4c68a72508c::t_da3016f9ec6873 1-111
+tests/test_spdz_prime256_prepared.py
+  s_75c4c68a72508c::t_336d6ea52d2776 1-72
+  s_75c4c68a72508c::t_920dfb56841f32 73-86
+benchmarks/spdz_autoregressive.py
+  s_75c4c68a72508c::t_05acc1f7f55340 1-65,67-107
+  s_75c4c68a72508c::t_a32fb9d87ad51a 66
+tests/test_spdz_native_field.py
+  s_75c4c68a72508c::t_b6df06a926a34b 1-70
+results/spdz_prime256_prepared_micro1_logs/party0.json
+  s_75c4c68a72508c::t_efeda7da5cf2e5 1-20
+logs/mascot_direct_capacity1024_batch8192_party0.log
+  s_75c4c68a72508c::t_26f8ddefa90d7c 1-279
+results/spdz_prime256_prepared_micro1_logs/party1.json
+  s_75c4c68a72508c::t_efeda7da5cf2e5 1-20
+results/autoregressive_benchmark_design.md
+  s_75c4c68a72508c::t_a32fb9d87ad51a 1-63
+  s_75c4c68a72508c::t_641490a4471235 64-87
+tests/test_lowgear_preprocessing.py
+  s_75c4c68a72508c::t_d0aec41d34a327 1-69
+logs/mascot_direct_capacity1024_batch8192_party3.log
+  s_75c4c68a72508c::t_26f8ddefa90d7c 1-278
+native/patches/lowgear-experimental-build.patch
+  s_75c4c68a72508c::t_a068250d2ea814 1-143
+results/spdz_prime256_autoregressive32_gpu_baselines.json
+  s_75c4c68a72508c::t_06312672a4a33d 1-1043
+results/spdz_prime256_autoregressive32_logs/party0.json
+  s_75c4c68a72508c::t_1555923f33fc0d 1-404
+scripts/preprocess_mascot_prepared.py
+  s_75c4c68a72508c::t_ffa1b9cb7a5ace 1-120
+docs/direct-field-preprocessing.md
+  s_75c4c68a72508c::t_2f073b9b7fb1bc 52-81
+logs/mascot_direct_capacity1024_batch8192_party1.log
+  s_75c4c68a72508c::t_26f8ddefa90d7c 1-278
+results/spdz_prime256_prepared_micro1_logs/party2.json
+  s_75c4c68a72508c::t_efeda7da5cf2e5 1-20
+results/spdz_prime256_autoregressive32.json
+  s_75c4c68a72508c::t_1555923f33fc0d 1-3902
+results/spdz_prime256_prepared_micro1.json
+  s_75c4c68a72508c::t_efeda7da5cf2e5 1-525
+results/spdz_prime256_prepared_micro1_logs/party3.json
+  s_75c4c68a72508c::t_efeda7da5cf2e5 1-20
+native/lowgear-source-lock.json
+  s_75c4c68a72508c::t_a068250d2ea814 1-1243
+scripts/run_spdz_prime256.py
+  s_75c4c68a72508c::t_9ed51f3cc7c7aa 1,27-35,56,67,81,94,97,110,113,131-132,160,165
+scripts/build_lowgear_secure.py
+  s_75c4c68a72508c::t_4e4fb89fd1dcac 1-93
+scripts/run_spdz_prime256_autoregressive.py
+  s_75c4c68a72508c::t_5293a5a9b0301c 1-78,81-133,135-141,143-175
+  s_75c4c68a72508c::t_fb523807dc685f 79-80,134,142
+scripts/run_spdz_prime256_prepared.py
+  s_75c4c68a72508c::t_fe80af2a876a6a 1-28,30,34-126,130-150
+  s_75c4c68a72508c::t_677e583b362469 29,31-33,127-129
+tests/test_mascot_prepared.py
+  s_75c4c68a72508c::t_6706c0a2cc9e80 1-91
+tests/test_spdz_autoregressive.py
+  s_75c4c68a72508c::t_05acc1f7f55340 1-15,22
+  s_75c4c68a72508c::t_01a2bb23c84cdb 16-21,23-29
+results/spdz_prime256_autoregressive32_logs/party2.json
+  s_75c4c68a72508c::t_1555923f33fc0d 1-404
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "166369f69d3f13ad956a18f058295f6d7f8390ef",
+  "prompts": {},
+  "sessions": {
+    "s_75c4c68a72508c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1c38d-f7bc-7d91-9747-09bc5f7b0dcf",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Zeb Taylor <zceboys@gmail.com>"
+    }
+  }
+}
