@@ -1,0 +1,823 @@
+artifacts/compact_conversion_local.json
+  s_75c4c68a72508c::t_6b34bf066a0661 1-81
+artifacts/compact_weight_ffn2048.json
+  s_75c4c68a72508c::t_156730fe6e052f 1-98
+artifacts/five_product_ffn2048.json
+  s_75c4c68a72508c::t_e01fc81d54eb84 1-54
+artifacts/gpu_prg_batch_bench.json
+  s_75c4c68a72508c::t_8f4db3241375c5 1-146
+artifacts/gpu_prg_batch_bench.jsonl
+  s_75c4c68a72508c::t_078ffbbca52f7c 1-16
+artifacts/gpu_prg_bench.json
+  s_75c4c68a72508c::t_c2ccd4afbf1d94 1-44
+artifacts/graph_product.jsonl
+  s_75c4c68a72508c::t_d40fbab7be8b3a 1-2
+artifacts/graph_runtime_tests.txt
+  s_75c4c68a72508c::t_5e08657fe407ee 1-12
+artifacts/kernel_bench.json
+  s_75c4c68a72508c::t_5b7c8645dd4e92 1-695
+artifacts/local_kernel_bench.json
+  s_75c4c68a72508c::t_b8a0ea114e25b4 1-935
+artifacts/local_kernel_hot_quick.json
+  s_75c4c68a72508c::t_75ba2f9074273a 1-473
+artifacts/packed_large64.json
+  s_75c4c68a72508c::t_b64703b11bbb29 1-14
+artifacts/packed_large_tiles.json
+  s_75c4c68a72508c::t_b2e5ac9049253e 1-134
+artifacts/packed_large_tiles.jsonl
+  s_75c4c68a72508c::t_81485c3d2a8359 1-8
+artifacts/packed_tune64_512.json
+  s_75c4c68a72508c::t_37d0bd92cdec75 1-194
+artifacts/packed_tune64_512.jsonl
+  s_75c4c68a72508c::t_01dacb3613061a 1-14
+artifacts/tuned_five_validation.json
+  s_75c4c68a72508c::t_3b4ebbdd0ad9e5 1-25
+artifacts/tuned_product_ffn2048.json
+  s_75c4c68a72508c::t_59154de1e7572c 1-50
+artifacts/tuned_six_validation.json
+  s_75c4c68a72508c::t_8fe31ad67f1b9b 1-24
+artifacts/warp_mma_64_1024.json
+  s_75c4c68a72508c::t_87ff69b8bf77db 1-34
+artifacts/warp_mma_64_512.json
+  s_75c4c68a72508c::t_59951035b56b31 1-34
+artifacts/weighted_kernel_bench.json
+  s_75c4c68a72508c::t_0dba870175a9b5 1-34
+benchmarks/compact_conversion_local.py
+  s_75c4c68a72508c::t_1b8fcad32e95c5 1-54
+benchmarks/compact_weight_bench.py
+  s_75c4c68a72508c::t_9710edd4070a10 1-47
+benchmarks/device_inference.py
+  s_75c4c68a72508c::t_305e82658c03d3 1-331
+benchmarks/five_product_bench.py
+  s_75c4c68a72508c::t_ce6c3f3a016107 1-45
+benchmarks/gpu_prg_batch_bench.py
+  s_75c4c68a72508c::t_74d81dd22ce868 1-50
+benchmarks/graph_product.py
+  s_75c4c68a72508c::t_35de8519601eb2 1-74
+benchmarks/kernel_bench.py
+  s_75c4c68a72508c::t_fb9d336fb897a7 1-53
+benchmarks/local_kernel_bench.py
+  s_75c4c68a72508c::t_506145627f2887 1-53
+benchmarks/packed_kernel_bench.py
+  s_75c4c68a72508c::t_f6a9e5862b009e 1-54
+benchmarks/simt_bench.py
+  s_75c4c68a72508c::t_e683fb0493e0c1 1-48
+benchmarks/spdz_online.py
+  s_75c4c68a72508c::t_311ee2fd2d4bac 1-83
+benchmarks/timing.py
+  s_75c4c68a72508c::t_10d312616d290e 1-20
+benchmarks/tune_kernel.py
+  s_75c4c68a72508c::t_444cf799770ae2 1-45
+benchmarks/tuned_product_bench.py
+  s_75c4c68a72508c::t_4adc3ebcb919f0 1-43
+benchmarks/warp_mma_bench.py
+  s_75c4c68a72508c::t_df6e756842864a 1-46
+docs/activations.md
+  s_75c4c68a72508c::t_cbd665e544d039 1-222
+docs/assets/performance.svg
+  s_75c4c68a72508c::t_6a8314deee67ae 1-2291
+docs/kernel-arithmetic.md
+  s_75c4c68a72508c::t_506132c4eee3d1 1-77
+docs/malicious-majority.md
+  s_75c4c68a72508c::t_78a4a7736ad065 1-110
+docs/protocol.md
+  s_75c4c68a72508c::t_11cf4373bc0bf1 1-91
+examples/README.md
+  s_75c4c68a72508c::t_51d9b52c8da383 1-63
+examples/toy_next_token.py
+  s_75c4c68a72508c::t_7b0a83690bd0da 1-166
+logs/device_inference_batch128_2048_q14.exit_status
+  s_75c4c68a72508c::t_499cd2686dfabe 1
+logs/device_inference_batch128_2048_q14.stdout.log
+  s_75c4c68a72508c::t_5f12c0f07f9a0e 1
+logs/device_inference_decode1_2048_q14.exit_status
+  s_75c4c68a72508c::t_0a6dbc83f994f8 1
+logs/device_inference_decode1_2048_q14.stdout.log
+  s_75c4c68a72508c::t_3fcbc167d357c6 1
+logs/device_inference_quick_q14.exit_status
+  s_75c4c68a72508c::t_4de21c8f7201e3 1
+logs/device_inference_quick_q14.stdout.log
+  s_75c4c68a72508c::t_7ed8a86d183f97 1
+logs/final_device_floor_decode.exit_status
+  s_75c4c68a72508c::t_3bb3b93d8a2e5a 1
+logs/final_device_floor_decode.stdout.log
+  s_75c4c68a72508c::t_8ac57459028eec 1
+logs/final_device_floor_prefill.exit_status
+  s_75c4c68a72508c::t_075e17fb4f0123 1
+logs/final_device_floor_prefill.stdout.log
+  s_75c4c68a72508c::t_6e40921a890109 1
+logs/final_device_prob_decode.exit_status
+  s_75c4c68a72508c::t_efe35ed576d078 1
+logs/final_device_prob_decode.stdout.log
+  s_75c4c68a72508c::t_cafa106eac2a64 1
+logs/final_device_prob_prefill.exit_status
+  s_75c4c68a72508c::t_9af40642fbe5ba 1
+logs/final_device_prob_prefill.stdout.log
+  s_75c4c68a72508c::t_11a40c055d3bf3 1
+logs/inference_cuda_compact32_q14_aes_2048_b128.log
+  s_75c4c68a72508c::t_ddb85fb7afcfb5 1
+logs/inference_decode2048_ring32_q14.log
+  s_75c4c68a72508c::t_e91818ad4e01b1 1
+logs/inference_decode2048_ring64_q14.log
+  s_75c4c68a72508c::t_1330f8aeb045d4 1
+logs/inference_prefill2048_ring32_q14.log
+  s_75c4c68a72508c::t_2dbf890b6ac041 1
+logs/optimized_decode1_2048_q14.exit_status
+  s_75c4c68a72508c::t_5bc18be4583e61 1
+logs/optimized_decode1_2048_q14.stdout.log
+  s_75c4c68a72508c::t_9a6d5f36811d11 1
+logs/optimized_prefill128_2048_q14.exit_status
+  s_75c4c68a72508c::t_c1cde229a699fb 1
+logs/optimized_prefill128_2048_q14.stdout.log
+  s_75c4c68a72508c::t_517cd14449044f 1
+logs/primitives_cuda32_aes.log
+  s_75c4c68a72508c::t_82ae670e07485f 1-9
+logs/primitives_cuda32_aes_prepared_decode.log
+  s_75c4c68a72508c::t_5dd2fe76b37cb0 1-2
+logs/primitives_decode_words32.log
+  s_75c4c68a72508c::t_e6450157e80399 1-2
+logs/pytest_baseline.log
+  s_75c4c68a72508c::t_efcb1c70327dd9 1-6
+logs/pytest_final.exit_status
+  s_75c4c68a72508c::t_1eafb0d4374e30 1
+logs/pytest_final.log
+  s_75c4c68a72508c::t_f72b686948148a 1-12
+logs/socket_device32_b2.log
+  s_75c4c68a72508c::t_3f7c64396223dc 1-12
+logs/socket_device64_b2.log
+  s_75c4c68a72508c::t_1e74a5b148bd56 1-12
+logs/toy_next_token_cuda.exit_status
+  s_75c4c68a72508c::t_ee1f15b440a71f 1
+logs/toy_next_token_cuda.stdout.log
+  s_75c4c68a72508c::t_84a8cea78a8700 1
+rep4gpu/__init__.py
+  s_75c4c68a72508c::t_146969bc186b9c 1-6
+rep4gpu/activations.py
+  s_75c4c68a72508c::t_9c00ee055cdeda 1-122
+rep4gpu/carry_tree.py
+  s_75c4c68a72508c::t_4039608812f912 1-153
+rep4gpu/carry_tree_gpu.py
+  s_75c4c68a72508c::t_a9f442d4894069 1-214
+rep4gpu/carry_tree_swar.py
+  s_75c4c68a72508c::t_e44de1a0e724c7 1-284
+rep4gpu/compact_conversion.py
+  s_75c4c68a72508c::t_66c8ecb5fb7c71 1-72
+rep4gpu/compact_conversion_gpu.py
+  s_75c4c68a72508c::t_cc5c7a227a83ef 1-130
+rep4gpu/device_open.py
+  s_75c4c68a72508c::t_d6ded64d492ec2 1-116
+rep4gpu/device_probabilistic.py
+  s_75c4c68a72508c::t_890d9f21e4a3e6 1-122
+rep4gpu/exact_truncation.py
+  s_75c4c68a72508c::t_1fe4f31d1dc085 1-135
+rep4gpu/five_product.py
+  s_75c4c68a72508c::t_219d3d85a9f168 1-75
+rep4gpu/fused_runtime.py
+  s_75c4c68a72508c::t_719b830873b963 1-281
+rep4gpu/gpu_hash.py
+  s_75c4c68a72508c::t_920cc4ac6067df 1-273
+rep4gpu/gpu_prg.py
+  s_75c4c68a72508c::t_853543a71288f3 1-179
+rep4gpu/gpu_prg_graph.py
+  s_75c4c68a72508c::t_4000f1a8696bb6 1-61
+rep4gpu/graph_runtime.py
+  s_75c4c68a72508c::t_3cfa1a0878ab0d 1-134
+rep4gpu/inference.py
+  s_75c4c68a72508c::t_e2d7fd8ae09ea2 1-38
+rep4gpu/kernels.py
+  s_75c4c68a72508c::t_ea8756ab39e606 1-384
+rep4gpu/nn.py
+  s_75c4c68a72508c::t_d8cc0b4c8685ef 1-164
+rep4gpu/packed_kernels.py
+  s_75c4c68a72508c::t_6d68ece7dceb8f 1-221
+rep4gpu/prg.py
+  s_75c4c68a72508c::t_da279d93f7e98b 1-44
+rep4gpu/probabilistic.py
+  s_75c4c68a72508c::t_cf9d46a4590e10 1-66
+rep4gpu/runtime.py
+  s_75c4c68a72508c::t_b91bed33864615 1-370
+rep4gpu/setup.py
+  s_75c4c68a72508c::t_c1a6b6c611f2a7 1-112
+rep4gpu/simt_kernels.py
+  s_75c4c68a72508c::t_a693c65375fe54 1-204
+rep4gpu/spdz.py
+  s_75c4c68a72508c::t_61952453d693be 1-156
+rep4gpu/transport.py
+  s_75c4c68a72508c::t_57ea54bd0daf39 1-290
+rep4gpu/tuned_kernels.py
+  s_75c4c68a72508c::t_dbf1ece02cece3 1-86
+rep4gpu/warp_mma_kernels.py
+  s_75c4c68a72508c::t_989f3f8719a1ed 1-352
+rep4gpu/weighted_kernels.py
+  s_75c4c68a72508c::t_124159c6b80a7f 1-102
+results/device_inference_batch128_2048_q14.json
+  s_75c4c68a72508c::t_40354845c03c3e 1-900
+results/device_inference_decode1_2048_q14.json
+  s_75c4c68a72508c::t_147ee91e2f91a5 1-1366
+results/device_inference_quick_q14.json
+  s_75c4c68a72508c::t_222b3decfa6bbf 1-667
+results/final_device_floor_decode.json
+  s_75c4c68a72508c::t_8352abe12f2a68 1-2206
+results/final_device_floor_prefill.json
+  s_75c4c68a72508c::t_e86a03b8de650d 1-1737
+results/final_device_prob_decode.json
+  s_75c4c68a72508c::t_67263ea1e42c6d 1-1878
+results/final_device_prob_prefill.json
+  s_75c4c68a72508c::t_67b71445e36daa 1-1489
+results/gpu_hash_bench.json
+  s_75c4c68a72508c::t_1ad3f1225ecd94 1-107
+results/inference_cpu_prob32_smoke.json
+  s_75c4c68a72508c::t_017e545633e730 1-49
+results/inference_cpu_smoke.json
+  s_75c4c68a72508c::t_9094f808588c4c 1-44
+results/inference_cuda_512.json
+  s_75c4c68a72508c::t_d975b196a0b31f 1-54
+results/inference_cuda_compact32_512.json
+  s_75c4c68a72508c::t_8b628cf4d0efab 1-59
+results/inference_cuda_compact32_q14_aes_2048_b128.json
+  s_75c4c68a72508c::t_22c6af40781f4e 1-479
+results/inference_cuda_prob32_aes_512.json
+  s_75c4c68a72508c::t_fbb83d0230a6db 1-426
+results/inference_cuda_smoke.json
+  s_75c4c68a72508c::t_6a7216bfe2fbcf 1-54
+results/inference_decode2048_ring32_q14.json
+  s_75c4c68a72508c::t_4fc5334272c023 1-933
+results/inference_decode2048_ring64_q14.json
+  s_75c4c68a72508c::t_8e7e51e5d585c4 1-989
+results/inference_prefill2048_ring32_q14.json
+  s_75c4c68a72508c::t_ac8b3ff25edd0a 1-481
+results/optimized_decode1_2048_q14.json
+  s_75c4c68a72508c::t_175b403ea5f764 1-1670
+results/optimized_prefill128_2048_q14.json
+  s_75c4c68a72508c::t_cc5bd80a71062b 1-1204
+results/primitives_cuda32_aes.json
+  s_75c4c68a72508c::t_d6c6aaaf7a254e 1-1758
+results/primitives_cuda32_aes_prepared_decode.json
+  s_75c4c68a72508c::t_3249455e5603cd 1-528
+results/primitives_decode_words32.json
+  s_75c4c68a72508c::t_2dd9ff788f5e25 1-620
+results/simt_initial.json
+  s_75c4c68a72508c::t_14badf3bacc4b2 1-329
+results/simt_manual_mac.json
+  s_75c4c68a72508c::t_cb21b6ddd4422c 1-113
+results/simt_small_tiles.json
+  s_75c4c68a72508c::t_76a396ec240ad3 1-221
+results/socket_cpu32_b1.json
+  s_75c4c68a72508c::t_efcd11744851fd 1-131
+results/socket_cpu32_b16.json
+  s_75c4c68a72508c::t_b7e7fc543d2f11 1-581
+results/socket_cpu32_b16_logs/party0.json
+  s_75c4c68a72508c::t_52c3519c6212f1 1-114
+results/socket_cpu32_b16_logs/party0.log
+  s_75c4c68a72508c::t_c1022fd0a35b8d 1
+results/socket_cpu32_b16_logs/party1.json
+  s_75c4c68a72508c::t_f86aa6bec933bd 1-114
+results/socket_cpu32_b16_logs/party1.log
+  s_75c4c68a72508c::t_ec05a3b7e65c82 1
+results/socket_cpu32_b16_logs/party2.json
+  s_75c4c68a72508c::t_1fabe077eb0f42 1-114
+results/socket_cpu32_b16_logs/party2.log
+  s_75c4c68a72508c::t_ca6943ff7ea527 1
+results/socket_cpu32_b16_logs/party3.json
+  s_75c4c68a72508c::t_0085edc5b590e8 1-114
+results/socket_cpu32_b16_logs/party3.log
+  s_75c4c68a72508c::t_41e38329611c37 1
+results/socket_cpu32_b1_logs/party0.json
+  s_75c4c68a72508c::t_f816e965f25760 1-24
+results/socket_cpu32_b1_logs/party0.log
+  s_75c4c68a72508c::t_c7c7db4bca34fa 1
+results/socket_cpu32_b1_logs/party1.json
+  s_75c4c68a72508c::t_26c05722813f7e 1-24
+results/socket_cpu32_b1_logs/party1.log
+  s_75c4c68a72508c::t_1531e953e3979e 1
+results/socket_cpu32_b1_logs/party2.json
+  s_75c4c68a72508c::t_4d64913924f7f1 1-24
+results/socket_cpu32_b1_logs/party2.log
+  s_75c4c68a72508c::t_b406b2b0b30d30 1
+results/socket_cpu32_b1_logs/party3.json
+  s_75c4c68a72508c::t_85fd4d08c55224 1-24
+results/socket_cpu32_b1_logs/party3.log
+  s_75c4c68a72508c::t_87ed80e4c43832 1
+results/socket_cpu64_b1.json
+  s_75c4c68a72508c::t_3e36443e10d894 1-131
+results/socket_cpu64_b16.json
+  s_75c4c68a72508c::t_31bfdf82b1fe87 1-581
+results/socket_cpu64_b16_logs/party0.json
+  s_75c4c68a72508c::t_301ca87056495f 1-114
+results/socket_cpu64_b16_logs/party0.log
+  s_75c4c68a72508c::t_a6ee99c16c2ee8 1
+results/socket_cpu64_b16_logs/party1.json
+  s_75c4c68a72508c::t_e66727b9e0247c 1-114
+results/socket_cpu64_b16_logs/party1.log
+  s_75c4c68a72508c::t_a39a225d1ee78e 1
+results/socket_cpu64_b16_logs/party2.json
+  s_75c4c68a72508c::t_e55cd28679c78c 1-114
+results/socket_cpu64_b16_logs/party2.log
+  s_75c4c68a72508c::t_ec94eeae2bddc3 1
+results/socket_cpu64_b16_logs/party3.json
+  s_75c4c68a72508c::t_052140e913e090 1-114
+results/socket_cpu64_b16_logs/party3.log
+  s_75c4c68a72508c::t_70c9fcdcae44e1 1
+results/socket_cpu64_b1_logs/party0.json
+  s_75c4c68a72508c::t_76cb5bcd5fbfe4 1-24
+results/socket_cpu64_b1_logs/party0.log
+  s_75c4c68a72508c::t_e72fb51a00cd54 1
+results/socket_cpu64_b1_logs/party1.json
+  s_75c4c68a72508c::t_24c4628a2a5831 1-24
+results/socket_cpu64_b1_logs/party1.log
+  s_75c4c68a72508c::t_ed7eaaa43ee90c 1
+results/socket_cpu64_b1_logs/party2.json
+  s_75c4c68a72508c::t_45a35e12c8ed5d 1-24
+results/socket_cpu64_b1_logs/party2.log
+  s_75c4c68a72508c::t_d52c8fa82253cf 1
+results/socket_cpu64_b1_logs/party3.json
+  s_75c4c68a72508c::t_f8395bd8fca901 1-24
+results/socket_cpu64_b1_logs/party3.log
+  s_75c4c68a72508c::t_3608903bc8c86e 1
+results/socket_cuda_fused32_b1.json
+  s_75c4c68a72508c::t_1f6419141a5bcf 1-131
+results/socket_cuda_fused32_b16.json
+  s_75c4c68a72508c::t_7dddc714a463c0 1-581
+results/socket_cuda_fused32_b16_logs/party0.json
+  s_75c4c68a72508c::t_8097a0eaa8b736 1-114
+results/socket_cuda_fused32_b16_logs/party0.log
+  s_75c4c68a72508c::t_0e82f10c87fcf1 1
+results/socket_cuda_fused32_b16_logs/party1.json
+  s_75c4c68a72508c::t_8365858da3b22b 1-114
+results/socket_cuda_fused32_b16_logs/party1.log
+  s_75c4c68a72508c::t_ff0eaecd2c27d9 1
+results/socket_cuda_fused32_b16_logs/party2.json
+  s_75c4c68a72508c::t_9ee264f981f4fe 1-114
+results/socket_cuda_fused32_b16_logs/party2.log
+  s_75c4c68a72508c::t_88243baed06c3e 1
+results/socket_cuda_fused32_b16_logs/party3.json
+  s_75c4c68a72508c::t_7a87f4dceb54e1 1-114
+results/socket_cuda_fused32_b16_logs/party3.log
+  s_75c4c68a72508c::t_c8a33d2b0a46ed 1
+results/socket_cuda_fused32_b1_logs/party0.json
+  s_75c4c68a72508c::t_ed3ec6285a8143 1-24
+results/socket_cuda_fused32_b1_logs/party0.log
+  s_75c4c68a72508c::t_0ebc27f5e13942 1
+results/socket_cuda_fused32_b1_logs/party1.json
+  s_75c4c68a72508c::t_d570a1c9f9b7d7 1-24
+results/socket_cuda_fused32_b1_logs/party1.log
+  s_75c4c68a72508c::t_7c45c08618d639 1
+results/socket_cuda_fused32_b1_logs/party2.json
+  s_75c4c68a72508c::t_71efbeb558983f 1-24
+results/socket_cuda_fused32_b1_logs/party2.log
+  s_75c4c68a72508c::t_10717a07c6987a 1
+results/socket_cuda_fused32_b1_logs/party3.json
+  s_75c4c68a72508c::t_20ef5bf16d7175 1-24
+results/socket_cuda_fused32_b1_logs/party3.log
+  s_75c4c68a72508c::t_01a00d44d1c5a7 1
+results/socket_cuda_fused64_b1.json
+  s_75c4c68a72508c::t_5a3ef1abbea7d3 1-131
+results/socket_cuda_fused64_b16.json
+  s_75c4c68a72508c::t_0ca6cf04ad54c2 1-581
+results/socket_cuda_fused64_b16_logs/party0.json
+  s_75c4c68a72508c::t_07412efb56078b 1-114
+results/socket_cuda_fused64_b16_logs/party0.log
+  s_75c4c68a72508c::t_2f191b7e073081 1
+results/socket_cuda_fused64_b16_logs/party1.json
+  s_75c4c68a72508c::t_858abe4b852359 1-114
+results/socket_cuda_fused64_b16_logs/party1.log
+  s_75c4c68a72508c::t_2a38a33ff2c784 1
+results/socket_cuda_fused64_b16_logs/party2.json
+  s_75c4c68a72508c::t_1455279c086d54 1-114
+results/socket_cuda_fused64_b16_logs/party2.log
+  s_75c4c68a72508c::t_7dd4b1caa7e057 1
+results/socket_cuda_fused64_b16_logs/party3.json
+  s_75c4c68a72508c::t_ea142f6a6833cf 1-114
+results/socket_cuda_fused64_b16_logs/party3.log
+  s_75c4c68a72508c::t_6fe245f7a74ce1 1
+results/socket_cuda_fused64_b1_logs/party0.json
+  s_75c4c68a72508c::t_82f61d6e70f8bf 1-24
+results/socket_cuda_fused64_b1_logs/party0.log
+  s_75c4c68a72508c::t_21a647b5873f0a 1
+results/socket_cuda_fused64_b1_logs/party1.json
+  s_75c4c68a72508c::t_3918f166f90ce2 1-24
+results/socket_cuda_fused64_b1_logs/party1.log
+  s_75c4c68a72508c::t_361454ed6d791a 1
+results/socket_cuda_fused64_b1_logs/party2.json
+  s_75c4c68a72508c::t_7a8de8fe939f48 1-24
+results/socket_cuda_fused64_b1_logs/party2.log
+  s_75c4c68a72508c::t_c9741d6823941c 1
+results/socket_cuda_fused64_b1_logs/party3.json
+  s_75c4c68a72508c::t_a6e6cc4e63ba18 1-24
+results/socket_cuda_fused64_b1_logs/party3.log
+  s_75c4c68a72508c::t_0e486a0cd169b8 1
+results/socket_device32_b2.json
+  s_75c4c68a72508c::t_5d5addc392ce79 1-169
+results/socket_device32_b2_logs/party0.json
+  s_75c4c68a72508c::t_7262dc99143788 1-31
+results/socket_device32_b2_logs/party0.log
+  s_75c4c68a72508c::t_590919b4410868 1
+results/socket_device32_b2_logs/party1.json
+  s_75c4c68a72508c::t_211e183994bc4b 1-31
+results/socket_device32_b2_logs/party1.log
+  s_75c4c68a72508c::t_d8fb892b18d417 1
+results/socket_device32_b2_logs/party2.json
+  s_75c4c68a72508c::t_264512c461db82 1-31
+results/socket_device32_b2_logs/party2.log
+  s_75c4c68a72508c::t_383d5174fd9ba0 1
+results/socket_device32_b2_logs/party3.json
+  s_75c4c68a72508c::t_915e6cca58ab5d 1-31
+results/socket_device32_b2_logs/party3.log
+  s_75c4c68a72508c::t_93dc1a57f060ad 1
+results/socket_device64_b2.json
+  s_75c4c68a72508c::t_8eb8351d5742d7 1-169
+results/socket_device64_b2_logs/party0.json
+  s_75c4c68a72508c::t_97b9ff6feebf68 1-31
+results/socket_device64_b2_logs/party0.log
+  s_75c4c68a72508c::t_50fd3d05a66550 1
+results/socket_device64_b2_logs/party1.json
+  s_75c4c68a72508c::t_0f2af6315e8d2c 1-31
+results/socket_device64_b2_logs/party1.log
+  s_75c4c68a72508c::t_dc907a468c1ab3 1
+results/socket_device64_b2_logs/party2.json
+  s_75c4c68a72508c::t_b6d7e96ff08f2d 1-31
+results/socket_device64_b2_logs/party2.log
+  s_75c4c68a72508c::t_8e892aa975a968 1
+results/socket_device64_b2_logs/party3.json
+  s_75c4c68a72508c::t_b2d8900aaec826 1-31
+results/socket_device64_b2_logs/party3.log
+  s_75c4c68a72508c::t_bc1a908bd0fb6f 1
+results/socket_final_device32_optimized0_gpuopen0.json
+  s_75c4c68a72508c::t_429513605475ef 1-179
+results/socket_final_device32_optimized0_gpuopen0_logs/party0.json
+  s_75c4c68a72508c::t_217450ed3dc134 1-33
+results/socket_final_device32_optimized0_gpuopen0_logs/party0.log
+  s_75c4c68a72508c::t_cd1aab9e1bc960 1
+results/socket_final_device32_optimized0_gpuopen0_logs/party1.json
+  s_75c4c68a72508c::t_324e0d5d6251f1 1-33
+results/socket_final_device32_optimized0_gpuopen0_logs/party1.log
+  s_75c4c68a72508c::t_ed1ec0d339df0a 1
+results/socket_final_device32_optimized0_gpuopen0_logs/party2.json
+  s_75c4c68a72508c::t_e91508d8c7ef9c 1-33
+results/socket_final_device32_optimized0_gpuopen0_logs/party2.log
+  s_75c4c68a72508c::t_a5af4b862072ce 1
+results/socket_final_device32_optimized0_gpuopen0_logs/party3.json
+  s_75c4c68a72508c::t_84992a988a5bb8 1-33
+results/socket_final_device32_optimized0_gpuopen0_logs/party3.log
+  s_75c4c68a72508c::t_2070df328e3df2 1
+results/socket_final_device32_optimized1_gpuopen0.json
+  s_75c4c68a72508c::t_189fa84ee98f59 1-179
+results/socket_final_device32_optimized1_gpuopen0_logs/party0.json
+  s_75c4c68a72508c::t_456856ed89dc65 1-33
+results/socket_final_device32_optimized1_gpuopen0_logs/party0.log
+  s_75c4c68a72508c::t_7eac48a1fc3735 1
+results/socket_final_device32_optimized1_gpuopen0_logs/party1.json
+  s_75c4c68a72508c::t_9ef5f45e29137a 1-33
+results/socket_final_device32_optimized1_gpuopen0_logs/party1.log
+  s_75c4c68a72508c::t_dfc20cab2dbb70 1
+results/socket_final_device32_optimized1_gpuopen0_logs/party2.json
+  s_75c4c68a72508c::t_cb97bef910529d 1-33
+results/socket_final_device32_optimized1_gpuopen0_logs/party2.log
+  s_75c4c68a72508c::t_ba77ea3e05957c 1
+results/socket_final_device32_optimized1_gpuopen0_logs/party3.json
+  s_75c4c68a72508c::t_1948f6b55c905b 1-33
+results/socket_final_device32_optimized1_gpuopen0_logs/party3.log
+  s_75c4c68a72508c::t_0be1359ed07b11 1
+results/socket_final_device32_optimized1_gpuopen1.json
+  s_75c4c68a72508c::t_cc6a1b761a7a0f 1-179
+results/socket_final_device32_optimized1_gpuopen1_logs/party0.json
+  s_75c4c68a72508c::t_b9fb759cf8f338 1-33
+results/socket_final_device32_optimized1_gpuopen1_logs/party0.log
+  s_75c4c68a72508c::t_31eadfc9b9d3f3 1
+results/socket_final_device32_optimized1_gpuopen1_logs/party1.json
+  s_75c4c68a72508c::t_f4e69104cec82f 1-33
+results/socket_final_device32_optimized1_gpuopen1_logs/party1.log
+  s_75c4c68a72508c::t_ff0b5f95b063bf 1
+results/socket_final_device32_optimized1_gpuopen1_logs/party2.json
+  s_75c4c68a72508c::t_03f690d81e663a 1-33
+results/socket_final_device32_optimized1_gpuopen1_logs/party2.log
+  s_75c4c68a72508c::t_087a5d704cca00 1
+results/socket_final_device32_optimized1_gpuopen1_logs/party3.json
+  s_75c4c68a72508c::t_f2c94631e79164 1-33
+results/socket_final_device32_optimized1_gpuopen1_logs/party3.log
+  s_75c4c68a72508c::t_94c1055aba9f88 1
+results/socket_final_device64_optimized0_gpuopen0.json
+  s_75c4c68a72508c::t_f93c970d48a8c6 1-179
+results/socket_final_device64_optimized0_gpuopen0_logs/party0.json
+  s_75c4c68a72508c::t_4bae64b44ec234 1-33
+results/socket_final_device64_optimized0_gpuopen0_logs/party0.log
+  s_75c4c68a72508c::t_8ccadf8bf67cb9 1
+results/socket_final_device64_optimized0_gpuopen0_logs/party1.json
+  s_75c4c68a72508c::t_880662ed764300 1-33
+results/socket_final_device64_optimized0_gpuopen0_logs/party1.log
+  s_75c4c68a72508c::t_8e4f430e9771ea 1
+results/socket_final_device64_optimized0_gpuopen0_logs/party2.json
+  s_75c4c68a72508c::t_e5810f8f38ce80 1-33
+results/socket_final_device64_optimized0_gpuopen0_logs/party2.log
+  s_75c4c68a72508c::t_ce019618441c7a 1
+results/socket_final_device64_optimized0_gpuopen0_logs/party3.json
+  s_75c4c68a72508c::t_c603bb3c95319e 1-33
+results/socket_final_device64_optimized0_gpuopen0_logs/party3.log
+  s_75c4c68a72508c::t_f70e9794196292 1
+results/socket_final_device64_optimized1_gpuopen0.json
+  s_75c4c68a72508c::t_0bda7de4f314ee 1-179
+results/socket_final_device64_optimized1_gpuopen0_logs/party0.json
+  s_75c4c68a72508c::t_d8ef57218dee21 1-33
+results/socket_final_device64_optimized1_gpuopen0_logs/party0.log
+  s_75c4c68a72508c::t_14d8c5f965bdba 1
+results/socket_final_device64_optimized1_gpuopen0_logs/party1.json
+  s_75c4c68a72508c::t_34a9fa66f11734 1-33
+results/socket_final_device64_optimized1_gpuopen0_logs/party1.log
+  s_75c4c68a72508c::t_6c8c37dfa02cb9 1
+results/socket_final_device64_optimized1_gpuopen0_logs/party2.json
+  s_75c4c68a72508c::t_4a4e678ca799ad 1-33
+results/socket_final_device64_optimized1_gpuopen0_logs/party2.log
+  s_75c4c68a72508c::t_19f459748610d8 1
+results/socket_final_device64_optimized1_gpuopen0_logs/party3.json
+  s_75c4c68a72508c::t_d2c39fc7754135 1-33
+results/socket_final_device64_optimized1_gpuopen0_logs/party3.log
+  s_75c4c68a72508c::t_e83234ad5cc7f9 1
+results/socket_final_device64_optimized1_gpuopen1.json
+  s_75c4c68a72508c::t_0e9129383bb8ae 1-179
+results/socket_final_device64_optimized1_gpuopen1_logs/party0.json
+  s_75c4c68a72508c::t_0adc9c87ecc6b7 1-33
+results/socket_final_device64_optimized1_gpuopen1_logs/party0.log
+  s_75c4c68a72508c::t_e8c4ffcebc79d6 1
+results/socket_final_device64_optimized1_gpuopen1_logs/party1.json
+  s_75c4c68a72508c::t_35a52bd51354df 1-33
+results/socket_final_device64_optimized1_gpuopen1_logs/party1.log
+  s_75c4c68a72508c::t_2dc068c1c49254 1
+results/socket_final_device64_optimized1_gpuopen1_logs/party2.json
+  s_75c4c68a72508c::t_cf74d235725903 1-33
+results/socket_final_device64_optimized1_gpuopen1_logs/party2.log
+  s_75c4c68a72508c::t_a2decac81da5f4 1
+results/socket_final_device64_optimized1_gpuopen1_logs/party3.json
+  s_75c4c68a72508c::t_7376eef65054f8 1-33
+results/socket_final_device64_optimized1_gpuopen1_logs/party3.log
+  s_75c4c68a72508c::t_26e03f9b607758 1
+results/spdz_cpu_smoke.json
+  s_75c4c68a72508c::t_ec7436beb0ad56 1-25
+results/spdz_online_cuda_smoke.json
+  s_75c4c68a72508c::t_2ae5fbed952825 1-25
+results/toy_next_token/metadata.json
+  s_75c4c68a72508c::t_8b6a32f0a37a05 1-34
+results/toy_next_token_cuda/metadata.json
+  s_75c4c68a72508c::t_23c66ab99efa4b 1-34
+results/validation_summary.json
+  s_75c4c68a72508c::t_fd5643e13234e2 1-109
+scripts/golden_mpspdz.py
+  s_75c4c68a72508c::t_9b1f2b20f92cf1 1-93
+scripts/golden_rep4.py
+  s_75c4c68a72508c::t_2468e33b45bcf6 1-89
+scripts/golden_toy_ffn.py
+  s_75c4c68a72508c::t_26ce5c250bdcf8 1-164
+scripts/golden_trunc_pr.py
+  s_75c4c68a72508c::t_946c5574009507 1-188
+scripts/plot_performance.py
+  s_75c4c68a72508c::t_66543c18e6da4a 1-51
+tests/golden/mpspdz/compile.log
+  s_75c4c68a72508c::t_671b360549b7e3 1-20
+tests/golden/mpspdz/party0.log
+  s_75c4c68a72508c::t_6fb95e4fceded4 1-33
+tests/golden/mpspdz/party1.log
+  s_75c4c68a72508c::t_130acd6ded9bb7 1-21
+tests/golden/mpspdz/party2.log
+  s_75c4c68a72508c::t_a22ba79773e6bc 1-21
+tests/golden/mpspdz/party3.log
+  s_75c4c68a72508c::t_c23e28c0f5679d 1-21
+tests/golden/mpspdz/summary.json
+  s_75c4c68a72508c::t_36493f77848bf9 1-59
+tests/golden/mpspdz_ring32/build.json
+  s_75c4c68a72508c::t_3836649590b542 1-12
+tests/golden/mpspdz_ring32/compile.log
+  s_75c4c68a72508c::t_6e9397da6b4497 1-19
+tests/golden/mpspdz_ring32/libsodium-build.log
+  s_75c4c68a72508c::t_b68180704860be 1-176
+tests/golden/mpspdz_ring32/libsodium-install.log
+  s_75c4c68a72508c::t_843263a8e088a8 1-101
+tests/golden/mpspdz_ring32/mpspdz-build-final.log
+  s_75c4c68a72508c::t_3ff1645e271d56 1-3
+tests/golden/mpspdz_ring32/mpspdz-build.log
+  s_75c4c68a72508c::t_6824a1bded1984 1-76
+tests/golden/mpspdz_ring32/optimized_compose_failure/compile.log
+  s_75c4c68a72508c::t_35438d85ee2d6f 1-20
+tests/golden/mpspdz_ring32/optimized_compose_failure/party0.log
+  s_75c4c68a72508c::t_944f7b396fda30 1-33
+tests/golden/mpspdz_ring32/optimized_compose_failure/party1.log
+  s_75c4c68a72508c::t_73113c6f18d9a4 1-21
+tests/golden/mpspdz_ring32/optimized_compose_failure/party2.log
+  s_75c4c68a72508c::t_7ea2712576d334 1-21
+tests/golden/mpspdz_ring32/optimized_compose_failure/party3.log
+  s_75c4c68a72508c::t_4615b940d86c70 1-21
+tests/golden/mpspdz_ring32/optimized_compose_failure/summary.json
+  s_75c4c68a72508c::t_0594c959a88fec 1-61
+tests/golden/mpspdz_ring32/party0.log
+  s_75c4c68a72508c::t_4d77100583850a 1-33
+tests/golden/mpspdz_ring32/party1.log
+  s_75c4c68a72508c::t_72316127eb96f7 1-21
+tests/golden/mpspdz_ring32/party2.log
+  s_75c4c68a72508c::t_9e3ec59030613e 1-21
+tests/golden/mpspdz_ring32/party3.log
+  s_75c4c68a72508c::t_35acbc4ca2f6f8 1-21
+tests/golden/mpspdz_ring32/reference.mpc
+  s_75c4c68a72508c::t_71f860703e1871 1-22
+tests/golden/mpspdz_ring32/summary.json
+  s_75c4c68a72508c::t_0b3fd5d2fbaab4 1-99
+tests/golden/mpspdz_ring32_z2/compile.log
+  s_75c4c68a72508c::t_db30bdc4cc10a9 1-19
+tests/golden/mpspdz_ring32_z2/party0.log
+  s_75c4c68a72508c::t_dc86b35445fe34 1-33
+tests/golden/mpspdz_ring32_z2/party1.log
+  s_75c4c68a72508c::t_ca0bbb7fbd6f98 1-21
+tests/golden/mpspdz_ring32_z2/party2.log
+  s_75c4c68a72508c::t_6f58c46ea51bdb 1-21
+tests/golden/mpspdz_ring32_z2/party3.log
+  s_75c4c68a72508c::t_5ed361bcb4e7e2 1-21
+tests/golden/mpspdz_ring32_z2/reference.mpc
+  s_75c4c68a72508c::t_3ecb0dec1e1daf 1-22
+tests/golden/mpspdz_ring32_z2/summary.json
+  s_75c4c68a72508c::t_df096ae74fb60f 1-99
+tests/golden/mpspdz_z4/compile.log
+  s_75c4c68a72508c::t_006b62302b5c50 1-20
+tests/golden/mpspdz_z4/party0.log
+  s_75c4c68a72508c::t_c2196082607c3a 1-33
+tests/golden/mpspdz_z4/party1.log
+  s_75c4c68a72508c::t_e1f5e0c602b561 1-21
+tests/golden/mpspdz_z4/party2.log
+  s_75c4c68a72508c::t_5a4ae51fc0de11 1-21
+tests/golden/mpspdz_z4/party3.log
+  s_75c4c68a72508c::t_471a63d252b686 1-21
+tests/golden/mpspdz_z4/summary.json
+  s_75c4c68a72508c::t_cbc7bd6afb9174 1-59
+tests/golden/rep4_reference.mpc
+  s_75c4c68a72508c::t_776512da306d7b 1-22
+tests/golden/rep4_transcripts.json
+  s_75c4c68a72508c::t_308f49ca0e0f10 1-566
+tests/golden/report.md
+  s_75c4c68a72508c::t_01fc76ed6c0f8f 1-37
+tests/golden/test_rep4_oracle.py
+  s_75c4c68a72508c::t_17413274f407d6 1-36
+tests/golden/test_runtime_golden.py
+  s_75c4c68a72508c::t_91b027a04b18e2 1-100
+tests/golden/toy_ffn32/Input-P0-0.txt
+  s_75c4c68a72508c::t_9383db62c88be5 1
+tests/golden/toy_ffn32/Input-P1-0.txt
+  s_75c4c68a72508c::t_c93d867b8c9d85 1
+tests/golden/toy_ffn32/Input-P2-0.txt
+  s_75c4c68a72508c::t_1d110ca643872a 1
+tests/golden/toy_ffn32/Input-P3-0.txt
+  s_75c4c68a72508c::t_91c019cb58d119 1
+tests/golden/toy_ffn32/compile.log
+  s_75c4c68a72508c::t_16afccbd88c707 1-21
+tests/golden/toy_ffn32/fixture.json
+  s_75c4c68a72508c::t_6ba4624f5f08d5 1-3984
+tests/golden/toy_ffn32/party0.log
+  s_75c4c68a72508c::t_db40dab5a8f1b9 1-533
+tests/golden/toy_ffn32/party1.log
+  s_75c4c68a72508c::t_4ef051baaae6ab 1-21
+tests/golden/toy_ffn32/party2.log
+  s_75c4c68a72508c::t_853d1300b40981 1-21
+tests/golden/toy_ffn32/party3.log
+  s_75c4c68a72508c::t_e0660640bf0c22 1-21
+tests/golden/toy_ffn32/reference.mpc
+  s_75c4c68a72508c::t_6cc332b3d524a4 1-26
+tests/golden/toy_ffn32/summary.json
+  s_75c4c68a72508c::t_6957d98bbbcc86 1-1407
+tests/golden/toy_ffn64/Input-P0-0.txt
+  s_75c4c68a72508c::t_35732d0c4143ce 1
+tests/golden/toy_ffn64/Input-P1-0.txt
+  s_75c4c68a72508c::t_8e57d1772b4f83 1
+tests/golden/toy_ffn64/Input-P2-0.txt
+  s_75c4c68a72508c::t_5f593140e74393 1
+tests/golden/toy_ffn64/Input-P3-0.txt
+  s_75c4c68a72508c::t_8d574076900f54 1
+tests/golden/toy_ffn64/compile.log
+  s_75c4c68a72508c::t_758de21b9f63a8 1-22
+tests/golden/toy_ffn64/fixture.json
+  s_75c4c68a72508c::t_074dfdb93b4466 1-3984
+tests/golden/toy_ffn64/party0.log
+  s_75c4c68a72508c::t_91dae380630804 1-533
+tests/golden/toy_ffn64/party1.log
+  s_75c4c68a72508c::t_fe5732dbc48b71 1-21
+tests/golden/toy_ffn64/party2.log
+  s_75c4c68a72508c::t_02803c84db367e 1-21
+tests/golden/toy_ffn64/party3.log
+  s_75c4c68a72508c::t_dfcc49bcc57499 1-21
+tests/golden/toy_ffn64/reference.mpc
+  s_75c4c68a72508c::t_e84d4475237e8f 1-26
+tests/golden/toy_ffn64/summary.json
+  s_75c4c68a72508c::t_e8c9028a493723 1-1407
+tests/golden/toy_ffn_report.md
+  s_75c4c68a72508c::t_57aff0aa484c92 1-24
+tests/golden/trunc_pr32/compile.log
+  s_75c4c68a72508c::t_02f64bd616016a 1-11
+tests/golden/trunc_pr32/party0.log
+  s_75c4c68a72508c::t_3ba9ea426d2207 1-333
+tests/golden/trunc_pr32/party1.log
+  s_75c4c68a72508c::t_9b5055f03bf0f9 1-29
+tests/golden/trunc_pr32/party2.log
+  s_75c4c68a72508c::t_60ce25a82ae89c 1-29
+tests/golden/trunc_pr32/party3.log
+  s_75c4c68a72508c::t_b7d720e1bc1103 1-29
+tests/golden/trunc_pr32/reference.mpc
+  s_75c4c68a72508c::t_4856a3f144050f 1-11
+tests/golden/trunc_pr32/summary.json
+  s_75c4c68a72508c::t_2d55e2e80c4cb1 1-2890
+tests/golden/trunc_pr64/compile.log
+  s_75c4c68a72508c::t_7deb1ca4c6e3d7 1-11
+tests/golden/trunc_pr64/party0.log
+  s_75c4c68a72508c::t_c654e49d7f422e 1-333
+tests/golden/trunc_pr64/party1.log
+  s_75c4c68a72508c::t_624a892aec8b63 1-29
+tests/golden/trunc_pr64/party2.log
+  s_75c4c68a72508c::t_b8d8968115fd18 1-29
+tests/golden/trunc_pr64/party3.log
+  s_75c4c68a72508c::t_368c48d6467e9e 1-29
+tests/golden/trunc_pr64/reference.mpc
+  s_75c4c68a72508c::t_fbf6a7a99edc48 1-11
+tests/golden/trunc_pr64/summary.json
+  s_75c4c68a72508c::t_4cf5b4d95eed91 1-2890
+tests/golden/trunc_pr_report.md
+  s_75c4c68a72508c::t_2f09b2d48c0424 1-32
+tests/test_activations.py
+  s_75c4c68a72508c::t_8e7d356ec22317 1-136
+tests/test_carry_tree.py
+  s_75c4c68a72508c::t_d5e85472cc3dc4 1-132
+tests/test_carry_tree_gpu.py
+  s_75c4c68a72508c::t_b56eca919d0ce2 1-78
+tests/test_carry_tree_swar.py
+  s_75c4c68a72508c::t_c75c4ea7595f08 1-77
+tests/test_compact_conversion.py
+  s_75c4c68a72508c::t_77c093a5a141f1 1-76
+tests/test_compact_conversion_gpu.py
+  s_75c4c68a72508c::t_b31e5c449e3278 1-71
+tests/test_conversion.py
+  s_75c4c68a72508c::t_ddb8ac2a649139 1-74
+tests/test_device_inference_benchmark.py
+  s_75c4c68a72508c::t_c7ab1c551c57f1 1-112
+tests/test_device_open.py
+  s_75c4c68a72508c::t_8b9b863a4b3ee9 1-165
+tests/test_device_probabilistic.py
+  s_75c4c68a72508c::t_7928b71fba2a55 1-178
+tests/test_device_runtime.py
+  s_75c4c68a72508c::t_4c3848789ac94e 1-275
+tests/test_exact_truncation.py
+  s_75c4c68a72508c::t_1836d93083ffea 1-63
+tests/test_five_product.py
+  s_75c4c68a72508c::t_3f35f51fffc238 1-30
+tests/test_fused_runtime.py
+  s_75c4c68a72508c::t_f38d587ce7bd1c 1-111
+tests/test_gpu_hash.py
+  s_75c4c68a72508c::t_a4c6f3e21e419f 1-130
+tests/test_gpu_prg.py
+  s_75c4c68a72508c::t_0e7f4932a8c4d3 1-124
+tests/test_graph_runtime.py
+  s_75c4c68a72508c::t_9f8f535807bbf7 1-221
+tests/test_inference_benchmark.py
+  s_75c4c68a72508c::t_674cbf6c73b528 1-23
+tests/test_inference_runtime.py
+  s_75c4c68a72508c::t_6e2a01b9263beb 1-33
+tests/test_kernels.py
+  s_75c4c68a72508c::t_747614094a341a 1-197
+tests/test_nn.py
+  s_75c4c68a72508c::t_a71c5cc2e2bd26 1-96
+tests/test_nonce_reservation.py
+  s_75c4c68a72508c::t_c89338fd3232ca 1-133
+tests/test_prg.py
+  s_75c4c68a72508c::t_dfa63d949d2bbc 1-112
+tests/test_primitives.py
+  s_75c4c68a72508c::t_6ad3e91b196e0b 1-52
+tests/test_probabilistic.py
+  s_75c4c68a72508c::t_09e259cbc74302 1-87
+tests/test_ring32.py
+  s_75c4c68a72508c::t_26221fb8460c4a 1-105
+tests/test_runtime.py
+  s_75c4c68a72508c::t_3cfeea69413e2b 1-247
+tests/test_setup.py
+  s_75c4c68a72508c::t_f134be6cb99f98 1-154
+tests/test_simt.py
+  s_75c4c68a72508c::t_36fae5c45bcde4 1-49
+tests/test_spdz.py
+  s_75c4c68a72508c::t_6c4f09c3e0aae8 1-91
+tests/test_toy_next_token.py
+  s_75c4c68a72508c::t_f4e9ff5071c74b 1-30
+tests/test_trained_device.py
+  s_75c4c68a72508c::t_904caa3abe2ded 1-91
+tests/test_transport_limits.py
+  s_75c4c68a72508c::t_3a56e25894debd 1-126
+tests/test_tuned_kernels.py
+  s_75c4c68a72508c::t_ee44dd428388a9 1-59
+tests/test_weighted_kernels.py
+  s_75c4c68a72508c::t_9fd4e75f175448 1-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7030d18da627752e03126a570f7de654dddc5276",
+  "prompts": {},
+  "sessions": {
+    "s_75c4c68a72508c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1c38d-f7bc-7d91-9747-09bc5f7b0dcf",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Zeb Taylor <zceboys@gmail.com>"
+    }
+  }
+}
