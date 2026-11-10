@@ -1,4 +1,4 @@
-"""Role-local bigint online reference over two supported 256-bit prime fields.
+"""Role-local bigint online reference over explicitly supported prime fields.
 
 One field MAC coordinate authenticates each value. Correct fresh private
 preprocessing and authenticated confidential links are required. This CPU
@@ -13,7 +13,8 @@ from .spdz_distributed import DistributedParty,ProtocolError,_hash
 
 PRIME=2**256-189
 LOWGEAR_PRIME=2**255+62*2**20+1
-SUPPORTED_PRIMES=frozenset((PRIME,LOWGEAR_PRIME))
+GOLDILOCKS_PRIME=2**64-2**32+1
+SUPPORTED_PRIMES=frozenset((PRIME,LOWGEAR_PRIME,GOLDILOCKS_PRIME))
 
 
 @dataclass
@@ -28,14 +29,16 @@ def _canonical(values,prime=PRIME):
 
 
 def _pack(values,prime=PRIME):
-    if not _canonical(values,prime):raise ValueError('noncanonical uint256 field values')
-    return b''.join(value.to_bytes(32,'little') for value in values)
+    if not _canonical(values,prime):raise ValueError('noncanonical prime field values')
+    width=(prime.bit_length()+7)//8
+    return b''.join(value.to_bytes(width,'little') for value in values)
 
 
 def _unpack(data,count,prime=PRIME):
-    if len(data)!=32*count:raise ProtocolError('q256 payload length mismatch')
-    values=[int.from_bytes(data[i:i+32],'little') for i in range(0,len(data),32)]
-    if not _canonical(values,prime):raise ProtocolError('noncanonical uint256 field encoding')
+    width=(prime.bit_length()+7)//8
+    if len(data)!=width*count:raise ProtocolError('prime field payload length mismatch')
+    values=[int.from_bytes(data[i:i+width],'little') for i in range(0,len(data),width)]
+    if not _canonical(values,prime):raise ProtocolError('noncanonical prime field encoding')
     return values
 
 
@@ -52,8 +55,9 @@ class Prime256Party(DistributedParty):
         self.poisoned=False;self._failure=None;self.round=0;self.spent_triples=set();self.spent_masks=set()
         with self.operation():
             if type(field_prime) is not int or field_prime not in SUPPORTED_PRIMES:
-                raise ValueError('unsupported uint256 prime field')
+                raise ValueError('unsupported prime field')
             self.prime=field_prime
+            self.field_bytes=(field_prime.bit_length()+7)//8
             if parties!=4 or party not in range(4):raise ValueError('q256 reference requires four roles')
             if not isinstance(session,bytes) or not session:raise ValueError('nonempty session required')
             if not getattr(transport,'authenticated',False) and not _allow_insecure_test_transport:
@@ -86,7 +90,7 @@ class Prime256Party(DistributedParty):
             shares=tuple(shares)
             if not shares:raise ValueError('opening requires at least one share')
             for share in shares:self._validate(share)
-            layout=json.dumps({'field':self.prime,'encoding':'uint256-le','keys':1,'shapes':[x.shape for x in shares]},
+            layout=json.dumps({'field':self.prime,'encoding':f'uint{8*self.field_bytes}-le','keys':1,'shapes':[x.shape for x in shares]},
                               sort_keys=True,separators=(',',':')).encode()
             context=b'SPDZq256-open-v1'+self._session_hash+struct.pack('<Q',self.round)+_hash(layout)+_hash(label)
             values=[v for share in shares for v in share.values]
@@ -104,7 +108,7 @@ class Prime256Party(DistributedParty):
             reveals=self.broadcast(reveal,label=context+b'reveal')
             checked=[]
             for p in range(4):
-                if len(reveals[p])!=32+32*count or not secrets.compare_digest(_hash(context+struct.pack('<I',p)+reveals[p]),commits[p]):
+                if len(reveals[p])!=32+self.field_bytes*count or not secrets.compare_digest(_hash(context+struct.pack('<I',p)+reveals[p]),commits[p]):
                     raise ProtocolError('q256 residual commitment mismatch')
                 checked.append(self._unpack(reveals[p][32:],count))
             if any(sum(row[i] for row in checked)%self.prime for i in range(count)):

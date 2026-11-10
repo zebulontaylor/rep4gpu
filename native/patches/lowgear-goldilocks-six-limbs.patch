@@ -1,0 +1,45 @@
+--- a/CONFIG.mine
++++ b/CONFIG.mine
+@@ -3,4 +3,4 @@
+ GDEBUG =
+ OPTIM = -O2
+ MY_CFLAGS += -DLONG_BIT_MAC_KEY
+-MOD = -DMAX_MOD_SZ=16
++MOD = -DMAX_MOD_SZ=6
+--- a/Protocols/LowGearKeyGen.hpp
++++ b/Protocols/LowGearKeyGen.hpp
+@@ -29,7 +29,7 @@
+ 
+     auto& batch_size = OnlineOptions::singleton.batch_size;
+     backup_batch_size = batch_size;
+-    batch_size = min(100, batch_size);
++    batch_size = min(OnlineOptions::singleton.has_param("keygen_probe_batch") ? OnlineOptions::singleton.get_param("keygen_probe_batch") : 100, batch_size);
+ 
+     if (OnlineOptions::singleton.live_prep)
+     {
+@@ -47,6 +47,25 @@
+     proc = new SubProcessor<share_type>(*MC, *prep, P);
+ 
+     MC->setup(P);
++    if (OnlineOptions::singleton.has_param("keygen_probe_bits"))
++    {
++        int n = OnlineOptions::singleton.get_param("keygen_probe_bits");
++        if (n < 1 or n > 65536) throw runtime_error("invalid bit probe size");
++        RunningTimer timer;
++        vector<share_type> bits;
++        for (int i = 0; i < n; ++i) bits.push_back(prep->get_bit());
++        double generation_seconds = timer.elapsed();
++        vector<open_type> opened;
++        MC->POpen(opened, bits, P);
++        MC->Check(P);
++        for (auto& bit : opened)
++            if (bit != 0 and bit != 1) throw runtime_error("non-Boolean bit probe output");
++        cerr << "LOWGEAR_BIT_PROBE count=" << n << " batch=" << batch_size
++             << " share_bytes=" << sizeof(share_type)
++             << " generation_seconds=" << generation_seconds
++             << " total_seconds=" << timer.elapsed() << endl;
++        exit(0);
++    }
+ }
+ 
+ template<int X, int L>

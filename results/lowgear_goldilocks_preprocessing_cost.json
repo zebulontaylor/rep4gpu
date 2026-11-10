@@ -1,0 +1,253 @@
+{
+  "format": "lowgear-goldilocks-preprocessing-cost-v1",
+  "protocol": "LowGear",
+  "prime": 18446744069414584321,
+  "configured_statistical_security": 40,
+  "configured_computational_security": 128,
+  "security_target_met": false,
+  "performance_target_met": false,
+  "experimental": true,
+  "ready": true,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "native_wall_ms": 480629.9936200012,
+  "compile_ms": 465.0028270043549,
+  "requested_queries": 120,
+  "queries_served": 120,
+  "private_bundles_consumed": true,
+  "finite_bit_probe": false,
+  "keygen_chunk": 924,
+  "public_manifest": "work/lowgear_native/goldilocks6_capacity120/public-manifest.json",
+  "public_manifest_sha256": "95fc4ce4a4c391b8b0ff759da8cfd2c18a90a478f0425cfd3e637a0f852c2261",
+  "native_binary_sha256": "54e7ed91286251cc0de4641e73632ea48d134a1261575f9e7ed98fbc3c31ba23",
+  "native_policy_sha256": "98dcef10788fad9e1b1954ae3283f4868f0c96e30e2cb315450fa1c938a1b530",
+  "roles": [
+    {
+      "binomial_keygen_seconds": 445.398,
+      "mac_keygen_seconds": 25.3771,
+      "static_key_seconds": 470.989,
+      "fresh_triple_seconds": 8.75944,
+      "party": 0,
+      "accepted_triples": 81920,
+      "input_mask_batches": [
+        {
+          "seconds": 0.0857886,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0777526,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0776925,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0781318,
+          "owner": 3,
+          "accepted_masks": 8191
+        }
+      ],
+      "native_log_sha256": "6f5e5a4d60e835284e0caa1cb88bc342d6a3f5eb32aa2d21cee43c502424ca3e"
+    },
+    {
+      "binomial_keygen_seconds": 445.398,
+      "mac_keygen_seconds": 25.6342,
+      "static_key_seconds": 471.251,
+      "fresh_triple_seconds": 8.75946,
+      "party": 1,
+      "accepted_triples": 81920,
+      "input_mask_batches": [
+        {
+          "seconds": 0.0822679,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0811781,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0777064,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0781861,
+          "owner": 3,
+          "accepted_masks": 8191
+        }
+      ],
+      "native_log_sha256": "4c828699f3f02e2f24ba85e38485fd3ec00fcd79e651c76dd02fac6c66bd4314"
+    },
+    {
+      "binomial_keygen_seconds": 445.398,
+      "mac_keygen_seconds": 25.4461,
+      "static_key_seconds": 471.062,
+      "fresh_triple_seconds": 8.75923,
+      "party": 2,
+      "accepted_triples": 81920,
+      "input_mask_batches": [
+        {
+          "seconds": 0.0812096,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0811888,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0775064,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0781508,
+          "owner": 3,
+          "accepted_masks": 8191
+        }
+      ],
+      "native_log_sha256": "0abf56c196ca4fee99626432e021c9e584e2394dccd9f8747aeb168e910b9836"
+    },
+    {
+      "binomial_keygen_seconds": 445.403,
+      "mac_keygen_seconds": 25.4978,
+      "static_key_seconds": 471.116,
+      "fresh_triple_seconds": 8.75944,
+      "party": 3,
+      "accepted_triples": 81920,
+      "input_mask_batches": [
+        {
+          "seconds": 0.0789238,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0811127,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.077692,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0781894,
+          "owner": 3,
+          "accepted_masks": 8191
+        }
+      ],
+      "native_log_sha256": "fa87a43fcd593efd4c29edb39da093dc4f1d7f98c0e5b9a2d86160f4d5d74092"
+    }
+  ],
+  "exported_scalar_products": 4080,
+  "exported_matrix_scalar_products": 3840,
+  "exported_squares": 240,
+  "reported_native_global_data_sent_MB": 932.503,
+  "traffic_scope": "Native final counter; coverage of auxiliary setup traffic has not been established.",
+  "accepted_capacity_not_served_queries": true,
+  "static_keygen_separate_from_fresh_production": true,
+  "cpu_work_last_samples": {
+    "unix_seconds": 1794330612.281263,
+    "roles": [
+      {
+        "pid": 412920,
+        "cpu_seconds": 1203.67,
+        "affinity": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      {
+        "pid": 412921,
+        "cpu_seconds": 1206.01,
+        "affinity": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      {
+        "pid": 412922,
+        "cpu_seconds": 1204.65,
+        "affinity": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      {
+        "pid": 412923,
+        "cpu_seconds": 1186.27,
+        "affinity": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      }
+    ]
+  },
+  "last_cpu_sample_may_omit_final_seconds": 5,
+  "no_private_role_files_read": true,
+  "consumed_once": true,
+  "actual_online_report": "results/lowgear_goldilocks_inference120.json",
+  "actual_online_report_sha256": "2ac695c082b899e15288e296c81bbb38e232bf3bd811f5d141b2787fa4349790",
+  "actual_online_return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "exact_integer_match": true,
+  "source_stable_during_run": true,
+  "checked_online_ms": 35.37054000480566,
+  "fresh_accepted_capacity_still_not_used_as_denominator": true
+}

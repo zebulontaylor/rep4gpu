@@ -5,7 +5,7 @@ import random
 
 import pytest
 
-from rep4gpu.spdz_prime256 import LOWGEAR_PRIME,PRIME,Prime256Party,QShare
+from rep4gpu.spdz_prime256 import GOLDILOCKS_PRIME,LOWGEAR_PRIME,PRIME,Prime256Party,QShare,_pack,_unpack
 from rep4gpu.transport import IdealNetwork
 
 
@@ -49,7 +49,7 @@ def run_field_case(prime,*,fault=None):
     return results,parties,expected
 
 
-@pytest.mark.parametrize('prime',[PRIME,LOWGEAR_PRIME])
+@pytest.mark.parametrize('prime',[PRIME,LOWGEAR_PRIME,GOLDILOCKS_PRIME])
 def test_supported_native_fields_match_integer_algebra(prime):
     results,parties,expected=run_field_case(prime)
     assert results==[expected]*4
@@ -57,10 +57,50 @@ def test_supported_native_fields_match_integer_algebra(prime):
 
 
 @pytest.mark.parametrize('fault',['mac','value','different-field'])
-def test_lowgear_field_rejects_bad_openings_and_cross_field_sessions(fault):
-    results,parties,_=run_field_case(LOWGEAR_PRIME,fault=fault)
+@pytest.mark.parametrize('prime',[LOWGEAR_PRIME,GOLDILOCKS_PRIME])
+def test_lowgear_field_rejects_bad_openings_and_cross_field_sessions(fault,prime):
+    results,parties,_=run_field_case(prime,fault=fault)
     assert all(isinstance(result,BaseException) for result in results)
     assert all(party.poisoned for party in parties)
+
+
+@pytest.mark.parametrize('prime,width',[(PRIME,32),(LOWGEAR_PRIME,32),(GOLDILOCKS_PRIME,8)])
+def test_wire_width_and_canonical_boundaries(prime,width):
+    values=[0,1,prime-1]
+    encoded=_pack(values,prime)
+    assert encoded==b''.join(v.to_bytes(width,'little') for v in values)
+    assert _unpack(encoded,len(values),prime)==values
+    with pytest.raises(RuntimeError,match='length'):_unpack(encoded+b'\0',len(values),prime)
+    with pytest.raises(RuntimeError,match='noncanonical'):_unpack(prime.to_bytes(width,'little'),1,prime)
+    with pytest.raises(ValueError,match='noncanonical'):_pack([prime],prime)
+
+
+@pytest.mark.parametrize('owner',range(4))
+def test_goldilocks_private_input_uses_unsigned_full_width_masks(owner):
+    prime=GOLDILOCKS_PRIME
+    rng=random.Random(907+owner)
+    keys=[rng.randrange(prime) for _ in range(4)]
+    mask=[prime-1,2**63+29,0]
+    query=[prime-2,7,2**63+19]
+    values=[[rng.randrange(prime) for _ in mask] for _ in range(3)]
+    values.append([(v-sum(row[j] for row in values))%prime for j,v in enumerate(mask)])
+    macs=[[rng.randrange(prime) for _ in mask] for _ in range(3)]
+    macs.append([(v*sum(keys)-sum(row[j] for row in macs))%prime for j,v in enumerate(mask)])
+    network=IdealNetwork(timeout=3)
+    parties=[Prime256Party(i,network.endpoint(i),keys[i],session=b'goldilocks-input',
+                          field_prime=prime,_allow_insecure_test_transport=True) for i in range(4)]
+    def worker(i):
+        try:
+            material=SimpleNamespace(share=QShare(values[i],macs[i],(1,3)),owner=owner,
+                                     clear=mask if i==owner else None,identifier=b'i'*32,used=False)
+            result=parties[i].open(parties[i].input(material,query if i==owner else None))
+            assert material.used
+            return result
+        except BaseException as error:
+            network.abort(error)
+            return error
+    with ThreadPoolExecutor(4) as pool:results=list(pool.map(worker,range(4)))
+    assert results==[query]*4
 
 
 def test_only_explicit_native_fields_are_accepted():

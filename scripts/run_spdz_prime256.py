@@ -1,4 +1,4 @@
-"""Run the trained micro model with native 256-bit field preprocessing over TLS.
+"""Run the trained micro model with native prime-field preprocessing over TLS.
 
 This is a CPU bigint reference, not a GPU timing result. Each worker loads only
 its own one-use preprocessing and owner-assigned plaintext fixture inputs.
@@ -29,7 +29,9 @@ def native_backend(name):
         from rep4gpu.preprocessing_mascot_direct import load_role,PRIME
     elif name=='lowgear':
         from rep4gpu.preprocessing_lowgear import load_role,PRIME
-    else:raise ValueError('preprocessing backend must be mascot or lowgear')
+    elif name=='lowgear-goldilocks-s40':
+        from rep4gpu.preprocessing_lowgear_goldilocks_loader import load_role,PRIME
+    else:raise ValueError('unknown native preprocessing backend')
     return load_role,PRIME
 
 
@@ -157,7 +159,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--bundle',type=Path)
     parser.add_argument('--checkpoint',default='results/spdz_micro_toy/model.pt');parser.add_argument('--batch',type=int,default=1)
     parser.add_argument('--timeout',type=float,default=120);parser.add_argument('--output',type=Path,default=Path('results/spdz_prime256_micro.json'))
-    parser.add_argument('--preprocessing-backend',choices=('mascot','lowgear'),default='mascot')
+    parser.add_argument('--preprocessing-backend',choices=('mascot','lowgear','lowgear-goldilocks-s40'),default='mascot')
     parser.add_argument('--worker',type=Path);parser.add_argument('--result',type=Path);args=parser.parse_args()
     if args.worker:worker(args.worker,args.result)
     else:
