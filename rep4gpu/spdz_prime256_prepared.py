@@ -105,6 +105,9 @@ def matmul_prepared_rows(party,x,prepared,*,model_id):
         party._validate(x)
         if x.shape!=state.a.shape:raise ValueError('prepared query dimensions mismatch')
         d=party.open_many((party.subtract(x,state.a),),label=state.identifier+b'q256-fixed-query')[0]
+        backend=getattr(party,'_prepared_right_product',None)
+        if backend is not None:
+            return backend(d,state.weights,state.factor,x.shape)
         product=clear_matmul(d,state.weights.values,x.shape,state.weights.shape)
         mac_product=clear_matmul(d,state.weights.macs,x.shape,state.weights.shape)
         return QShare([(a+b)%PRIME for a,b in zip(state.factor.values,product)],

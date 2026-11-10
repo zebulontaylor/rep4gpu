@@ -29,7 +29,9 @@ def _fingerprints():
            Path('scripts/run_spdz_prime256.py'),Path('scripts/build_mascot_secure.py'),
            Path('rep4gpu/preprocessing_mascot_prepared.py'),Path('rep4gpu/spdz_prime256_prepared.py'),
            Path('rep4gpu/preprocessing_mascot_direct.py'),Path('rep4gpu/preprocessing_mama.py'),
-           Path('rep4gpu/spdz_prime256.py'),Path('rep4gpu/spdz_distributed.py'),Path('rep4gpu/transport.py'),
+           Path('rep4gpu/spdz_prime256.py'),Path('rep4gpu/spdz_prime256_gpu.py'),
+           Path('rep4gpu/field_q256_bytes.py'),Path('rep4gpu/field_q256_tensor.py'),Path('rep4gpu/field_q256.py'),
+           Path('rep4gpu/spdz_distributed.py'),Path('rep4gpu/transport.py'),
            Path('benchmarks/socket_inference.py'),Path('examples/spdz_micro_toy.py')]
     return {str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
 
@@ -48,9 +50,14 @@ def worker(config_path,result_path):
         client.load_cert_chain(config['identity']['certificate'],config['identity']['key'])
         transport=MeteredTransport(p,[tuple(a) for a in config['addresses']],timeout=config['timeout'],
             server_context=server,client_context=client,peer_hostnames={q:f'party{q}' for q in range(4)})
-        party=Prime256Party(p,transport,material['alpha_share'],session=material['session'])
+        if config.get('gpu_products'):
+            from rep4gpu.spdz_prime256_gpu import GPUPrime256Party
+            party=GPUPrime256Party(p,transport,material['alpha_share'],session=material['session'],device=config['gpu_device'])
+        else:
+            party=Prime256Party(p,transport,material['alpha_share'],session=material['session'])
         h1=import_prepared_rows(party,first,(1,),model_id=first.model_id)[0]
         h2=import_prepared_rows(party,second,(1,),model_id=second.model_id)[0]
+        if config.get('gpu_products'):party.prepare_handles((h1,h2))
         setup_ms=(time.perf_counter()-started)*1000
         own=json.loads(Path(config['query_input']).read_text()) if p==0 else None
         started=time.perf_counter();x=party.input(material['input_masks']['query'],own)
@@ -66,7 +73,12 @@ def worker(config_path,result_path):
         report=dict(party=p,passed=True,output=[v-PRIME if v>PRIME//2 else v for v in opened],
                     checked_query_ms=elapsed,input_sharing_ms=input_ms,role_setup_ms=setup_ms,
                     online_payload_bytes=transport.bytes_sent-before_bytes,online_rounds=transport.rounds-before_rounds,
-                    authenticated_tls=transport.authenticated)
+                    authenticated_tls=transport.authenticated,
+                    gpu_weight_setup_ms=getattr(party,'gpu_setup_ms',0),
+                    gpu_query_products_ms=getattr(party,'gpu_query_product_ms',0),
+                    gpu_product_calls=getattr(party,'gpu_product_calls',0),
+                    gpu_query_device_interval_ms=getattr(party,'gpu_query_device_interval_ms',0),
+                    gpu_product_samples=getattr(party,'gpu_product_samples',[]))
         Path(result_path).write_text(json.dumps(report,indent=2)+'\n')
     except BaseException as error:
         if party is not None:party.abort(error)
@@ -75,7 +87,7 @@ def worker(config_path,result_path):
         if transport is not None:transport.close()
 
 
-def run(output,bundle,*,native_root='work/mascot256-fresh-build',checkpoint='results/spdz_micro_toy/model.pt',timeout=120):
+def run(output,bundle,*,native_root='work/mascot256-fresh-build',checkpoint='results/spdz_micro_toy/model.pt',timeout=120,gpu_products=False,gpu_device='cuda'):
     from examples import spdz_micro_toy as api
     from scripts.preprocess_mascot_prepared import run_native
     if not math.isfinite(timeout) or timeout<=0:raise ValueError('timeout must be positive and finite')
@@ -103,7 +115,7 @@ def run(output,bundle,*,native_root='work/mascot256-fresh-build',checkpoint='res
         try:
             for p in range(4):
                 config=directory/f'online{p}.json';config.write_text(json.dumps(dict(party=p,bundle=str(bundle),query_input=str(query) if p==0 else None,
-                   ca=ca,identity=identities[p],addresses=addresses,timeout=timeout)));config.chmod(0o600)
+                   ca=ca,identity=identities[p],addresses=addresses,timeout=timeout,gpu_products=bool(gpu_products),gpu_device=gpu_device))); config.chmod(0o600)
                 result=logs/f'party{p}.json';result.unlink(missing_ok=True);handle=(logs/f'party{p}.log').open('w');handles.append(handle)
                 processes.append(subprocess.Popen([sys.executable,'-m','scripts.run_spdz_prime256_prepared','--worker',str(config),'--result',str(result)],stdout=handle,stderr=subprocess.STDOUT))
             deadline=time.monotonic()+timeout
@@ -120,16 +132,23 @@ def run(output,bundle,*,native_root='work/mascot256-fresh-build',checkpoint='res
     online=max((p.get('checked_query_ms',0) for p in parties),default=0)
     inputs=max((p.get('input_sharing_ms',0) for p in parties),default=0)
     after=_fingerprints()
+    gpu_setup=max((p.get('gpu_weight_setup_ms',0) for p in parties),default=0)
     report=dict(passed=codes==[0]*4 and exact and before==after,return_codes=codes,timed_out=timed_out,exact_integer_match=exact,
                 expected=expected,parties=parties,native=native,checked_query_ms=online,new_input_sharing_ms=inputs,
                 fresh_preprocessing_ms=native['native_preprocessing_ms'],fresh_preprocessing_query_capacity=1,
-                inclusive_per_query_ms=native['native_preprocessing_ms']+inputs+online,
+                inclusive_per_query_ms=native['native_preprocessing_ms']+inputs+online+gpu_setup,
                 inclusive_cost_complete=False,
-                inclusive_cost_scope='Fresh native generation and owner provisioning plus input sharing and checked query; no native compilation, certificate provisioning, or online role loading/TLS setup.',
+                inclusive_cost_scope='Fresh native generation and owner provisioning plus GPU model packing/setup when enabled, input sharing and checked query; no native compilation, certificate provisioning, or online role loading/TLS setup.',
                 max_role_setup_ms=max((p.get('role_setup_ms',0) for p in parties),default=0),
                 compile_ms=native['compile_ms'],source_stable=before==after,source_sha256=after,
-                trusted_dealer=False,device='cpu',security_target_met=False,privacy_audit_status='conditional_native_fixed_model_experiment',
-                measurement='Staged shared-host contended functional run; fresh native fixed-W preparation plus four-process CPU bigint/TLS checks; no GPU, perfect-network, or latency-target claim.',
+                trusted_dealer=False,device='cuda-products/cpu-checks' if gpu_products else 'cpu',
+                gpu_products=bool(gpu_products),gpu_device=gpu_device if gpu_products else None,
+                gpu_weight_setup_ms=max((p.get('gpu_weight_setup_ms',0) for p in parties),default=0),
+                gpu_query_products_ms=max((p.get('gpu_query_products_ms',0) for p in parties),default=0),
+                gpu_event_scope='CUDA stream interval covers H2D and GPU products, including launch gaps and shared-device scheduling; CPU packing, D2H decode and F addition remain in product wall time.',
+                gpu_cost_scope='Model packing/H2D/preparation and public-zero kernel warmup charged to setup; every query includes D packing, H2D, exact GPU product, D2H, canonical decode and F addition. Four CUDA processes contend on one physical GPU; all wire and MAC checks remain CPU.' if gpu_products else None,
+                security_target_met=False,privacy_audit_status='conditional_native_fixed_model_experiment',
+                measurement='Staged shared-host contended functional run; fresh native fixed-W preparation plus four-process checked query. Optional CUDA products share one physical GPU; CPU framing/MAC checks and real TLS remain charged. No perfect-network or latency-target claim.',
                 provisioning='Public checkpoint fixture. Each native owner reads only its assigned private model file; each online worker loads only its own role bundle. Same-user processes are not separate security domains.')
     output.write_text(json.dumps(report,indent=2)+'\n');return report
 
@@ -139,10 +158,11 @@ def main():
     parser.add_argument('--output',type=Path,default=Path('results/spdz_prime256_prepared_micro.json'))
     parser.add_argument('--bundle',type=Path,default=Path('work/mascot_prepared/micro1'));parser.add_argument('--native-root',default='work/mascot256-fresh-build')
     parser.add_argument('--checkpoint',default='results/spdz_micro_toy/model.pt');parser.add_argument('--timeout',type=float,default=120)
+    parser.add_argument('--gpu-products',action='store_true');parser.add_argument('--gpu-device',default='cuda')
     args=parser.parse_args()
     if args.worker:worker(args.worker,args.result)
     else:
-        report=run(args.output,args.bundle,native_root=args.native_root,checkpoint=args.checkpoint,timeout=args.timeout)
+        report=run(args.output,args.bundle,native_root=args.native_root,checkpoint=args.checkpoint,timeout=args.timeout,gpu_products=args.gpu_products,gpu_device=args.gpu_device)
         print(json.dumps({key:report.get(key) for key in ('passed','exact_integer_match','fresh_preprocessing_ms','checked_query_ms','inclusive_per_query_ms')}));raise SystemExit(0 if report['passed'] else 1)
 
 

@@ -180,12 +180,15 @@ checks and completed one fresh trained-model inference. Its field conversion
 is too expensive for the performance target. The [direct native-field
 path](docs/direct-field-preprocessing.md) removes that conversion and cuts
 fresh toy preprocessing from 22.35 minutes to 0.416 seconds; its complete
-online runtime currently uses CPU big integers.
+online runtime uses CPU big-integer checks with optional GPU products for
+fixed-model evaluation.
 
 Separate [exact q256 tensor-core kernels](docs/large-prime-kernels.md) support
 prepared local weights. The [matrix-correlation expansion helper](docs/matrix-pcg-linear.md)
 combines raw local terms before applying their public linear map. Both are
 isolated arithmetic components; neither supplies complete preprocessing.
+The [F127 kernels](docs/field-fp127.md) also prepare fixed left operands for
+the public linear maps used by experimental matrix-correlation generators.
 
 The malicious-majority target includes amortized fresh cryptographic
 preprocessing and is **not met**. Online-only timing improvements do not

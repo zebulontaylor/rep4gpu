@@ -6,9 +6,10 @@ that dominated the earlier bridge. For the same one-query micro model, fresh
 preprocessing fell from 1,340.8 seconds to 0.416 seconds. This is a different
 field and runtime: these bundles cannot feed the p31 GPU implementation.
 
-The current complete direct-field runtime uses Python big integers in four
-TLS processes. Separate [exact q256 GPU matmul kernels](large-prime-kernels.md) pass bigint parity tests,
-but they are not yet integrated into the complete authenticated online path.
+The direct-field runtime uses four TLS processes with Python big-integer
+authentication checks. Fixed-model evaluation can use the
+[exact q256 GPU matmul kernels](large-prime-kernels.md) for its value and MAC
+products; input sharing, square activations, checks, and transport remain on CPU.
 The preprocessing-inclusive performance target remains unmet.
 
 ## Generate and consume a fresh bundle
@@ -72,6 +73,15 @@ logit with the clear reference. The bundle directory must be new. This provider
 supports only `2**256 - 189`; it rejects other fields before consuming handles
 or communicating. Native generation still uses scalar MASCOT products, so this
 change reduces online work without reducing the asymptotic preprocessing cost.
+
+Add `--gpu-products` to run the checked fixed-model query with GPU matrix
+products. The adapter packs each role's weight and MAC matrices together once,
+then multiplies both by each checked public `D`. It charges weight packing and
+public-zero kernel warmup to setup, and charges fresh input packing, transfers,
+and synchronization to each query. The local fixture runs four CUDA contexts
+on one GPU; it does not model four independent GPUs. The
+[fresh GPU fixture](../results/spdz_prime256_prepared_gpu_micro2.json) checked
+every output and reports each stage separately.
 
 The [dependent-stream runner and measurements](../results/autoregressive_benchmark_design.md)
 serve successive tokens using disjoint rows from a fresh pool. Its plaintext

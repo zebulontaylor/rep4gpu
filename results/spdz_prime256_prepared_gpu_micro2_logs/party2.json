@@ -1,0 +1,44 @@
+{
+  "party": 2,
+  "passed": true,
+  "output": [
+    26468635,
+    60537524,
+    -3805610,
+    -40648386,
+    29847998,
+    3126244,
+    15623602,
+    -91149508
+  ],
+  "checked_query_ms": 11.539158003870398,
+  "input_sharing_ms": 1.2594030049513094,
+  "role_setup_ms": 777.9770930064842,
+  "online_payload_bytes": 15912,
+  "online_rounds": 24,
+  "authenticated_tls": true,
+  "gpu_weight_setup_ms": 565.8843990022433,
+  "gpu_query_products_ms": 1.2327430013101548,
+  "gpu_product_calls": 2,
+  "gpu_query_device_interval_ms": 0.7783040255308151,
+  "gpu_product_samples": [
+    {
+      "wall_ms": 0.50892499712063,
+      "device_stream_interval_ms": 0.24473600089550018,
+      "shape": [
+        1,
+        8
+      ],
+      "columns": 2
+    },
+    {
+      "wall_ms": 0.7238180041895248,
+      "device_stream_interval_ms": 0.5335680246353149,
+      "shape": [
+        1,
+        2
+      ],
+      "columns": 8
+    }
+  ]
+}
