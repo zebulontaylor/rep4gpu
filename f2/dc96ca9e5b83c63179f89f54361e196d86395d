@@ -1,0 +1,105 @@
+tests/test_lowgear_key_cache.py
+  s_75c4c68a72508c::t_f99413aae6d967 51-61
+  s_75c4c68a72508c::t_2adef2ffd69536 1-50
+tests/test_spdz_goldilocks_stream.py
+  s_75c4c68a72508c::t_a59b7ab71d6ed8 1-100,104-105,136-137,148,156,161,166-168,172
+  s_75c4c68a72508c::t_510b30f5faa485 101-103,106-135,138-147,149-155,157-160,162-165,169-171,173-208
+rep4gpu/preprocessing_lowgear_goldilocks_loader.py
+  s_75c4c68a72508c::t_c8e736bce3f98e 87-155,207
+  s_75c4c68a72508c::t_877df5200976b1 208
+results/lowgear_goldilocks_deferred2400_cost.json
+  s_75c4c68a72508c::t_e0c903fbaf2d4d 1-51
+results/lowgear_goldilocks_fresh2400_repeat_cost.json
+  s_75c4c68a72508c::t_fdff372af51c73 1-16,19-24,26-40,49-67,79
+  s_75c4c68a72508c::t_c6ff0c96afa94d 70-78
+  s_75c4c68a72508c::t_c560a1976ade5e 17-18,25,41-48,68-69
+tests/test_goldilocks_stream_runner.py
+  s_75c4c68a72508c::t_5ed952800c01d9 1-28
+results/lowgear_goldilocks_stream128_cost.json
+  s_75c4c68a72508c::t_c6ff0c96afa94d 48-56
+  s_75c4c68a72508c::t_8c23487b30746d 11-12,42-47
+  s_75c4c68a72508c::t_bcf8f7695e5c32 1-10,13-41,57
+rep4gpu/spdz_prime256.py
+  s_75c4c68a72508c::t_9498e39d4f3278 93-96
+results/lowgear_goldilocks_preprocessing_cost.json
+  s_75c4c68a72508c::t_c6ff0c96afa94d 252-260
+rep4gpu/spdz_goldilocks_stream.py
+  s_75c4c68a72508c::t_a59b7ab71d6ed8 159-160
+  s_75c4c68a72508c::t_4a1680068aced4 120-122
+  s_75c4c68a72508c::t_fc51cff9ba6a72 1-119,123-158,161-164,166-200
+  s_75c4c68a72508c::t_84c681b839dbd1 165,201-212
+results/lowgear_goldilocks_inference2400.json
+  s_75c4c68a72508c::t_9af9dabd914e23 1-106337
+scripts/run_spdz_prime256.py
+  s_75c4c68a72508c::t_c9ce230dacb75c 155-161
+  s_75c4c68a72508c::t_cb9a249c9f2c2a 91-93,99,168-180
+  s_75c4c68a72508c::t_5c285066e2fbe8 181-182
+rep4gpu/spdz_goldilocks_deferred.py
+  s_75c4c68a72508c::t_e56da1030472f1 1-68,70-124
+  s_75c4c68a72508c::t_0c29a3dea600ed 69
+tests/test_spdz_goldilocks_retirement.py
+  s_75c4c68a72508c::t_cb9a249c9f2c2a 1-48
+rep4gpu/preprocessing_lowgear_goldilocks.py
+  s_75c4c68a72508c::t_56ad489a87ea85 12
+  s_75c4c68a72508c::t_4016ad329c8bdd 25,35-40,60-63,98-100,102-103,105-106,110,118-120,132
+  s_75c4c68a72508c::t_3d7f2f7daab86e 104
+  s_75c4c68a72508c::t_7efcee0b7b3cce 128-130
+  s_75c4c68a72508c::t_f99413aae6d967 101
+artifacts/goldilocks_deferred_validation.json
+  s_75c4c68a72508c::t_67fc52d0a2131c 1-29
+scripts/run_spdz_goldilocks_stream.py
+  s_75c4c68a72508c::t_21154a00bad9be 1-48,55-96,98-109,114-118,120-130,132-136,139,142-156,163,165-168,178-179,181-202,204-207,209-213
+  s_75c4c68a72508c::t_4a1680068aced4 49-54,97,131,164,203,208
+  s_75c4c68a72508c::t_5ed952800c01d9 111-113,137-138,140-141,158-162,169-174
+  s_75c4c68a72508c::t_184159616ef6ca 110,119,157,175-177,180
+tests/test_spdz_goldilocks_deferred.py
+  s_75c4c68a72508c::t_9498e39d4f3278 202,229-230,232-236,240-264
+  s_75c4c68a72508c::t_9be27a6f753dc8 56-196,203
+  s_75c4c68a72508c::t_2910feb83479fc 1-55,197-201,204-228,231,237-239
+RESULTS.md
+  s_75c4c68a72508c::t_0ca83eb6842ed2 319-322,324-330,332-342
+  s_75c4c68a72508c::t_2e6f88760b5d6b 286-318
+  s_75c4c68a72508c::t_fe78edcc18d838 323,331
+  s_75c4c68a72508c::t_f0d6fe9e055504 245-253,264-284
+  s_75c4c68a72508c::t_92cb188d5236ed 285
+scripts/report_lowgear_epoch.py
+  s_75c4c68a72508c::t_84dbe3e7137507 1-16,20-31,35,37-68
+  s_75c4c68a72508c::t_f1284ff5419613 17-19,32-34,36
+results/lowgear_goldilocks_fresh2400_cost.json
+  s_75c4c68a72508c::t_b84a1fb4f65588 1-16,19-377,397
+  s_75c4c68a72508c::t_c6ff0c96afa94d 388-396
+  s_75c4c68a72508c::t_6d9b3d85cc972f 17-18,378-387
+results/goldilocks_dependent128_costs.json
+  s_75c4c68a72508c::t_a20c9cf9c9ffa6 1-27
+results/lowgear_actual_epoch_costs.json
+  s_75c4c68a72508c::t_47dccef77d89e0 1-74
+rep4gpu/lowgear_key_cache.py
+  s_75c4c68a72508c::t_508d8cdf5d959c 1-18,20-32,36,38-39,41-59,61-67,74,77-78
+  s_75c4c68a72508c::t_f99413aae6d967 19,33-35,75-76
+  s_75c4c68a72508c::t_4016ad329c8bdd 37,68-73
+  s_75c4c68a72508c::t_e09076382bfc49 40,60
+results/goldilocks_dependent128.json
+  s_75c4c68a72508c::t_9e5ec8ea61af7d 1-11312
+results/goldilocks_dependent2400_deferred.json
+  s_75c4c68a72508c::t_3c549801402c95 1-184195
+results/lowgear_goldilocks_inference2400_second.json
+  s_75c4c68a72508c::t_6b5965a0997804 1-106342
+tests/test_preprocessing_goldilocks_loader.py
+  s_75c4c68a72508c::t_94fbfcb5676eef 99,109,214-291
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f2dc96ca9e5b83c63179f89f54361e196d86395d",
+  "prompts": {},
+  "sessions": {
+    "s_75c4c68a72508c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1c38d-f7bc-7d91-9747-09bc5f7b0dcf",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Zeb Taylor <zceboys@gmail.com>"
+    }
+  }
+}
