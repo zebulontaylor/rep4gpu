@@ -1,0 +1,186 @@
+[
+  {
+    "m": 1,
+    "k": 64,
+    "n": 64,
+    "median_ms": {
+      "q256_bytes_prepared": {
+        "graph_event_ms": 0.025599999353289604,
+        "eager_wall_ms": 0.09513900295132771
+      },
+      "q256_bytes_raw": {
+        "graph_event_ms": 0.03379200026392937,
+        "eager_wall_ms": 0.1161479958682321
+      },
+      "q256_prepared": {
+        "graph_event_ms": 0.03276799991726875,
+        "eager_wall_ms": 0.10038799518952146
+      },
+      "q256_simt": {
+        "graph_event_ms": 0.08294399827718735,
+        "eager_wall_ms": 0.1125009948736988
+      },
+      "q256_tensor": {
+        "graph_event_ms": 0.03481600061058998,
+        "eager_wall_ms": 0.11651800014078617
+      },
+      "q256_tensor_uint16": {
+        "graph_event_ms": 0.034752000123262405,
+        "eager_wall_ms": 0.11427499703131616
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.01228800043463707,
+        "eager_wall_ms": 0.03918300353689119
+      }
+    },
+    "exact_simt_tensor_parity": true,
+    "cross_product_temporary_bytes": {
+      "radix128": 350464,
+      "centered_bytes": 262144
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one field product only; excludes preprocessing, authentication, checks and communication",
+    "prepared_weight_bytes": {
+      "radix128": 151552,
+      "centered_bytes": 139264
+    }
+  },
+  {
+    "m": 1,
+    "k": 128,
+    "n": 128,
+    "median_ms": {
+      "q256_bytes_prepared": {
+        "graph_event_ms": 0.028672000393271446,
+        "eager_wall_ms": 0.09446699550608173
+      },
+      "q256_bytes_raw": {
+        "graph_event_ms": 0.048128001391887665,
+        "eager_wall_ms": 0.11876299686264247
+      },
+      "q256_prepared": {
+        "graph_event_ms": 0.035840000957250595,
+        "eager_wall_ms": 0.0974429931375198
+      },
+      "q256_simt": {
+        "graph_event_ms": 0.22835199534893036,
+        "eager_wall_ms": 0.26005700055975467
+      },
+      "q256_tensor": {
+        "graph_event_ms": 0.04095999896526337,
+        "eager_wall_ms": 0.11949400504818186
+      },
+      "q256_tensor_uint16": {
+        "graph_event_ms": 0.04095999896526337,
+        "eager_wall_ms": 0.11744999937945977
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.013279999606311321,
+        "eager_wall_ms": 0.03629800630733371
+      }
+    },
+    "exact_simt_tensor_parity": true,
+    "cross_product_temporary_bytes": {
+      "radix128": 700928,
+      "centered_bytes": 524288
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one field product only; excludes preprocessing, authentication, checks and communication",
+    "prepared_weight_bytes": {
+      "radix128": 606208,
+      "centered_bytes": 540672
+    }
+  },
+  {
+    "m": 1,
+    "k": 1024,
+    "n": 1024,
+    "median_ms": {
+      "q256_bytes_prepared": {
+        "graph_event_ms": 0.2314240038394928,
+        "eager_wall_ms": 0.2867170042009093
+      },
+      "q256_bytes_raw": {
+        "graph_event_ms": 1.3957120180130005,
+        "eager_wall_ms": 1.4316160013549961
+      },
+      "q256_prepared": {
+        "graph_event_ms": 0.3491840064525604,
+        "eager_wall_ms": 0.41042999509954825
+      },
+      "q256_simt": {
+        "graph_event_ms": 11.43603229522705,
+        "eager_wall_ms": 10.650370000803377
+      },
+      "q256_tensor": {
+        "graph_event_ms": 0.7301120162010193,
+        "eager_wall_ms": 0.7627910017617978
+      },
+      "q256_tensor_uint16": {
+        "graph_event_ms": 0.623520016670227,
+        "eager_wall_ms": 0.6514220003737137
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.03686400130391121,
+        "eager_wall_ms": 0.06449100328609347
+      }
+    },
+    "exact_simt_tensor_parity": true,
+    "cross_product_temporary_bytes": {
+      "radix128": 5607424,
+      "centered_bytes": 4194304
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one field product only; excludes preprocessing, authentication, checks and communication",
+    "prepared_weight_bytes": {
+      "radix128": 38797312,
+      "centered_bytes": 33685504
+    }
+  },
+  {
+    "m": 1,
+    "k": 4096,
+    "n": 1024,
+    "median_ms": {
+      "q256_bytes_prepared": {
+        "graph_event_ms": 0.6338559985160828,
+        "eager_wall_ms": 0.6923090040800162
+      },
+      "q256_bytes_raw": {
+        "graph_event_ms": 5.262335777282715,
+        "eager_wall_ms": 5.359233000490349
+      },
+      "q256_prepared": {
+        "graph_event_ms": 1.2247040271759033,
+        "eager_wall_ms": 1.2938269937876612
+      },
+      "q256_simt": {
+        "graph_event_ms": 43.615230560302734,
+        "eager_wall_ms": 44.08676599996397
+      },
+      "q256_tensor": {
+        "graph_event_ms": 3.195904016494751,
+        "eager_wall_ms": 3.269474000262562
+      },
+      "q256_tensor_uint16": {
+        "graph_event_ms": 2.959359884262085,
+        "eager_wall_ms": 3.020946998731233
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.15033599734306335,
+        "eager_wall_ms": 0.17788299737730995
+      }
+    },
+    "exact_simt_tensor_parity": true,
+    "cross_product_temporary_bytes": {
+      "radix128": 5607424,
+      "centered_bytes": 4194304
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one field product only; excludes preprocessing, authentication, checks and communication",
+    "prepared_weight_bytes": {
+      "radix128": 155189248,
+      "centered_bytes": 134348800
+    }
+  }
+]

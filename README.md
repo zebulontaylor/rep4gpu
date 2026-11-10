@@ -182,6 +182,11 @@ path](docs/direct-field-preprocessing.md) removes that conversion and cuts
 fresh toy preprocessing from 22.35 minutes to 0.416 seconds; its complete
 online runtime currently uses CPU big integers.
 
+Separate [exact q256 tensor-core kernels](docs/large-prime-kernels.md) support
+prepared local weights. The [matrix-correlation expansion helper](docs/matrix-pcg-linear.md)
+combines raw local terms before applying their public linear map. Both are
+isolated arithmetic components; neither supplies complete preprocessing.
+
 The malicious-majority target includes amortized fresh cryptographic
 preprocessing and is **not met**. Online-only timing improvements do not
 establish that target. Both native paths remove the central randomness dealer. The direct path is

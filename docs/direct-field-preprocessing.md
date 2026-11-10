@@ -7,7 +7,7 @@ preprocessing fell from 1,340.8 seconds to 0.416 seconds. This is a different
 field and runtime: these bundles cannot feed the p31 GPU implementation.
 
 The current complete direct-field runtime uses Python big integers in four
-TLS processes. Separate exact q256 GPU matmul kernels pass bigint parity tests,
+TLS processes. Separate [exact q256 GPU matmul kernels](large-prime-kernels.md) pass bigint parity tests,
 but they are not yet integrated into the complete authenticated online path.
 The preprocessing-inclusive performance target remains unmet.
 
