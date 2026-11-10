@@ -1,0 +1,2599 @@
+{
+  "passed": false,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "timed_out": false,
+  "exact_integer_match": false,
+  "expected": [
+    [
+      26468635,
+      60537524,
+      -3805610,
+      -40648386,
+      29847998,
+      3126244,
+      15623602,
+      -91149508
+    ]
+  ],
+  "parties": [
+    {
+      "party": 0,
+      "passed": true,
+      "output": [
+        -2226371264330,
+        -3827146102852,
+        5822309631001,
+        -17614910273718,
+        12913159931642,
+        -26549343474638,
+        -13605763176200,
+        -35867316915208
+      ],
+      "preprocessing_load_ms": 55.38208499638131,
+      "input_protocol_by_name_ms": {
+        "x": 14.79930299683474,
+        "w1": 1.3322789964149706,
+        "b1": 1.4494589995592833,
+        "w2": 1.2648830015677959,
+        "b2": 1.7340929989586584
+      },
+      "checked_online_ms": 16.066971998952795,
+      "online_payload_bytes": 22056,
+      "online_rounds": 24,
+      "authenticated_tls": true,
+      "role_local_loader": true,
+      "provenance": {
+        "format": "mascot256-native-role-v1",
+        "ready": true,
+        "parties": 4,
+        "prime": 115792089237316195423570985008687907853269984665640564039457584007913129639747,
+        "mac_keys": 1,
+        "security_parameter": 128,
+        "session": "e94b55450b64120fd32bf524230adadfbcd790c57d857259275ee5a8960ff184",
+        "request": {
+          "matrices": [
+            {
+              "name": "first",
+              "m": 1,
+              "k": 8,
+              "n": 2
+            },
+            {
+              "name": "second",
+              "m": 1,
+              "k": 2,
+              "n": 8
+            }
+          ],
+          "squares": [
+            {
+              "name": "hidden",
+              "shape": [
+                1,
+                2
+              ]
+            }
+          ],
+          "inputs": [
+            {
+              "name": "x",
+              "owner": 0,
+              "shape": [
+                1,
+                8
+              ]
+            },
+            {
+              "name": "w1",
+              "owner": 1,
+              "shape": [
+                8,
+                2
+              ]
+            },
+            {
+              "name": "b1",
+              "owner": 1,
+              "shape": [
+                1,
+                2
+              ]
+            },
+            {
+              "name": "w2",
+              "owner": 1,
+              "shape": [
+                2,
+                8
+              ]
+            },
+            {
+              "name": "b2",
+              "owner": 1,
+              "shape": [
+                1,
+                8
+              ]
+            }
+          ]
+        },
+        "records": [
+          {
+            "kind": "calibration",
+            "name": "constant_one",
+            "component": "value",
+            "shape": [
+              1,
+              1
+            ],
+            "offset": 0,
+            "count": 1,
+            "identifier": "add7fe7ece9ce51be29aa2ff382d3f9b87ce56b987e768b549bcdd54d328d1b6"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "a",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 1,
+            "count": 8,
+            "identifier": "f37a884f5c282cc801133ab5322b8675e04074820084bae2d4ee5b3c8d35c515"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "b",
+            "shape": [
+              8,
+              2
+            ],
+            "offset": 9,
+            "count": 16,
+            "identifier": "d3d4e8760ac49b62037b91ea9066ecdf1c002540cd1b96e4f62d1529c1980fac"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "c",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 25,
+            "count": 2,
+            "identifier": "668a173a49138bdeef4976bddce470624d7e81a7f40318f285e159a5c5c67e7b"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "a",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 27,
+            "count": 2,
+            "identifier": "75a09884559a8825574a31fce6bbea889d63bf313b9cb1072d7ae22467c958c3"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "b",
+            "shape": [
+              2,
+              8
+            ],
+            "offset": 29,
+            "count": 16,
+            "identifier": "5e144fe03da83a3c42d805f3255215109a8b418245a83ee04daf0426b0e00cb0"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "c",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 45,
+            "count": 8,
+            "identifier": "f2847f24cac4e6f8aebe507a5c21193824971d2d88abd92a2b726e4f2121a33c"
+          },
+          {
+            "kind": "squares",
+            "name": "hidden",
+            "component": "a",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 53,
+            "count": 2,
+            "identifier": "6b11c87ad4de321f482df12acb0372eaff89aecf9e4a2320c90af353f53d2ff4"
+          },
+          {
+            "kind": "squares",
+            "name": "hidden",
+            "component": "a_squared",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 55,
+            "count": 2,
+            "identifier": "6b11c87ad4de321f482df12acb0372eaff89aecf9e4a2320c90af353f53d2ff4"
+          },
+          {
+            "kind": "inputs",
+            "name": "x",
+            "component": "share",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 57,
+            "count": 8,
+            "identifier": "d4057a57023b7fbe1ee5a2c591a703607accaa21af10f009732d25988ee62253",
+            "owner": 0,
+            "clear_offset": 0
+          },
+          {
+            "kind": "inputs",
+            "name": "w1",
+            "component": "share",
+            "shape": [
+              8,
+              2
+            ],
+            "offset": 65,
+            "count": 16,
+            "identifier": "aad0349e448d9827d74292b6038082adfb699ff3010dec9166d02d634d074b3c",
+            "owner": 1,
+            "clear_offset": 0
+          },
+          {
+            "kind": "inputs",
+            "name": "b1",
+            "component": "share",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 81,
+            "count": 2,
+            "identifier": "8b339790c962d3706ea0998be86a170854950f8d6dfd79584ef7e28f51b63fa4",
+            "owner": 1,
+            "clear_offset": 16
+          },
+          {
+            "kind": "inputs",
+            "name": "w2",
+            "component": "share",
+            "shape": [
+              2,
+              8
+            ],
+            "offset": 83,
+            "count": 16,
+            "identifier": "64b203e10a4edff98d4093d74e07d334be4aa048b33b06bb5f6963e0da70c920",
+            "owner": 1,
+            "clear_offset": 18
+          },
+          {
+            "kind": "inputs",
+            "name": "b2",
+            "component": "share",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 99,
+            "count": 8,
+            "identifier": "44cdd72f866b8028435b5720a0dedcc7cb4251268fc346d9a72cf2ed80c1ba2e",
+            "owner": 1,
+            "clear_offset": 34
+          }
+        ],
+        "privacy_audit_status": "conditional_native_q256_experiment",
+        "security_target_met": false,
+        "experimental": true,
+        "field_conversion": false,
+        "share_count": 107,
+        "clear_counts": [
+          8,
+          42,
+          0,
+          0
+        ],
+        "native_binary": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/mascot-party.x",
+        "native_binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+        "native_policy": {
+          "format": "mascot256-tau4-fresh-sacrifice-build-v2",
+          "internal_prime": "115792089237316195423570985008687907853269984665640564039457584007913129639747",
+          "field_bits": 256,
+          "runtime_security": 128,
+          "compiler_security": 176,
+          "compiler_bit_length": 78,
+          "amplification": 4,
+          "check": true,
+          "post_authentication_sacrifice_coin": true,
+          "native_mac_keys": 1,
+          "application_prime": 2147483647,
+          "application_mac_keys": 7,
+          "ot": "SoftSpokenMalOt",
+          "binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+          "source_sha256": {
+            "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+            "Makefile": "72994e5606079c197e5a6cdab4019a54f42d7e0a5895a7c82941aa2b3eda8ea9",
+            "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+            "Machines/SPDZ.cpp": "261923e251e85ff1e44a332316e99e0d819096e2eaa81786537c6b8080d7394f",
+            "Processor/FieldMachine.hpp": "cb16cf24589a59fba6461106450d3885399707b9a0643c344af9358ea3721623",
+            "Math/gfp.h": "3b9af0a4a83abeda72d8e48a5c90f88b2497368d964b829d50f6ef8e0092e912",
+            "Math/Zp_Data.h": "1e300c058fda86edfb964e9dd8b97e99cbd14eb6491293b9c0597c2d898a77a4",
+            "Protocols/MascotPrep.hpp": "5b33a46627bca22393f85153d8b8dc42c9c0e3568b3c51049125a5445f309946",
+            "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+            "Protocols/Share.h": "e657f7d39b6d9bf8f5b4e07123157c0d34b02619f162104801da00b9ea136520",
+            "OT/NPartyTripleGenerator.h": "c333b57c983d54d361d66697d18508c14a20783597b1e8ad5ee8fae3e0d83abe",
+            "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+            "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+            "OT/MascotParams.cpp": "60a19a941e1131a825e87e9836b724b017aba5f4ae52f4badef54bb766946a70",
+            "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c",
+            "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+            "GC/TinierShare.h": "5a0e71c2017149f1c834615ea32673483f5ca6fdb6c317bcacd27640cce5101e",
+            "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+            "Compiler/comparison.py": "7ae17ea0ef7713fa9b69646653192f068bab38c668363afc97d819ae4c1cd1bb",
+            "Compiler/floatingpoint.py": "287903b999b5a0eafc39092bd2d8954cf108c8b8a74372de7187e15e6af907d8",
+            "Compiler/non_linear.py": "26c1d4697da156ec7319d05a02e6d56132a3b573113bec11ebeb96627b1a9dba",
+            "Compiler/types.py": "e5d107b1351db6258c81a70cd8295d802fc19babff1c75a8b94f0a51157a481a",
+            "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829"
+          },
+          "dependency_sha256": {
+            "local/lib/liblibOTe.a": "bff4475f26c3648209a65ea20bb02ad17a14a8cf148af70d8fe242384e598720",
+            "local/lib/libcryptoTools.a": "4121c2d8166a1a8a1254e75cc6dc4c46fba8517554656cda2eeeab88809b2ffd",
+            "deps/SimpleOT/libsimpleot.a": "be743eccb974391c6160edc385d52d7d3acb97fbad12c4236e07b10f905bf311",
+            "deps/SimplestOT_C/ref10/libSimplestOT.a": "a035cde324bc012d0b270c8d73d3cc050669125d116a0595137809d2e35338fa",
+            "libSPDZ.so": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122",
+            "local/lib/libsodium.so": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+          },
+          "source_lock_sha256": "21de4b3da0f07a86eb133cfc8b49efb73b111f083d3fffb58359c3f61786a527",
+          "reviewed_patch_sha256": "2ffdd3ffb5f50f5ca4a1ed96a0300dea8f7d8ef17df118a0083affca23e2a781",
+          "fresh_sacrifice_patch_sha256": "5073dc640c9348c8331d00084dd5e448684e00f4908cb41f381e27eb5b5f0b70",
+          "build_properties": {
+            "LONG_BIT_MAC_KEY": true,
+            "USE_KOS": 0,
+            "USE_LIBOTE2": 0,
+            "INSECURE": false
+          }
+        },
+        "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+        "native_loaded_libraries": {
+          "libSPDZ.so": {
+            "path": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/libSPDZ.so",
+            "sha256": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122"
+          },
+          "libgmpxx.so.4": {
+            "path": "/usr/lib64/libgmpxx.so.4.6.1",
+            "sha256": "7c7b62a1e89474977ec8dfa295fd7fa094c64fb3671fdc15ccde11f013ba667f"
+          },
+          "libgmp.so.10": {
+            "path": "/usr/lib64/libgmp.so.10.4.1",
+            "sha256": "1119b8f422ba480b04452d6bd427a091633e64c987a53bb11d03655d2c766c8a"
+          },
+          "libsodium.so.26": {
+            "path": "/usr/lib64/libsodium.so.26.4.0",
+            "sha256": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+          },
+          "libssl.so.3": {
+            "path": "/usr/lib64/libssl.so.3.5.8",
+            "sha256": "5f39428765cf3be435e7777ac106e8bae98598d07ce9635e4750a8ba8962f711"
+          },
+          "libcrypto.so.3": {
+            "path": "/usr/lib64/libcrypto.so.3.5.8",
+            "sha256": "d1a2e98f2d6cea1e1c7905f82214305a63d22773f0024d6ccd6e4a2f18c3628b"
+          },
+          "libboost_filesystem.so.1.83.0": {
+            "path": "/usr/lib64/libboost_filesystem.so.1.83.0",
+            "sha256": "6e6a109cfff8f687bbcd68050cea98b99e1340dc4c8583dbce1f10cbbd1db746"
+          },
+          "libboost_iostreams.so.1.83.0": {
+            "path": "/usr/lib64/libboost_iostreams.so.1.83.0",
+            "sha256": "448ba1c0a403715eca32c82a4a24d1445ef2788ded47755ad7909399f8ea9c86"
+          },
+          "libstdc++.so.6": {
+            "path": "/usr/lib64/libstdc++.so.6.0.33",
+            "sha256": "895f92d1ffca3941e747009e079b1a0fb69e7a0883f58513892cbc46374ea140"
+          },
+          "libm.so.6": {
+            "path": "/usr/lib64/libm.so.6",
+            "sha256": "febbfa979117086ff669a97acc68d578e98c2064f782987a9daf2e96cabf4f87"
+          },
+          "libgcc_s.so.1": {
+            "path": "/usr/lib64/libgcc_s-14-20251022.so.1",
+            "sha256": "a171f0e03a2b4181c299e8a532f23a2ba802e96549892c0a7a73d293e02206ff"
+          },
+          "libc.so.6": {
+            "path": "/usr/lib64/libc.so.6",
+            "sha256": "2c4c4856030a9af10dcbec8f799f463124036c25fa0e4a7e9dfcec76444d0593"
+          },
+          "libz.so.1": {
+            "path": "/usr/lib64/libz.so.1.3.1.zlib-ng",
+            "sha256": "502367e59fbbb3ec65c2c7c31f8ad1b47df7a6b4a6b7d283e0556def8ce6bf42"
+          },
+          "libboost_atomic.so.1.83.0": {
+            "path": "/usr/lib64/libboost_atomic.so.1.83.0",
+            "sha256": "5a080d78d4cc9be37a272042883060728f358967da3308875b9af64ea4ac79e0"
+          },
+          "libbz2.so.1": {
+            "path": "/usr/lib64/libbz2.so.1.0.8",
+            "sha256": "237eb6f00023f0d0cf1e512c80fe1e1ccfcab6d133f65ded2b335cc3836a7ef8"
+          },
+          "liblzma.so.5": {
+            "path": "/usr/lib64/liblzma.so.5.6.2",
+            "sha256": "6e9166c7bcc54ead0f3d810ec18a805ad38230246e802dd9f3b782f5320242e5"
+          },
+          "libzstd.so.1": {
+            "path": "/usr/lib64/libzstd.so.1.5.5",
+            "sha256": "94af4a706493a5d0821482afbefa0f05d0e98ad7cda4c50bcab23c0e67ce3f12"
+          }
+        },
+        "export_source_sha256": "c0bd32e73b59b26eb8edc9db5c5eec2f4cafb28c93f74478f27fbffd55829a14",
+        "native_source_sha256": {
+          "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+          "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829",
+          "compile.py": "1f0d3eb9108e4819b3335feb4e0bab2b2a19b6451bc3bc6a43fceb2d93fe6868",
+          "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+          "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+          "Protocols/ShuffleSacrifice.hpp": "f9ce89d917d6f34e751cb1fd419505e53269d025f778b57e5bfe6d265814fd35",
+          "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+          "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+          "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+          "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+          "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c"
+        },
+        "passed": true,
+        "return_codes": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "compile_ms": 315.1140330010094,
+        "native_preprocessing_ms": 417.67129999789177,
+        "preprocessing_ms": 767.9324330019881,
+        "private_role_directories": [
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party0",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party1",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party2",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party3"
+        ],
+        "transport": "native encrypted peer channels",
+        "trusted_dealer": false
+      }
+    },
+    {
+      "party": 1,
+      "passed": true,
+      "output": [
+        -2226371264330,
+        -3827146102852,
+        5822309631001,
+        -17614910273718,
+        12913159931642,
+        -26549343474638,
+        -13605763176200,
+        -35867316915208
+      ],
+      "preprocessing_load_ms": 55.794818996218964,
+      "input_protocol_by_name_ms": {
+        "x": 3.5340390022611246,
+        "w1": 1.5761569957248867,
+        "b1": 1.030382998578716,
+        "w2": 1.2098489969503134,
+        "b2": 1.519138997537084
+      },
+      "checked_online_ms": 16.29411699832417,
+      "online_payload_bytes": 22056,
+      "online_rounds": 24,
+      "authenticated_tls": true,
+      "role_local_loader": true,
+      "provenance": {
+        "format": "mascot256-native-role-v1",
+        "ready": true,
+        "parties": 4,
+        "prime": 115792089237316195423570985008687907853269984665640564039457584007913129639747,
+        "mac_keys": 1,
+        "security_parameter": 128,
+        "session": "e94b55450b64120fd32bf524230adadfbcd790c57d857259275ee5a8960ff184",
+        "request": {
+          "matrices": [
+            {
+              "name": "first",
+              "m": 1,
+              "k": 8,
+              "n": 2
+            },
+            {
+              "name": "second",
+              "m": 1,
+              "k": 2,
+              "n": 8
+            }
+          ],
+          "squares": [
+            {
+              "name": "hidden",
+              "shape": [
+                1,
+                2
+              ]
+            }
+          ],
+          "inputs": [
+            {
+              "name": "x",
+              "owner": 0,
+              "shape": [
+                1,
+                8
+              ]
+            },
+            {
+              "name": "w1",
+              "owner": 1,
+              "shape": [
+                8,
+                2
+              ]
+            },
+            {
+              "name": "b1",
+              "owner": 1,
+              "shape": [
+                1,
+                2
+              ]
+            },
+            {
+              "name": "w2",
+              "owner": 1,
+              "shape": [
+                2,
+                8
+              ]
+            },
+            {
+              "name": "b2",
+              "owner": 1,
+              "shape": [
+                1,
+                8
+              ]
+            }
+          ]
+        },
+        "records": [
+          {
+            "kind": "calibration",
+            "name": "constant_one",
+            "component": "value",
+            "shape": [
+              1,
+              1
+            ],
+            "offset": 0,
+            "count": 1,
+            "identifier": "add7fe7ece9ce51be29aa2ff382d3f9b87ce56b987e768b549bcdd54d328d1b6"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "a",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 1,
+            "count": 8,
+            "identifier": "f37a884f5c282cc801133ab5322b8675e04074820084bae2d4ee5b3c8d35c515"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "b",
+            "shape": [
+              8,
+              2
+            ],
+            "offset": 9,
+            "count": 16,
+            "identifier": "d3d4e8760ac49b62037b91ea9066ecdf1c002540cd1b96e4f62d1529c1980fac"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "c",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 25,
+            "count": 2,
+            "identifier": "668a173a49138bdeef4976bddce470624d7e81a7f40318f285e159a5c5c67e7b"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "a",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 27,
+            "count": 2,
+            "identifier": "75a09884559a8825574a31fce6bbea889d63bf313b9cb1072d7ae22467c958c3"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "b",
+            "shape": [
+              2,
+              8
+            ],
+            "offset": 29,
+            "count": 16,
+            "identifier": "5e144fe03da83a3c42d805f3255215109a8b418245a83ee04daf0426b0e00cb0"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "c",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 45,
+            "count": 8,
+            "identifier": "f2847f24cac4e6f8aebe507a5c21193824971d2d88abd92a2b726e4f2121a33c"
+          },
+          {
+            "kind": "squares",
+            "name": "hidden",
+            "component": "a",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 53,
+            "count": 2,
+            "identifier": "6b11c87ad4de321f482df12acb0372eaff89aecf9e4a2320c90af353f53d2ff4"
+          },
+          {
+            "kind": "squares",
+            "name": "hidden",
+            "component": "a_squared",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 55,
+            "count": 2,
+            "identifier": "6b11c87ad4de321f482df12acb0372eaff89aecf9e4a2320c90af353f53d2ff4"
+          },
+          {
+            "kind": "inputs",
+            "name": "x",
+            "component": "share",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 57,
+            "count": 8,
+            "identifier": "d4057a57023b7fbe1ee5a2c591a703607accaa21af10f009732d25988ee62253",
+            "owner": 0,
+            "clear_offset": 0
+          },
+          {
+            "kind": "inputs",
+            "name": "w1",
+            "component": "share",
+            "shape": [
+              8,
+              2
+            ],
+            "offset": 65,
+            "count": 16,
+            "identifier": "aad0349e448d9827d74292b6038082adfb699ff3010dec9166d02d634d074b3c",
+            "owner": 1,
+            "clear_offset": 0
+          },
+          {
+            "kind": "inputs",
+            "name": "b1",
+            "component": "share",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 81,
+            "count": 2,
+            "identifier": "8b339790c962d3706ea0998be86a170854950f8d6dfd79584ef7e28f51b63fa4",
+            "owner": 1,
+            "clear_offset": 16
+          },
+          {
+            "kind": "inputs",
+            "name": "w2",
+            "component": "share",
+            "shape": [
+              2,
+              8
+            ],
+            "offset": 83,
+            "count": 16,
+            "identifier": "64b203e10a4edff98d4093d74e07d334be4aa048b33b06bb5f6963e0da70c920",
+            "owner": 1,
+            "clear_offset": 18
+          },
+          {
+            "kind": "inputs",
+            "name": "b2",
+            "component": "share",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 99,
+            "count": 8,
+            "identifier": "44cdd72f866b8028435b5720a0dedcc7cb4251268fc346d9a72cf2ed80c1ba2e",
+            "owner": 1,
+            "clear_offset": 34
+          }
+        ],
+        "privacy_audit_status": "conditional_native_q256_experiment",
+        "security_target_met": false,
+        "experimental": true,
+        "field_conversion": false,
+        "share_count": 107,
+        "clear_counts": [
+          8,
+          42,
+          0,
+          0
+        ],
+        "native_binary": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/mascot-party.x",
+        "native_binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+        "native_policy": {
+          "format": "mascot256-tau4-fresh-sacrifice-build-v2",
+          "internal_prime": "115792089237316195423570985008687907853269984665640564039457584007913129639747",
+          "field_bits": 256,
+          "runtime_security": 128,
+          "compiler_security": 176,
+          "compiler_bit_length": 78,
+          "amplification": 4,
+          "check": true,
+          "post_authentication_sacrifice_coin": true,
+          "native_mac_keys": 1,
+          "application_prime": 2147483647,
+          "application_mac_keys": 7,
+          "ot": "SoftSpokenMalOt",
+          "binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+          "source_sha256": {
+            "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+            "Makefile": "72994e5606079c197e5a6cdab4019a54f42d7e0a5895a7c82941aa2b3eda8ea9",
+            "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+            "Machines/SPDZ.cpp": "261923e251e85ff1e44a332316e99e0d819096e2eaa81786537c6b8080d7394f",
+            "Processor/FieldMachine.hpp": "cb16cf24589a59fba6461106450d3885399707b9a0643c344af9358ea3721623",
+            "Math/gfp.h": "3b9af0a4a83abeda72d8e48a5c90f88b2497368d964b829d50f6ef8e0092e912",
+            "Math/Zp_Data.h": "1e300c058fda86edfb964e9dd8b97e99cbd14eb6491293b9c0597c2d898a77a4",
+            "Protocols/MascotPrep.hpp": "5b33a46627bca22393f85153d8b8dc42c9c0e3568b3c51049125a5445f309946",
+            "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+            "Protocols/Share.h": "e657f7d39b6d9bf8f5b4e07123157c0d34b02619f162104801da00b9ea136520",
+            "OT/NPartyTripleGenerator.h": "c333b57c983d54d361d66697d18508c14a20783597b1e8ad5ee8fae3e0d83abe",
+            "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+            "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+            "OT/MascotParams.cpp": "60a19a941e1131a825e87e9836b724b017aba5f4ae52f4badef54bb766946a70",
+            "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c",
+            "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+            "GC/TinierShare.h": "5a0e71c2017149f1c834615ea32673483f5ca6fdb6c317bcacd27640cce5101e",
+            "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+            "Compiler/comparison.py": "7ae17ea0ef7713fa9b69646653192f068bab38c668363afc97d819ae4c1cd1bb",
+            "Compiler/floatingpoint.py": "287903b999b5a0eafc39092bd2d8954cf108c8b8a74372de7187e15e6af907d8",
+            "Compiler/non_linear.py": "26c1d4697da156ec7319d05a02e6d56132a3b573113bec11ebeb96627b1a9dba",
+            "Compiler/types.py": "e5d107b1351db6258c81a70cd8295d802fc19babff1c75a8b94f0a51157a481a",
+            "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829"
+          },
+          "dependency_sha256": {
+            "local/lib/liblibOTe.a": "bff4475f26c3648209a65ea20bb02ad17a14a8cf148af70d8fe242384e598720",
+            "local/lib/libcryptoTools.a": "4121c2d8166a1a8a1254e75cc6dc4c46fba8517554656cda2eeeab88809b2ffd",
+            "deps/SimpleOT/libsimpleot.a": "be743eccb974391c6160edc385d52d7d3acb97fbad12c4236e07b10f905bf311",
+            "deps/SimplestOT_C/ref10/libSimplestOT.a": "a035cde324bc012d0b270c8d73d3cc050669125d116a0595137809d2e35338fa",
+            "libSPDZ.so": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122",
+            "local/lib/libsodium.so": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+          },
+          "source_lock_sha256": "21de4b3da0f07a86eb133cfc8b49efb73b111f083d3fffb58359c3f61786a527",
+          "reviewed_patch_sha256": "2ffdd3ffb5f50f5ca4a1ed96a0300dea8f7d8ef17df118a0083affca23e2a781",
+          "fresh_sacrifice_patch_sha256": "5073dc640c9348c8331d00084dd5e448684e00f4908cb41f381e27eb5b5f0b70",
+          "build_properties": {
+            "LONG_BIT_MAC_KEY": true,
+            "USE_KOS": 0,
+            "USE_LIBOTE2": 0,
+            "INSECURE": false
+          }
+        },
+        "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+        "native_loaded_libraries": {
+          "libSPDZ.so": {
+            "path": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/libSPDZ.so",
+            "sha256": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122"
+          },
+          "libgmpxx.so.4": {
+            "path": "/usr/lib64/libgmpxx.so.4.6.1",
+            "sha256": "7c7b62a1e89474977ec8dfa295fd7fa094c64fb3671fdc15ccde11f013ba667f"
+          },
+          "libgmp.so.10": {
+            "path": "/usr/lib64/libgmp.so.10.4.1",
+            "sha256": "1119b8f422ba480b04452d6bd427a091633e64c987a53bb11d03655d2c766c8a"
+          },
+          "libsodium.so.26": {
+            "path": "/usr/lib64/libsodium.so.26.4.0",
+            "sha256": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+          },
+          "libssl.so.3": {
+            "path": "/usr/lib64/libssl.so.3.5.8",
+            "sha256": "5f39428765cf3be435e7777ac106e8bae98598d07ce9635e4750a8ba8962f711"
+          },
+          "libcrypto.so.3": {
+            "path": "/usr/lib64/libcrypto.so.3.5.8",
+            "sha256": "d1a2e98f2d6cea1e1c7905f82214305a63d22773f0024d6ccd6e4a2f18c3628b"
+          },
+          "libboost_filesystem.so.1.83.0": {
+            "path": "/usr/lib64/libboost_filesystem.so.1.83.0",
+            "sha256": "6e6a109cfff8f687bbcd68050cea98b99e1340dc4c8583dbce1f10cbbd1db746"
+          },
+          "libboost_iostreams.so.1.83.0": {
+            "path": "/usr/lib64/libboost_iostreams.so.1.83.0",
+            "sha256": "448ba1c0a403715eca32c82a4a24d1445ef2788ded47755ad7909399f8ea9c86"
+          },
+          "libstdc++.so.6": {
+            "path": "/usr/lib64/libstdc++.so.6.0.33",
+            "sha256": "895f92d1ffca3941e747009e079b1a0fb69e7a0883f58513892cbc46374ea140"
+          },
+          "libm.so.6": {
+            "path": "/usr/lib64/libm.so.6",
+            "sha256": "febbfa979117086ff669a97acc68d578e98c2064f782987a9daf2e96cabf4f87"
+          },
+          "libgcc_s.so.1": {
+            "path": "/usr/lib64/libgcc_s-14-20251022.so.1",
+            "sha256": "a171f0e03a2b4181c299e8a532f23a2ba802e96549892c0a7a73d293e02206ff"
+          },
+          "libc.so.6": {
+            "path": "/usr/lib64/libc.so.6",
+            "sha256": "2c4c4856030a9af10dcbec8f799f463124036c25fa0e4a7e9dfcec76444d0593"
+          },
+          "libz.so.1": {
+            "path": "/usr/lib64/libz.so.1.3.1.zlib-ng",
+            "sha256": "502367e59fbbb3ec65c2c7c31f8ad1b47df7a6b4a6b7d283e0556def8ce6bf42"
+          },
+          "libboost_atomic.so.1.83.0": {
+            "path": "/usr/lib64/libboost_atomic.so.1.83.0",
+            "sha256": "5a080d78d4cc9be37a272042883060728f358967da3308875b9af64ea4ac79e0"
+          },
+          "libbz2.so.1": {
+            "path": "/usr/lib64/libbz2.so.1.0.8",
+            "sha256": "237eb6f00023f0d0cf1e512c80fe1e1ccfcab6d133f65ded2b335cc3836a7ef8"
+          },
+          "liblzma.so.5": {
+            "path": "/usr/lib64/liblzma.so.5.6.2",
+            "sha256": "6e9166c7bcc54ead0f3d810ec18a805ad38230246e802dd9f3b782f5320242e5"
+          },
+          "libzstd.so.1": {
+            "path": "/usr/lib64/libzstd.so.1.5.5",
+            "sha256": "94af4a706493a5d0821482afbefa0f05d0e98ad7cda4c50bcab23c0e67ce3f12"
+          }
+        },
+        "export_source_sha256": "c0bd32e73b59b26eb8edc9db5c5eec2f4cafb28c93f74478f27fbffd55829a14",
+        "native_source_sha256": {
+          "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+          "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829",
+          "compile.py": "1f0d3eb9108e4819b3335feb4e0bab2b2a19b6451bc3bc6a43fceb2d93fe6868",
+          "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+          "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+          "Protocols/ShuffleSacrifice.hpp": "f9ce89d917d6f34e751cb1fd419505e53269d025f778b57e5bfe6d265814fd35",
+          "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+          "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+          "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+          "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+          "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c"
+        },
+        "passed": true,
+        "return_codes": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "compile_ms": 315.1140330010094,
+        "native_preprocessing_ms": 417.67129999789177,
+        "preprocessing_ms": 767.9324330019881,
+        "private_role_directories": [
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party0",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party1",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party2",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party3"
+        ],
+        "transport": "native encrypted peer channels",
+        "trusted_dealer": false
+      }
+    },
+    {
+      "party": 2,
+      "passed": true,
+      "output": [
+        -2226371264330,
+        -3827146102852,
+        5822309631001,
+        -17614910273718,
+        12913159931642,
+        -26549343474638,
+        -13605763176200,
+        -35867316915208
+      ],
+      "preprocessing_load_ms": 52.512401998683345,
+      "input_protocol_by_name_ms": {
+        "x": 2.4799020029604435,
+        "w1": 1.421897002728656,
+        "b1": 1.2396259990055114,
+        "w2": 1.264692000404466,
+        "b2": 1.2156099983258173
+      },
+      "checked_online_ms": 16.625028001726605,
+      "online_payload_bytes": 22056,
+      "online_rounds": 24,
+      "authenticated_tls": true,
+      "role_local_loader": true,
+      "provenance": {
+        "format": "mascot256-native-role-v1",
+        "ready": true,
+        "parties": 4,
+        "prime": 115792089237316195423570985008687907853269984665640564039457584007913129639747,
+        "mac_keys": 1,
+        "security_parameter": 128,
+        "session": "e94b55450b64120fd32bf524230adadfbcd790c57d857259275ee5a8960ff184",
+        "request": {
+          "matrices": [
+            {
+              "name": "first",
+              "m": 1,
+              "k": 8,
+              "n": 2
+            },
+            {
+              "name": "second",
+              "m": 1,
+              "k": 2,
+              "n": 8
+            }
+          ],
+          "squares": [
+            {
+              "name": "hidden",
+              "shape": [
+                1,
+                2
+              ]
+            }
+          ],
+          "inputs": [
+            {
+              "name": "x",
+              "owner": 0,
+              "shape": [
+                1,
+                8
+              ]
+            },
+            {
+              "name": "w1",
+              "owner": 1,
+              "shape": [
+                8,
+                2
+              ]
+            },
+            {
+              "name": "b1",
+              "owner": 1,
+              "shape": [
+                1,
+                2
+              ]
+            },
+            {
+              "name": "w2",
+              "owner": 1,
+              "shape": [
+                2,
+                8
+              ]
+            },
+            {
+              "name": "b2",
+              "owner": 1,
+              "shape": [
+                1,
+                8
+              ]
+            }
+          ]
+        },
+        "records": [
+          {
+            "kind": "calibration",
+            "name": "constant_one",
+            "component": "value",
+            "shape": [
+              1,
+              1
+            ],
+            "offset": 0,
+            "count": 1,
+            "identifier": "add7fe7ece9ce51be29aa2ff382d3f9b87ce56b987e768b549bcdd54d328d1b6"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "a",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 1,
+            "count": 8,
+            "identifier": "f37a884f5c282cc801133ab5322b8675e04074820084bae2d4ee5b3c8d35c515"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "b",
+            "shape": [
+              8,
+              2
+            ],
+            "offset": 9,
+            "count": 16,
+            "identifier": "d3d4e8760ac49b62037b91ea9066ecdf1c002540cd1b96e4f62d1529c1980fac"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "c",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 25,
+            "count": 2,
+            "identifier": "668a173a49138bdeef4976bddce470624d7e81a7f40318f285e159a5c5c67e7b"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "a",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 27,
+            "count": 2,
+            "identifier": "75a09884559a8825574a31fce6bbea889d63bf313b9cb1072d7ae22467c958c3"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "b",
+            "shape": [
+              2,
+              8
+            ],
+            "offset": 29,
+            "count": 16,
+            "identifier": "5e144fe03da83a3c42d805f3255215109a8b418245a83ee04daf0426b0e00cb0"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "c",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 45,
+            "count": 8,
+            "identifier": "f2847f24cac4e6f8aebe507a5c21193824971d2d88abd92a2b726e4f2121a33c"
+          },
+          {
+            "kind": "squares",
+            "name": "hidden",
+            "component": "a",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 53,
+            "count": 2,
+            "identifier": "6b11c87ad4de321f482df12acb0372eaff89aecf9e4a2320c90af353f53d2ff4"
+          },
+          {
+            "kind": "squares",
+            "name": "hidden",
+            "component": "a_squared",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 55,
+            "count": 2,
+            "identifier": "6b11c87ad4de321f482df12acb0372eaff89aecf9e4a2320c90af353f53d2ff4"
+          },
+          {
+            "kind": "inputs",
+            "name": "x",
+            "component": "share",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 57,
+            "count": 8,
+            "identifier": "d4057a57023b7fbe1ee5a2c591a703607accaa21af10f009732d25988ee62253",
+            "owner": 0,
+            "clear_offset": 0
+          },
+          {
+            "kind": "inputs",
+            "name": "w1",
+            "component": "share",
+            "shape": [
+              8,
+              2
+            ],
+            "offset": 65,
+            "count": 16,
+            "identifier": "aad0349e448d9827d74292b6038082adfb699ff3010dec9166d02d634d074b3c",
+            "owner": 1,
+            "clear_offset": 0
+          },
+          {
+            "kind": "inputs",
+            "name": "b1",
+            "component": "share",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 81,
+            "count": 2,
+            "identifier": "8b339790c962d3706ea0998be86a170854950f8d6dfd79584ef7e28f51b63fa4",
+            "owner": 1,
+            "clear_offset": 16
+          },
+          {
+            "kind": "inputs",
+            "name": "w2",
+            "component": "share",
+            "shape": [
+              2,
+              8
+            ],
+            "offset": 83,
+            "count": 16,
+            "identifier": "64b203e10a4edff98d4093d74e07d334be4aa048b33b06bb5f6963e0da70c920",
+            "owner": 1,
+            "clear_offset": 18
+          },
+          {
+            "kind": "inputs",
+            "name": "b2",
+            "component": "share",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 99,
+            "count": 8,
+            "identifier": "44cdd72f866b8028435b5720a0dedcc7cb4251268fc346d9a72cf2ed80c1ba2e",
+            "owner": 1,
+            "clear_offset": 34
+          }
+        ],
+        "privacy_audit_status": "conditional_native_q256_experiment",
+        "security_target_met": false,
+        "experimental": true,
+        "field_conversion": false,
+        "share_count": 107,
+        "clear_counts": [
+          8,
+          42,
+          0,
+          0
+        ],
+        "native_binary": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/mascot-party.x",
+        "native_binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+        "native_policy": {
+          "format": "mascot256-tau4-fresh-sacrifice-build-v2",
+          "internal_prime": "115792089237316195423570985008687907853269984665640564039457584007913129639747",
+          "field_bits": 256,
+          "runtime_security": 128,
+          "compiler_security": 176,
+          "compiler_bit_length": 78,
+          "amplification": 4,
+          "check": true,
+          "post_authentication_sacrifice_coin": true,
+          "native_mac_keys": 1,
+          "application_prime": 2147483647,
+          "application_mac_keys": 7,
+          "ot": "SoftSpokenMalOt",
+          "binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+          "source_sha256": {
+            "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+            "Makefile": "72994e5606079c197e5a6cdab4019a54f42d7e0a5895a7c82941aa2b3eda8ea9",
+            "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+            "Machines/SPDZ.cpp": "261923e251e85ff1e44a332316e99e0d819096e2eaa81786537c6b8080d7394f",
+            "Processor/FieldMachine.hpp": "cb16cf24589a59fba6461106450d3885399707b9a0643c344af9358ea3721623",
+            "Math/gfp.h": "3b9af0a4a83abeda72d8e48a5c90f88b2497368d964b829d50f6ef8e0092e912",
+            "Math/Zp_Data.h": "1e300c058fda86edfb964e9dd8b97e99cbd14eb6491293b9c0597c2d898a77a4",
+            "Protocols/MascotPrep.hpp": "5b33a46627bca22393f85153d8b8dc42c9c0e3568b3c51049125a5445f309946",
+            "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+            "Protocols/Share.h": "e657f7d39b6d9bf8f5b4e07123157c0d34b02619f162104801da00b9ea136520",
+            "OT/NPartyTripleGenerator.h": "c333b57c983d54d361d66697d18508c14a20783597b1e8ad5ee8fae3e0d83abe",
+            "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+            "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+            "OT/MascotParams.cpp": "60a19a941e1131a825e87e9836b724b017aba5f4ae52f4badef54bb766946a70",
+            "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c",
+            "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+            "GC/TinierShare.h": "5a0e71c2017149f1c834615ea32673483f5ca6fdb6c317bcacd27640cce5101e",
+            "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+            "Compiler/comparison.py": "7ae17ea0ef7713fa9b69646653192f068bab38c668363afc97d819ae4c1cd1bb",
+            "Compiler/floatingpoint.py": "287903b999b5a0eafc39092bd2d8954cf108c8b8a74372de7187e15e6af907d8",
+            "Compiler/non_linear.py": "26c1d4697da156ec7319d05a02e6d56132a3b573113bec11ebeb96627b1a9dba",
+            "Compiler/types.py": "e5d107b1351db6258c81a70cd8295d802fc19babff1c75a8b94f0a51157a481a",
+            "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829"
+          },
+          "dependency_sha256": {
+            "local/lib/liblibOTe.a": "bff4475f26c3648209a65ea20bb02ad17a14a8cf148af70d8fe242384e598720",
+            "local/lib/libcryptoTools.a": "4121c2d8166a1a8a1254e75cc6dc4c46fba8517554656cda2eeeab88809b2ffd",
+            "deps/SimpleOT/libsimpleot.a": "be743eccb974391c6160edc385d52d7d3acb97fbad12c4236e07b10f905bf311",
+            "deps/SimplestOT_C/ref10/libSimplestOT.a": "a035cde324bc012d0b270c8d73d3cc050669125d116a0595137809d2e35338fa",
+            "libSPDZ.so": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122",
+            "local/lib/libsodium.so": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+          },
+          "source_lock_sha256": "21de4b3da0f07a86eb133cfc8b49efb73b111f083d3fffb58359c3f61786a527",
+          "reviewed_patch_sha256": "2ffdd3ffb5f50f5ca4a1ed96a0300dea8f7d8ef17df118a0083affca23e2a781",
+          "fresh_sacrifice_patch_sha256": "5073dc640c9348c8331d00084dd5e448684e00f4908cb41f381e27eb5b5f0b70",
+          "build_properties": {
+            "LONG_BIT_MAC_KEY": true,
+            "USE_KOS": 0,
+            "USE_LIBOTE2": 0,
+            "INSECURE": false
+          }
+        },
+        "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+        "native_loaded_libraries": {
+          "libSPDZ.so": {
+            "path": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/libSPDZ.so",
+            "sha256": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122"
+          },
+          "libgmpxx.so.4": {
+            "path": "/usr/lib64/libgmpxx.so.4.6.1",
+            "sha256": "7c7b62a1e89474977ec8dfa295fd7fa094c64fb3671fdc15ccde11f013ba667f"
+          },
+          "libgmp.so.10": {
+            "path": "/usr/lib64/libgmp.so.10.4.1",
+            "sha256": "1119b8f422ba480b04452d6bd427a091633e64c987a53bb11d03655d2c766c8a"
+          },
+          "libsodium.so.26": {
+            "path": "/usr/lib64/libsodium.so.26.4.0",
+            "sha256": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+          },
+          "libssl.so.3": {
+            "path": "/usr/lib64/libssl.so.3.5.8",
+            "sha256": "5f39428765cf3be435e7777ac106e8bae98598d07ce9635e4750a8ba8962f711"
+          },
+          "libcrypto.so.3": {
+            "path": "/usr/lib64/libcrypto.so.3.5.8",
+            "sha256": "d1a2e98f2d6cea1e1c7905f82214305a63d22773f0024d6ccd6e4a2f18c3628b"
+          },
+          "libboost_filesystem.so.1.83.0": {
+            "path": "/usr/lib64/libboost_filesystem.so.1.83.0",
+            "sha256": "6e6a109cfff8f687bbcd68050cea98b99e1340dc4c8583dbce1f10cbbd1db746"
+          },
+          "libboost_iostreams.so.1.83.0": {
+            "path": "/usr/lib64/libboost_iostreams.so.1.83.0",
+            "sha256": "448ba1c0a403715eca32c82a4a24d1445ef2788ded47755ad7909399f8ea9c86"
+          },
+          "libstdc++.so.6": {
+            "path": "/usr/lib64/libstdc++.so.6.0.33",
+            "sha256": "895f92d1ffca3941e747009e079b1a0fb69e7a0883f58513892cbc46374ea140"
+          },
+          "libm.so.6": {
+            "path": "/usr/lib64/libm.so.6",
+            "sha256": "febbfa979117086ff669a97acc68d578e98c2064f782987a9daf2e96cabf4f87"
+          },
+          "libgcc_s.so.1": {
+            "path": "/usr/lib64/libgcc_s-14-20251022.so.1",
+            "sha256": "a171f0e03a2b4181c299e8a532f23a2ba802e96549892c0a7a73d293e02206ff"
+          },
+          "libc.so.6": {
+            "path": "/usr/lib64/libc.so.6",
+            "sha256": "2c4c4856030a9af10dcbec8f799f463124036c25fa0e4a7e9dfcec76444d0593"
+          },
+          "libz.so.1": {
+            "path": "/usr/lib64/libz.so.1.3.1.zlib-ng",
+            "sha256": "502367e59fbbb3ec65c2c7c31f8ad1b47df7a6b4a6b7d283e0556def8ce6bf42"
+          },
+          "libboost_atomic.so.1.83.0": {
+            "path": "/usr/lib64/libboost_atomic.so.1.83.0",
+            "sha256": "5a080d78d4cc9be37a272042883060728f358967da3308875b9af64ea4ac79e0"
+          },
+          "libbz2.so.1": {
+            "path": "/usr/lib64/libbz2.so.1.0.8",
+            "sha256": "237eb6f00023f0d0cf1e512c80fe1e1ccfcab6d133f65ded2b335cc3836a7ef8"
+          },
+          "liblzma.so.5": {
+            "path": "/usr/lib64/liblzma.so.5.6.2",
+            "sha256": "6e9166c7bcc54ead0f3d810ec18a805ad38230246e802dd9f3b782f5320242e5"
+          },
+          "libzstd.so.1": {
+            "path": "/usr/lib64/libzstd.so.1.5.5",
+            "sha256": "94af4a706493a5d0821482afbefa0f05d0e98ad7cda4c50bcab23c0e67ce3f12"
+          }
+        },
+        "export_source_sha256": "c0bd32e73b59b26eb8edc9db5c5eec2f4cafb28c93f74478f27fbffd55829a14",
+        "native_source_sha256": {
+          "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+          "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829",
+          "compile.py": "1f0d3eb9108e4819b3335feb4e0bab2b2a19b6451bc3bc6a43fceb2d93fe6868",
+          "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+          "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+          "Protocols/ShuffleSacrifice.hpp": "f9ce89d917d6f34e751cb1fd419505e53269d025f778b57e5bfe6d265814fd35",
+          "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+          "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+          "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+          "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+          "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c"
+        },
+        "passed": true,
+        "return_codes": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "compile_ms": 315.1140330010094,
+        "native_preprocessing_ms": 417.67129999789177,
+        "preprocessing_ms": 767.9324330019881,
+        "private_role_directories": [
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party0",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party1",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party2",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party3"
+        ],
+        "transport": "native encrypted peer channels",
+        "trusted_dealer": false
+      }
+    },
+    {
+      "party": 3,
+      "passed": true,
+      "output": [
+        -2226371264330,
+        -3827146102852,
+        5822309631001,
+        -17614910273718,
+        12913159931642,
+        -26549343474638,
+        -13605763176200,
+        -35867316915208
+      ],
+      "preprocessing_load_ms": 52.98258399852784,
+      "input_protocol_by_name_ms": {
+        "x": 2.8279149992158636,
+        "w1": 1.4469449961325154,
+        "b1": 1.2538019946077839,
+        "w2": 1.2119929961045273,
+        "b2": 1.1480839966679923
+      },
+      "checked_online_ms": 16.67216700298013,
+      "online_payload_bytes": 22056,
+      "online_rounds": 24,
+      "authenticated_tls": true,
+      "role_local_loader": true,
+      "provenance": {
+        "format": "mascot256-native-role-v1",
+        "ready": true,
+        "parties": 4,
+        "prime": 115792089237316195423570985008687907853269984665640564039457584007913129639747,
+        "mac_keys": 1,
+        "security_parameter": 128,
+        "session": "e94b55450b64120fd32bf524230adadfbcd790c57d857259275ee5a8960ff184",
+        "request": {
+          "matrices": [
+            {
+              "name": "first",
+              "m": 1,
+              "k": 8,
+              "n": 2
+            },
+            {
+              "name": "second",
+              "m": 1,
+              "k": 2,
+              "n": 8
+            }
+          ],
+          "squares": [
+            {
+              "name": "hidden",
+              "shape": [
+                1,
+                2
+              ]
+            }
+          ],
+          "inputs": [
+            {
+              "name": "x",
+              "owner": 0,
+              "shape": [
+                1,
+                8
+              ]
+            },
+            {
+              "name": "w1",
+              "owner": 1,
+              "shape": [
+                8,
+                2
+              ]
+            },
+            {
+              "name": "b1",
+              "owner": 1,
+              "shape": [
+                1,
+                2
+              ]
+            },
+            {
+              "name": "w2",
+              "owner": 1,
+              "shape": [
+                2,
+                8
+              ]
+            },
+            {
+              "name": "b2",
+              "owner": 1,
+              "shape": [
+                1,
+                8
+              ]
+            }
+          ]
+        },
+        "records": [
+          {
+            "kind": "calibration",
+            "name": "constant_one",
+            "component": "value",
+            "shape": [
+              1,
+              1
+            ],
+            "offset": 0,
+            "count": 1,
+            "identifier": "add7fe7ece9ce51be29aa2ff382d3f9b87ce56b987e768b549bcdd54d328d1b6"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "a",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 1,
+            "count": 8,
+            "identifier": "f37a884f5c282cc801133ab5322b8675e04074820084bae2d4ee5b3c8d35c515"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "b",
+            "shape": [
+              8,
+              2
+            ],
+            "offset": 9,
+            "count": 16,
+            "identifier": "d3d4e8760ac49b62037b91ea9066ecdf1c002540cd1b96e4f62d1529c1980fac"
+          },
+          {
+            "kind": "matrices",
+            "name": "first",
+            "component": "c",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 25,
+            "count": 2,
+            "identifier": "668a173a49138bdeef4976bddce470624d7e81a7f40318f285e159a5c5c67e7b"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "a",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 27,
+            "count": 2,
+            "identifier": "75a09884559a8825574a31fce6bbea889d63bf313b9cb1072d7ae22467c958c3"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "b",
+            "shape": [
+              2,
+              8
+            ],
+            "offset": 29,
+            "count": 16,
+            "identifier": "5e144fe03da83a3c42d805f3255215109a8b418245a83ee04daf0426b0e00cb0"
+          },
+          {
+            "kind": "matrices",
+            "name": "second",
+            "component": "c",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 45,
+            "count": 8,
+            "identifier": "f2847f24cac4e6f8aebe507a5c21193824971d2d88abd92a2b726e4f2121a33c"
+          },
+          {
+            "kind": "squares",
+            "name": "hidden",
+            "component": "a",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 53,
+            "count": 2,
+            "identifier": "6b11c87ad4de321f482df12acb0372eaff89aecf9e4a2320c90af353f53d2ff4"
+          },
+          {
+            "kind": "squares",
+            "name": "hidden",
+            "component": "a_squared",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 55,
+            "count": 2,
+            "identifier": "6b11c87ad4de321f482df12acb0372eaff89aecf9e4a2320c90af353f53d2ff4"
+          },
+          {
+            "kind": "inputs",
+            "name": "x",
+            "component": "share",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 57,
+            "count": 8,
+            "identifier": "d4057a57023b7fbe1ee5a2c591a703607accaa21af10f009732d25988ee62253",
+            "owner": 0,
+            "clear_offset": 0
+          },
+          {
+            "kind": "inputs",
+            "name": "w1",
+            "component": "share",
+            "shape": [
+              8,
+              2
+            ],
+            "offset": 65,
+            "count": 16,
+            "identifier": "aad0349e448d9827d74292b6038082adfb699ff3010dec9166d02d634d074b3c",
+            "owner": 1,
+            "clear_offset": 0
+          },
+          {
+            "kind": "inputs",
+            "name": "b1",
+            "component": "share",
+            "shape": [
+              1,
+              2
+            ],
+            "offset": 81,
+            "count": 2,
+            "identifier": "8b339790c962d3706ea0998be86a170854950f8d6dfd79584ef7e28f51b63fa4",
+            "owner": 1,
+            "clear_offset": 16
+          },
+          {
+            "kind": "inputs",
+            "name": "w2",
+            "component": "share",
+            "shape": [
+              2,
+              8
+            ],
+            "offset": 83,
+            "count": 16,
+            "identifier": "64b203e10a4edff98d4093d74e07d334be4aa048b33b06bb5f6963e0da70c920",
+            "owner": 1,
+            "clear_offset": 18
+          },
+          {
+            "kind": "inputs",
+            "name": "b2",
+            "component": "share",
+            "shape": [
+              1,
+              8
+            ],
+            "offset": 99,
+            "count": 8,
+            "identifier": "44cdd72f866b8028435b5720a0dedcc7cb4251268fc346d9a72cf2ed80c1ba2e",
+            "owner": 1,
+            "clear_offset": 34
+          }
+        ],
+        "privacy_audit_status": "conditional_native_q256_experiment",
+        "security_target_met": false,
+        "experimental": true,
+        "field_conversion": false,
+        "share_count": 107,
+        "clear_counts": [
+          8,
+          42,
+          0,
+          0
+        ],
+        "native_binary": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/mascot-party.x",
+        "native_binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+        "native_policy": {
+          "format": "mascot256-tau4-fresh-sacrifice-build-v2",
+          "internal_prime": "115792089237316195423570985008687907853269984665640564039457584007913129639747",
+          "field_bits": 256,
+          "runtime_security": 128,
+          "compiler_security": 176,
+          "compiler_bit_length": 78,
+          "amplification": 4,
+          "check": true,
+          "post_authentication_sacrifice_coin": true,
+          "native_mac_keys": 1,
+          "application_prime": 2147483647,
+          "application_mac_keys": 7,
+          "ot": "SoftSpokenMalOt",
+          "binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+          "source_sha256": {
+            "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+            "Makefile": "72994e5606079c197e5a6cdab4019a54f42d7e0a5895a7c82941aa2b3eda8ea9",
+            "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+            "Machines/SPDZ.cpp": "261923e251e85ff1e44a332316e99e0d819096e2eaa81786537c6b8080d7394f",
+            "Processor/FieldMachine.hpp": "cb16cf24589a59fba6461106450d3885399707b9a0643c344af9358ea3721623",
+            "Math/gfp.h": "3b9af0a4a83abeda72d8e48a5c90f88b2497368d964b829d50f6ef8e0092e912",
+            "Math/Zp_Data.h": "1e300c058fda86edfb964e9dd8b97e99cbd14eb6491293b9c0597c2d898a77a4",
+            "Protocols/MascotPrep.hpp": "5b33a46627bca22393f85153d8b8dc42c9c0e3568b3c51049125a5445f309946",
+            "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+            "Protocols/Share.h": "e657f7d39b6d9bf8f5b4e07123157c0d34b02619f162104801da00b9ea136520",
+            "OT/NPartyTripleGenerator.h": "c333b57c983d54d361d66697d18508c14a20783597b1e8ad5ee8fae3e0d83abe",
+            "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+            "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+            "OT/MascotParams.cpp": "60a19a941e1131a825e87e9836b724b017aba5f4ae52f4badef54bb766946a70",
+            "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c",
+            "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+            "GC/TinierShare.h": "5a0e71c2017149f1c834615ea32673483f5ca6fdb6c317bcacd27640cce5101e",
+            "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+            "Compiler/comparison.py": "7ae17ea0ef7713fa9b69646653192f068bab38c668363afc97d819ae4c1cd1bb",
+            "Compiler/floatingpoint.py": "287903b999b5a0eafc39092bd2d8954cf108c8b8a74372de7187e15e6af907d8",
+            "Compiler/non_linear.py": "26c1d4697da156ec7319d05a02e6d56132a3b573113bec11ebeb96627b1a9dba",
+            "Compiler/types.py": "e5d107b1351db6258c81a70cd8295d802fc19babff1c75a8b94f0a51157a481a",
+            "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829"
+          },
+          "dependency_sha256": {
+            "local/lib/liblibOTe.a": "bff4475f26c3648209a65ea20bb02ad17a14a8cf148af70d8fe242384e598720",
+            "local/lib/libcryptoTools.a": "4121c2d8166a1a8a1254e75cc6dc4c46fba8517554656cda2eeeab88809b2ffd",
+            "deps/SimpleOT/libsimpleot.a": "be743eccb974391c6160edc385d52d7d3acb97fbad12c4236e07b10f905bf311",
+            "deps/SimplestOT_C/ref10/libSimplestOT.a": "a035cde324bc012d0b270c8d73d3cc050669125d116a0595137809d2e35338fa",
+            "libSPDZ.so": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122",
+            "local/lib/libsodium.so": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+          },
+          "source_lock_sha256": "21de4b3da0f07a86eb133cfc8b49efb73b111f083d3fffb58359c3f61786a527",
+          "reviewed_patch_sha256": "2ffdd3ffb5f50f5ca4a1ed96a0300dea8f7d8ef17df118a0083affca23e2a781",
+          "fresh_sacrifice_patch_sha256": "5073dc640c9348c8331d00084dd5e448684e00f4908cb41f381e27eb5b5f0b70",
+          "build_properties": {
+            "LONG_BIT_MAC_KEY": true,
+            "USE_KOS": 0,
+            "USE_LIBOTE2": 0,
+            "INSECURE": false
+          }
+        },
+        "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+        "native_loaded_libraries": {
+          "libSPDZ.so": {
+            "path": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/libSPDZ.so",
+            "sha256": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122"
+          },
+          "libgmpxx.so.4": {
+            "path": "/usr/lib64/libgmpxx.so.4.6.1",
+            "sha256": "7c7b62a1e89474977ec8dfa295fd7fa094c64fb3671fdc15ccde11f013ba667f"
+          },
+          "libgmp.so.10": {
+            "path": "/usr/lib64/libgmp.so.10.4.1",
+            "sha256": "1119b8f422ba480b04452d6bd427a091633e64c987a53bb11d03655d2c766c8a"
+          },
+          "libsodium.so.26": {
+            "path": "/usr/lib64/libsodium.so.26.4.0",
+            "sha256": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+          },
+          "libssl.so.3": {
+            "path": "/usr/lib64/libssl.so.3.5.8",
+            "sha256": "5f39428765cf3be435e7777ac106e8bae98598d07ce9635e4750a8ba8962f711"
+          },
+          "libcrypto.so.3": {
+            "path": "/usr/lib64/libcrypto.so.3.5.8",
+            "sha256": "d1a2e98f2d6cea1e1c7905f82214305a63d22773f0024d6ccd6e4a2f18c3628b"
+          },
+          "libboost_filesystem.so.1.83.0": {
+            "path": "/usr/lib64/libboost_filesystem.so.1.83.0",
+            "sha256": "6e6a109cfff8f687bbcd68050cea98b99e1340dc4c8583dbce1f10cbbd1db746"
+          },
+          "libboost_iostreams.so.1.83.0": {
+            "path": "/usr/lib64/libboost_iostreams.so.1.83.0",
+            "sha256": "448ba1c0a403715eca32c82a4a24d1445ef2788ded47755ad7909399f8ea9c86"
+          },
+          "libstdc++.so.6": {
+            "path": "/usr/lib64/libstdc++.so.6.0.33",
+            "sha256": "895f92d1ffca3941e747009e079b1a0fb69e7a0883f58513892cbc46374ea140"
+          },
+          "libm.so.6": {
+            "path": "/usr/lib64/libm.so.6",
+            "sha256": "febbfa979117086ff669a97acc68d578e98c2064f782987a9daf2e96cabf4f87"
+          },
+          "libgcc_s.so.1": {
+            "path": "/usr/lib64/libgcc_s-14-20251022.so.1",
+            "sha256": "a171f0e03a2b4181c299e8a532f23a2ba802e96549892c0a7a73d293e02206ff"
+          },
+          "libc.so.6": {
+            "path": "/usr/lib64/libc.so.6",
+            "sha256": "2c4c4856030a9af10dcbec8f799f463124036c25fa0e4a7e9dfcec76444d0593"
+          },
+          "libz.so.1": {
+            "path": "/usr/lib64/libz.so.1.3.1.zlib-ng",
+            "sha256": "502367e59fbbb3ec65c2c7c31f8ad1b47df7a6b4a6b7d283e0556def8ce6bf42"
+          },
+          "libboost_atomic.so.1.83.0": {
+            "path": "/usr/lib64/libboost_atomic.so.1.83.0",
+            "sha256": "5a080d78d4cc9be37a272042883060728f358967da3308875b9af64ea4ac79e0"
+          },
+          "libbz2.so.1": {
+            "path": "/usr/lib64/libbz2.so.1.0.8",
+            "sha256": "237eb6f00023f0d0cf1e512c80fe1e1ccfcab6d133f65ded2b335cc3836a7ef8"
+          },
+          "liblzma.so.5": {
+            "path": "/usr/lib64/liblzma.so.5.6.2",
+            "sha256": "6e9166c7bcc54ead0f3d810ec18a805ad38230246e802dd9f3b782f5320242e5"
+          },
+          "libzstd.so.1": {
+            "path": "/usr/lib64/libzstd.so.1.5.5",
+            "sha256": "94af4a706493a5d0821482afbefa0f05d0e98ad7cda4c50bcab23c0e67ce3f12"
+          }
+        },
+        "export_source_sha256": "c0bd32e73b59b26eb8edc9db5c5eec2f4cafb28c93f74478f27fbffd55829a14",
+        "native_source_sha256": {
+          "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+          "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829",
+          "compile.py": "1f0d3eb9108e4819b3335feb4e0bab2b2a19b6451bc3bc6a43fceb2d93fe6868",
+          "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+          "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+          "Protocols/ShuffleSacrifice.hpp": "f9ce89d917d6f34e751cb1fd419505e53269d025f778b57e5bfe6d265814fd35",
+          "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+          "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+          "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+          "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+          "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c"
+        },
+        "passed": true,
+        "return_codes": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "compile_ms": 315.1140330010094,
+        "native_preprocessing_ms": 417.67129999789177,
+        "preprocessing_ms": 767.9324330019881,
+        "private_role_directories": [
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party0",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party1",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party2",
+          "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party3"
+        ],
+        "transport": "native encrypted peer channels",
+        "trusted_dealer": false
+      }
+    }
+  ],
+  "prime": 115792089237316195423570985008687907853269984665640564039457584007913129639747,
+  "mac_keys": 1,
+  "device": "cpu",
+  "runtime": "CPU bigint Prime256Party; four real TLS roles",
+  "trusted_dealer": false,
+  "privacy_audit_status": "pending",
+  "security_target_met": false,
+  "checked_online_ms": 16.67216700298013,
+  "public_preprocessing_manifest": {
+    "format": "mascot256-native-role-v1",
+    "ready": true,
+    "parties": 4,
+    "prime": 115792089237316195423570985008687907853269984665640564039457584007913129639747,
+    "mac_keys": 1,
+    "security_parameter": 128,
+    "session": "e94b55450b64120fd32bf524230adadfbcd790c57d857259275ee5a8960ff184",
+    "request": {
+      "matrices": [
+        {
+          "name": "first",
+          "m": 1,
+          "k": 8,
+          "n": 2
+        },
+        {
+          "name": "second",
+          "m": 1,
+          "k": 2,
+          "n": 8
+        }
+      ],
+      "squares": [
+        {
+          "name": "hidden",
+          "shape": [
+            1,
+            2
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "name": "x",
+          "owner": 0,
+          "shape": [
+            1,
+            8
+          ]
+        },
+        {
+          "name": "w1",
+          "owner": 1,
+          "shape": [
+            8,
+            2
+          ]
+        },
+        {
+          "name": "b1",
+          "owner": 1,
+          "shape": [
+            1,
+            2
+          ]
+        },
+        {
+          "name": "w2",
+          "owner": 1,
+          "shape": [
+            2,
+            8
+          ]
+        },
+        {
+          "name": "b2",
+          "owner": 1,
+          "shape": [
+            1,
+            8
+          ]
+        }
+      ]
+    },
+    "records": [
+      {
+        "kind": "calibration",
+        "name": "constant_one",
+        "component": "value",
+        "shape": [
+          1,
+          1
+        ],
+        "offset": 0,
+        "count": 1,
+        "identifier": "add7fe7ece9ce51be29aa2ff382d3f9b87ce56b987e768b549bcdd54d328d1b6"
+      },
+      {
+        "kind": "matrices",
+        "name": "first",
+        "component": "a",
+        "shape": [
+          1,
+          8
+        ],
+        "offset": 1,
+        "count": 8,
+        "identifier": "f37a884f5c282cc801133ab5322b8675e04074820084bae2d4ee5b3c8d35c515"
+      },
+      {
+        "kind": "matrices",
+        "name": "first",
+        "component": "b",
+        "shape": [
+          8,
+          2
+        ],
+        "offset": 9,
+        "count": 16,
+        "identifier": "d3d4e8760ac49b62037b91ea9066ecdf1c002540cd1b96e4f62d1529c1980fac"
+      },
+      {
+        "kind": "matrices",
+        "name": "first",
+        "component": "c",
+        "shape": [
+          1,
+          2
+        ],
+        "offset": 25,
+        "count": 2,
+        "identifier": "668a173a49138bdeef4976bddce470624d7e81a7f40318f285e159a5c5c67e7b"
+      },
+      {
+        "kind": "matrices",
+        "name": "second",
+        "component": "a",
+        "shape": [
+          1,
+          2
+        ],
+        "offset": 27,
+        "count": 2,
+        "identifier": "75a09884559a8825574a31fce6bbea889d63bf313b9cb1072d7ae22467c958c3"
+      },
+      {
+        "kind": "matrices",
+        "name": "second",
+        "component": "b",
+        "shape": [
+          2,
+          8
+        ],
+        "offset": 29,
+        "count": 16,
+        "identifier": "5e144fe03da83a3c42d805f3255215109a8b418245a83ee04daf0426b0e00cb0"
+      },
+      {
+        "kind": "matrices",
+        "name": "second",
+        "component": "c",
+        "shape": [
+          1,
+          8
+        ],
+        "offset": 45,
+        "count": 8,
+        "identifier": "f2847f24cac4e6f8aebe507a5c21193824971d2d88abd92a2b726e4f2121a33c"
+      },
+      {
+        "kind": "squares",
+        "name": "hidden",
+        "component": "a",
+        "shape": [
+          1,
+          2
+        ],
+        "offset": 53,
+        "count": 2,
+        "identifier": "6b11c87ad4de321f482df12acb0372eaff89aecf9e4a2320c90af353f53d2ff4"
+      },
+      {
+        "kind": "squares",
+        "name": "hidden",
+        "component": "a_squared",
+        "shape": [
+          1,
+          2
+        ],
+        "offset": 55,
+        "count": 2,
+        "identifier": "6b11c87ad4de321f482df12acb0372eaff89aecf9e4a2320c90af353f53d2ff4"
+      },
+      {
+        "kind": "inputs",
+        "name": "x",
+        "component": "share",
+        "shape": [
+          1,
+          8
+        ],
+        "offset": 57,
+        "count": 8,
+        "identifier": "d4057a57023b7fbe1ee5a2c591a703607accaa21af10f009732d25988ee62253",
+        "owner": 0,
+        "clear_offset": 0
+      },
+      {
+        "kind": "inputs",
+        "name": "w1",
+        "component": "share",
+        "shape": [
+          8,
+          2
+        ],
+        "offset": 65,
+        "count": 16,
+        "identifier": "aad0349e448d9827d74292b6038082adfb699ff3010dec9166d02d634d074b3c",
+        "owner": 1,
+        "clear_offset": 0
+      },
+      {
+        "kind": "inputs",
+        "name": "b1",
+        "component": "share",
+        "shape": [
+          1,
+          2
+        ],
+        "offset": 81,
+        "count": 2,
+        "identifier": "8b339790c962d3706ea0998be86a170854950f8d6dfd79584ef7e28f51b63fa4",
+        "owner": 1,
+        "clear_offset": 16
+      },
+      {
+        "kind": "inputs",
+        "name": "w2",
+        "component": "share",
+        "shape": [
+          2,
+          8
+        ],
+        "offset": 83,
+        "count": 16,
+        "identifier": "64b203e10a4edff98d4093d74e07d334be4aa048b33b06bb5f6963e0da70c920",
+        "owner": 1,
+        "clear_offset": 18
+      },
+      {
+        "kind": "inputs",
+        "name": "b2",
+        "component": "share",
+        "shape": [
+          1,
+          8
+        ],
+        "offset": 99,
+        "count": 8,
+        "identifier": "44cdd72f866b8028435b5720a0dedcc7cb4251268fc346d9a72cf2ed80c1ba2e",
+        "owner": 1,
+        "clear_offset": 34
+      }
+    ],
+    "privacy_audit_status": "conditional_native_q256_experiment",
+    "security_target_met": false,
+    "experimental": true,
+    "field_conversion": false,
+    "share_count": 107,
+    "clear_counts": [
+      8,
+      42,
+      0,
+      0
+    ],
+    "native_binary": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/mascot-party.x",
+    "native_binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+    "native_policy": {
+      "format": "mascot256-tau4-fresh-sacrifice-build-v2",
+      "internal_prime": "115792089237316195423570985008687907853269984665640564039457584007913129639747",
+      "field_bits": 256,
+      "runtime_security": 128,
+      "compiler_security": 176,
+      "compiler_bit_length": 78,
+      "amplification": 4,
+      "check": true,
+      "post_authentication_sacrifice_coin": true,
+      "native_mac_keys": 1,
+      "application_prime": 2147483647,
+      "application_mac_keys": 7,
+      "ot": "SoftSpokenMalOt",
+      "binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+      "source_sha256": {
+        "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+        "Makefile": "72994e5606079c197e5a6cdab4019a54f42d7e0a5895a7c82941aa2b3eda8ea9",
+        "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+        "Machines/SPDZ.cpp": "261923e251e85ff1e44a332316e99e0d819096e2eaa81786537c6b8080d7394f",
+        "Processor/FieldMachine.hpp": "cb16cf24589a59fba6461106450d3885399707b9a0643c344af9358ea3721623",
+        "Math/gfp.h": "3b9af0a4a83abeda72d8e48a5c90f88b2497368d964b829d50f6ef8e0092e912",
+        "Math/Zp_Data.h": "1e300c058fda86edfb964e9dd8b97e99cbd14eb6491293b9c0597c2d898a77a4",
+        "Protocols/MascotPrep.hpp": "5b33a46627bca22393f85153d8b8dc42c9c0e3568b3c51049125a5445f309946",
+        "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+        "Protocols/Share.h": "e657f7d39b6d9bf8f5b4e07123157c0d34b02619f162104801da00b9ea136520",
+        "OT/NPartyTripleGenerator.h": "c333b57c983d54d361d66697d18508c14a20783597b1e8ad5ee8fae3e0d83abe",
+        "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+        "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+        "OT/MascotParams.cpp": "60a19a941e1131a825e87e9836b724b017aba5f4ae52f4badef54bb766946a70",
+        "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c",
+        "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+        "GC/TinierShare.h": "5a0e71c2017149f1c834615ea32673483f5ca6fdb6c317bcacd27640cce5101e",
+        "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+        "Compiler/comparison.py": "7ae17ea0ef7713fa9b69646653192f068bab38c668363afc97d819ae4c1cd1bb",
+        "Compiler/floatingpoint.py": "287903b999b5a0eafc39092bd2d8954cf108c8b8a74372de7187e15e6af907d8",
+        "Compiler/non_linear.py": "26c1d4697da156ec7319d05a02e6d56132a3b573113bec11ebeb96627b1a9dba",
+        "Compiler/types.py": "e5d107b1351db6258c81a70cd8295d802fc19babff1c75a8b94f0a51157a481a",
+        "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829"
+      },
+      "dependency_sha256": {
+        "local/lib/liblibOTe.a": "bff4475f26c3648209a65ea20bb02ad17a14a8cf148af70d8fe242384e598720",
+        "local/lib/libcryptoTools.a": "4121c2d8166a1a8a1254e75cc6dc4c46fba8517554656cda2eeeab88809b2ffd",
+        "deps/SimpleOT/libsimpleot.a": "be743eccb974391c6160edc385d52d7d3acb97fbad12c4236e07b10f905bf311",
+        "deps/SimplestOT_C/ref10/libSimplestOT.a": "a035cde324bc012d0b270c8d73d3cc050669125d116a0595137809d2e35338fa",
+        "libSPDZ.so": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122",
+        "local/lib/libsodium.so": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+      },
+      "source_lock_sha256": "21de4b3da0f07a86eb133cfc8b49efb73b111f083d3fffb58359c3f61786a527",
+      "reviewed_patch_sha256": "2ffdd3ffb5f50f5ca4a1ed96a0300dea8f7d8ef17df118a0083affca23e2a781",
+      "fresh_sacrifice_patch_sha256": "5073dc640c9348c8331d00084dd5e448684e00f4908cb41f381e27eb5b5f0b70",
+      "build_properties": {
+        "LONG_BIT_MAC_KEY": true,
+        "USE_KOS": 0,
+        "USE_LIBOTE2": 0,
+        "INSECURE": false
+      }
+    },
+    "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+    "native_loaded_libraries": {
+      "libSPDZ.so": {
+        "path": "/home/zeb/Desktop/SIV/work/mascot256-fresh-build/libSPDZ.so",
+        "sha256": "b7aa7dcca484a391655041baa34497d335ddaf543bfbddcaf8740548aa02f122"
+      },
+      "libgmpxx.so.4": {
+        "path": "/usr/lib64/libgmpxx.so.4.6.1",
+        "sha256": "7c7b62a1e89474977ec8dfa295fd7fa094c64fb3671fdc15ccde11f013ba667f"
+      },
+      "libgmp.so.10": {
+        "path": "/usr/lib64/libgmp.so.10.4.1",
+        "sha256": "1119b8f422ba480b04452d6bd427a091633e64c987a53bb11d03655d2c766c8a"
+      },
+      "libsodium.so.26": {
+        "path": "/usr/lib64/libsodium.so.26.4.0",
+        "sha256": "00fea634c07b9a037b5d7ea3e51e27fe4ce347054579d987ec13ad25802371fd"
+      },
+      "libssl.so.3": {
+        "path": "/usr/lib64/libssl.so.3.5.8",
+        "sha256": "5f39428765cf3be435e7777ac106e8bae98598d07ce9635e4750a8ba8962f711"
+      },
+      "libcrypto.so.3": {
+        "path": "/usr/lib64/libcrypto.so.3.5.8",
+        "sha256": "d1a2e98f2d6cea1e1c7905f82214305a63d22773f0024d6ccd6e4a2f18c3628b"
+      },
+      "libboost_filesystem.so.1.83.0": {
+        "path": "/usr/lib64/libboost_filesystem.so.1.83.0",
+        "sha256": "6e6a109cfff8f687bbcd68050cea98b99e1340dc4c8583dbce1f10cbbd1db746"
+      },
+      "libboost_iostreams.so.1.83.0": {
+        "path": "/usr/lib64/libboost_iostreams.so.1.83.0",
+        "sha256": "448ba1c0a403715eca32c82a4a24d1445ef2788ded47755ad7909399f8ea9c86"
+      },
+      "libstdc++.so.6": {
+        "path": "/usr/lib64/libstdc++.so.6.0.33",
+        "sha256": "895f92d1ffca3941e747009e079b1a0fb69e7a0883f58513892cbc46374ea140"
+      },
+      "libm.so.6": {
+        "path": "/usr/lib64/libm.so.6",
+        "sha256": "febbfa979117086ff669a97acc68d578e98c2064f782987a9daf2e96cabf4f87"
+      },
+      "libgcc_s.so.1": {
+        "path": "/usr/lib64/libgcc_s-14-20251022.so.1",
+        "sha256": "a171f0e03a2b4181c299e8a532f23a2ba802e96549892c0a7a73d293e02206ff"
+      },
+      "libc.so.6": {
+        "path": "/usr/lib64/libc.so.6",
+        "sha256": "2c4c4856030a9af10dcbec8f799f463124036c25fa0e4a7e9dfcec76444d0593"
+      },
+      "libz.so.1": {
+        "path": "/usr/lib64/libz.so.1.3.1.zlib-ng",
+        "sha256": "502367e59fbbb3ec65c2c7c31f8ad1b47df7a6b4a6b7d283e0556def8ce6bf42"
+      },
+      "libboost_atomic.so.1.83.0": {
+        "path": "/usr/lib64/libboost_atomic.so.1.83.0",
+        "sha256": "5a080d78d4cc9be37a272042883060728f358967da3308875b9af64ea4ac79e0"
+      },
+      "libbz2.so.1": {
+        "path": "/usr/lib64/libbz2.so.1.0.8",
+        "sha256": "237eb6f00023f0d0cf1e512c80fe1e1ccfcab6d133f65ded2b335cc3836a7ef8"
+      },
+      "liblzma.so.5": {
+        "path": "/usr/lib64/liblzma.so.5.6.2",
+        "sha256": "6e9166c7bcc54ead0f3d810ec18a805ad38230246e802dd9f3b782f5320242e5"
+      },
+      "libzstd.so.1": {
+        "path": "/usr/lib64/libzstd.so.1.5.5",
+        "sha256": "94af4a706493a5d0821482afbefa0f05d0e98ad7cda4c50bcab23c0e67ce3f12"
+      }
+    },
+    "export_source_sha256": "c0bd32e73b59b26eb8edc9db5c5eec2f4cafb28c93f74478f27fbffd55829a14",
+    "native_source_sha256": {
+      "CONFIG": "810021ec7e2cf5ce98393357cf414198ec87b1cf42975fea829c173ec591497a",
+      "CONFIG.mine": "e3c02490c0e780737de385fbf7342279681141bcc5131c18fe1a2aabdc244829",
+      "compile.py": "1f0d3eb9108e4819b3335feb4e0bab2b2a19b6451bc3bc6a43fceb2d93fe6868",
+      "Machines/mascot-party.cpp": "5b353cc761403162800523a8f24d36895b4393c9bf2ed41b59103543faf908e1",
+      "OT/Triple.hpp": "a85da301cbedb82e589d2793a0b255f4837e5091250a833d32a6f7996c8493be",
+      "Protocols/ShuffleSacrifice.hpp": "f9ce89d917d6f34e751cb1fd419505e53269d025f778b57e5bfe6d265814fd35",
+      "Protocols/MAC_Check.hpp": "6aa24821e6dae6370cd89832f407523dc046d4648dcc281f36dd054d7cb723b8",
+      "OT/NPartyTripleGenerator.hpp": "025611afdc07555aefb37e0c6a6e0fb645d672a25a667332a4825eed48aa1f42",
+      "OT/OTExtensionWithMatrix.cpp": "229e22315d8e002e9ce2fb216e8318e9e447fd5908ce32d7d51986a71979ce44",
+      "OT/OTMultiplier.hpp": "12429b0c5a81c17e02c80b36b5636d763efa679086e5244dabe1838792b25eb4",
+      "OT/MascotMacKey.hpp": "155a8848fb253ce2bead8e9f03df703337ce6a94e97db18a9593c1383e5d2a0c"
+    },
+    "passed": true,
+    "return_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "compile_ms": 315.1140330010094,
+    "native_preprocessing_ms": 417.67129999789177,
+    "preprocessing_ms": 767.9324330019881,
+    "private_role_directories": [
+      "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party0",
+      "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party1",
+      "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party2",
+      "/home/zeb/Desktop/SIV/work/mascot_direct/micro1/party3"
+    ],
+    "transport": "native encrypted peer channels",
+    "trusted_dealer": false
+  },
+  "numerical": {
+    "task": "synthetic successor token modulo 8",
+    "architecture": [
+      8,
+      2,
+      8
+    ],
+    "evaluation_rows": 1,
+    "unique_contexts": 1,
+    "evaluation": "All eight tokens are training examples; no held-out accuracy claim.",
+    "float_accuracy": 1.0,
+    "integer_accuracy": 1.0,
+    "max_logit_error": 0.009280979633331299,
+    "max_logprob_error": 0.011129689136334608,
+    "range_proof": {
+      "field_prime": 2147483647,
+      "signed_limit": 1073741823,
+      "weight_fractional_bits": 8,
+      "input_scale": 1,
+      "first_affine_scale": 256,
+      "square_scale": 65536,
+      "output_scale": 16777216,
+      "first_affine_abs_bound": 1372,
+      "square_abs_bound": 1882384,
+      "output_abs_bound": 653079894,
+      "actual_output_max_abs": 91149508,
+      "no_field_wrap": true,
+      "no_private_truncation": true,
+      "contract": "Public bound across all 8 one-hot inputs; no private domain check."
+    }
+  },
+  "source_stable_during_run": true,
+  "source_sha256_before": {
+    "/home/zeb/Desktop/SIV/scripts/run_spdz_prime256.py": "a1eeea6ddba1be332ef24f7ed85380460bf161ec89229e755b8313b67fc55b03",
+    "rep4gpu/kernels.py": "a59eb164231574d9d01afc5e5c3d22e0c43a344eeec710c905f6f290a6e45502",
+    "rep4gpu/transport.py": "bffaa7d490d1e7ed2ee3fcc7ec696986d880e94f19d0d044e6c3434df9475c1f",
+    "rep4gpu/activations.py": "9429203efb4ebc54aa4f0dee2c358afe9e8eb37c6c4522f46c09470cc2188c76",
+    "rep4gpu/runtime.py": "b85ea3df852260014891c2a6f6a7f95edb6280e2d19099a8ac6a056aeab94b00",
+    "rep4gpu/spdz.py": "735c29077aad7d76ce366dcdfc335df3698fc9393447e627f136a83d613de31f",
+    "rep4gpu/conversion.py": "7470d910faccfef53d68d3e7398b5c5bd89f706623f2c71c1e29b63e827ca342",
+    "rep4gpu/__init__.py": "2928ddf58a570311e6b6db4ebfc34876be8a8970050576e444bbeda7ba24281a",
+    "rep4gpu/setup.py": "52ee5986a701d99a34ee37bf89243cc73e74155776a19c69c77dab90e30b6521",
+    "rep4gpu/simt_kernels.py": "a58e0c534ee9850cb29ba5b8926816651580fa9abe788d0f1590aaf53944840b",
+    "rep4gpu/probabilistic.py": "0fc6672e3fcf58f80aa68db05112e83ef05b7dbd0f0e917389f72a2e94bed566",
+    "rep4gpu/packed_kernels.py": "96cca224bee35dcc5db037884b9b80ee60b072a670616fa57a54d31e4efec86a",
+    "rep4gpu/exact_truncation.py": "346d94088c90cac0f229dc79956309a37089117510a085cb868d75301883f245",
+    "rep4gpu/fused_runtime.py": "46182bf072dd5a7cecf5bce2474011cbfe22cc0826a7485ff034b367f420d173",
+    "rep4gpu/prg.py": "be3963e28c244d818faa04cc9494f94545a436cd75531297fef97a395134606e",
+    "rep4gpu/warp_mma_kernels.py": "246d9804b92628ed769afa230166bf617fb20d7849cc3575448cfbdc92532679",
+    "rep4gpu/compact_conversion.py": "dbd14fa033678e1bfe3feb8627a6a5b1f0d14ba6ab82e108829098a1a3dd9351",
+    "rep4gpu/weighted_kernels.py": "d5f612be5b74ad07cc50636e0e1bdfac0ead3589fb658c990253f5ef73628df9",
+    "rep4gpu/carry_tree.py": "672a986a1218dbc75791a79c8d35bba3374cf051e787f6fd281c76fd16ec04d8",
+    "rep4gpu/inference.py": "6b610b72d538419fa949c9faf5ccba7ae1fd9de97fc994b81c2450df0a9b21c4",
+    "rep4gpu/carry_tree_gpu.py": "7c10f9e77f892c336839fcf5abfd4cf7f6c4d4545521025e3e218d7e27c2cbd6",
+    "rep4gpu/nn.py": "9cf7cdd5d706e121fd7720e635a5ec2f417e1cb4170afdc65bfd445345181575",
+    "rep4gpu/gpu_hash.py": "a5449222c3684b4d83b1859212bc90a0db2f2b34ecffa0827948666afd91aa2c",
+    "rep4gpu/gpu_prg.py": "64b187bee9f0d47f8db692427cfb2a3f7c9a8ee27319af4768aa629ac494161e",
+    "rep4gpu/device_runtime.py": "ce55553621693d61c0b202985e13527b6c90c3cf9672c62bb3b73d23f3271b45",
+    "rep4gpu/device_transport.py": "187acfa333a7a830039ff8ff7a2a32e3bbb915103f1d698d858e690b1fe4dc17",
+    "rep4gpu/gpu_prg_batch.py": "fe24492d45a2467f4524b5bb4720ca0b8534009b9729f2784af23bc629d9c6eb",
+    "rep4gpu/compact_conversion_gpu.py": "ba4de72671855b5dd154e706f611ee3c87befbf59e9b23d6d13390283e37c662",
+    "rep4gpu/carry_tree_swar.py": "5585a0517d92ad49b2832f25596f5d8c0c82a1ae629e5d59c3d36586d2076975",
+    "rep4gpu/device_inference.py": "1322101c5eea59b4abd12e00252f1b1297218cd4b077fb718a38299ed748b164",
+    "rep4gpu/gpu_prg_graph.py": "b6e3d87ad8ec67d4d9307dda2903ccfc2a8b249019aee8b1ca28a3705b8df90f",
+    "rep4gpu/graph_runtime.py": "4da90c21cc2ad6eeb95ce8e1a9e6889ec62b885be67352ef3ddb216f0e3a047d",
+    "rep4gpu/five_product.py": "eb13039f6ee3ee7fe79f92080f16fde8cf431acab0336546d4b6dd86618e5fe4",
+    "rep4gpu/device_open.py": "7049f290904b24fcb1012ff8b5294847a1e50309ec293eb427d73540d6c6e6df",
+    "rep4gpu/device_probabilistic.py": "d8a27de53a1b952e470642b230d1654eb98b02ab67213264f008bcb7e28f243f",
+    "rep4gpu/tuned_kernels.py": "eebde12d7e28567d4d87c1c824a420cd63d4eac4bf93c17645a837d55d7ca95d",
+    "rep4gpu/field_kernels.py": "6c59c01c751d4c577d955dab0b8f3ea2d8bae16cd434dc8c0e70817617d6473a",
+    "rep4gpu/spdz_inputs.py": "2d8d497098b1eeacf1eada53cc276016536358f7cee5f7297518192c7152204a",
+    "rep4gpu/spdz_distributed.py": "2e0e2097da8699f740521071106bd3cd0f5b988e1b9a61615e6243145ce74759",
+    "rep4gpu/spdz_polynomial.py": "304cb10261cd672d31e6f28499c73ac8aed821f233a02524e71dbb9ebb720770",
+    "rep4gpu/spdz_compression.py": "3199e9f43ccd73f225f92867b4746525c09b3409511f924d9d8b43d856e4d3e7",
+    "rep4gpu/field_fast.py": "69155af4d0ab80030d9a944c3dcd3229b2fd9c7395c92d664957afabceedb561",
+    "rep4gpu/spdz_device.py": "7b4482dd3991264049749f7266ca460ad7315d2432e2b63433842508f5f28ae7",
+    "rep4gpu/field_fusion.py": "677f372b5c8af3a278894c8f945e559bdd3171b6ffa0db0adbe755b971a335ec",
+    "rep4gpu/preprocessing_mama.py": "9fd9d5b413e1af47d9129abe94b282851a9457f8f192348be4cce6d850489ef9",
+    "rep4gpu/field_decode_auth.py": "42a53a9853c789e20c76fb0e2d4e35c8d1a7f5c21e8332c8686bef4df7e78d61",
+    "rep4gpu/spdz_device_graph.py": "81d70e9cc48924038a2d7e74ed9ec7e2fe2640894334c81318eefcf2745b9103",
+    "rep4gpu/spdz_deferred.py": "a023e17fa0dec843357900ea275746f51c9ebc4b0431afc6c5617703b43f423d",
+    "rep4gpu/spdz_metadata.py": "d8c755e46fe08a4e7fc6290eedfec06edc85f7b47f1578c4e7978b0a38286016",
+    "rep4gpu/field_weighted.py": "26b90cd6dcd14e1c440fd84fe85c274228a0d92aa161ec8e34331ea26cc5f207",
+    "rep4gpu/field_hybrid_auth.py": "79c502ceb20eb6221a499b7c8dedaaee8a82c736b3c3fc65e0876cf549710279",
+    "rep4gpu/spdz_prepared_right.py": "03726c83acafc439fd236c3928f7e9f980fd184bfb9d4e603b8f232d4d382aca",
+    "rep4gpu/field_prepared.py": "e95eaf7c05a2ba25b4a87d321c1c1bce2c73af908bf8b4c364f9429206f4e39a",
+    "rep4gpu/spdz_hash_frames.py": "4de3c75a7a96b0604d34e5e492030ef5bcaf478e55f61cf8b50fa550cd6d7a91",
+    "rep4gpu/field_prepared_canonical.py": "66e957c4eb4f2ca6fd4e19a3aff3ddd178509a45500ef9f487fdeda7c7096ae7",
+    "rep4gpu/spdz_broadcast_metadata.py": "6bb1021e32a4f83162dfae99b2d6456cf77b9c828988c1ff2edc2c709696f224",
+    "rep4gpu/preprocessing_mascot.py": "538243854934357dfec8462b8786fe91602defe1cc1bc10f77eebf755367b022",
+    "rep4gpu/field_weighted_accumulate.py": "9bbd2279a55e6c958f40ca8f1cf0bf9b1ca2d8a31a7929448037a772d423bfd6",
+    "rep4gpu/field_q256.py": "9e84db427b71dc4c903bbac6ad942c1de5abf6db5c590dd0eabda5442b6c908b",
+    "rep4gpu/preprocessing_mascot_direct.py": "675f3b1727d7e31193255359a567bc32a6e105267816e6c6de360edb9587930d",
+    "rep4gpu/spdz_prime256.py": "0913a06f538e5a8068f2572eccc6846d2e07577ffbe7ffa80ef2aa311c1309d0",
+    "benchmarks/spdz_online.py": "888c474c53fc5623c76c19443466591becfca1875943bd65e62ded6242cd555f",
+    "benchmarks/spdz_inference.py": "0ba3d123df310c9533da0f80168b243dbe3230e5da30a204c36be69542577c8b",
+    "benchmarks/spdz_native_replay.py": "f3f8f09408c5f6856b9e19ecef83dbbe499b7e2dc9d5b1ff55e87561672484c4",
+    "benchmarks/spdz_broadcast_graph.py": "3ef0460ee7f81a71c978d4f51c1413485593314a5f421582e9a9817b5e217c7d",
+    "benchmarks/spdz_prepared_fixture.py": "607755c307205d4b4568e393b94d6652d8cbbad57c979e4d798df10ac443467c",
+    "benchmarks/spdz_prepared_model.py": "c76482bcb0bb8ea0d4d165f1a80c8f922ed24dd23206b2bf4cdaaa1431f6b208",
+    "benchmarks/spdz_timing.py": "b857b6d920911cbe1f1da333fd7486570b643c2500e9f3a66cd99ec49650ff3b",
+    "benchmarks/spdz_streamed_replay.py": "bb2f6bc2012c06828f6bfc2057334b044c8359f028b3368120a791457f1086dc",
+    "benchmarks/spdz_cost.py": "da57ab4b0df26af836e95aa62a3a0396734dcde31ec8bba46311362aba06e976",
+    "benchmarks/spdz_batched_preparation.py": "e2df70be563908b334acb09ab572991c7d78eab9558fe2ecfeaddc69f5ce2767",
+    "benchmarks/socket_inference.py": "e880f9dfaeda91ef9d73cd1bf2cda530a42a14e517d9e83204699fd31af8cb45",
+    "examples/spdz_micro_toy.py": "a2ea43811d0a2241ed6a072fc86cac7bb7dfd4083e5ee788beec0770fc96c93f"
+  },
+  "source_sha256": {
+    "/home/zeb/Desktop/SIV/scripts/run_spdz_prime256.py": "a1eeea6ddba1be332ef24f7ed85380460bf161ec89229e755b8313b67fc55b03",
+    "rep4gpu/kernels.py": "a59eb164231574d9d01afc5e5c3d22e0c43a344eeec710c905f6f290a6e45502",
+    "rep4gpu/transport.py": "bffaa7d490d1e7ed2ee3fcc7ec696986d880e94f19d0d044e6c3434df9475c1f",
+    "rep4gpu/activations.py": "9429203efb4ebc54aa4f0dee2c358afe9e8eb37c6c4522f46c09470cc2188c76",
+    "rep4gpu/runtime.py": "b85ea3df852260014891c2a6f6a7f95edb6280e2d19099a8ac6a056aeab94b00",
+    "rep4gpu/spdz.py": "735c29077aad7d76ce366dcdfc335df3698fc9393447e627f136a83d613de31f",
+    "rep4gpu/conversion.py": "7470d910faccfef53d68d3e7398b5c5bd89f706623f2c71c1e29b63e827ca342",
+    "rep4gpu/__init__.py": "2928ddf58a570311e6b6db4ebfc34876be8a8970050576e444bbeda7ba24281a",
+    "rep4gpu/setup.py": "52ee5986a701d99a34ee37bf89243cc73e74155776a19c69c77dab90e30b6521",
+    "rep4gpu/simt_kernels.py": "a58e0c534ee9850cb29ba5b8926816651580fa9abe788d0f1590aaf53944840b",
+    "rep4gpu/probabilistic.py": "0fc6672e3fcf58f80aa68db05112e83ef05b7dbd0f0e917389f72a2e94bed566",
+    "rep4gpu/packed_kernels.py": "96cca224bee35dcc5db037884b9b80ee60b072a670616fa57a54d31e4efec86a",
+    "rep4gpu/exact_truncation.py": "346d94088c90cac0f229dc79956309a37089117510a085cb868d75301883f245",
+    "rep4gpu/fused_runtime.py": "46182bf072dd5a7cecf5bce2474011cbfe22cc0826a7485ff034b367f420d173",
+    "rep4gpu/prg.py": "be3963e28c244d818faa04cc9494f94545a436cd75531297fef97a395134606e",
+    "rep4gpu/warp_mma_kernels.py": "246d9804b92628ed769afa230166bf617fb20d7849cc3575448cfbdc92532679",
+    "rep4gpu/compact_conversion.py": "dbd14fa033678e1bfe3feb8627a6a5b1f0d14ba6ab82e108829098a1a3dd9351",
+    "rep4gpu/weighted_kernels.py": "d5f612be5b74ad07cc50636e0e1bdfac0ead3589fb658c990253f5ef73628df9",
+    "rep4gpu/carry_tree.py": "672a986a1218dbc75791a79c8d35bba3374cf051e787f6fd281c76fd16ec04d8",
+    "rep4gpu/inference.py": "6b610b72d538419fa949c9faf5ccba7ae1fd9de97fc994b81c2450df0a9b21c4",
+    "rep4gpu/carry_tree_gpu.py": "7c10f9e77f892c336839fcf5abfd4cf7f6c4d4545521025e3e218d7e27c2cbd6",
+    "rep4gpu/nn.py": "9cf7cdd5d706e121fd7720e635a5ec2f417e1cb4170afdc65bfd445345181575",
+    "rep4gpu/gpu_hash.py": "a5449222c3684b4d83b1859212bc90a0db2f2b34ecffa0827948666afd91aa2c",
+    "rep4gpu/gpu_prg.py": "64b187bee9f0d47f8db692427cfb2a3f7c9a8ee27319af4768aa629ac494161e",
+    "rep4gpu/device_runtime.py": "ce55553621693d61c0b202985e13527b6c90c3cf9672c62bb3b73d23f3271b45",
+    "rep4gpu/device_transport.py": "187acfa333a7a830039ff8ff7a2a32e3bbb915103f1d698d858e690b1fe4dc17",
+    "rep4gpu/gpu_prg_batch.py": "fe24492d45a2467f4524b5bb4720ca0b8534009b9729f2784af23bc629d9c6eb",
+    "rep4gpu/compact_conversion_gpu.py": "ba4de72671855b5dd154e706f611ee3c87befbf59e9b23d6d13390283e37c662",
+    "rep4gpu/carry_tree_swar.py": "5585a0517d92ad49b2832f25596f5d8c0c82a1ae629e5d59c3d36586d2076975",
+    "rep4gpu/device_inference.py": "1322101c5eea59b4abd12e00252f1b1297218cd4b077fb718a38299ed748b164",
+    "rep4gpu/gpu_prg_graph.py": "b6e3d87ad8ec67d4d9307dda2903ccfc2a8b249019aee8b1ca28a3705b8df90f",
+    "rep4gpu/graph_runtime.py": "4da90c21cc2ad6eeb95ce8e1a9e6889ec62b885be67352ef3ddb216f0e3a047d",
+    "rep4gpu/five_product.py": "eb13039f6ee3ee7fe79f92080f16fde8cf431acab0336546d4b6dd86618e5fe4",
+    "rep4gpu/device_open.py": "7049f290904b24fcb1012ff8b5294847a1e50309ec293eb427d73540d6c6e6df",
+    "rep4gpu/device_probabilistic.py": "d8a27de53a1b952e470642b230d1654eb98b02ab67213264f008bcb7e28f243f",
+    "rep4gpu/tuned_kernels.py": "eebde12d7e28567d4d87c1c824a420cd63d4eac4bf93c17645a837d55d7ca95d",
+    "rep4gpu/field_kernels.py": "6c59c01c751d4c577d955dab0b8f3ea2d8bae16cd434dc8c0e70817617d6473a",
+    "rep4gpu/spdz_inputs.py": "2d8d497098b1eeacf1eada53cc276016536358f7cee5f7297518192c7152204a",
+    "rep4gpu/spdz_distributed.py": "2e0e2097da8699f740521071106bd3cd0f5b988e1b9a61615e6243145ce74759",
+    "rep4gpu/spdz_polynomial.py": "304cb10261cd672d31e6f28499c73ac8aed821f233a02524e71dbb9ebb720770",
+    "rep4gpu/spdz_compression.py": "3199e9f43ccd73f225f92867b4746525c09b3409511f924d9d8b43d856e4d3e7",
+    "rep4gpu/field_fast.py": "69155af4d0ab80030d9a944c3dcd3229b2fd9c7395c92d664957afabceedb561",
+    "rep4gpu/spdz_device.py": "7b4482dd3991264049749f7266ca460ad7315d2432e2b63433842508f5f28ae7",
+    "rep4gpu/field_fusion.py": "677f372b5c8af3a278894c8f945e559bdd3171b6ffa0db0adbe755b971a335ec",
+    "rep4gpu/preprocessing_mama.py": "9fd9d5b413e1af47d9129abe94b282851a9457f8f192348be4cce6d850489ef9",
+    "rep4gpu/field_decode_auth.py": "42a53a9853c789e20c76fb0e2d4e35c8d1a7f5c21e8332c8686bef4df7e78d61",
+    "rep4gpu/spdz_device_graph.py": "81d70e9cc48924038a2d7e74ed9ec7e2fe2640894334c81318eefcf2745b9103",
+    "rep4gpu/spdz_deferred.py": "a023e17fa0dec843357900ea275746f51c9ebc4b0431afc6c5617703b43f423d",
+    "rep4gpu/spdz_metadata.py": "d8c755e46fe08a4e7fc6290eedfec06edc85f7b47f1578c4e7978b0a38286016",
+    "rep4gpu/field_weighted.py": "26b90cd6dcd14e1c440fd84fe85c274228a0d92aa161ec8e34331ea26cc5f207",
+    "rep4gpu/field_hybrid_auth.py": "79c502ceb20eb6221a499b7c8dedaaee8a82c736b3c3fc65e0876cf549710279",
+    "rep4gpu/spdz_prepared_right.py": "03726c83acafc439fd236c3928f7e9f980fd184bfb9d4e603b8f232d4d382aca",
+    "rep4gpu/field_prepared.py": "e95eaf7c05a2ba25b4a87d321c1c1bce2c73af908bf8b4c364f9429206f4e39a",
+    "rep4gpu/spdz_hash_frames.py": "4de3c75a7a96b0604d34e5e492030ef5bcaf478e55f61cf8b50fa550cd6d7a91",
+    "rep4gpu/field_prepared_canonical.py": "66e957c4eb4f2ca6fd4e19a3aff3ddd178509a45500ef9f487fdeda7c7096ae7",
+    "rep4gpu/spdz_broadcast_metadata.py": "6bb1021e32a4f83162dfae99b2d6456cf77b9c828988c1ff2edc2c709696f224",
+    "rep4gpu/preprocessing_mascot.py": "538243854934357dfec8462b8786fe91602defe1cc1bc10f77eebf755367b022",
+    "rep4gpu/field_weighted_accumulate.py": "9bbd2279a55e6c958f40ca8f1cf0bf9b1ca2d8a31a7929448037a772d423bfd6",
+    "rep4gpu/field_q256.py": "9e84db427b71dc4c903bbac6ad942c1de5abf6db5c590dd0eabda5442b6c908b",
+    "rep4gpu/preprocessing_mascot_direct.py": "675f3b1727d7e31193255359a567bc32a6e105267816e6c6de360edb9587930d",
+    "rep4gpu/spdz_prime256.py": "0913a06f538e5a8068f2572eccc6846d2e07577ffbe7ffa80ef2aa311c1309d0",
+    "benchmarks/spdz_online.py": "888c474c53fc5623c76c19443466591becfca1875943bd65e62ded6242cd555f",
+    "benchmarks/spdz_inference.py": "0ba3d123df310c9533da0f80168b243dbe3230e5da30a204c36be69542577c8b",
+    "benchmarks/spdz_native_replay.py": "f3f8f09408c5f6856b9e19ecef83dbbe499b7e2dc9d5b1ff55e87561672484c4",
+    "benchmarks/spdz_broadcast_graph.py": "3ef0460ee7f81a71c978d4f51c1413485593314a5f421582e9a9817b5e217c7d",
+    "benchmarks/spdz_prepared_fixture.py": "607755c307205d4b4568e393b94d6652d8cbbad57c979e4d798df10ac443467c",
+    "benchmarks/spdz_prepared_model.py": "c76482bcb0bb8ea0d4d165f1a80c8f922ed24dd23206b2bf4cdaaa1431f6b208",
+    "benchmarks/spdz_timing.py": "b857b6d920911cbe1f1da333fd7486570b643c2500e9f3a66cd99ec49650ff3b",
+    "benchmarks/spdz_streamed_replay.py": "bb2f6bc2012c06828f6bfc2057334b044c8359f028b3368120a791457f1086dc",
+    "benchmarks/spdz_cost.py": "da57ab4b0df26af836e95aa62a3a0396734dcde31ec8bba46311362aba06e976",
+    "benchmarks/spdz_batched_preparation.py": "e2df70be563908b334acb09ab572991c7d78eab9558fe2ecfeaddc69f5ce2767",
+    "benchmarks/socket_inference.py": "e880f9dfaeda91ef9d73cd1bf2cda530a42a14e517d9e83204699fd31af8cb45",
+    "examples/spdz_micro_toy.py": "a2ea43811d0a2241ed6a072fc86cac7bb7dfd4083e5ee788beec0770fc96c93f"
+  },
+  "measurement": "Actual shared-host four-process CPU/TLS latency including all checks and final opening; not a GPU or perfect-network estimate.",
+  "clear_baselines": {
+    "timings": {
+      "fp32_eager_ms": 0.014486999134533107,
+      "numpy_cpu_ms": 0.0036659985198639333
+    },
+    "accuracy": {
+      "fp32": {
+        "max_logit_error": 0.0,
+        "max_logprob_error": 0.0
+      },
+      "numpy": {
+        "max_logit_error": 0.0,
+        "max_logprob_error": 0.0
+      }
+    },
+    "measurements": {
+      "fp32_eager": {
+        "median_ms": 0.014486999134533107,
+        "minimum_ms": 0.014336001186165959,
+        "maximum_ms": 0.015157995221670717,
+        "samples_ms": [
+          0.015157995221670717,
+          0.01485800021328032,
+          0.014546996681019664,
+          0.014798002666793764,
+          0.014436998753808439,
+          0.014718003512825817,
+          0.014457000361289829,
+          0.014787998225074261,
+          0.01438699837308377,
+          0.01449700357625261,
+          0.014336001186165959,
+          0.014377001207321882,
+          0.014486999134533107,
+          0.014676996215712279,
+          0.01471699943067506,
+          0.014457000361289829,
+          0.014536999515257776,
+          0.014557001122739166,
+          0.014496996300294995,
+          0.014367004041559994,
+          0.014356999599840492,
+          0.014426994312088937,
+          0.01440699998056516,
+          0.01442700158804655,
+          0.014416997146327049
+        ],
+        "warmups": 20,
+        "minimum_requested_warmups": 20,
+        "minimum_gpu_warmup_ms": 0.0,
+        "actual_warmup_wall_ms": 0.2888919989345595
+      },
+      "numpy_cpu": {
+        "median_ms": 0.0036659985198639333,
+        "minimum_ms": 0.0035869961720891297,
+        "maximum_ms": 0.003936998837161809,
+        "samples_ms": [
+          0.003936998837161809,
+          0.003806999302469194,
+          0.0036869969335384667,
+          0.003636996552813798,
+          0.0036760029615834355,
+          0.0035869961720891297,
+          0.0036569981602951884,
+          0.0036769997677765787,
+          0.0036470009945333004,
+          0.003597000613808632,
+          0.0036659985198639333,
+          0.003636996552813798,
+          0.003697001375257969,
+          0.0036769997677765787,
+          0.0036569981602951884,
+          0.003636996552813798,
+          0.0036760029615834355,
+          0.0036969940993003547,
+          0.0036769997677765787,
+          0.0036569981602951884,
+          0.0036869969335384667,
+          0.003635999746620655,
+          0.0036769997677765787,
+          0.0036470009945333004,
+          0.003636996552813798
+        ],
+        "warmups": 20,
+        "minimum_requested_warmups": 20,
+        "minimum_gpu_warmup_ms": 0.0,
+        "actual_warmup_wall_ms": 0.06423099694075063
+      }
+    },
+    "repeats": 25,
+    "minimum_requested_warmups": 20,
+    "minimum_gpu_warmup_ms": 100,
+    "model": "actual trained Linear(8,2), square, Linear(2,8) in PyTorch inference mode"
+  },
+  "checkpoint_sha256": "0f9e7031bee44625452f6d8ce85e2ae2004780b94a72802cae550f4152f68921",
+  "provisioning": "Shared-host functional fixture; deployment requires private execution domains and authenticated confidential channels. Each worker reads only its own claimed native role bundle and owner-assigned plaintext inputs.",
+  "input_protocol_by_name_ms": {
+    "x": 14.79930299683474,
+    "w1": 1.5761569957248867,
+    "b1": 1.4494589995592833,
+    "w2": 1.2648830015677959,
+    "b2": 1.7340929989586584
+  },
+  "pipeline_cost": {
+    "stages": {
+      "checked_query_ms": 16.67216700298013,
+      "fresh_model_preparation_ms": 0,
+      "new_input_sharing_ms": 14.79930299683474,
+      "amortized_static_model_sharing_ms": 6.024591995810624,
+      "fresh_cryptographic_preprocessing_ms": 417.67129999789177
+    },
+    "preprocessing_query_capacity": 1,
+    "model_queries": 1,
+    "known_stage_sum_ms": 455.16736199351726,
+    "total_per_query_ms": 455.16736199351726,
+    "total_complete": true,
+    "total_slowdowns": {
+      "fp32_eager_ms": 31419.023206022066,
+      "numpy_cpu_ms": 124159.17778668694
+    },
+    "formula": "crypto_batch_ms / distinct_single_use_query_packs + fresh_model_preparation_ms + new_input_sharing_ms + checked_query_ms + static_model_sharing_ms / model_queries",
+    "reuse_contract": "Each query consumes its own fresh correlations and E/F preparation; only static model sharing is reusable.",
+    "security_target_met": false,
+    "timing_context": "Actual native fresh generation plus CPU/TLS sharing and checked query; compilation separate; one fresh correlation pack, no replay amortization."
+  }
+}

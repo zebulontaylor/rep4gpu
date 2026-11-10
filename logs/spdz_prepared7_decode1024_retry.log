@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/zeb/Desktop/SIV/benchmarks/spdz_inference.py", line 493, in main
+    row=run_case(m,k,args.n or k,args.hidden,args.workload,args.device,args.repeats,args.mac_keys,
+  File "/home/zeb/Desktop/SIV/benchmarks/spdz_inference.py", line 303, in run_case
+    correlations=fresh_correlations(dealer,m,k,n,hidden,workload,compact=backend!='host')
+  File "/home/zeb/Desktop/SIV/benchmarks/spdz_inference.py", line 223, in fresh_correlations
+    first=split_triple(dealer.triple(m,k,n if workload=='matmul' else hidden))
+  File "/home/zeb/Desktop/SIV/rep4gpu/spdz.py", line 107, in triple
+    return MatrixTriple(self.share(a), self.share(b), self.share(field_matmul(a, b)))
+  File "/home/zeb/Desktop/SIV/rep4gpu/spdz.py", line 99, in share
+    macs = _random((self.mac_keys, self.parties, *value.shape), self.device)
+  File "/home/zeb/Desktop/SIV/rep4gpu/spdz.py", line 29, in _random
+    result[used:used + len(accepted)] = accepted
+KeyboardInterrupt

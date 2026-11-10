@@ -133,6 +133,8 @@ class SocketTransport:
             deadline = time.monotonic() + timeout
             while True:
                 sock = socket.socket()
+                # Short protocol frames must not wait for a delayed TCP ACK.
+                sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
                 sock.settimeout(timeout)
                 try:
                     sock.connect(addresses[peer])
@@ -148,6 +150,7 @@ class SocketTransport:
                     time.sleep(.02)
         for _ in range(party + 1, 4):
             sock, _ = listener.accept()
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
             sock.settimeout(timeout)
             if tls:
                 sock = server_context.wrap_socket(sock, server_side=True)

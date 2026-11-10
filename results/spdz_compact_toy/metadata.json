@@ -1,0 +1,40 @@
+{
+  "task": "synthetic two-token sum modulo 8",
+  "architecture": [
+    16,
+    8,
+    8
+  ],
+  "evaluation_rows": 64,
+  "unique_contexts": 64,
+  "evaluation": "All 64 contexts are training contexts; no held-out accuracy claim.",
+  "float_accuracy": 1.0,
+  "integer_accuracy": 1.0,
+  "max_logit_error": 0.04137146472930908,
+  "max_logprob_error": 0.06064433242693035,
+  "range_proof": {
+    "field_prime": 2147483647,
+    "signed_limit": 1073741823,
+    "weight_fractional_bits": 8,
+    "input_scale": 1,
+    "first_affine_scale": 256,
+    "square_scale": 65536,
+    "output_scale": 16777216,
+    "first_affine_abs_bound": 657,
+    "square_abs_bound": 431649,
+    "output_abs_bound": 401749245,
+    "actual_output_max_abs": 181150076,
+    "no_field_wrap": true,
+    "no_private_truncation": true,
+    "contract": "Public bound across all 64 two-one-hot inputs; no private domain check."
+  },
+  "private_batch": 1,
+  "training": {
+    "seed": 20261110,
+    "steps": 2000,
+    "optimizer": "Adam",
+    "learning_rate": 0.02,
+    "weight_decay": 0.001,
+    "cpu_threads": 1
+  }
+}

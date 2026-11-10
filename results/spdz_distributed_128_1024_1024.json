@@ -1,0 +1,240 @@
+{
+  "passed": true,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "timed_out": false,
+  "device": "cuda",
+  "completed_utc": "2026-11-10T12:56:45.486117+00:00",
+  "source_sha256": {
+    "scripts/run_spdz_distributed.py": "bd46a49c12195cde01081ea027f307f5b304870df3775af8d23a7c0968d0f5b0",
+    "rep4gpu/spdz.py": "735c29077aad7d76ce366dcdfc335df3698fc9393447e627f136a83d613de31f",
+    "rep4gpu/spdz_distributed.py": "d5efe0e08c2fd69e5c6734df44f34d04ee99857c7386122036f73d290e050317",
+    "rep4gpu/spdz_inputs.py": "2d8d497098b1eeacf1eada53cc276016536358f7cee5f7297518192c7152204a",
+    "rep4gpu/transport.py": "bffaa7d490d1e7ed2ee3fcc7ec696986d880e94f19d0d044e6c3434df9475c1f",
+    "rep4gpu/kernels.py": "a59eb164231574d9d01afc5e5c3d22e0c43a344eeec710c905f6f290a6e45502",
+    "rep4gpu/field_kernels.py": "6c59c01c751d4c577d955dab0b8f3ea2d8bae16cd434dc8c0e70817617d6473a",
+    "benchmarks/socket_inference.py": "e880f9dfaeda91ef9d73cd1bf2cda530a42a14e517d9e83204699fd31af8cb45"
+  },
+  "source_sha256_after": {
+    "scripts/run_spdz_distributed.py": "bd46a49c12195cde01081ea027f307f5b304870df3775af8d23a7c0968d0f5b0",
+    "rep4gpu/spdz.py": "735c29077aad7d76ce366dcdfc335df3698fc9393447e627f136a83d613de31f",
+    "rep4gpu/spdz_distributed.py": "d5efe0e08c2fd69e5c6734df44f34d04ee99857c7386122036f73d290e050317",
+    "rep4gpu/spdz_inputs.py": "2d8d497098b1eeacf1eada53cc276016536358f7cee5f7297518192c7152204a",
+    "rep4gpu/transport.py": "bffaa7d490d1e7ed2ee3fcc7ec696986d880e94f19d0d044e6c3434df9475c1f",
+    "rep4gpu/kernels.py": "a59eb164231574d9d01afc5e5c3d22e0c43a344eeec710c905f6f290a6e45502",
+    "rep4gpu/field_kernels.py": "6c59c01c751d4c577d955dab0b8f3ea2d8bae16cd434dc8c0e70817617d6473a",
+    "benchmarks/socket_inference.py": "e880f9dfaeda91ef9d73cd1bf2cda530a42a14e517d9e83204699fd31af8cb45"
+  },
+  "source_stable_during_run": true,
+  "torch_version": "2.13.0+cu130",
+  "cuda_version": "13.0",
+  "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "reproduction_command": [
+    "/home/zeb/Desktop/SIV/.venv/bin/python",
+    "-m",
+    "scripts.run_spdz_distributed",
+    "--device",
+    "cuda",
+    "--m",
+    "128",
+    "--k",
+    "1024",
+    "--n",
+    "1024",
+    "--mac-keys",
+    "5",
+    "--timeout",
+    "90",
+    "--output",
+    "/home/zeb/Desktop/SIV/results/spdz_distributed_128_1024_1024.json",
+    "--stack-macs"
+  ],
+  "fp32_samples_ms": [
+    0.06938099977560341,
+    0.06931000098120421,
+    0.06775700603611767,
+    0.06645399844273925,
+    0.06642499647568911,
+    0.06637500337092206,
+    0.06628400296904147,
+    0.06580299668712541,
+    0.06600399501621723,
+    0.06647499685641378
+  ],
+  "matrix_shape": [
+    128,
+    1024,
+    1024
+  ],
+  "field_prime": 2147483647,
+  "mac_keys": 5,
+  "stack_macs": true,
+  "fp32_tf32_enabled": false,
+  "fixture_seed": 2301,
+  "preprocessing": "Explicit trusted dealer; each worker receives only its local additive/MAC/key shares.",
+  "preprocessing_ms": 1508.318212996528,
+  "online_critical_path_ms": 1100.6748450017767,
+  "fp32_matmul_median_ms": 0.06643949745921418,
+  "online_to_fp32_ratio": 16566.57390699648,
+  "global_payload_bytes": 391678644,
+  "global_online_payload_bytes": 377511504,
+  "input_critical_path_ms": 103.60521300026448,
+  "global_messages": 216,
+  "parties": [
+    {
+      "party": 0,
+      "passed": true,
+      "online_ms": 1100.6748450017767,
+      "authenticated_tls": true,
+      "payload_bytes": 95953581,
+      "input_payload_bytes": 1574748,
+      "online_payload_bytes": 94377876,
+      "input_protocol_ms": 103.60521300026448,
+      "online_exchange_ms": 269.0642699963064,
+      "local_arithmetic_serialization_staging_ms": 831.6105750054703,
+      "messages": 54,
+      "rounds": 18,
+      "local_value_shape": [
+        128,
+        1024
+      ],
+      "local_mac_shape": [
+        5,
+        128,
+        1024
+      ],
+      "alpha_share_shape": [
+        5
+      ],
+      "other_owners_plaintext_supplied": false,
+      "local_only_preprocessing": true,
+      "triple_consumed": true,
+      "output_sha256": "27089f8b6137349825eab39312971e273e4b11f0751badfd0dd35294f6a6134a",
+      "output_shape": [
+        128,
+        1024
+      ],
+      "exact_field_match": true
+    },
+    {
+      "party": 1,
+      "passed": true,
+      "online_ms": 1095.3462539982866,
+      "authenticated_tls": true,
+      "payload_bytes": 106963629,
+      "input_payload_bytes": 12584796,
+      "online_payload_bytes": 94377876,
+      "input_protocol_ms": 96.23170099803247,
+      "online_exchange_ms": 257.91526699322276,
+      "local_arithmetic_serialization_staging_ms": 837.4309870050638,
+      "messages": 54,
+      "rounds": 18,
+      "local_value_shape": [
+        128,
+        1024
+      ],
+      "local_mac_shape": [
+        5,
+        128,
+        1024
+      ],
+      "alpha_share_shape": [
+        5
+      ],
+      "other_owners_plaintext_supplied": false,
+      "local_only_preprocessing": true,
+      "triple_consumed": true,
+      "output_sha256": "27089f8b6137349825eab39312971e273e4b11f0751badfd0dd35294f6a6134a",
+      "output_shape": [
+        128,
+        1024
+      ],
+      "exact_field_match": true
+    },
+    {
+      "party": 2,
+      "passed": true,
+      "online_ms": 1100.4309659983846,
+      "authenticated_tls": true,
+      "payload_bytes": 94380717,
+      "input_payload_bytes": 1884,
+      "online_payload_bytes": 94377876,
+      "input_protocol_ms": 100.5501940016984,
+      "online_exchange_ms": 266.1249260054319,
+      "local_arithmetic_serialization_staging_ms": 834.3060399929527,
+      "messages": 54,
+      "rounds": 18,
+      "local_value_shape": [
+        128,
+        1024
+      ],
+      "local_mac_shape": [
+        5,
+        128,
+        1024
+      ],
+      "alpha_share_shape": [
+        5
+      ],
+      "other_owners_plaintext_supplied": false,
+      "local_only_preprocessing": true,
+      "triple_consumed": true,
+      "output_sha256": "27089f8b6137349825eab39312971e273e4b11f0751badfd0dd35294f6a6134a",
+      "output_shape": [
+        128,
+        1024
+      ],
+      "exact_field_match": true
+    },
+    {
+      "party": 3,
+      "passed": true,
+      "online_ms": 1098.175399005413,
+      "authenticated_tls": true,
+      "payload_bytes": 94380717,
+      "input_payload_bytes": 1884,
+      "online_payload_bytes": 94377876,
+      "input_protocol_ms": 103.25803099840414,
+      "online_exchange_ms": 260.12206201266963,
+      "local_arithmetic_serialization_staging_ms": 838.0533369927434,
+      "messages": 54,
+      "rounds": 18,
+      "local_value_shape": [
+        128,
+        1024
+      ],
+      "local_mac_shape": [
+        5,
+        128,
+        1024
+      ],
+      "alpha_share_shape": [
+        5
+      ],
+      "other_owners_plaintext_supplied": false,
+      "local_only_preprocessing": true,
+      "triple_consumed": true,
+      "output_sha256": "27089f8b6137349825eab39312971e273e4b11f0751badfd0dd35294f6a6134a",
+      "output_shape": [
+        128,
+        1024
+      ],
+      "exact_field_match": true
+    }
+  ],
+  "expected": null,
+  "expected_sha256": "27089f8b6137349825eab39312971e273e4b11f0751badfd0dd35294f6a6134a",
+  "expected_shape": [
+    128,
+    1024
+  ],
+  "exchange_diagnostic": "Exchange wall time includes real TLS and peer synchronization. Remaining local time includes arithmetic, serialization, host/device staging and colocated GPU contention; it is not an ideal-network projection.",
+  "physical_network": "Four real processes over localhost mutual TLS; includes wire transfer and synchronization.",
+  "wire_accounting": "Counts application protocol bytes including broadcast framing, excluding TCP/TLS framing. Timings include actual TLS transport.",
+  "gpu_placement": "All workers use the selected local GPU; not a four-GPU measurement.",
+  "methodology": "Owner-private masked inputs are timed separately. One fresh preprocessed matrix triple per role; checked masked openings and checked final output. Preprocessing, input sharing, TLS setup, arithmetic warmup and independent FP32 baseline are outside matmul online timing. The trusted dealer must not observe the input transcript."
+}

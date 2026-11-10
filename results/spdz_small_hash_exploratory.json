@@ -1,0 +1,55 @@
+{
+  "timing_kind": "Exploratory captured local CUDA work during concurrent CPU native OT; not a final clean latency benchmark.",
+  "results": [
+    {
+      "payload_bytes": 0,
+      "backend": "prepared_original_local",
+      "graph_ms": 0.0062956579389243286
+    },
+    {
+      "payload_bytes": 0,
+      "backend": "prepared_fused_local",
+      "graph_ms": 0.003646127998828888
+    },
+    {
+      "payload_bytes": 32,
+      "backend": "prepared_original_local",
+      "graph_ms": 0.007965734231210973
+    },
+    {
+      "payload_bytes": 32,
+      "backend": "prepared_fused_local",
+      "graph_ms": 0.004694012941512386
+    },
+    {
+      "payload_bytes": 64,
+      "backend": "prepared_original_local",
+      "graph_ms": 0.008364561244622985
+    },
+    {
+      "payload_bytes": 64,
+      "backend": "prepared_fused_local",
+      "graph_ms": 0.004938084488614983
+    },
+    {
+      "payload_bytes": 512,
+      "backend": "prepared_original_local",
+      "graph_ms": 0.022289763664712713
+    },
+    {
+      "payload_bytes": 512,
+      "backend": "prepared_fused_local",
+      "graph_ms": 0.012878244106586162
+    },
+    {
+      "payload_bytes": 927,
+      "backend": "prepared_original_local",
+      "graph_ms": 0.019770707533909724
+    },
+    {
+      "payload_bytes": 927,
+      "backend": "prepared_fused_local",
+      "graph_ms": 0.016558651924133302
+    }
+  ]
+}

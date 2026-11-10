@@ -1,0 +1,67 @@
+{
+  "matrices": [
+    {
+      "name": "first",
+      "m": 1,
+      "k": 16,
+      "n": 2048
+    },
+    {
+      "name": "second",
+      "m": 1,
+      "k": 2048,
+      "n": 8
+    }
+  ],
+  "squares": [
+    {
+      "name": "hidden",
+      "shape": [
+        1,
+        2048
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "x",
+      "owner": 0,
+      "shape": [
+        1,
+        16
+      ]
+    },
+    {
+      "name": "w1",
+      "owner": 1,
+      "shape": [
+        16,
+        2048
+      ]
+    },
+    {
+      "name": "b1",
+      "owner": 1,
+      "shape": [
+        1,
+        2048
+      ]
+    },
+    {
+      "name": "w2",
+      "owner": 1,
+      "shape": [
+        2048,
+        8
+      ]
+    },
+    {
+      "name": "b2",
+      "owner": 1,
+      "shape": [
+        1,
+        8
+      ]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "architecture": "8 -> 16 -> square -> 4",
+  "batch": 4,
+  "field_prime": 2147483647,
+  "mac_keys": 5,
+  "preprocessing": "trusted offline dealer",
+  "transport": "ideal in-process test transport",
+  "output": [
+    [
+      209,
+      204,
+      -40,
+      257
+    ],
+    [
+      -8,
+      -261,
+      -185,
+      308
+    ],
+    [
+      111,
+      194,
+      13,
+      -67
+    ],
+    [
+      143,
+      8,
+      146,
+      38
+    ]
+  ],
+  "expected": [
+    [
+      209,
+      204,
+      -40,
+      257
+    ],
+    [
+      -8,
+      -261,
+      -185,
+      308
+    ],
+    [
+      111,
+      194,
+      13,
+      -67
+    ],
+    [
+      143,
+      8,
+      146,
+      38
+    ]
+  ],
+  "global_payload_bytes": 172416
+}

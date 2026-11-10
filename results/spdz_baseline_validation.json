@@ -1,0 +1,14 @@
+{
+  "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest tests/test_spdz_baselines.py -q",
+  "exit_status": 0,
+  "passed": 3,
+  "elapsed_seconds": 6.91,
+  "log": "logs/spdz_baseline_validation.log",
+  "scope": "Warmed-stream CUDA capture correctness and grouped baseline statistics; not a performance-goal measurement",
+  "source_sha256": {
+    "benchmarks/spdz_inference.py": "4b1d317736a3eef944487402c8fe25f7a0a4e474816fae98351d7efd81272075",
+    "benchmarks/spdz_native_replay.py": "cfa1d782f3aa8a007bdbf55a0af1f0fb844a8b086deb88fd83fba9418ef98478",
+    "benchmarks/spdz_timing.py": "5007785dcff2f1be5887ae60bcf38a8486393c0f3e575db5167615b7afa3ebd0",
+    "tests/test_spdz_baselines.py": "37495cfec442e1f99b4eb449d3df0e316a0af6dcea0a399153b1b3422c933c3e"
+  }
+}

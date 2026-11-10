@@ -1,0 +1,95 @@
+{
+  "format": "mascot-micro-amortization-count-projection-v1",
+  "analytical_not_measured_throughput": true,
+  "architecture": "8 -> 2 square -> 8",
+  "application_mac_keys": 7,
+  "compiler_statistical_security": 176,
+  "generator": "rep4gpu.preprocessing_mascot._program",
+  "generator_function_sha256": "53cd76fabd4d76b77b18bfe44b59e3f2dd5ab6934ff9cdb923cb4967b9dfe7c0",
+  "provider_source_sha256": "538243854934357dfec8462b8786fe91602defe1cc1bc10f77eebf755367b022",
+  "batch1_export_source_sha256": "e9828a256227a4704150505caa062d0ef7921f7bb56fe0690aee1972f9c68219",
+  "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+  "request_sha256": "8f7924b0ac220b9e4e1840e1bfb162f646b3202363d1744faeea880005bfdadd",
+  "batch_contract": "B fresh independent query rows use one matrix correlation per layer and one shared fixed model for that batch. No A row, square mask, or private-query input mask is reused. Fixed model masks and the matrix B components occur once per batch.",
+  "authenticated_scalars_formula": "E(B) = 32*B + 74; calibration excluded",
+  "q_random_bits_formula": "Q(B) = 190696*B + 439685",
+  "derivation": {
+    "authenticated_scalars": {
+      "first_matrix": "8B + 16 + 2B",
+      "second_matrix": "2B + 16 + 8B",
+      "square_pair": "4B",
+      "input_masks": "8B + 42"
+    },
+    "q_random_bits_per_scalar_reduction": {
+      "reduce33": 631,
+      "reduce62": 660,
+      "reduce63": 872,
+      "reduce65": 874
+    },
+    "reduction_bit_count_rule": "A k-bit decomposition consumes k+176 bits; each following bounded LTZ(35) consumes 35+176=211 bits. reduce_p uses ceil(k/31) such comparisons.",
+    "key_sum": "7*631 = 4417",
+    "global_uniform_values": "(20B+74)*631",
+    "matrix_and_square_outputs": "2B*874 + 8B*872 + 2B*660 = 10044B",
+    "value_sharing_residuals": "(32B+74)*631",
+    "mac_sharing_residuals": "7*(32B+74)*660"
+  },
+  "batch1_compiler_q_bits": 630381,
+  "batch1_formula_q_bits": 630381,
+  "current_provider_max_elements": 16384,
+  "current_provider_max_supported_batch": 509,
+  "theoretical_component_limit_bits_per_query": 190696,
+  "theoretical_component_reduction_factor": 3.3056854889457568,
+  "examples": [
+    {
+      "fresh_queries_in_one_batch": 1,
+      "authenticated_p31_scalars": 106,
+      "q_random_bits": 630381,
+      "q_random_bits_per_query": 630381.0,
+      "component_reduction_vs_batch1": 1.0
+    },
+    {
+      "fresh_queries_in_one_batch": 2,
+      "authenticated_p31_scalars": 138,
+      "q_random_bits": 821077,
+      "q_random_bits_per_query": 410538.5,
+      "component_reduction_vs_batch1": 1.5354978887485582
+    },
+    {
+      "fresh_queries_in_one_batch": 8,
+      "authenticated_p31_scalars": 330,
+      "q_random_bits": 1965253,
+      "q_random_bits_per_query": 245656.625,
+      "component_reduction_vs_batch1": 2.5661062468801727
+    },
+    {
+      "fresh_queries_in_one_batch": 16,
+      "authenticated_p31_scalars": 586,
+      "q_random_bits": 3490821,
+      "q_random_bits_per_query": 218176.3125,
+      "component_reduction_vs_batch1": 2.8893191601631822
+    },
+    {
+      "fresh_queries_in_one_batch": 32,
+      "authenticated_p31_scalars": 1098,
+      "q_random_bits": 6541957,
+      "q_random_bits_per_query": 204436.15625,
+      "component_reduction_vs_batch1": 3.0835103318471826
+    },
+    {
+      "fresh_queries_in_one_batch": 128,
+      "authenticated_p31_scalars": 4170,
+      "q_random_bits": 24848773,
+      "q_random_bits_per_query": 194131.0390625,
+      "component_reduction_vs_batch1": 3.247193251755328
+    },
+    {
+      "fresh_queries_in_one_batch": 509,
+      "authenticated_p31_scalars": 16362,
+      "q_random_bits": 97503949,
+      "q_random_bits_per_query": 191559.82121807465,
+      "component_reduction_vs_batch1": 3.2907788073281012
+    }
+  ],
+  "limitations": "These are exact compiler-requirement count projections for the current circuit, checked at B=1. They do not measure batched native wall time, CPU work, bandwidth, GPU execution, or an ideal-network lower bound. The asymptotic limit extrapolates beyond the current bounded prototype; supported B is at most509. It is not an overall performance speedup or proof that the amortized target is met.",
+  "q_random_bits_definition": "Compiler integer bits: authenticated random Boolean values secret-shared over the internal q field, not raw local PRG bits or network bits."
+}

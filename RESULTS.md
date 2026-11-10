@@ -5,8 +5,10 @@ prefill blocks against both FP32 and FP16 PyTorch under a zero-network timing
 model. This uses bounded probabilistic Q14 rounding. Exact floor rounding meets
 the decode target but remains about 120× FP16 for prefill. A checked
 4096 × 4096 matrix-vector product also meets the preferred **less than 10×**
-target. Complete inference has not reached 10× FP16, and the malicious-majority
-bonus is not established.
+target. Complete inference has not reached 10× FP16. The malicious-majority
+online experiments have improved, but the original small-field native
+preprocessor has a [confirmed privacy limitation](docs/native-mama-sacrifice.md#mask-privacy-limitation).
+Its correctness and timing results do not establish secure dealer-free inference.
 
 These results come from one RTX 4060 Laptop GPU with 8 GB of memory. The
 four-party runtime executes real masks, messages, integrity checks, and secret
@@ -87,9 +89,12 @@ cast secret ring values to approximate floating-point arithmetic.
 
 ## Correctness and communication evidence
 
-The full regression passes **763 tests and 8 subtests**, including the trained
-GPU model and six separate-process TLS configurations.
-[Validation summary](results/validation_summary.json), [complete test log](logs/pytest_final.log).
+The combined regression passes **1,438 tests and 8 subtests**, including the
+trained GPU model and separate-process TLS configurations. The subsequent
+direct-q256 addition passes 45 focused tests and native role-local checks.
+[Validation summary](results/malicious_final_all_validation.json),
+[complete regression log](logs/pytest_malicious_final_all.log),
+[direct-field test log](logs/pytest_prime256_final.log).
 
 - An independent Rep4 oracle compares recipients, protocol phases, payloads,
   digests, and local replicated components. Input ownership and checked opening
@@ -168,18 +173,157 @@ The public fixture bounds fit ring32 at Q14. This does not justify ring32 or
 the same precision for arbitrary models: signed accumulators must fit before
 rescaling. Ring64 is available when more headroom is needed.
 
+## Malicious-majority target and measured costs
+
+The malicious-majority target **includes amortized fresh cryptographic
+preprocessing and is not met**. Removing work from the online timer does not
+remove its throughput cost. A preprocessing batch can be divided only by the
+number of distinct one-use query packs it creates; replay samples do not
+increase that number. Static compilation and model sharing have separate
+amortization rules.
+
+The current GPU path uses seven independent application MAC coordinates,
+canonical packed field shares, exact integer matrix kernels, committed joint
+check randomness, and deferred internal checks that finish before output
+shares are released. It supports a bounded integer square MLP, rather than a
+complete fixed-point transformer. All parties matched the integer references
+in the following synthetic workloads.
+
+| Workload | Online ideal-network estimate | Versus FP32 graph | Versus FP16 graph | Fresh model preparation, four roles colocated | Evidence |
+| --- | ---: | ---: | ---: | ---: | --- |
+| 1024 → 4096 → 1024, one row | 5.315 ms | 114.7× | 80.9× | 117.43 ms | [JSON](results/spdz_prepared7_decode1024_quiet.json) |
+| 512 → 2048 → 512, one row | 5.104 ms | 330.3× | 370.0× | 72.26 ms | [JSON](results/spdz_prepared7_decode_prefill512_quiet.json) |
+| 512 → 2048 → 512, 128 rows | 7.592 ms | 95.6× | 227.2× | 295.70 ms | [JSON](results/spdz_prepared7_decode_prefill512_quiet.json) |
+| 1024 → 4096 → 1024, 16 rows | 8.018 ms | 56.5× | 196.1× | 124.52 ms | [JSON](results/spdz_prepared7_batch16_32_width1024.json) |
+| 1024 → 4096 → 1024, 32 rows | 8.597 ms | 69.8× | 211.6× | 119.48 ms | [JSON](results/spdz_prepared7_batch16_32_width1024.json) |
+
+These are online timings with **trusted correlation fixtures**, not measured
+large-model dealer-free throughput. Each row retains 20 discarded replay
+warmups and 25 timed samples per role. The estimate sums per-phase maxima of
+role medians and assumes GPU-resident incoming messages. The graph comparator
+uses warmed CPU-submitted CUDA-graph repetitions. The 1024 one-row run has
+remaining tail variation in two roles; its raw samples and fastest-group
+comparators are retained. The 512 one-row and prefill tails were stable.
+Physical GPUDirect networking is not implemented.
+
+The preparation column is actual colocated wall time, while the query column
+is an isolated-role projection. Their sum is an observed partial aggregate,
+not a rigorous perfect-network lower bound. Secure preprocessing and new-input
+sharing are also absent from that sum. The [stage accounting
+report](results/spdz_pipeline_costs.json) keeps the missing secure cost unknown
+and does not substitute trusted-dealer fixture generation for it.
+
+The [prepared-model interface](docs/prepared-model.md) opens `E=W-B` and
+computes `F=C+A@E` before a query. Every query needs fresh `A/F`. A new partition
+operation divides one prepared matrix batch into disjoint one-use query
+handles, sharing an owned immutable `W`. It permits the weight-sized opening
+and preparation to be amortized across actual fresh rows without reusing query
+masks. Its CPU and GPU tests cover complete partitions, mismatched partitions,
+parent/child reuse, scope, and mutation checks.
+
+A fused projection-accumulation epilogue reduces the measured three-segment
+check kernel sequence from 0.218 ms to 0.127 ms in the isolated
+[microbenchmark](artifacts/field_weighted_accumulate_bench.json). The table
+predates that integration; it does not subtract the microbenchmark improvement
+from whole-query results.
+
+## Direct native-field replacement
+
+Removing q256-to-p31 conversion reduced fresh preprocessing for the trained
+micro model from **1,340.8 seconds to 0.416 seconds**, about 3,200×. The
+[direct-field path](docs/direct-field-preprocessing.md) keeps native q256
+shares throughout; it cannot feed the existing p31 GPU runtime.
+
+The [actual direct native inference](results/spdz_prime256_micro2.json) passed
+all four TLS roles and matched the independent integer oracle. Checked online
+CPU latency was 17.361 ms. Including role loading and input/model sharing gives
+an [observed staged sum](results/spdz_prime256_micro2_cost.json) of 506.587 ms;
+static compilation is separate. This is still about 35,582× the measured CPU
+FP32 eager baseline for this tiny model. It is not a GPU or perfect-network
+measurement, and it does not meet the preprocessing-inclusive target.
+
+Exact q256 GPU matmul prototypes pass nine bigint parity tests, including carry
+boundaries at K=4096. Their [single-field kernel timings](artifacts/field_q256_bench.json)
+are 0.083 ms for 1×64×64 and 0.228 ms for 1×128×128. These kernels are not yet
+integrated with the full authenticated direct-field runtime.
+
+Fresh direct-field batches of 128 and 1,024 rows took 5.324 and 36.392 seconds
+of native generation. Their [per-capacity-row costs](results/mascot_direct_preprocessing_cost.json)
+are 41.590 and 35.539 ms. Both batches were then served once, with all integer
+outputs correct. Their [observed staged totals](results/spdz_prime256_served_capacity_costs.json),
+including loading and sharing, were 42.788 and 36.059 ms per row. Matched-batch
+FP32 comparisons remain about 303,885× and 937,788× respectively. Both sides
+use the same batch size; these are throughput comparisons, not single-query
+latency ratios. Scalar-triple generation remains the dominant cost.
+
+## Dealer-free conversion-bridge evidence
+
+The replacement [large-prime MASCOT bridge](docs/mascot-preprocessing.md) runs
+four native roles over `q=2**256-189`, with amplification four and a fresh joint
+sacrifice challenge after authentication. Each assigned worker samples its
+private contributions. The secure computation produces canonical p31 value
+shares, seven application MAC coordinates, input masks, and correlation
+outputs privately for their designated roles. There is no central randomness
+dealer. Honest roles still need approved code, private execution domains, and
+authenticated confidential channels.
+
+The [repaired native probe](results/mascot_postauth_preprocessing_validation.json)
+completed with four successful native exits and four successful independent
+role-local matrix/MAC checks. Two malformed-input runs, including a non-first
+lane whose check has zero low 64 bits, caused all roles to abort before export.
+These tests and the source argument support a conditional experimental
+construction, not a formal implementation-security proof.
+
+That one-use 1×1 matrix-triple probe required **47.02 seconds of fresh
+preprocessing**, excluding 10.74 seconds of compilation. Native reports record
+about **42.39 GB of logical protocol traffic**. The tiny probe includes native
+batch/setup overhead and is not a large-batch throughput prediction. Its
+[public cost report](results/mascot_fresh_probe_cost.json) distinguishes static
+compilation, fresh generation, native-process times, and rounded traffic.
+The [trained bridge inference](results/spdz_mascot_fresh_micro2.json) also
+completed with exact output at all four roles. Its fresh preprocessing took
+1,340.8 seconds and its ideal-network GPU query estimate was 3.884 ms. The
+direct-field replacement above avoids that conversion cost.
+
+The trained micro model is an 8 → 2 → square → 8 successor-token classifier.
+Its floating-point and Q8 versions classify all eight training examples
+correctly, with maximum logit error 0.06472. The public absolute-sum bound is
+653,079,894, below the signed p31 limit. These are training examples, with no
+held-out language-model claim. The [independent integer
+validation](results/spdz_micro_toy/validation.json) checks every example; it is
+separate from the fresh native private-inference test.
+
+### Superseded preprocessing paths
+
+The retained small-field MAMA path has a [known-mask privacy
+flaw](docs/native-mama-sacrifice.md#mask-privacy-limitation). Its independent
+sacrifice improves product checking but does not repair that flaw. The earlier
+large-field build also used a sacrifice challenge predictable before
+candidate authentication; it is superseded by the post-authentication joint
+challenge build. Old functional/timing records retain their measured values
+and explicit failed-security annotations. Neither old path establishes secure
+dealer-free inference, and no stopped or superseded bundle is reused.
+
 ## Security scope and remaining work
 
-Rep4 protects against one malicious party out of four; two colluding parties
-can reconstruct secrets. It does not satisfy the design document's all-but-one
-privacy requirement. The separate authenticated matrix-product experiment
-uses a centralized trusted dealer and does not establish distributed
-malicious-majority inference or the 500× bonus target.
-[Experiment and limits](docs/malicious-majority.md).
+Rep4 protects against one malicious party among four. The separate
+prime-field protocol targets correctness and privacy with abort against three
+malicious parties, conditional on its preprocessing, channel, randomness, and
+honest-execution assumptions. The direct native-field path addresses the central-dealer requirement
+experimentally and removes the conversion bridge, but its fresh scalar-triple
+work remains too expensive for the preprocessing-inclusive target.
 
-The implementation supports dense layers, exact ReLU, fixed-point composition,
-and approximate GELU/SiLU. It does not implement full transformer execution,
-attention, model binding, authenticated inference records, or the document's
-model-substitution detection claim. Real multi-GPU networking, larger-model
-numerical validation, and independently reviewed malicious-majority
-preprocessing remain separate work.
+Efficient malicious matrix preprocessing is the principal missing capability.
+The installed native malicious protocols generate scalar correlations; their
+matrix interface does not provide the packed malicious matrix-OLE path needed
+here. A persistent producer can amortize setup and hold a fixed private model,
+but it must still charge every fresh correlation. Published constructions such
+as [malicious matrix preprocessing](https://eprint.iacr.org/2020/451) are an
+algorithmic direction, rather than an implemented performance claim.
+
+The Rep4 implementation supports dense layers, exact ReLU, fixed-point
+composition, and approximate GELU/SiLU. The malicious-majority prototype
+currently supports field matmuls and polynomial operations without general
+private rescaling. Full transformers, attention, authenticated inference
+records, model binding, model-substitution detection, and physical multi-GPU
+networking remain outside the implemented result.

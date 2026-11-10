@@ -1,0 +1,35 @@
+{
+  "party": 3,
+  "passed": true,
+  "online_ms": 104.11621299863327,
+  "authenticated_tls": true,
+  "payload_bytes": 9446061,
+  "input_payload_bytes": 1884,
+  "online_payload_bytes": 9443220,
+  "input_protocol_ms": 70.32394699490396,
+  "online_exchange_ms": 23.006490984698758,
+  "local_arithmetic_serialization_staging_ms": 81.10972201393452,
+  "messages": 54,
+  "rounds": 18,
+  "local_value_shape": [
+    128,
+    256
+  ],
+  "local_mac_shape": [
+    5,
+    128,
+    256
+  ],
+  "alpha_share_shape": [
+    5
+  ],
+  "other_owners_plaintext_supplied": false,
+  "local_only_preprocessing": true,
+  "triple_consumed": true,
+  "output_sha256": "c1bfb4cd481586ce8312a7e5d16342278793bf31d4b6c4df0b05f38e7a82943f",
+  "output_shape": [
+    128,
+    256
+  ],
+  "exact_field_match": true
+}

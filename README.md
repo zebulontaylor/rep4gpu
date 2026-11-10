@@ -16,7 +16,7 @@ Rep4 tolerates one malicious party among four. Two colluding parties can
 reconstruct the secrets. This differs from the all-but-one privacy target in
 the [project design](https://docs.google.com/document/d/192TcAOZ43OQI1E3Q01Mxw7hRUGCXEL74rriaW2aI4ko/edit).
 The [malicious-majority experiment](docs/malicious-majority.md) has separate
-trust assumptions and does not supply that target.
+trust assumptions and a separate large-prime MASCOT preprocessing bridge.
 
 ## Run locally
 
@@ -161,5 +161,53 @@ model-substitution detection threshold are not implemented.
 The implementation is a research prototype with checked transcripts and
 fault-injection tests, not a formally verified or independently audited MPC
 deployment. Its privacy assumptions require independent party isolation,
-authenticated confidential channels, fresh randomness, and completed checks
-before outputs are accepted.
+authenticated confidential channels and fresh randomness. Pending internal
+checks complete before unmasked output shares are broadcast; the final output
+check completes before acceptance.
+
+## Malicious-majority GPU prototype
+
+The separate prime-field implementation supports authenticated matrix products,
+elementwise products, and square activations with up to three malicious roles
+out of four, under its [preprocessing and channel assumptions](docs/malicious-majority.md).
+Each online worker loads only its own material. The original small-field MAMA
+producer has a confirmed [mask-privacy limitation](docs/native-mama-sacrifice.md#mask-privacy-limitation):
+its successful correctness checks do not establish 128-bit-private preprocessing.
+Its bundles remain functional test material. The replacement large-prime
+[MASCOT bridge](docs/mascot-preprocessing.md), with a fresh sacrifice challenge
+after authentication, has passed native correlation and malformed-input
+checks and completed one fresh trained-model inference. Its field conversion
+is too expensive for the performance target. The [direct native-field
+path](docs/direct-field-preprocessing.md) removes that conversion and cuts
+fresh toy preprocessing from 22.35 minutes to 0.416 seconds; its complete
+online runtime currently uses CPU big integers.
+
+The malicious-majority target includes amortized fresh cryptographic
+preprocessing and is **not met**. Online-only timing improvements do not
+establish that target. Both native paths remove the central randomness dealer. The direct path is
+much faster, but fresh preprocessing still dominates its measured cost.
+
+[Model-dependent preparation](docs/prepared-model.md) moves the weight-mask
+opening and part of each matrix product before the query. Every query consumes
+fresh correlations. Deferred internal checks finish before output shares are
+sent; small outputs use full-vector checks and larger outputs use independent
+per-key random projections.
+
+A prepared matrix batch can be partitioned into disjoint one-use query handles.
+This shares the fixed-model preparation across the batch while preserving a
+fresh input mask for each query; it does not reuse a query's correlations.
+
+The trained examples use bounded integer square MLPs with public scale decoding.
+They do not implement general fixed-point transformer inference. See
+[the measured timings](RESULTS.md) for the clear-model comparators, network
+assumptions, and separate preprocessing costs, and the
+[direct-field execution guide](docs/direct-field-preprocessing.md) to run without a dealer.
+
+```sh
+python -m examples.spdz_square_toy
+python -m scripts.run_spdz_distributed --device cuda --m 128 --k 256 --n 256 \
+  --output results/spdz_distributed.json
+```
+
+The commands above use explicit trusted-dealer test fixtures. The native guide
+uses distributed preprocessing and consumes each role's bundle once.

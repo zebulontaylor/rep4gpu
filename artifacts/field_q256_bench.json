@@ -1,0 +1,70 @@
+[
+  {
+    "m": 1,
+    "k": 16,
+    "n": 16,
+    "median_ms": {
+      "q256_one_field": {
+        "graph_event_ms": 0.023552000522613525,
+        "eager_wall_ms": 0.050224000005982816
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.01228800043463707,
+        "eager_wall_ms": 0.0361380007234402
+      }
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one unauthenticated field matrix product; excludes native preprocessing and all online protocol/check work"
+  },
+  {
+    "m": 1,
+    "k": 64,
+    "n": 64,
+    "median_ms": {
+      "q256_one_field": {
+        "graph_event_ms": 0.08294399827718735,
+        "eager_wall_ms": 0.11037699732696638
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.014336000196635723,
+        "eager_wall_ms": 0.04502500087255612
+      }
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one unauthenticated field matrix product; excludes native preprocessing and all online protocol/check work"
+  },
+  {
+    "m": 16,
+    "k": 64,
+    "n": 64,
+    "median_ms": {
+      "q256_one_field": {
+        "graph_event_ms": 0.8129280209541321,
+        "eager_wall_ms": 0.8681190010975115
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.01321600005030632,
+        "eager_wall_ms": 0.040626000554766506
+      }
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one unauthenticated field matrix product; excludes native preprocessing and all online protocol/check work"
+  },
+  {
+    "m": 1,
+    "k": 128,
+    "n": 128,
+    "median_ms": {
+      "q256_one_field": {
+        "graph_event_ms": 0.22835199534893036,
+        "eager_wall_ms": 0.2595069963717833
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.011455999687314034,
+        "eager_wall_ms": 0.036106997868046165
+      }
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one unauthenticated field matrix product; excludes native preprocessing and all online protocol/check work"
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "focused_tests_passed": 45,
+  "runner_final_tests_passed": 1,
+  "gpu_bigint_parity_cases": 9,
+  "native_inference_checks": [
+    {
+      "report": "results/spdz_prime256_micro2.json",
+      "sha256": "ac1a518de7406f9de47ace23609cfc58d42a9280c496f147f8ab4ecda226fae0",
+      "passed": true
+    },
+    {
+      "report": "results/spdz_prime256_capacity128.json",
+      "sha256": "8e4fd0f05fea2cf6f49ed8891bacf600b0cef9a086245ea9bc35589e74938bf9",
+      "passed": true
+    },
+    {
+      "report": "results/spdz_prime256_capacity1024.json",
+      "sha256": "4fcdb966424bb025c35f97b2f0f259d098521892bc429e74eab1e07786639b55",
+      "passed": true
+    }
+  ],
+  "source_sha256": {
+    "rep4gpu/spdz_prime256.py": "0913a06f538e5a8068f2572eccc6846d2e07577ffbe7ffa80ef2aa311c1309d0",
+    "rep4gpu/preprocessing_mascot_direct.py": "845dad525b01538fed5be61c72181376729d57446b264bc38b77ae152ef2197a",
+    "rep4gpu/field_q256.py": "9e84db427b71dc4c903bbac6ad942c1de5abf6db5c590dd0eabda5442b6c908b",
+    "scripts/run_spdz_prime256.py": "c3462818c62c92aebfc1dfca506975ac3d65a486ad8eaac3e5344a62d3ef8e79",
+    "scripts/preprocess_mascot_direct.py": "5e14c89991e460655102fc36c69b127329a6a32c8d52a0937d5facc8c878b074",
+    "tests/test_preprocessing_native_field.py": "a26521ca92cf7e1884a4b1d8f503067a656b254559a20ecfcced3dd2a70bf845",
+    "tests/test_spdz_prime256.py": "d965f2d75e99a0bd33873409f6ce5bda37bfca6aaf762d6e4c9740f3b74e356a",
+    "tests/test_field_q256.py": "b826486432f088eae3b007cf6649582524f28357f4441b5b5d47553b5c4aacc4",
+    "tests/test_spdz_prime256_runner.py": "80929b0a1e31a9e29e87e6d836f5d993ec9db398e78a9db5bf4b71363ab5e561"
+  },
+  "security_target_met": false,
+  "amortized_performance_target_met": false,
+  "scope": "Direct native q256 preprocessing and CPU/TLS authenticated inference; GPU field primitive separately tested, not a complete GPU online integration."
+}

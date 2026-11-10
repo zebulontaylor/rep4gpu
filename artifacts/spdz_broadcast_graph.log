@@ -1,0 +1,4 @@
+{"payload_bytes": 32, "max_party_median_ms": {"DeviceDistributedParty": 0.2420290038571693, "GraphDeviceDistributedParty": 0.2421595017949585}}
+{"payload_bytes": 512, "max_party_median_ms": {"DeviceDistributedParty": 0.2555044993641786, "GraphDeviceDistributedParty": 0.23288200100068934}}
+{"payload_bytes": 4096, "max_party_median_ms": {"DeviceDistributedParty": 0.24218950056820177, "GraphDeviceDistributedParty": 0.24505449982825667}}
+{"payload_bytes": 65536, "max_party_median_ms": {"DeviceDistributedParty": 0.26042850004159845, "GraphDeviceDistributedParty": 0.24334149929927662}}

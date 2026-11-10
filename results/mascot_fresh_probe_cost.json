@@ -1,0 +1,56 @@
+{
+  "provider": "mascot256-prime31-role-v1",
+  "ready": true,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "privacy_audit_status": "pending_post_authentication_validation",
+  "fresh_bundle_count": 1,
+  "preprocessing_ms": 57763.62179800344,
+  "static_compile_ms": 10739.910064003197,
+  "fresh_preprocessing_ms": 47023.711734000244,
+  "native_orchestration_ms": 46971.02109299885,
+  "role_statistics": [
+    {
+      "party": 0,
+      "native_seconds": 45.002,
+      "sent_decimal_MB": 10607.8,
+      "global_sent_decimal_MB": 42387.6
+    },
+    {
+      "party": 1,
+      "native_seconds": 45.001,
+      "sent_decimal_MB": 10599.4,
+      "global_sent_decimal_MB": 42387.6
+    },
+    {
+      "party": 2,
+      "native_seconds": 45.0001,
+      "sent_decimal_MB": 10599.4,
+      "global_sent_decimal_MB": 42387.6
+    },
+    {
+      "party": 3,
+      "native_seconds": 44.9987,
+      "sent_decimal_MB": 10581.0,
+      "global_sent_decimal_MB": 42387.6
+    }
+  ],
+  "maximum_native_process_seconds": 45.002,
+  "compiled_primitive_counts": {
+    "triples": 19072,
+    "simple multiplications": 19071,
+    "opens": 3606,
+    "bits": 22092
+  },
+  "authenticated_p31_scalars": 3,
+  "native_binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+  "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+  "decimal_MB_bytes": 1000000,
+  "communication_values_rounded": true,
+  "communication_context": "Logical native protocol traffic over encrypted colocated peer channels; NIC packet overhead is not counted.",
+  "amortization_contract": "One fresh bundle; replaying its correlations does not increase the count of fresh inferences."
+}

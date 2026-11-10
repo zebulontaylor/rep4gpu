@@ -1,0 +1,36 @@
+{
+  "task": "synthetic successor token modulo 8",
+  "architecture": [
+    8,
+    2,
+    8
+  ],
+  "evaluation_rows": 8,
+  "unique_contexts": 8,
+  "evaluation": "All eight tokens are training examples; no held-out accuracy claim.",
+  "float_accuracy": 1.0,
+  "integer_accuracy": 1.0,
+  "max_logit_error": 0.06471526622772217,
+  "max_logprob_error": 0.08471219088324844,
+  "range_proof": {
+    "field_prime": 2147483647,
+    "signed_limit": 1073741823,
+    "weight_fractional_bits": 8,
+    "input_scale": 1,
+    "first_affine_scale": 256,
+    "square_scale": 65536,
+    "output_scale": 16777216,
+    "first_affine_abs_bound": 1372,
+    "square_abs_bound": 1882384,
+    "output_abs_bound": 653079894,
+    "actual_output_max_abs": 615000808,
+    "no_field_wrap": true,
+    "no_private_truncation": true,
+    "contract": "Public bound across all 8 one-hot inputs; no private domain check."
+  },
+  "passed": true,
+  "python_bigint_reference_match": true,
+  "contexts_checked": 8,
+  "checkpoint": "results/spdz_micro_toy/model.pt",
+  "native_inference_test": false
+}

@@ -1,0 +1,67 @@
+{
+  "matrices": [
+    {
+      "name": "first",
+      "m": 64,
+      "k": 16,
+      "n": 64
+    },
+    {
+      "name": "second",
+      "m": 64,
+      "k": 64,
+      "n": 8
+    }
+  ],
+  "squares": [
+    {
+      "name": "hidden",
+      "shape": [
+        64,
+        64
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "x",
+      "owner": 0,
+      "shape": [
+        64,
+        16
+      ]
+    },
+    {
+      "name": "w1",
+      "owner": 1,
+      "shape": [
+        16,
+        64
+      ]
+    },
+    {
+      "name": "b1",
+      "owner": 1,
+      "shape": [
+        1,
+        64
+      ]
+    },
+    {
+      "name": "w2",
+      "owner": 1,
+      "shape": [
+        64,
+        8
+      ]
+    },
+    {
+      "name": "b2",
+      "owner": 1,
+      "shape": [
+        1,
+        8
+      ]
+    }
+  ]
+}

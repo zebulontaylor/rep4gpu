@@ -1,0 +1,221 @@
+{
+  "format": "native-q256-direct-fresh-cost-v1",
+  "prime": 115792089237316195423570985008687907853269984665640564039457584007913129639747,
+  "mac_keys": 1,
+  "amplification": 4,
+  "post_authentication_sacrifice_coin": true,
+  "field_conversion": false,
+  "gpu_compatible": false,
+  "privacy_audit_status": "conditional_native_field_experiment",
+  "performance_target_met": false,
+  "trusted_dealer": false,
+  "experiments": [
+    {
+      "batch_capacity": 1,
+      "fresh_query_rows_generated": 1,
+      "queries_served": 1,
+      "capacity_only": false,
+      "ready": true,
+      "native_return_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "static_compile_ms": 314.5881489981548,
+      "native_preprocessing_ms": 416.2763240019558,
+      "fresh_lifecycle_ms": 449.0007550048176,
+      "native_crypto_ms_per_query_capacity": 416.2763240019558,
+      "fresh_lifecycle_ms_per_query_capacity": 449.0007550048176,
+      "maximum_native_process_seconds": 0.230169,
+      "role_native_statistics": [
+        {
+          "party": 0,
+          "native_seconds": 0.230169,
+          "sent_decimal_MB": 33.0303,
+          "global_sent_decimal_MB": 132.101
+        },
+        {
+          "party": 1,
+          "native_seconds": 0.228886,
+          "sent_decimal_MB": 33.0237,
+          "global_sent_decimal_MB": 132.101
+        },
+        {
+          "party": 2,
+          "native_seconds": 0.229058,
+          "sent_decimal_MB": 33.0237,
+          "global_sent_decimal_MB": 132.101
+        },
+        {
+          "party": 3,
+          "native_seconds": 0.228326,
+          "sent_decimal_MB": 33.0237,
+          "global_sent_decimal_MB": 132.101
+        }
+      ],
+      "compiled_primitive_counts": {
+        "randoms": 42,
+        "triples": 32,
+        "squares": 2
+      },
+      "scalar_products": 32,
+      "share_count": 107,
+      "native_binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+      "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+      "export_source_sha256": "cb63c50f31ec7cf1e353527fb18a4f6b56520d84892285bc94c51c81d51eb9f2",
+      "public_manifest": "work/mascot_direct/micro2/public-manifest.json"
+    },
+    {
+      "batch_capacity": 128,
+      "fresh_query_rows_generated": 128,
+      "queries_served": 128,
+      "capacity_only": false,
+      "ready": true,
+      "native_return_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "static_compile_ms": 314.63519699900644,
+      "native_preprocessing_ms": 5323.563463003666,
+      "fresh_lifecycle_ms": 5357.115397004236,
+      "native_crypto_ms_per_query_capacity": 41.59033955471614,
+      "fresh_lifecycle_ms_per_query_capacity": 41.852464039095594,
+      "maximum_native_process_seconds": 5.08489,
+      "role_native_statistics": [
+        {
+          "party": 0,
+          "native_seconds": 5.08489,
+          "sent_decimal_MB": 1145.75,
+          "global_sent_decimal_MB": 4506.74
+        },
+        {
+          "party": 1,
+          "native_seconds": 5.08363,
+          "sent_decimal_MB": 1120.33,
+          "global_sent_decimal_MB": 4506.74
+        },
+        {
+          "party": 2,
+          "native_seconds": 5.07233,
+          "sent_decimal_MB": 1120.33,
+          "global_sent_decimal_MB": 4506.74
+        },
+        {
+          "party": 3,
+          "native_seconds": 5.08018,
+          "sent_decimal_MB": 1120.33,
+          "global_sent_decimal_MB": 4506.74
+        }
+      ],
+      "compiled_primitive_counts": {
+        "randoms": 1312,
+        "triples": 4096,
+        "squares": 256
+      },
+      "scalar_products": 4096,
+      "share_count": 4171,
+      "native_binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+      "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+      "export_source_sha256": "f8dcf691600f9ab80619c6d2401837dc40d576f5a96f3feeb0ace52c6876540c",
+      "public_manifest": "work/mascot_direct/capacity128/public-manifest.json",
+      "role_bundles_consumed_once": true,
+      "actual_inference_report": "results/spdz_prime256_capacity128.json",
+      "actual_inference_report_sha256": "8e4fd0f05fea2cf6f49ed8891bacf600b0cef9a086245ea9bc35589e74938bf9",
+      "exact_integer_match": true,
+      "native_and_online_return_codes": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "batch_capacity": 1024,
+      "fresh_query_rows_generated": 1024,
+      "queries_served": 1024,
+      "capacity_only": false,
+      "ready": true,
+      "native_return_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "static_compile_ms": 314.58731799648376,
+      "native_preprocessing_ms": 36391.51502800087,
+      "fresh_lifecycle_ms": 36424.44321100629,
+      "native_crypto_ms_per_query_capacity": 35.5385888945321,
+      "fresh_lifecycle_ms_per_query_capacity": 35.57074532324833,
+      "maximum_native_process_seconds": 36.1549,
+      "role_native_statistics": [
+        {
+          "party": 0,
+          "native_seconds": 36.1549,
+          "sent_decimal_MB": 9092.03,
+          "global_sent_decimal_MB": 35758.0
+        },
+        {
+          "party": 1,
+          "native_seconds": 36.1531,
+          "sent_decimal_MB": 8888.65,
+          "global_sent_decimal_MB": 35758.0
+        },
+        {
+          "party": 2,
+          "native_seconds": 36.1494,
+          "sent_decimal_MB": 8888.65,
+          "global_sent_decimal_MB": 35758.0
+        },
+        {
+          "party": 3,
+          "native_seconds": 36.1479,
+          "sent_decimal_MB": 8888.65,
+          "global_sent_decimal_MB": 35758.0
+        }
+      ],
+      "compiled_primitive_counts": {
+        "randoms": 10272,
+        "triples": 32768,
+        "squares": 2048
+      },
+      "scalar_products": 32768,
+      "share_count": 32843,
+      "native_binary_sha256": "06a6efa3074030e9780beda036d13c1fe32d9148427c494bb7e80cb6d6e9c5bf",
+      "native_policy_sha256": "b59d91762bad098c995a74c0675a0fe9a24fe1c7c215dd9b82030efbd3f51214",
+      "export_source_sha256": "be647f323b7209a49ab8318e6fe8c6fcc7d7847d1256245a53ed1b00245fe753",
+      "public_manifest": "work/mascot_direct/capacity1024/public-manifest.json",
+      "role_bundles_consumed_once": true,
+      "actual_inference_report": "results/spdz_prime256_capacity1024.json",
+      "actual_inference_report_sha256": "4fcdb966424bb025c35f97b2f0f259d098521892bc429e74eab1e07786639b55",
+      "exact_integer_match": true,
+      "native_and_online_return_codes": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "actual_inference": {
+    "report": "results/spdz_prime256_micro2.json",
+    "report_sha256": "ac1a518de7406f9de47ace23609cfc58d42a9280c496f147f8ab4ecda226fae0",
+    "passed": true,
+    "return_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "exact_integer_match": true,
+    "source_stable": true
+  },
+  "decimal_MB_bytes": 1000000,
+  "traffic_rounding": "Native logs report rounded logical protocol traffic, not NIC packet bytes.",
+  "amortization_contract": "Batch128 and1024 each contain independent fresh A rows, square masks, and query input masks with fixed model dimensions. Each batch was consumed exactly once by four role-local TLS workers, and every output row matched the independent Python integer oracle. No correlations were reset, reloaded, or replayed to increase the served-query denominator.",
+  "limitations": "Direct q256 export removes integer field conversion and seven small-field application MAC construction. The runtime uses CPU big integers; this is not the validated p31 GPU path. Fresh batch preprocessing cost is amortized only across the actually served rows. Matched served-query costs are recorded separately; no <100x total claim is made.",
+  "served_cost_report": "results/spdz_prime256_served_capacity_costs.json",
+  "served_cost_report_sha256": "3e75c20898af27b3940ff396db4ed902da6118e4d2c0edd2c85af4caae08b7bc"
+}

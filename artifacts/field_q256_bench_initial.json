@@ -1,0 +1,70 @@
+[
+  {
+    "m": 1,
+    "k": 16,
+    "n": 16,
+    "median_ms": {
+      "q256_one_field": {
+        "graph_event_ms": 0.01740800030529499,
+        "eager_wall_ms": 0.06050299998605624
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.011264000087976456,
+        "eager_wall_ms": 0.036978999560233206
+      }
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one unauthenticated field matrix product; excludes native preprocessing and all online protocol/check work"
+  },
+  {
+    "m": 1,
+    "k": 64,
+    "n": 64,
+    "median_ms": {
+      "q256_one_field": {
+        "graph_event_ms": 0.09523200243711472,
+        "eager_wall_ms": 0.13219800166552886
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.01228800043463707,
+        "eager_wall_ms": 0.03481599560473114
+      }
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one unauthenticated field matrix product; excludes native preprocessing and all online protocol/check work"
+  },
+  {
+    "m": 16,
+    "k": 64,
+    "n": 64,
+    "median_ms": {
+      "q256_one_field": {
+        "graph_event_ms": 1.0444799661636353,
+        "eager_wall_ms": 1.087490003556013
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.012256000190973282,
+        "eager_wall_ms": 0.03997499879915267
+      }
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one unauthenticated field matrix product; excludes native preprocessing and all online protocol/check work"
+  },
+  {
+    "m": 1,
+    "k": 128,
+    "n": 128,
+    "median_ms": {
+      "q256_one_field": {
+        "graph_event_ms": 0.2826240062713623,
+        "eager_wall_ms": 0.32048200228018686
+      },
+      "p31_one_field": {
+        "graph_event_ms": 0.01206399966031313,
+        "eager_wall_ms": 0.0358380057150498
+      }
+    },
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "scope": "one unauthenticated field matrix product; excludes native preprocessing and all online protocol/check work"
+  }
+]

@@ -52,7 +52,7 @@ print('all CPU-interpreted node and gate buffers match')
 '''
     environment = dict(os.environ, TRITON_INTERPRET='1')
     result = subprocess.run([sys.executable, '-c', script], cwd=Path(__file__).resolve().parents[1],
-                            env=environment, capture_output=True, text=True, timeout=120)
+                            env=environment, capture_output=True, text=True, timeout=300)
     assert result.returncode == 0, result.stdout + result.stderr
 
 

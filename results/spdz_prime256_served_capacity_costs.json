@@ -1,0 +1,98 @@
+{
+  "measurement": "Fresh actual CPU/TLS batched inference, including native generation, owner sharing, role loading and checked output; observed sum of stage maxima, not one end-to-end stopwatch. Compilation and process/certificate setup separate.",
+  "normalization": "Per-row throughput divides BOTH MPC batch cost and matched clear batch cost by B. It is not single-request latency. Each native batch is consumed once for B actual rows; no replay samples counted as fresh rows.",
+  "results": [
+    {
+      "batch_rows": 128,
+      "actual_rows_checked": 128,
+      "all_role_exit_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "all_logits_exact": true,
+      "source_stable_during_run": true,
+      "source": "results/spdz_prime256_capacity128.json",
+      "source_sha256": "8e4fd0f05fea2cf6f49ed8891bacf600b0cef9a086245ea9bc35589e74938bf9",
+      "batch_stages_ms": {
+        "checked_query_ms": 71.18215600348776,
+        "fresh_model_preparation_ms": 0,
+        "new_input_sharing_ms": 5.728396004997194,
+        "amortized_static_model_sharing_ms": 9.492848002992105,
+        "fresh_cryptographic_preprocessing_ms": 5323.563463003666,
+        "role_private_loading_ms": 66.94768199668033
+      },
+      "batch_staged_pipeline_ms": 5476.914545011823,
+      "per_row_throughput_stages_ms": {
+        "checked_query_ms": 0.5561105937772481,
+        "fresh_model_preparation_ms": 0.0,
+        "new_input_sharing_ms": 0.04475309378904058,
+        "amortized_static_model_sharing_ms": 0.07416287502337582,
+        "fresh_cryptographic_preprocessing_ms": 41.59033955471614,
+        "role_private_loading_ms": 0.5230287655990651
+      },
+      "per_row_throughput_pipeline_ms": 42.78839488290487,
+      "matched_clear_batch_ms": {
+        "fp32_eager_ms": 0.018022998119704425,
+        "numpy_cpu_ms": 0.005590001819655299
+      },
+      "matched_clear_per_row_throughput_ms": {
+        "fp32_eager_ms": 0.00014080467281019082,
+        "numpy_cpu_ms": 4.3671889216057025e-05
+      },
+      "matched_slowdowns": {
+        "fp32_eager_ms": 303884.764823004,
+        "numpy_cpu_ms": 979769.724896002
+      },
+      "static_compile_ms": 314.63519699900644,
+      "security_target_met": false
+    },
+    {
+      "batch_rows": 1024,
+      "actual_rows_checked": 1024,
+      "all_role_exit_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "all_logits_exact": true,
+      "source_stable_during_run": true,
+      "source": "results/spdz_prime256_capacity1024.json",
+      "source_sha256": "4fcdb966424bb025c35f97b2f0f259d098521892bc429e74eab1e07786639b55",
+      "batch_stages_ms": {
+        "checked_query_ms": 357.02378800488077,
+        "fresh_model_preparation_ms": 0,
+        "new_input_sharing_ms": 20.701966997876298,
+        "amortized_static_model_sharing_ms": 11.15021800796967,
+        "fresh_cryptographic_preprocessing_ms": 36391.51502800087,
+        "role_private_loading_ms": 144.07754599960754
+      },
+      "batch_staged_pipeline_ms": 36924.4685470112,
+      "per_row_throughput_stages_ms": {
+        "checked_query_ms": 0.3486560429735164,
+        "fresh_model_preparation_ms": 0.0,
+        "new_input_sharing_ms": 0.020216764646363572,
+        "amortized_static_model_sharing_ms": 0.01088888477340788,
+        "fresh_cryptographic_preprocessing_ms": 35.5385888945321,
+        "role_private_loading_ms": 0.14070072851524174
+      },
+      "per_row_throughput_pipeline_ms": 36.05905131544063,
+      "matched_clear_batch_ms": {
+        "fp32_eager_ms": 0.03937399742426351,
+        "numpy_cpu_ms": 0.0178540067281574
+      },
+      "matched_clear_per_row_throughput_ms": {
+        "fp32_eager_ms": 3.845116935963233e-05,
+        "numpy_cpu_ms": 1.7435553445466212e-05
+      },
+      "matched_slowdowns": {
+        "fp32_eager_ms": 937788.1587470509,
+        "numpy_cpu_ms": 2068133.4508952512
+      },
+      "static_compile_ms": 314.58731799648376,
+      "security_target_met": false
+    }
+  ]
+}

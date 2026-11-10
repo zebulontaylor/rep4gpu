@@ -1,0 +1,2 @@
+{"query_capacity": 32, "width": 1024, "model_preparation_colocated_batch_ms": 1159.1433489957126, "observed_partial_aggregate_ms": 59.12400263559903}
+{"query_capacity": 128, "width": 1024, "model_preparation_colocated_batch_ms": 15282.067390005977, "observed_partial_aggregate_ms": 166.31830747672893}

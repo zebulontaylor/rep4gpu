@@ -1,0 +1,89 @@
+................................................................ [  4%]
+........................................................................ [ 10%]
+........................................................................ [ 15%]
+........................................................................ [ 21%]
+........................................................................ [ 26%]
+........................................................................ [ 32%]
+........................................................................ [ 38%]
+........................................................................ [ 43%]
+........................................................................ [ 49%]
+......................................................s................. [ 54%]
+........................................................................ [ 60%]
+........................................................................ [ 65%]
+........................................................................ [ 71%]
+........................................................................ [ 76%]
+........................................................................ [ 82%]
+........................................................................ [ 87%]
+...................................F.................................... [ 93%]
+........................................................................ [ 98%]
+.................                                                        [100%]
+=================================== FAILURES ===================================
+_ test_prepared_gpu_model_capability[prepared_capability_failure_consumes_handle_and_poison_session('reuse',)-full] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f14a1445660>
+backend = 'full'
+name = 'test_prepared_capability_failure_consumes_handle_and_poison_session'
+args = ('reuse',)
+
+    @pytest.mark.parametrize('backend',['full','compressed','deferred'])
+    @pytest.mark.parametrize('name,args',CASES,ids=[name.removeprefix('test_')+str(args) for name,args in CASES])
+    def test_prepared_gpu_model_capability(monkeypatch,backend,name,args):
+        if not torch.cuda.is_available():
+            pytest.skip('CUDA required')
+        from rep4gpu.spdz_device import DeviceDistributedParty
+        from rep4gpu.spdz_compression import DeviceCompressedParty
+        from rep4gpu.spdz_deferred import DeviceDeferredCompressedParty
+        party_type = dict(full=DeviceDistributedParty,compressed=DeviceCompressedParty,
+                          deferred=DeviceDeferredCompressedParty)[backend]
+        monkeypatch.setattr(checks,'_run',functools.partial(checks._run,device='cuda',party_type=party_type))
+        if name == 'test_prepared_right_matches_exact_product_and_opens_only_query_difference':
+            from rep4gpu.spdz_prepared_right import prepare_right_matmul,matmul_prepared_right
+            keys,(m,k,n) = args
+            def operation(p,x,w,triple):
+                prepared = prepare_right_matmul(p,w,triple,model_id=b'gpu-model-v1')
+                assert triple.used and not prepared.used
+                output = matmul_prepared_right(p,x,prepared,model_id=b'gpu-model-v1')
+                assert prepared.used
+                opened = p.open(output)
+                assert not getattr(p,'pending_values',0)
+                return opened
+            results,roles,_,expected = checks._run(operation,keys=keys,m=m,k=k,n=n)
+            assert all(isinstance(value,torch.Tensor) and torch.equal(value,expected) for value in results)
+            assert all(not role.poisoned for role in roles)
+        else:
+>           getattr(checks,name)(*args)
+
+tests/test_spdz_prepared_right_device.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kind = 'reuse'
+
+    @pytest.mark.parametrize('kind',['reuse','model','shape','key','session'])
+    def test_prepared_capability_failure_consumes_handle_and_poison_session(kind):
+        def operation(p,x,w,t):
+            prepared = _prepare(p,w,t,model_id=b'model-v1')
+            if kind == 'reuse':
+                matmul_prepared_right(p,x,prepared,model_id=b'model-v1')
+            if kind == 'key':
+                p.alpha_share = p.alpha_share.clone()
+            if kind == 'session':
+                p.session = b'another-session'
+            query = x if kind != 'shape' else type(x)(x.values[:1],x.macs[:,:1])
+            before = p.round
+            with pytest.raises((ValueError,RuntimeError)):
+                matmul_prepared_right(p,query,prepared,model_id=b'wrong-model' if kind == 'model' else b'model-v1')
+            assert prepared.used
+            assert p.poisoned
+            assert p.round == before
+            return True
+        results,_,_,_ = _run(operation)
+>       assert results == [True]*4
+E       AssertionError: assert [NetworkAbort...orted'), True] == [True, True, True, True]
+E         
+E         At index 0 diff: NetworkAbortedError('ideal network aborted') != True
+E         Use -v to get more diff
+
+tests/test_spdz_prepared_right.py:111: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_spdz_prepared_right_device.py::test_prepared_gpu_model_capability[prepared_capability_failure_consumes_handle_and_poison_session('reuse',)-full]
+1 failed, 1303 passed, 1 skipped, 8 subtests passed in 330.56s (0:05:30)

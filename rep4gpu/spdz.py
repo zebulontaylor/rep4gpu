@@ -34,9 +34,9 @@ def _random(shape, device):
 def field_matmul(a, b):
     """Exact product over F_(2**31-1) for canonical int64 matrices.
 
-    Split each element into 16-bit limbs. Three integer products recover the
-    low, cross, and high terms; reduction between shifts avoids int64 overflow.
-    CUDA uses the project's exact ring kernel for the integer products.
+    CUDA uses centered signed-byte tensor products and Mersenne reduction.
+    CPU splits each element into 16-bit limbs; three integer products recover
+    the low, cross and high terms without overflowing int64 accumulators.
     """
     if a.dtype != torch.int64 or b.dtype != torch.int64:
         raise TypeError("field matrices must have dtype int64")
@@ -46,12 +46,11 @@ def field_matmul(a, b):
         raise ValueError("matrices must use the same device")
     if a.shape[1] * (2**17 - 2) ** 2 >= 2**63:
         raise ValueError("inner dimension exceeds the exact accumulation bound")
-    a, b = a.remainder(PRIME), b.remainder(PRIME)
     if a.is_cuda:
-        from rep4gpu.kernels import ring_matmul
-        multiply = ring_matmul
-    else:
-        multiply = torch.matmul
+        from .field_kernels import field_matmul as cuda_field_matmul
+        return cuda_field_matmul(a, b)
+    a, b = a.remainder(PRIME), b.remainder(PRIME)
+    multiply = torch.matmul
     al, ah = a & 65535, a >> 16
     bl, bh = b & 65535, b >> 16
     low = multiply(al, bl)
