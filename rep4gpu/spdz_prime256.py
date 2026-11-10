@@ -90,6 +90,10 @@ class Prime256Party(DistributedParty):
             shares=tuple(shares)
             if not shares:raise ValueError('opening requires at least one share')
             for share in shares:self._validate(share)
+            # A lazy iterable may execute masked operations while materializing.
+            # Authenticate their residuals before binding or sending this output.
+            before_open=getattr(self,'_before_ordinary_open_many',None)
+            if before_open is not None:before_open()
             layout=json.dumps({'field':self.prime,'encoding':f'uint{8*self.field_bytes}-le','keys':1,'shapes':[x.shape for x in shares]},
                               sort_keys=True,separators=(',',':')).encode()
             context=b'SPDZq256-open-v1'+self._session_hash+struct.pack('<Q',self.round)+_hash(layout)+_hash(label)

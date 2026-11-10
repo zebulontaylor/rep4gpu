@@ -9,7 +9,7 @@ MAC_KEYS=1
 
 
 def _program(request):
-    source=_strong_program(request).replace('program.security=128','program.security=40')
+    source=_strong_program(request).replace('program.security=128','program.security=40').replace('Native q256 export checks complete','Native Goldilocks export checks complete')
     return '\n'.join(line for line in source.splitlines() if not ('.to_regint(' in line and any('>>'+str(shift)+')' in line for shift in (64,128,192))))+'\n'
 
 
@@ -22,7 +22,7 @@ def _verify_policy(root,binary):
 
 
 def run_native(manifest_path,output_dir,*,native_root='work/lowgear-goldilocks6-build',
-               timeout=900,batch_size=924,keygen_chunk=924):
+               timeout=900,batch_size=924,keygen_chunk=924,previous_bundle=None,success_report=None):
     """Generate native Goldilocks role bundles with 40-bit statistical security.
 
     ``output_dir`` must not exist. No fake/file preprocessing or insecure flags
@@ -32,6 +32,12 @@ def run_native(manifest_path,output_dir,*,native_root='work/lowgear-goldilocks6-
     request=json.loads(Path(manifest_path).read_text()) if not isinstance(manifest_path,dict) else manifest_path
     if not math.isfinite(timeout) or timeout<=0 or type(batch_size) is not int or batch_size<1:raise ValueError('invalid native timeout or batch size')
     if type(keygen_chunk) is not int or not 1<=keygen_chunk<=924:raise ValueError('invalid key-generation chunk')
+    parent_info={}
+    if previous_bundle is not None:
+        from .lowgear_key_cache import validate_parent
+        if success_report is None:raise ValueError('successful predecessor report required')
+        parent_info=validate_parent(previous_bundle,success_report)
+    elif success_report is not None:raise ValueError('predecessor bundle required')
     session=secrets.token_hex(32)
     records,total,clear_counts=_layout(request,session)
     output=Path(output_dir).resolve();output.mkdir(parents=True,exist_ok=False,mode=0o700)
@@ -51,6 +57,10 @@ def run_native(manifest_path,output_dir,*,native_root='work/lowgear-goldilocks6-
                   native_binary=str(binary),native_binary_sha256=_sha(binary),
                   native_policy=policy,native_policy_sha256=policy_hash,native_loaded_libraries=loaded_libraries,
                   export_source_sha256=_sha(source),native_source_sha256={})
+    metadata.update(parent_info)
+    metadata.setdefault('key_epoch_root',str(output))
+    metadata.setdefault('key_epoch_session',session)
+    metadata['native_key_cache_reused']=previous_bundle is not None
     for name in ('CONFIG','CONFIG.mine','compile.py','Machines/lowgear-party.cpp','Protocols/LowGearKeyGen.hpp','Protocols/ShuffleSacrifice.hpp',
                  'Protocols/MAC_Check.hpp','OT/NPartyTripleGenerator.hpp','OT/OTExtensionWithMatrix.cpp',
                  'OT/OTMultiplier.hpp','OT/MascotMacKey.hpp'):
@@ -85,10 +95,19 @@ def run_native(manifest_path,output_dir,*,native_root='work/lowgear-goldilocks6-
     base=_port_base();processes=[];logs=[]
     native_started=time.perf_counter()
     try:
+        if previous_bundle is not None:
+            cache_started=time.perf_counter()
+            for p,role in enumerate(roles):
+                completed=subprocess.run([sys.executable,str(Path(__file__).with_name('lowgear_key_cache.py')),
+                    '--previous-root',str(Path(previous_bundle).resolve()),'--destination-role',str(role),
+                    '--party',str(p),'--session',session,'--success-report',str(Path(success_report).resolve())],
+                    check=True,capture_output=True,text=True,env={**native_env,'PYTHONDONTWRITEBYTECODE':'1'},timeout=60)
+            metadata['private_key_cache_handoff_ms']=(time.perf_counter()-cache_started)*1000
+        native_execution_started=time.perf_counter()
         for p,role in enumerate(roles):
             log=(role/'native.log').open('w');logs.append(log)
             command=[str(binary),'-p',str(p),'-N','4','-P',str(PRIME),'-lgp','64',
-                     '-S','40','-o',f'comp_sec=128,verbose_he,keygen_probe_batch={keygen_chunk}','-e','-pn',str(base),'-b',str(batch_size),program]
+                     '-S','40','-o',f'comp_sec=128,verbose_he,keygen_probe_batch={keygen_chunk}'+(',expect_setup' if previous_bundle is not None else ''),'-e','-pn',str(base),'-b',str(batch_size),program]
             assert not any('keygen_probe_bits' in arg for arg in command)
             processes.append(subprocess.Popen(command,cwd=role,stdout=log,stderr=subprocess.STDOUT,
                                               env=native_env))
@@ -96,6 +115,9 @@ def run_native(manifest_path,output_dir,*,native_root='work/lowgear-goldilocks6-
         for process in processes:process.wait(timeout=max(.001,deadline-time.monotonic()))
     except BaseException as error:
         metadata['error']=f'{type(error).__name__}: {error}'
+        if previous_bundle is not None:
+            from .lowgear_key_cache import retire_epoch
+            retire_epoch(previous_bundle,'failed native LowGear continuation')
     finally:
         for process in processes:
             if process.poll() is None:process.kill()
@@ -103,7 +125,11 @@ def run_native(manifest_path,output_dir,*,native_root='work/lowgear-goldilocks6-
         for log in logs:log.close()
     codes=[process.returncode for process in processes]
     passed=len(codes)==4 and all(code==0 for code in codes)
+    if previous_bundle is not None and not passed:
+        from .lowgear_key_cache import retire_epoch
+        retire_epoch(previous_bundle,'failed native LowGear continuation')
     metadata.update(ready=passed,passed=passed,return_codes=codes,compile_ms=compile_ms,
+                    native_execution_ms=(time.perf_counter()-native_execution_started)*1000 if 'native_execution_started' in locals() else None,
                     native_preprocessing_ms=(time.perf_counter()-native_started)*1000,
                     preprocessing_ms=(time.perf_counter()-started)*1000,
                     private_role_directories=[str(role) for role in roles],

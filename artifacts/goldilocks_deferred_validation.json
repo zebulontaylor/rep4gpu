@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "return_code": 0,
+  "test_count": 66,
+  "pytest_elapsed_seconds": 1.44,
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_spdz_goldilocks_deferred.py",
+    "tests/test_spdz_goldilocks_stream.py",
+    "tests/test_goldilocks_stream_runner.py",
+    "tests/test_spdz_goldilocks_retirement.py",
+    "tests/test_spdz_prime256.py",
+    "-q"
+  ],
+  "source_review": "field_review approved the final source after generator/base-alias output barrier review",
+  "source_sha256": {
+    "rep4gpu/spdz_prime256.py": "1cc43755d198b0de840865f574366f504631924c3f0037aaf0147e476f5c425c",
+    "rep4gpu/spdz_goldilocks_stream.py": "043caf5f0cf3e385ac14024e8ab3d14855345e066fb7670a62395cd2e2ed9c8a",
+    "rep4gpu/spdz_goldilocks_deferred.py": "5995b1ed230a9db31f113407d8dd27d4dd6574666b3dc1c04916eef28929a083",
+    "rep4gpu/spdz_distributed.py": "2e0e2097da8699f740521071106bd3cd0f5b988e1b9a61615e6243145ce74759",
+    "rep4gpu/transport.py": "bffaa7d490d1e7ed2ee3fcc7ec696986d880e94f19d0d044e6c3434df9475c1f",
+    "rep4gpu/lowgear_key_cache.py": "879fd01ffb122188bc06a715bbef010351a571ebfdc84bd40722577d09b9abe1",
+    "scripts/run_spdz_goldilocks_stream.py": "285f7ea805717211b08e226f02c3ce2ac3856897eb8380cb1f462be946ecec90",
+    "tests/test_spdz_goldilocks_deferred.py": "7eceecc9f092c3cffce0b95ea914c533421b67b3318f9444be0d6f04293fe030"
+  },
+  "scope": "Exact full-field two-token parity, 16 exchanges per token, immediate setup/generic openings, opaque capability authorization, masked-stage value/MAC faults, no final output frames on failure, frozen residuals, per-coordinate checks, malformed commitments/reveals, queue caps, base aliases/lazy iterables, and ancestor epoch retirement. No new native material was generated or consumed by these tests."
+}

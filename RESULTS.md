@@ -242,10 +242,15 @@ static compilation is separate. This is still about 35,582× the measured CPU
 FP32 eager baseline for this tiny model. It is not a GPU or perfect-network
 measurement, and it does not meet the preprocessing-inclusive target.
 
-Exact q256 GPU matmul prototypes pass nine bigint parity tests, including carry
-boundaries at K=4096. Their [single-field kernel timings](artifacts/field_q256_bench.json)
-are 0.083 ms for 1×64×64 and 0.228 ms for 1×128×128. These kernels are not yet
-integrated with the full authenticated direct-field runtime.
+The [exact q256 tensor-core kernels](docs/large-prime-kernels.md) now supply
+value and MAC products inside the fixed-model runtime. A
+[fresh native/GPU/TLS toy run](results/spdz_prime256_prepared_gpu_micro2.json)
+passed all integer outputs. Its checked query took 11.609 ms, including
+1.353 ms of GPU product calls with packing and transfers. GPU setup took
+571.482 ms, including public-zero kernel warmup; fresh native preparation took
+1,669.775 ms. This single-query fixture does not establish a speedup or an
+amortized preprocessing target. Input sharing, activations, and MAC checks
+remain on CPU, and the four CUDA contexts share one physical GPU.
 
 Fresh direct-field batches of 128 and 1,024 rows took 5.324 and 36.392 seconds
 of native generation. Their [per-capacity-row costs](results/mascot_direct_preprocessing_cost.json)
@@ -255,6 +260,85 @@ including loading and sharing, were 42.788 and 36.059 ms per row. Matched-batch
 FP32 comparisons remain about 303,885× and 937,788× respectively. Both sides
 use the same batch size; these are throughput comparisons, not single-query
 latency ratios. Scalar-triple generation remains the dominant cost.
+
+### Dependent toy stream
+
+The [32-step successor-token benchmark](results/autoregressive_benchmark_design.md)
+uses the same small square MLP, preparing fresh correlations for future steps
+before their token inputs are known. It checked every integer logit and
+consumed every row once. Its observed staged sum, including fresh native pool
+generation and online setup, was 5,883.410 ms, or 183.857 ms per token.
+Native compilation and process/certificate provisioning are separate.
+
+| Matched clear comparator | Time per token | Preprocessing-inclusive slowdown |
+| --- | ---: | ---: |
+| PyTorch CPU FP32 | 31.70 μs | 5,800× |
+| NumPy CPU | 4.98 μs | 36,916× |
+| PyTorch GPU FP32, resident per-step graph | 8.70 μs | 21,123× |
+| PyTorch GPU FP16, resident per-step graph | 7.20 μs | 25,536× |
+
+These are provisional shared-host measurements from separate contended windows.
+Every clear comparator preserves token dependencies. The GPU comparator retains
+the next token on device; host-logit delivery is measured separately. These
+ratios are not perfect-network projections, and they do not establish a full
+transformer result or meet the malicious-majority target.
+
+### Goldilocks streams with persistent HE keys
+
+The native LowGear route also evaluates the same dependent micro-model stream
+over `p = 2**64 - 2**32 + 1`, using persistent HE keys and fresh correlation
+pools. The configured settings are S40 and 128-bit computational security;
+a whole-epoch statistical error bound has **not** been established. These are
+conditional experimental CPU/TLS results, and the preprocessing-inclusive
+performance target remains unmet.
+
+The [128-token run](results/goldilocks_dependent128.json) served every dependent
+step with exact integer logits and one-use rows. Its fresh pool cost, including
+native compilation and provisioning, was 10.148 seconds. Including owner
+fixture setup and the actual consumer-process stopwatch gives 14.394 seconds,
+or 112.452 ms per served token. This is a warm-key epoch measurement, not a
+cold-start result.
+
+| Matched 128-step clear sequence | Clear sequence time | Warm-key process-inclusive slowdown |
+| --- | ---: | ---: |
+| PyTorch CPU FP32 | 2.851 ms | 5,048× |
+| NumPy CPU | 0.522 ms | 27,564× |
+| PyTorch GPU FP16, resident per-step graph, wall | 0.919 ms | 15,669× |
+
+The FP16 CUDA-event comparator is 0.911 ms, giving 15,794×. Neither GPU
+comparator waits for host logits between steps. The
+[stage accounting](results/goldilocks_dependent128_costs.json) keeps the initial
+cold cost separate: measured HE-key generation took about **471 seconds**, and
+the complete first cold pool took 481.134 seconds. Those initial costs are
+excluded from the warm-key figures above. Charging the whole first cold pool
+to this stream gives a conservative 495.527-second staged case; it is not a
+separately measured cold 128-token run, and its earlier independent rows do not
+increase this stream's dependent-token denominator. Setup reuse never permits
+correlation reuse or credit for unserved capacity.
+
+The [fresh 2,400-token deferred-check run](results/goldilocks_dependent2400_deferred.json)
+also served every dependent step with exact logits at all four roles. Internal
+masked-opening checks finished before each public output. Its fresh pool,
+including native compilation and provisioning, cost 10.934 seconds; the
+checked sequence cost 16.056 seconds, or 6.690 ms per token. Including owner setup and the actual
+consumer-process stopwatch gives **29.182 seconds**, or **12.159 ms per served
+token**, with warm HE keys.
+
+| Matched 2,400-step clear sequence | Clear sequence time | Warm-key process-inclusive slowdown |
+| --- | ---: | ---: |
+| PyTorch CPU FP32 | 51.941 ms | 562× |
+| NumPy CPU | 9.372 ms | 3,114× |
+| PyTorch GPU FP32, resident per-step graph, wall | 16.327 ms | 1,787× |
+| PyTorch GPU FP16, resident per-step graph, wall | 17.119 ms | 1,705× |
+
+The corresponding FP16 event measurement is 17.100 ms and gives 1,707×.
+The larger pool amortizes fresh preprocessing over 2,400 **actually served**
+dependent tokens; it does not batch future token inputs or count replay as new
+capacity. Initial HE-key setup remains excluded from these warm figures.
+Charging the complete first cold pool as a conservative setup case gives
+510.315 seconds, or 212.631 ms per token, for this run. That sum is not a
+separately measured cold 2,400-token sequence. The S40 whole-epoch bound remains
+unestablished, and neither warm nor cold accounting meets the target.
 
 ## Dealer-free conversion-bridge evidence
 

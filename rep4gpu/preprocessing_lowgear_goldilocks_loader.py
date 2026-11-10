@@ -84,6 +84,75 @@ def _read_local(role: Path, directory: str, filename: str, *, optional=False):
         os.close(role_fd)
 
 
+def _validate_key_epoch(role: Path, metadata):
+    """Check public cache lineage and this role's handoff markers only."""
+    root = role.parent
+    if json.loads((root / 'public-manifest.json').read_text()) != metadata:
+        raise ValueError('Goldilocks root and role manifests differ')
+    epoch = Path(metadata.get('key_epoch_root', root)).resolve()
+    if os.path.lexists(epoch / 'key-epoch-retired'):
+        raise ValueError('Goldilocks key epoch is retired')
+    if os.path.lexists(role / 'key-cache-advanced'):
+        raise ValueError('Goldilocks ancestor key cache has advanced')
+    first = json.loads((epoch / 'public-manifest.json').read_text())
+    epoch_session = metadata.get('key_epoch_session', metadata['session'])
+
+    def successful(m):
+        codes = m.get('return_codes')
+        return (m.get('format') == _FORMAT and m.get('ready') is True and
+                m.get('passed') is True and type(codes) is list and len(codes) == 4 and
+                all(type(code) is int and code == 0 for code in codes) and
+                m.get('prime') == PRIME and m.get('finite_bit_probe') is False and
+                m.get('statistical_security') == 40 and m.get('computational_security') == 128)
+
+    if (not successful(first) or first.get('session') != epoch_session or
+            first.get('native_policy_sha256') != metadata['native_policy_sha256'] or
+            first.get('native_binary_sha256') != metadata['native_binary_sha256'] or
+            Path(first.get('key_epoch_root', epoch)).resolve() != epoch or
+            first.get('key_epoch_session', first['session']) != first['session'] or
+            first.get('native_key_cache_reused', False) is not False):
+        raise ValueError('Goldilocks key epoch identity differs')
+    current_root, current = root, metadata
+    visited = set()
+    while True:
+        if current_root in visited or len(visited) >= 1024 or not successful(current):
+            raise ValueError('invalid Goldilocks key-cache lineage')
+        visited.add(current_root)
+        reused = current.get('native_key_cache_reused', False)
+        if type(reused) is not bool:
+            raise ValueError('invalid Goldilocks key-cache mode')
+        if (Path(current.get('key_epoch_root', current_root)).resolve() != epoch or
+                current.get('key_epoch_session', current['session']) != epoch_session or
+                current['native_policy_sha256'] != metadata['native_policy_sha256']):
+            raise ValueError('Goldilocks ancestor epoch differs')
+        if not reused:
+            if current_root != epoch or current['session'] != epoch_session:
+                raise ValueError('Goldilocks cold epoch root differs')
+            break
+        parent_path = Path(current['parent_native_manifest']).resolve()
+        if parent_path.name != 'public-manifest.json' or _sha(parent_path) != current['parent_native_manifest_sha256']:
+            raise ValueError('Goldilocks parent manifest differs')
+        parent = json.loads(parent_path.read_text())
+        report_path = Path(current['parent_online_report']).resolve()
+        if _sha(report_path) != current['parent_online_report_sha256']:
+            raise ValueError('Goldilocks parent online report differs')
+        report = json.loads(report_path.read_text())
+        if (not successful(parent) or parent['session'] != current['parent_session'] or
+                parent['session'] == current['session'] or
+                report.get('passed') is not True or report.get('return_codes') != [0] * 4 or
+                report.get('source_stable_during_run') is not True or
+                report.get('exact_integer_match') is not True or
+                report.get('public_preprocessing_manifest') != parent):
+            raise ValueError('Goldilocks parent run was not successful')
+        parent_role = parent_path.parent / role.name
+        consumed = _read_local(parent_role, '.', 'consumed').decode()
+        handoff = json.loads(_read_local(parent_role, '.', 'key-cache-advanced'))
+        if (consumed != parent['session'] or handoff.get('successor_session') != current['session'] or
+                Path(handoff.get('destination', '')).resolve() != current_root / role.name):
+            raise ValueError('Goldilocks own-role key-cache handoff differs')
+        current_root, current = parent_path.parent, parent
+
+
 def load_role(bundle_path, party, device='cpu'):
     """Verify public provenance, claim the whole role bundle, then read its data.
 
@@ -134,6 +203,8 @@ def load_role(bundle_path, party, device='cpu'):
             type(m['clear_counts']) is not list or
             any(type(count) is not int for count in m['clear_counts']) or counts != m['clear_counts']):
         raise ValueError('Goldilocks native layout mismatch')
+
+    _validate_key_epoch(role, m)
 
     fd = os.open(role / 'consumed', os.O_CREAT | os.O_EXCL | os.O_WRONLY | os.O_NOFOLLOW, 0o600)
     with os.fdopen(fd, 'w') as claim:

@@ -88,12 +88,15 @@ def worker(config_path,result_path):
         Path(result_path).write_text(json.dumps(report,indent=2)+'\n')
     except BaseException as error:
         if party is not None:party.abort(error)
+        if config.get('preprocessing_backend')=='lowgear-goldilocks-s40':
+            from rep4gpu.lowgear_key_cache import retire_epoch
+            retire_epoch(Path(config['bundle'])/f'party{p}','failed Goldilocks online worker or loader')
         traceback.print_exc();Path(result_path).write_text(json.dumps(dict(party=p,passed=False,error=str(error)))+'\n');raise
     finally:
         if transport is not None:transport.close()
 
 
-def run(bundle,output,checkpoint='results/spdz_micro_toy/model.pt',batch=1,timeout=120,preprocessing_backend='mascot'):
+def _run(bundle,output,checkpoint='results/spdz_micro_toy/model.pt',batch=1,timeout=120,preprocessing_backend='mascot'):
     from examples import spdz_micro_toy as api
     if type(batch) is not int or batch<1:raise ValueError('batch must be positive')
     _,prime=native_backend(preprocessing_backend)
@@ -149,10 +152,32 @@ def run(bundle,output,checkpoint='results/spdz_micro_toy/model.pt',batch=1,timeo
         static_model_sharing_ms=sum(inputs[name] for name in NAMES if name!='x'),model_queries=1,baselines=clear['timings'])
     report['pipeline_cost']['security_target_met']=False
     report['pipeline_cost']['timing_context']='Actual native fresh generation plus CPU/TLS sharing and checked query; compilation separate; one fresh correlation pack, no replay amortization.'
+    report['pipeline_cost']['total_complete']=False
+    report['pipeline_cost']['excluded_costs']=[
+        'native compilation and certificate provisioning',
+        'online worker startup, role loading, and TLS setup',
+    ]
+    if public.get('key_epoch_root'):
+        report['pipeline_cost']['excluded_costs'].append('original key-epoch setup; account across all actually served epoch rows')
     after=fingerprints()
     report.update(source_stable_during_run=before==after,source_sha256=after)
     report['passed']=report['passed'] and before==after
     output.write_text(json.dumps(report,indent=2)+'\n');return report
+
+
+def run(bundle,output,checkpoint='results/spdz_micro_toy/model.pt',batch=1,timeout=120,preprocessing_backend='mascot'):
+    """Retire a reused key epoch if any stage fails or its final evidence differs."""
+    try:
+        report=_run(bundle,output,checkpoint,batch,timeout,preprocessing_backend)
+    except BaseException:
+        if preprocessing_backend=='lowgear-goldilocks-s40':
+            from rep4gpu.lowgear_key_cache import retire_epoch
+            retire_epoch(bundle,'failed Goldilocks online coordinator')
+        raise
+    if preprocessing_backend=='lowgear-goldilocks-s40' and not report.get('passed'):
+        from rep4gpu.lowgear_key_cache import retire_epoch
+        retire_epoch(bundle,'failed Goldilocks online verification')
+    return report
 
 
 def main():

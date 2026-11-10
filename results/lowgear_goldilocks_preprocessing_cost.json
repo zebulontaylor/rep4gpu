@@ -249,5 +249,13 @@
   "exact_integer_match": true,
   "source_stable_during_run": true,
   "checked_online_ms": 35.37054000480566,
-  "fresh_accepted_capacity_still_not_used_as_denominator": true
+  "fresh_accepted_capacity_still_not_used_as_denominator": true,
+  "all_in_preprocessing_ms": 481133.5907850007,
+  "all_in_preprocessing_ms_per_exported_row_or_token": 4009.446589875006,
+  "timing_field_scope": {
+    "native_preprocessing_ms": "Native execution plus private cache handoff; excludes compiler and initial certificate provisioning.",
+    "native_execution_ms": "Native subprocess phase after private key-cache handoff.",
+    "all_in_preprocessing_ms": "Compiler, initial certificate provisioning, private key-cache handoff, and native execution.",
+    "full_producer_ms_per_requested_row": "Historical field name: native_preprocessing_ms / requested rows; excludes compiler/provisioning."
+  }
 }

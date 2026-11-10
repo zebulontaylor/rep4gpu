@@ -96,7 +96,7 @@ def bundle(tmp_path, monkeypatch, party=1):
     digest = hashlib.sha256(text).hexdigest()
     (root/'lowgear-goldilocks-s40-policy.json').write_bytes(text)
     (role/'native-policy.json').write_bytes(text)
-    metadata = dict(format='lowgear-goldilocks-s40-native-field-v1', ready=True, parties=4,
+    metadata = dict(format='lowgear-goldilocks-s40-native-field-v1', ready=True, passed=True, parties=4,
                     return_codes=[0]*4, prime=Q, mac_keys=1, security_parameter=40,
                     statistical_security=40, computational_security=128, finite_bit_probe=False,
                     field_conversion=False, experimental=True, security_target_met=False,
@@ -106,6 +106,7 @@ def bundle(tmp_path, monkeypatch, party=1):
                     request=request, records=records, share_count=total, clear_counts=counts,
                     export_source_sha256=hashlib.sha256(native._program(request).encode()).hexdigest())
     (role/'public-manifest.json').write_text(json.dumps(metadata))
+    (tmp_path/'public-manifest.json').write_text(json.dumps(metadata))
     (role/'Persistence'/f'Transactions-P{party}.data').write_bytes(encoded(rows, key))
     clear = [2**63, Q - 1, Q//2 + 1]
     (role/'Player-Data'/f'Binary-Output-P{party}-0').write_bytes(b''.join(v.to_bytes(8, 'little') for v in clear))
@@ -209,4 +210,82 @@ def test_metadata_numeric_booleans_fail_closed(tmp_path, monkeypatch, key, value
     metadata[key] = value
     (role/'public-manifest.json').write_text(json.dumps(metadata))
     with pytest.raises(ValueError): native.load_role(role, 1)
+    assert not (role/'consumed').exists()
+
+
+def warm_bundle(tmp_path, monkeypatch):
+    parent_dir = tmp_path/'parent'; parent_dir.mkdir()
+    parent_role, parent, *_ = bundle(parent_dir, monkeypatch)
+    (parent_role/'consumed').write_text(parent['session'])
+    report = dict(passed=True, return_codes=[0]*4, source_stable_during_run=True,
+                  exact_integer_match=True, public_preprocessing_manifest=parent)
+    report_path = tmp_path/'parent-success.json'; report_path.write_text(json.dumps(report))
+    child_dir = tmp_path/'child'; child_dir.mkdir()
+    role, metadata, rows, key, clear = bundle(child_dir, monkeypatch)
+    # Both pools use the same pinned build; only the correlation session changes.
+    metadata.update(session='b9'*32, native_root=parent['native_root'],
+                    native_binary=parent['native_binary'], native_policy=parent['native_policy'],
+                    native_policy_sha256=parent['native_policy_sha256'],
+                    native_binary_sha256=parent['native_binary_sha256'])
+    records, total, counts = native._layout(metadata['request'], metadata['session'])
+    metadata.update(records=records, share_count=total, clear_counts=counts,
+                    native_key_cache_reused=True, key_epoch_root=str(parent_dir),
+                    key_epoch_session=parent['session'], parent_session=parent['session'],
+                    parent_native_manifest=str(parent_dir/'public-manifest.json'),
+                    parent_native_manifest_sha256=native._sha(parent_dir/'public-manifest.json'),
+                    parent_online_report=str(report_path), parent_online_report_sha256=native._sha(report_path))
+    (role/'native-policy.json').write_bytes((parent_role/'native-policy.json').read_bytes())
+    (parent_role/'key-cache-advanced').write_text(json.dumps(dict(successor_session=metadata['session'],destination=str(role))))
+    for path in (role/'public-manifest.json', child_dir/'public-manifest.json'):
+        path.write_text(json.dumps(metadata))
+    monkeypatch.setattr(native, '_verify_policy', lambda root,binary:(parent['native_policy'],parent['native_policy_sha256']))
+    return role, metadata, parent_role, report_path
+
+
+def test_warm_lineage_reads_only_own_handoff_and_returns_new_correlations(tmp_path, monkeypatch):
+    role, metadata, parent_role, _ = warm_bundle(tmp_path, monkeypatch)
+    original = native._read_local
+    reads=[]
+    def own_only(path, directory, filename, **kwargs):
+        assert path in (role, parent_role) and path.name == 'party1'
+        reads.append(filename)
+        return original(path,directory,filename,**kwargs)
+    monkeypatch.setattr(native,'_read_local',own_only)
+    loaded=native.load_role(role,1)
+    assert loaded['provenance']['native_key_cache_reused'] is True
+    assert reads[:2] == ['consumed','key-cache-advanced']
+    assert (role/'consumed').read_text() == metadata['session']
+
+
+@pytest.mark.parametrize('fault', ['retired', 'advanced', 'epoch-session', 'epoch-policy',
+                                   'root-manifest', 'parent-hash', 'report-hash', 'handoff-session',
+                                   'handoff-destination', 'missing-consumed', 'cold-root', 'parent-cycle'])
+def test_epoch_guards_fail_before_burn_or_payload_read(tmp_path, monkeypatch, fault):
+    role,m,parent,report_path=warm_bundle(tmp_path,monkeypatch)
+    epoch=parent.parent
+    if fault=='retired': (epoch/'key-epoch-retired').write_text('failed check')
+    elif fault=='advanced': (role/'key-cache-advanced').write_text('already advanced')
+    elif fault=='epoch-session': m['key_epoch_session']='cc'*32
+    elif fault=='epoch-policy':
+        first=json.loads((epoch/'public-manifest.json').read_text());first['native_policy_sha256']='00'*32
+        (epoch/'public-manifest.json').write_text(json.dumps(first))
+    elif fault=='root-manifest':
+        changed=dict(m, session='cc'*32);(role.parent/'public-manifest.json').write_text(json.dumps(changed))
+    elif fault=='parent-hash': m['parent_native_manifest_sha256']='00'*32
+    elif fault=='report-hash': m['parent_online_report_sha256']='00'*32
+    elif fault.startswith('handoff'):
+        handoff=json.loads((parent/'key-cache-advanced').read_text())
+        handoff['successor_session' if fault.endswith('session') else 'destination']='wrong'
+        (parent/'key-cache-advanced').write_text(json.dumps(handoff))
+    elif fault=='missing-consumed': (parent/'consumed').unlink()
+    elif fault=='cold-root': m['native_key_cache_reused']=False
+    else:
+        m['parent_native_manifest']=str(role.parent/'public-manifest.json')
+    (role/'public-manifest.json').write_text(json.dumps(m))
+    if fault!='root-manifest': (role.parent/'public-manifest.json').write_text(json.dumps(m))
+    def forbidden(path,directory,filename,**kwargs):
+        if directory!='.': raise AssertionError('guard must precede private payload reads')
+        return original(path,directory,filename,**kwargs)
+    original=native._read_local;monkeypatch.setattr(native,'_read_local',forbidden)
+    with pytest.raises((ValueError,OSError)): native.load_role(role,1)
     assert not (role/'consumed').exists()

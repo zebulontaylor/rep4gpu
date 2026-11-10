@@ -1,0 +1,397 @@
+{
+  "format": "lowgear-goldilocks-fresh-pool-cost-v1",
+  "protocol": "LowGear",
+  "configured_statistical_security": 40,
+  "configured_computational_security": 128,
+  "whole_epoch_statistical_bound_not_established": true,
+  "security_target_met": false,
+  "performance_target_met": false,
+  "ready": true,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "requested_rows": 2400,
+  "served_rows": 2400,
+  "capacity_only_until_checked_online": false,
+  "native_preprocessing_ms": 15840.9491949933,
+  "native_execution_ms": 10240.511505005998,
+  "private_key_cache_handoff_ms": 5600.434733998554,
+  "native_execution_ms_per_requested_row": 4.266879793752499,
+  "full_producer_ms_per_requested_row": 6.600395497913875,
+  "static_key_epoch_setup_ms": 470989,
+  "static_setup_allocation_pending_actual_served_epoch_rows": true,
+  "exported_matrix_products": 76800,
+  "exported_squares": 4800,
+  "total_exported_products": 81600,
+  "accepted_triples_per_role": 81920,
+  "accepted_capacity_not_denominator": true,
+  "roles": [
+    {
+      "party": 0,
+      "static_key_check_seconds": 0.0272941,
+      "fresh_triple_seconds": 8.79035,
+      "accepted_triples": 81920,
+      "input_batches": [
+        {
+          "seconds": 0.0842056,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0795669,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0771558,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0790462,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.075612,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0756438,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0743069,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0758824,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.075515,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0743495,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0760621,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.076344,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0738634,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0748214,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0726113,
+          "owner": 0,
+          "accepted_masks": 8191
+        }
+      ],
+      "native_log_sha256": "2df6c79ac1982cc072b4faed3a9b870002ce71ffffcfc2c8053ab0f6002f1b92"
+    },
+    {
+      "party": 1,
+      "static_key_check_seconds": 0.0270836,
+      "fresh_triple_seconds": 8.79077,
+      "accepted_triples": 81920,
+      "input_batches": [
+        {
+          "seconds": 0.0828072,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0797155,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0776481,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.078448,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0754171,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0757658,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0744156,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0760064,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0733338,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0744384,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0758331,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0763775,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0736739,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0746662,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0727102,
+          "owner": 0,
+          "accepted_masks": 8191
+        }
+      ],
+      "native_log_sha256": "cfac55c8d3438eeec09d7627464672936dd24a3f20a2806af7204ded535b4865"
+    },
+    {
+      "party": 2,
+      "static_key_check_seconds": 0.0272028,
+      "fresh_triple_seconds": 8.7908,
+      "accepted_triples": 81920,
+      "input_batches": [
+        {
+          "seconds": 0.0842982,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0797157,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.077346,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.07904,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0755344,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0757581,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0744143,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0761451,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0766501,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0743971,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0760043,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0763109,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0736746,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0746064,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0727115,
+          "owner": 0,
+          "accepted_masks": 8191
+        }
+      ],
+      "native_log_sha256": "57bbebdba362b916f3d36713117b429f33d469266645fefb0ea32c0b300f9801"
+    },
+    {
+      "party": 3,
+      "static_key_check_seconds": 0.0269164,
+      "fresh_triple_seconds": 8.78985,
+      "accepted_triples": 81920,
+      "input_batches": [
+        {
+          "seconds": 0.0821691,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0797143,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0772753,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.079065,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0752196,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0781655,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0718306,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0761422,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0733911,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0744384,
+          "owner": 1,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.075921,
+          "owner": 2,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0764412,
+          "owner": 3,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0738539,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.074517,
+          "owner": 0,
+          "accepted_masks": 8191
+        },
+        {
+          "seconds": 0.0726286,
+          "owner": 0,
+          "accepted_masks": 8191
+        }
+      ],
+      "native_log_sha256": "8563a1e0453c18597f2373da34157d5bbd87211834a6f81cb259beba1328da35"
+    }
+  ],
+  "key_epoch_session": "6ffd4ce851f6173a3186104aa2ca5305af8e8f9f2a50cd2d569f15ee46eca577",
+  "key_epoch_root": "/home/zeb/Desktop/SIV/work/lowgear_native/goldilocks6_capacity120",
+  "public_manifest": "work/lowgear_native/goldilocks6_capacity2400_warmkeys/public-manifest.json",
+  "public_manifest_sha256": "53fb86bb184ba13cb688730597bb7cb4332c0b39005d39e4f5465b18dcb01c92",
+  "native_binary_sha256": "54e7ed91286251cc0de4641e73632ea48d134a1261575f9e7ed98fbc3c31ba23",
+  "native_policy_sha256": "98dcef10788fad9e1b1954ae3283f4868f0c96e30e2cb315450fa1c938a1b530",
+  "no_coordinator_secret_cache_reads": true,
+  "no_private_correlation_reuse": true,
+  "finite_bit_probe": false,
+  "reported_native_global_data_sent_MB": 961.38,
+  "consumed_once": true,
+  "actual_online_report": "results/lowgear_goldilocks_inference2400.json",
+  "actual_online_report_sha256": "fb142d25424bd61c7af1e217cabc8a05ef864854561b167f164583c22d122695",
+  "checked_online_ms": 437.5498270019307,
+  "exact_integer_match": true,
+  "source_stable_during_run": true,
+  "actual_epoch_served_rows": 2520,
+  "cold_epoch_static_setup_ms_per_actual_served_row": 186.90039682539683,
+  "cumulative_measured_native_producer_ms": 496470.9428149945,
+  "cumulative_measured_native_producer_ms_per_served_row": 197.01227889483908,
+  "all_in_preprocessing_ms": 16341.735257003165,
+  "all_in_preprocessing_ms_per_exported_row_or_token": 6.8090563570846525,
+  "timing_field_scope": {
+    "native_preprocessing_ms": "Native execution plus private cache handoff; excludes compiler and initial certificate provisioning.",
+    "native_execution_ms": "Native subprocess phase after private key-cache handoff.",
+    "all_in_preprocessing_ms": "Compiler, initial certificate provisioning, private key-cache handoff, and native execution.",
+    "full_producer_ms_per_requested_row": "Historical field name: native_preprocessing_ms / requested rows; excludes compiler/provisioning."
+  }
+}

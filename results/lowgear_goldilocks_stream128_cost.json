@@ -1,0 +1,57 @@
+{
+  "format": "lowgear-goldilocks-dependent-stream-preprocessing-v1",
+  "ready": true,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "requested_tokens": 128,
+  "served_tokens": 128,
+  "dependent_tokens_not_yet_served": false,
+  "native_preprocessing_ms": 9697.284201996808,
+  "native_execution_ms": 9239.247169003647,
+  "private_key_cache_handoff_ms": 458.03438799339347,
+  "total_exported_products": 4352,
+  "accepted_triples_per_role": 81920,
+  "capacity_not_served_denominator": true,
+  "private_seed_shape": [
+    1,
+    8
+  ],
+  "field_prime": 18446744069414584321,
+  "configured_statistical_security": 40,
+  "configured_computational_security": 128,
+  "whole_epoch_statistical_bound_not_established": true,
+  "security_target_met": false,
+  "performance_target_met": false,
+  "key_epoch_session": "6ffd4ce851f6173a3186104aa2ca5305af8e8f9f2a50cd2d569f15ee46eca577",
+  "public_manifest": "work/lowgear_native/goldilocks6_stream128/public-manifest.json",
+  "public_manifest_sha256": "4378ed79121572bbcc5b885046dd81fb9a16c8053c4fffaa6cfe1c3ee8f4ce42",
+  "native_policy_sha256": "98dcef10788fad9e1b1954ae3283f4868f0c96e30e2cb315450fa1c938a1b530",
+  "native_phase_counters": [
+    "LOWGEAR_STATIC_PARAMETER_SECONDS 0.00687347",
+    "LOWGEAR_STATIC_KEY_SECONDS 0.0271139",
+    "LOWGEAR_FRESH_INPUT_SECONDS 0.0823818 OWNER 0 ACCEPTED_MASKS 8191",
+    "LOWGEAR_FRESH_INPUT_SECONDS 0.0812457 OWNER 1 ACCEPTED_MASKS 8191",
+    "LOWGEAR_FRESH_INPUT_SECONDS 0.0817487 OWNER 2 ACCEPTED_MASKS 8191",
+    "LOWGEAR_FRESH_INPUT_SECONDS 0.0793597 OWNER 3 ACCEPTED_MASKS 8191",
+    "LOWGEAR_FRESH_TRIPLE_SECONDS 8.65911 ACCEPTED_TRIPLES 81920"
+  ],
+  "actual_epoch_served_rows_before_this_pool": 4920,
+  "consumed_once": true,
+  "actual_online_report": "results/goldilocks_dependent128.json",
+  "actual_online_report_sha256": "a76b71c3ec539be806e9ad9f6e70fb7719696216c73c217bb95bb94c6ce23ee7",
+  "exact_integer_match": true,
+  "source_stable_during_run": true,
+  "actual_epoch_served_rows_after_this_pool": 5048,
+  "all_in_preprocessing_ms": 10148.181444004877,
+  "all_in_preprocessing_ms_per_exported_row_or_token": 79.2826675312881,
+  "timing_field_scope": {
+    "native_preprocessing_ms": "Native execution plus private cache handoff; excludes compiler and initial certificate provisioning.",
+    "native_execution_ms": "Native subprocess phase after private key-cache handoff.",
+    "all_in_preprocessing_ms": "Compiler, initial certificate provisioning, private key-cache handoff, and native execution.",
+    "full_producer_ms_per_requested_row": "Historical field name: native_preprocessing_ms / requested rows; excludes compiler/provisioning."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "measurement_report": "results/goldilocks_dependent128.json",
+  "measurement_sha256": "a76b71c3ec539be806e9ad9f6e70fb7719696216c73c217bb95bb94c6ce23ee7",
+  "steps_actually_served": 128,
+  "warm_epoch_only": {
+    "checked_online_sequence_ms": 1454.0631729978486,
+    "staged_sequence_ms": 12620.110507996287,
+    "native_plus_process_inclusive_ms": 14393.832728004782,
+    "inclusive_per_served_token_ms": 112.45181818753736,
+    "initial_HE_setup_excluded": true
+  },
+  "cold_setup": {
+    "public_epoch_manifest": "/home/zeb/Desktop/SIV/work/lowgear_native/goldilocks6_capacity120/public-manifest.json",
+    "full_cold_pool_generation_ms": 481133.5907850007,
+    "pure_HE_key_setup_isolated": false,
+    "contract": "Full cold-pool generation is a conservative bound including initial HE key setup plus a separate pool. No credit from independent rows is included in the dependent-token denominator."
+  },
+  "conservative_cold_plus_stream_sequence_ms": 495527.4235130055,
+  "conservative_cold_plus_stream_per_dependent_token_ms": 3871.3079961953554,
+  "matched_FP16_resident_step_graph_sequence_ms": 0.9186320021399297,
+  "slowdowns": {
+    "online": 1582.8570848943273,
+    "warm_epoch_process_inclusive": 15668.769098479825,
+    "conservative_cold_plus_stream": 539418.8558189645
+  },
+  "security_target_met": false
+}
