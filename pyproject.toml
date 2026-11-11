@@ -14,7 +14,9 @@ crypto = ["cryptography>=45"]
 test = ["pytest>=8", "blake3>=1.0"]
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = ["rep4gpu*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src", "."]
