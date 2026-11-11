@@ -1,0 +1,131 @@
+........................................................................ [  8%]
+........................................................................ [ 16%]
+........................................................................ [ 24%]
+........................................................................ [ 32%]
+........................................................................ [ 40%]
+........................................................................ [ 48%]
+........................................................................ [ 56%]
+............................................FF.......................... [ 64%]
+........................................................................ [ 72%]
+........................................................................ [ 80%]
+........................................................................ [ 88%]
+........................................................................ [ 96%]
+...............................                                          [100%]
+=================================== FAILURES ===================================
+_______________ test_five32_rejected_before_cuda_setup[64-True] ________________
+
+bits = 64, prepared = True
+
+    @pytest.mark.parametrize('bits,prepared',[(64,True),(32,False)])
+    def test_five32_rejected_before_cuda_setup(bits,prepared):
+        with pytest.raises(ValueError,match='five32 requires bits=32 and prepared=True'):
+>           run_case(1,8,8,4,device='cpu',bits=bits,prepared=prepared,weight_storage='five32')
+
+tests/test_device_inference_benchmark.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+batch = 1, width = 8, hidden = 8, out = 4, device = 'cpu', repeats = 5
+bits = 64, binary_bits = 32, fractional_bits = 12, prepared = True
+weight_storage = 'five32', staging = 'device', optimized = False
+gpu_open = False, rounding = 'floor', phase_graphs = False, bounded_sign = False
+graph_check_at_send = False, sparse_products = False, activation = 'relu'
+activation_bound = 4.0, activation_profile = 'uniform', narrow_products = False
+
+    def run_case(batch,width,hidden,out,device='cuda',repeats=5,bits=32,
+                 binary_bits=32,fractional_bits=12,prepared=False,
+                 weight_storage='limbs',staging='device',optimized=False,gpu_open=False,rounding='floor',
+                 phase_graphs=False,bounded_sign=False,graph_check_at_send=False,sparse_products=False,
+                 activation='relu',activation_bound=4.,activation_profile='uniform',narrow_products=False):
+        if activation not in ('relu','quadratic_relu','quadratic_gelu','quadratic_silu','simulated_relu'):
+            raise ValueError('unsupported activation experiment')
+        bounded_sign = bounded_sign and activation == 'relu'
+        if rounding not in ('floor','probabilistic'):
+            raise ValueError('rounding must be floor or probabilistic')
+        if rounding=='probabilistic' and not 0 <= fractional_bits < bits-1:
+            raise ValueError('probabilistic fractional_bits must be in [0, bits-2]')
+        if repeats < 1:
+            raise ValueError('repeats must be positive')
+        if weight_storage not in ('limbs','words32','five32','strassen32'):
+            raise ValueError('weight_storage must be limbs, words32, five32 or strassen32')
+        if weight_storage in ('five32','strassen32') and (bits != 32 or not prepared):
+>           raise ValueError('five32 and strassen32 require bits=32 and prepared=True')
+E           ValueError: five32 and strassen32 require bits=32 and prepared=True
+
+benchmarks/device_inference.py:159: ValueError
+
+During handling of the above exception, another exception occurred:
+
+bits = 64, prepared = True
+
+    @pytest.mark.parametrize('bits,prepared',[(64,True),(32,False)])
+    def test_five32_rejected_before_cuda_setup(bits,prepared):
+>       with pytest.raises(ValueError,match='five32 requires bits=32 and prepared=True'):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'five32 requires bits=32 and prepared=True'
+E         Actual message: 'five32 and strassen32 require bits=32 and prepared=True'
+
+tests/test_device_inference_benchmark.py:47: AssertionError
+_______________ test_five32_rejected_before_cuda_setup[32-False] _______________
+
+bits = 32, prepared = False
+
+    @pytest.mark.parametrize('bits,prepared',[(64,True),(32,False)])
+    def test_five32_rejected_before_cuda_setup(bits,prepared):
+        with pytest.raises(ValueError,match='five32 requires bits=32 and prepared=True'):
+>           run_case(1,8,8,4,device='cpu',bits=bits,prepared=prepared,weight_storage='five32')
+
+tests/test_device_inference_benchmark.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+batch = 1, width = 8, hidden = 8, out = 4, device = 'cpu', repeats = 5
+bits = 32, binary_bits = 32, fractional_bits = 12, prepared = False
+weight_storage = 'five32', staging = 'device', optimized = False
+gpu_open = False, rounding = 'floor', phase_graphs = False, bounded_sign = False
+graph_check_at_send = False, sparse_products = False, activation = 'relu'
+activation_bound = 4.0, activation_profile = 'uniform', narrow_products = False
+
+    def run_case(batch,width,hidden,out,device='cuda',repeats=5,bits=32,
+                 binary_bits=32,fractional_bits=12,prepared=False,
+                 weight_storage='limbs',staging='device',optimized=False,gpu_open=False,rounding='floor',
+                 phase_graphs=False,bounded_sign=False,graph_check_at_send=False,sparse_products=False,
+                 activation='relu',activation_bound=4.,activation_profile='uniform',narrow_products=False):
+        if activation not in ('relu','quadratic_relu','quadratic_gelu','quadratic_silu','simulated_relu'):
+            raise ValueError('unsupported activation experiment')
+        bounded_sign = bounded_sign and activation == 'relu'
+        if rounding not in ('floor','probabilistic'):
+            raise ValueError('rounding must be floor or probabilistic')
+        if rounding=='probabilistic' and not 0 <= fractional_bits < bits-1:
+            raise ValueError('probabilistic fractional_bits must be in [0, bits-2]')
+        if repeats < 1:
+            raise ValueError('repeats must be positive')
+        if weight_storage not in ('limbs','words32','five32','strassen32'):
+            raise ValueError('weight_storage must be limbs, words32, five32 or strassen32')
+        if weight_storage in ('five32','strassen32') and (bits != 32 or not prepared):
+>           raise ValueError('five32 and strassen32 require bits=32 and prepared=True')
+E           ValueError: five32 and strassen32 require bits=32 and prepared=True
+
+benchmarks/device_inference.py:159: ValueError
+
+During handling of the above exception, another exception occurred:
+
+bits = 32, prepared = False
+
+    @pytest.mark.parametrize('bits,prepared',[(64,True),(32,False)])
+    def test_five32_rejected_before_cuda_setup(bits,prepared):
+>       with pytest.raises(ValueError,match='five32 requires bits=32 and prepared=True'):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'five32 requires bits=32 and prepared=True'
+E         Actual message: 'five32 and strassen32 require bits=32 and prepared=True'
+
+tests/test_device_inference_benchmark.py:47: AssertionError
+=============================== warnings summary ===============================
+tests/test_phase_graph.py: 9 warnings
+tests/test_simulated_activation.py: 3 warnings
+  /home/zeb/.pyenv/versions/3.10.13/lib/python3.10/site-packages/torch/cuda/graphs.py:169: UserWarning: The CUDA Graph is empty. This usually means that the graph was attempted to be captured on wrong device or stream. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/cuda/CUDAGraph.cpp:210.)
+    super().capture_end()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_device_inference_benchmark.py::test_five32_rejected_before_cuda_setup[64-True]
+FAILED tests/test_device_inference_benchmark.py::test_five32_rejected_before_cuda_setup[32-False]
+2 failed, 893 passed, 12 warnings in 110.65s (0:01:50)

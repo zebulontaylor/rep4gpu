@@ -1,0 +1,106 @@
+{
+  "elements": 14336,
+  "total_bytes": 125101744,
+  "max_abs_error": 7.29696087775622e-07,
+  "methodology": "Manual expansion of current numerical_program(silu), with identical scalar operations, constraints, exact floor and fixture. Total bytes and output error asserted against production benchmark. Global payloads include tags; input x sharing and final output opening excluded.",
+  "source_sha256": {
+    "benchmarks/silu_accounting.py": "23482f14708c4b03903d4a0ef9e284945d0af0b052e8d14d5c5bc01a33560b56",
+    "rep4gpu/numerical.py": "f3c1829237182b413480e61b3114d90630b8a606b528d42637e0050fa2962d5a",
+    "rep4gpu/witness_activations.py": "ceaf71a243291739706e114d2b00c2a9f3f502aece66f2d8851c39cfdf3af7d7",
+    "rep4gpu/carry_tree_swar.py": "5c813aaf3a2a95e7a5a4d95cd2ce07db350daa1d962d909086d959bf73542d2f",
+    "rep4gpu/compact_conversion_gpu.py": "98986a38547612efd6c279d23e8ca85a5a8acaf3b933adcfc5165877d0b10663",
+    "rep4gpu/exact_truncation.py": "346d94088c90cac0f229dc79956309a37089117510a085cb868d75301883f245"
+  },
+  "stages": {
+    "witness_input": {
+      "bytes": 229504,
+      "bytes_per_coordinate": 16.008928571428573,
+      "ring64_word_equivalents_per_coordinate": 2.0011160714285716
+    },
+    "witness_range_and_clamp": {
+      "bytes": 7987328,
+      "bytes_per_coordinate": 557.1517857142857,
+      "ring64_word_equivalents_per_coordinate": 69.64397321428571
+    },
+    "input_range_and_clamp": {
+      "bytes": 11636032,
+      "bytes_per_coordinate": 811.6651785714286,
+      "ring64_word_equivalents_per_coordinate": 101.45814732142857
+    },
+    "absolute_sign_and_select": {
+      "bytes": 2832960,
+      "bytes_per_coordinate": 197.61160714285714,
+      "ring64_word_equivalents_per_coordinate": 24.701450892857142
+    },
+    "exp_reduce_shift4": {
+      "bytes": 3736384,
+      "bytes_per_coordinate": 260.6294642857143,
+      "ring64_word_equivalents_per_coordinate": 32.578683035714285
+    },
+    "exp_horner_degree10": {
+      "bytes": 49579840,
+      "bytes_per_coordinate": 3458.4151785714284,
+      "ring64_word_equivalents_per_coordinate": 432.30189732142856
+    },
+    "exp_square_1": {
+      "bytes": 5026816,
+      "bytes_per_coordinate": 350.64285714285717,
+      "ring64_word_equivalents_per_coordinate": 43.830357142857146
+    },
+    "exp_square_2": {
+      "bytes": 5026816,
+      "bytes_per_coordinate": 350.64285714285717,
+      "ring64_word_equivalents_per_coordinate": 43.830357142857146
+    },
+    "exp_square_3": {
+      "bytes": 5026816,
+      "bytes_per_coordinate": 350.64285714285717,
+      "ring64_word_equivalents_per_coordinate": 43.830357142857146
+    },
+    "exp_square_4": {
+      "bytes": 5026816,
+      "bytes_per_coordinate": 350.64285714285717,
+      "ring64_word_equivalents_per_coordinate": 43.830357142857146
+    },
+    "denominator_range_and_clamp": {
+      "bytes": 11636032,
+      "bytes_per_coordinate": 811.6651785714286,
+      "ring64_word_equivalents_per_coordinate": 101.45814732142857
+    },
+    "reciprocal_raw_product": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "reciprocal_lower_check": {
+      "bytes": 2961984,
+      "bytes_per_coordinate": 206.61160714285714,
+      "ring64_word_equivalents_per_coordinate": 25.826450892857142
+    },
+    "reciprocal_upper_check": {
+      "bytes": 2961984,
+      "bytes_per_coordinate": 206.61160714285714,
+      "ring64_word_equivalents_per_coordinate": 25.826450892857142
+    },
+    "negative_sigmoid_product_floor": {
+      "bytes": 5026816,
+      "bytes_per_coordinate": 350.64285714285717,
+      "ring64_word_equivalents_per_coordinate": 43.830357142857146
+    },
+    "sigmoid_sign_select": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "final_x_sigmoid_product_floor": {
+      "bytes": 5026816,
+      "bytes_per_coordinate": 350.64285714285717,
+      "ring64_word_equivalents_per_coordinate": 43.830357142857146
+    },
+    "aggregate_acceptance": {
+      "bytes": 2160,
+      "bytes_per_coordinate": 0.15066964285714285,
+      "ring64_word_equivalents_per_coordinate": 0.018833705357142856
+    }
+  }
+}

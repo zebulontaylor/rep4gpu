@@ -1,0 +1,167 @@
+{
+  "source_sha256": {
+    "native/matrix_vope/spake2_eq.h": "cb6b38beef13f936d6bfa19e62a5a87d8acb8013afbe771ff8081b9987236c05",
+    "native/matrix_vope/spake2_eq.cpp": "7afd92bbaa0ab70c1f8b8517c815ffa2f02e3ccd769fdbb346d4a4870e656035",
+    "native/matrix_vope/spake2_rfc9382_vectors.h": "2116e64ca438021a3d315f3d0a29161ac63473bbe1eb03d0cbd6dda2bb544a08",
+    "native/matrix_vope/test_spake2_eq.cpp": "d65432ee97d2473f55eb71b61de1361df6f38d447424f1f03ae107ae3c6609b0",
+    "native/matrix_vope/spake2_eq_production_smoke.cpp": "bd1b68fa281a8e73b52458452bad85ee866a67f49bbc1fc6b3a86c34e5989a02",
+    "native/matrix_vope/run_spake2_eq_checks.py": "0b3244dbe502aea39adb303b0049810be80f41d58c9effa73210de1bd2bec2ab"
+  },
+  "checks": [
+    {
+      "name": "build_normal",
+      "command": [
+        "taskset",
+        "-c",
+        "6,7,14,15",
+        "clang++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pthread",
+        "-O2",
+        "-DSIV_SPAKE2_EQ_TESTING",
+        "/home/zeb/Desktop/SIV/native/matrix_vope/spake2_eq.cpp",
+        "/home/zeb/Desktop/SIV/native/matrix_vope/test_spake2_eq.cpp",
+        "-lcrypto",
+        "-o",
+        "/home/zeb/Desktop/SIV/work/matrix_vope/spake2_eq/test_spake2_eq_normal"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "work/matrix_vope/spake2_eq/build_normal.log"
+    },
+    {
+      "name": "test_normal",
+      "command": [
+        "taskset",
+        "-c",
+        "6,7,14,15",
+        "/home/zeb/Desktop/SIV/work/matrix_vope/spake2_eq/test_spake2_eq_normal",
+        "--test-mode"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "work/matrix_vope/spake2_eq/test_normal.log"
+    },
+    {
+      "name": "refuse_implicit_normal",
+      "command": [
+        "/home/zeb/Desktop/SIV/work/matrix_vope/spake2_eq/test_spake2_eq_normal"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "log": "work/matrix_vope/spake2_eq/refuse_implicit_normal.log"
+    },
+    {
+      "name": "build_ubsan",
+      "command": [
+        "taskset",
+        "-c",
+        "6,7,14,15",
+        "clang++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pthread",
+        "-O1",
+        "-g",
+        "-fsanitize=undefined",
+        "-fno-sanitize-recover=all",
+        "-DSIV_SPAKE2_EQ_TESTING",
+        "/home/zeb/Desktop/SIV/native/matrix_vope/spake2_eq.cpp",
+        "/home/zeb/Desktop/SIV/native/matrix_vope/test_spake2_eq.cpp",
+        "-lcrypto",
+        "-o",
+        "/home/zeb/Desktop/SIV/work/matrix_vope/spake2_eq/test_spake2_eq_ubsan"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "work/matrix_vope/spake2_eq/build_ubsan.log"
+    },
+    {
+      "name": "test_ubsan",
+      "command": [
+        "taskset",
+        "-c",
+        "6,7,14,15",
+        "/home/zeb/Desktop/SIV/work/matrix_vope/spake2_eq/test_spake2_eq_ubsan",
+        "--test-mode"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "work/matrix_vope/spake2_eq/test_ubsan.log"
+    },
+    {
+      "name": "refuse_implicit_ubsan",
+      "command": [
+        "/home/zeb/Desktop/SIV/work/matrix_vope/spake2_eq/test_spake2_eq_ubsan"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "log": "work/matrix_vope/spake2_eq/refuse_implicit_ubsan.log"
+    },
+    {
+      "name": "build_production",
+      "command": [
+        "taskset",
+        "-c",
+        "6,7,14,15",
+        "clang++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pthread",
+        "-O2",
+        "/home/zeb/Desktop/SIV/native/matrix_vope/spake2_eq.cpp",
+        "/home/zeb/Desktop/SIV/native/matrix_vope/spake2_eq_production_smoke.cpp",
+        "-lcrypto",
+        "-o",
+        "/home/zeb/Desktop/SIV/work/matrix_vope/spake2_eq/spake2_eq_production_smoke"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "work/matrix_vope/spake2_eq/build_production.log"
+    },
+    {
+      "name": "production_env_1",
+      "command": [
+        "taskset",
+        "-c",
+        "6,7,14,15",
+        "/home/zeb/Desktop/SIV/work/matrix_vope/spake2_eq/spake2_eq_production_smoke"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "work/matrix_vope/spake2_eq/production_env_1.log"
+    },
+    {
+      "name": "production_env_0",
+      "command": [
+        "taskset",
+        "-c",
+        "6,7,14,15",
+        "/home/zeb/Desktop/SIV/work/matrix_vope/spake2_eq/spake2_eq_production_smoke"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "work/matrix_vope/spake2_eq/production_env_0.log"
+    },
+    {
+      "name": "production_env_empty",
+      "command": [
+        "taskset",
+        "-c",
+        "6,7,14,15",
+        "/home/zeb/Desktop/SIV/work/matrix_vope/spake2_eq/spake2_eq_production_smoke"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "work/matrix_vope/spake2_eq/production_env_empty.log"
+    }
+  ],
+  "exit_code": 0
+}

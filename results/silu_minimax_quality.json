@@ -1,0 +1,335 @@
+{
+  "fractional_bits": 24,
+  "target_max_abs_error": 6.41e-07,
+  "methodology": "True high-precision Remez exchange on [-1,0], followed by nearest Q24 coefficient encoding. Argument reduction and Horner products use exact floor. Variants change only the four squaring roundings. Output witness is nearest-even integer to the verified Q48 numerator divided by S+E. Grid and random tests are samples; exhaustive, when present, covers all Q24 input encodings in [-16,16]. Float64 references are numerical checks, not a formal real-arithmetic error proof.",
+  "range_proof": "C0=S >= C1 >= ... >= Cn >=0. For -S<=T<=0, each floor Horner stage remains in [Ck-C(k+1),Ck], hence final H in[0,S]. Both floor and nearest-square rescaling preserve[0,S]. All raw Horner products have absolute value<=S*S, and square numerators<=S*S+S/2<2**62; denominator lies in[S,2S].",
+  "source_sha256": {
+    "/home/zeb/Desktop/SIV/benchmarks/silu_minimax_quality.py": "3dbca3264a0dea8c5fe93b83e4f310e47e57f8d6f395a05bbc42ad9d3f626def"
+  },
+  "fits": [
+    {
+      "degree": 6,
+      "iterations": 6,
+      "real_coefficients": [
+        "0.999999985180034643474779315968790971759067158311729640538162",
+        "0.999998520971016134066995907320477375833095027443123922460744",
+        "0.499975872688817793919919958499759921907746331592590718816475",
+        "0.166518494510655453972269610645955294825934146850239594561447",
+        "0.0412297249475145318361201370250434774516411344867370181639797",
+        "0.00766001339840198240238012498521745480773723994636784933351542",
+        "0.00085090205511427933157068565072565003505576256871218280676406"
+      ],
+      "encoded_coefficients": [
+        16777216,
+        16777191,
+        8388203,
+        2793717,
+        691720,
+        128514,
+        14276
+      ],
+      "alternation_points": [
+        "-1.0",
+        "-0.949653104070959792017383769827655370425239134463146814124727",
+        "-0.80903728746760539172420593452740655225305191178167849908378",
+        "-0.60703162587758657913474634518265864217209607437821483159079",
+        "-0.384490098188766579015808287500277913174095275614768176851686",
+        "-0.185510385751996328440545596470710834686879539285157799123594",
+        "-0.0486677300426908487780442861496311036678642366972300759432788",
+        "0.0"
+      ],
+      "alternation_errors": [
+        "-0.0000000148199653565252206840312090282409328416882703594618380355742",
+        "0.0000000148199653565252206840312090282409328416882703594618380355742",
+        "-0.0000000148199653565252206840312090282409328416882703594618380355742",
+        "0.0000000148199653565252206840312090282409328416882703594618380355742",
+        "-0.0000000148199653565252206840312090282409328416882703594618380355742",
+        "0.0000000148199653565252206840312090282409328416882703594618380355742",
+        "-0.0000000148199653565252206840312090282409328416882703594618380355742",
+        "0.0000000148199653565252206840312090282409328416882703594618380355742"
+      ],
+      "real_minimax_max_abs_error": 1.481996535652522e-08
+    },
+    {
+      "degree": 7,
+      "iterations": 6,
+      "real_coefficients": [
+        "0.999999999537372034965172502834843455550816104290189670228718",
+        "0.999999939940241531008777921539757716086131628563140925493024",
+        "0.499998719893954239566887341157895503718779012146363909493999",
+        "0.166656249298781736871137607210844622103956031367858503826866",
+        "0.0416248466869027681788680140528068176976798531732928076101943",
+        "0.00824137075998998729500830389910368315123579580220346631733985",
+        "0.00127482661284280438111951415989097272014743794143687398729029",
+        "0.000121392023244235356427266559426405349471716496122860946416927"
+      ],
+      "encoded_coefficients": [
+        16777216,
+        16777215,
+        8388587,
+        2796028,
+        698349,
+        138267,
+        21388,
+        2037
+      ],
+      "alternation_points": [
+        "-1.0",
+        "-0.961437192066423616085255866927116368847569378475397481246473",
+        "-0.851833080565481129635955113588407248555649248946775390722822",
+        "-0.688393661967204736918122862178348139770444430816318685699981",
+        "-0.49653048378169752368181897466284522306125626695372500638557",
+        "-0.305683472679707510062544953291250749905590481775341407167537",
+        "-0.144697341928768517210742741990975720810432781882498356593456",
+        "-0.037546579562587923190466950967857082183718435665626979037285",
+        "0.0"
+      ],
+      "alternation_errors": [
+        "0.000000000462627965034827497165156544449183895709810329771281529561626",
+        "-0.000000000462627965034827497165156544449183895709810329771281529561626",
+        "0.000000000462627965034827497165156544449183895709810329771281529561626",
+        "-0.000000000462627965034827497165156544449183895709810329771281529561626",
+        "0.000000000462627965034827497165156544449183895709810329771281529561626",
+        "-0.000000000462627965034827497165156544449183895709810329771281529561626",
+        "0.000000000462627965034827497165156544449183895709810329771281529561627",
+        "-0.000000000462627965034827497165156544449183895709810329771281529561627",
+        "0.000000000462627965034827497165156544449183895709810329771281529561626"
+      ],
+      "real_minimax_max_abs_error": 4.626279650348275e-10
+    }
+  ],
+  "candidates": [
+    {
+      "degree": 6,
+      "squaring_rounding": "floor",
+      "grid_results": {
+        "4": {
+          "elements": 65537,
+          "max_abs_error": 5.407012642622e-07,
+          "max_error_at": -2.4840087890625,
+          "rmse": 2.1762060681515138e-07,
+          "min_exp_encoded": 307284,
+          "max_exp_encoded": 16777216,
+          "passes_target": true
+        },
+        "16": {
+          "elements": 65537,
+          "max_abs_error": 9.468100337110395e-07,
+          "max_error_at": -15.9423828125,
+          "rmse": 3.4072819551353995e-07,
+          "min_exp_encoded": 1,
+          "max_exp_encoded": 16777216,
+          "passes_target": false
+        }
+      },
+      "random_results": {
+        "elements": 1000000,
+        "max_abs_error": 9.470078428378527e-07,
+        "max_error_at": -15.942271769046783,
+        "rmse": 3.541683930893069e-07,
+        "min_exp_encoded": 1,
+        "max_exp_encoded": 16777168,
+        "passes_target": false
+      }
+    },
+    {
+      "degree": 6,
+      "squaring_rounding": "nearest_last",
+      "grid_results": {
+        "4": {
+          "elements": 65537,
+          "max_abs_error": 4.6905406669850436e-07,
+          "max_error_at": 2.4466552734375,
+          "rmse": 1.6690679694108492e-07,
+          "min_exp_encoded": 307285,
+          "max_exp_encoded": 16777216,
+          "passes_target": true
+        },
+        "16": {
+          "elements": 65537,
+          "max_abs_error": 4.946124750059414e-07,
+          "max_error_at": -15.71923828125,
+          "rmse": 1.788890864410049e-07,
+          "min_exp_encoded": 2,
+          "max_exp_encoded": 16777216,
+          "passes_target": true
+        }
+      },
+      "random_results": {
+        "elements": 1000000,
+        "max_abs_error": 6.37771772282747e-07,
+        "max_error_at": 2.075581669807434,
+        "rmse": 1.9800736502215466e-07,
+        "min_exp_encoded": 2,
+        "max_exp_encoded": 16777168,
+        "passes_target": true
+      }
+    },
+    {
+      "degree": 6,
+      "squaring_rounding": "nearest_all",
+      "grid_results": {
+        "4": {
+          "elements": 65537,
+          "max_abs_error": 3.4184100589085276e-07,
+          "max_error_at": -2.451171875,
+          "rmse": 8.69409605797032e-08,
+          "min_exp_encoded": 307285,
+          "max_exp_encoded": 16777216,
+          "passes_target": true
+        },
+        "16": {
+          "elements": 65537,
+          "max_abs_error": 4.946124750059414e-07,
+          "max_error_at": -15.71923828125,
+          "rmse": 1.626280040027543e-07,
+          "min_exp_encoded": 2,
+          "max_exp_encoded": 16777216,
+          "passes_target": true
+        }
+      },
+      "random_results": {
+        "elements": 1000000,
+        "max_abs_error": 5.052088081214379e-07,
+        "max_error_at": 2.2025481462478638,
+        "rmse": 1.7181257305729653e-07,
+        "min_exp_encoded": 2,
+        "max_exp_encoded": 16777168,
+        "passes_target": true
+      }
+    },
+    {
+      "degree": 7,
+      "squaring_rounding": "floor",
+      "grid_results": {
+        "4": {
+          "elements": 65537,
+          "max_abs_error": 5.407012642622e-07,
+          "max_error_at": -2.4840087890625,
+          "rmse": 2.451842797170152e-07,
+          "min_exp_encoded": 307284,
+          "max_exp_encoded": 16777216,
+          "passes_target": true
+        },
+        "16": {
+          "elements": 65537,
+          "max_abs_error": 9.468100337110395e-07,
+          "max_error_at": -15.9423828125,
+          "rmse": 3.4694393063272464e-07,
+          "min_exp_encoded": 1,
+          "max_exp_encoded": 16777216,
+          "passes_target": false
+        }
+      },
+      "random_results": {
+        "elements": 1000000,
+        "max_abs_error": 9.470078428378527e-07,
+        "max_error_at": -15.942271769046783,
+        "rmse": 3.621597216730892e-07,
+        "min_exp_encoded": 1,
+        "max_exp_encoded": 16777168,
+        "passes_target": false
+      }
+    },
+    {
+      "degree": 7,
+      "squaring_rounding": "nearest_last",
+      "grid_results": {
+        "4": {
+          "elements": 65537,
+          "max_abs_error": 5.210978004932532e-07,
+          "max_error_at": -2.0657958984375,
+          "rmse": 1.9703992505093242e-07,
+          "min_exp_encoded": 307285,
+          "max_exp_encoded": 16777216,
+          "passes_target": true
+        },
+        "16": {
+          "elements": 65537,
+          "max_abs_error": 4.946124750059414e-07,
+          "max_error_at": -15.71923828125,
+          "rmse": 1.8714702619158905e-07,
+          "min_exp_encoded": 2,
+          "max_exp_encoded": 16777216,
+          "passes_target": true
+        }
+      },
+      "random_results": {
+        "elements": 1000000,
+        "max_abs_error": 6.880262499175949e-07,
+        "max_error_at": -1.528450071811676,
+        "rmse": 2.0924904791173272e-07,
+        "min_exp_encoded": 2,
+        "max_exp_encoded": 16777168,
+        "passes_target": false
+      }
+    },
+    {
+      "degree": 7,
+      "squaring_rounding": "nearest_all",
+      "grid_results": {
+        "4": {
+          "elements": 65537,
+          "max_abs_error": 3.7112106654468846e-07,
+          "max_error_at": -1.4913330078125,
+          "rmse": 1.0582622753788346e-07,
+          "min_exp_encoded": 307285,
+          "max_exp_encoded": 16777216,
+          "passes_target": true
+        },
+        "16": {
+          "elements": 65537,
+          "max_abs_error": 4.946124750059414e-07,
+          "max_error_at": -15.71923828125,
+          "rmse": 1.6552002258251275e-07,
+          "min_exp_encoded": 2,
+          "max_exp_encoded": 16777216,
+          "passes_target": true
+        }
+      },
+      "random_results": {
+        "elements": 1000000,
+        "max_abs_error": 5.397185572908469e-07,
+        "max_error_at": -1.809114694595337,
+        "rmse": 1.7886423542789517e-07,
+        "min_exp_encoded": 2,
+        "max_exp_encoded": 16777168,
+        "passes_target": true
+      }
+    }
+  ],
+  "selected_exhaustive": {
+    "distinct_input_encodings": 536870913,
+    "max_abs_error": 5.589604386568858e-07,
+    "branch_max_abs_errors": [
+      5.589604386568858e-07,
+      5.589604386013747e-07
+    ],
+    "max_error_at": [
+      -1.797920286655426,
+      1.797920286655426
+    ],
+    "max_error_encoded_at": [
+      -30164097,
+      30164097
+    ],
+    "min_exp_encoded": 2,
+    "max_exp_encoded": 16777216,
+    "accepted_tie_choice_error_upper_bound": 6.185650834322765e-07,
+    "passes_target": true,
+    "elapsed_seconds": 14.57187776399951
+  },
+  "selected_candidate": {
+    "degree": 6,
+    "squaring_rounding": "nearest_all",
+    "encoded_coefficients": [
+      16777216,
+      16777191,
+      8388203,
+      2793717,
+      691720,
+      128514,
+      14276
+    ]
+  }
+}

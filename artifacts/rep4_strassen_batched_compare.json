@@ -1,0 +1,57 @@
+{
+  "kind": "single ring matrix product component benchmark",
+  "online_boundary": "all dynamic input sums, exact leaf products, output joins, allocations and final graph completion; static weight preparation excluded",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "results": [
+    {
+      "shape": [
+        128,
+        2048,
+        8192
+      ],
+      "baseline_single_ring_product_ms": 0.9209457735220591,
+      "baseline_static_weight_bytes": 67108864,
+      "variants": [
+        {
+          "levels": 1,
+          "graph_ms": 0.8492721635468152,
+          "retained_static_weight_bytes": 117440512,
+          "exact_full_output_match": true,
+          "baseline_ratio": 0.9221739085666947
+        },
+        {
+          "levels": 2,
+          "graph_ms": 1.0949008672133735,
+          "retained_static_weight_bytes": 205520896,
+          "exact_full_output_match": true,
+          "baseline_ratio": 1.1888874445083142
+        }
+      ]
+    },
+    {
+      "shape": [
+        128,
+        8192,
+        2048
+      ],
+      "baseline_single_ring_product_ms": 0.9507839989203674,
+      "baseline_static_weight_bytes": 67108864,
+      "variants": [
+        {
+          "levels": 1,
+          "graph_ms": 0.9368074904096887,
+          "retained_static_weight_bytes": 117440512,
+          "exact_full_output_match": true,
+          "baseline_ratio": 0.9853000171158232
+        },
+        {
+          "levels": 2,
+          "graph_ms": 1.1931875679228041,
+          "retained_static_weight_bytes": 205520896,
+          "exact_full_output_match": true,
+          "baseline_ratio": 1.2549512499975708
+        }
+      ]
+    }
+  ]
+}

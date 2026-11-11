@@ -1,0 +1,124 @@
+{
+  "decision": "rejected: slower than ring_matmul_tuned",
+  "method": "Four int32 diagonal accumulators across K, uint32 limb extraction, final modular reconstruction",
+  "validation": "All measured outputs matched the existing tuned ring32 product",
+  "shape": [
+    128,
+    2048,
+    8192
+  ],
+  "baseline_ms": 0.920788,
+  "variants": [
+    {
+      "tile": [
+        16,
+        64,
+        64
+      ],
+      "warps": 4,
+      "ms": 1.419554
+    },
+    {
+      "tile": [
+        32,
+        64,
+        64
+      ],
+      "warps": 4,
+      "ms": 1.17434
+    },
+    {
+      "tile": [
+        32,
+        128,
+        64
+      ],
+      "warps": 4,
+      "ms": 1.152924
+    },
+    {
+      "tile": [
+        32,
+        64,
+        128
+      ],
+      "warps": 4,
+      "ms": 1.302862
+    },
+    {
+      "tile": [
+        32,
+        128,
+        128
+      ],
+      "warps": 4,
+      "ms": 1.679885
+    },
+    {
+      "tile": [
+        16,
+        128,
+        64
+      ],
+      "warps": 4,
+      "ms": 1.107392
+    },
+    {
+      "tile": [
+        64,
+        64,
+        64
+      ],
+      "warps": 4,
+      "ms": 0.998556
+    },
+    {
+      "tile": [
+        32,
+        128,
+        64
+      ],
+      "warps": 8,
+      "ms": 1.251105
+    }
+  ],
+  "measurement": "triton.testing.do_bench; single RTX 4060 Laptop GPU; other GPU experiments excluded during measurement",
+  "other_attempts": {
+    "cublas_full_k": {
+      "decision": "rejected: slower even with prepacked column-major int8 limbs and CUDA graph capture",
+      "shapes": [
+        [
+          128,
+          2048,
+          8192
+        ],
+        [
+          128,
+          8192,
+          2048
+        ]
+      ],
+      "baseline_graph_ms": [
+        0.887463,
+        0.993051
+      ],
+      "cublas_graph_ms": [
+        1.365166,
+        1.183628
+      ],
+      "validation": "Both full outputs matched tuned ring32 product"
+    },
+    "uint32_opaque_mma_barrier": {
+      "decision": "rejected: no paired shape improvement under CUDA graph capture",
+      "baseline_graph_ms": [
+        0.887463,
+        0.993051
+      ],
+      "candidate_graph_ms": [
+        0.884443,
+        1.079843
+      ],
+      "validation": "Both full outputs matched tuned ring32 product"
+    }
+  }
+}

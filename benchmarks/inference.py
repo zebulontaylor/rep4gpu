@@ -131,27 +131,27 @@ def timed(fn, device, repeats=10):
     return statistics.median(values)
 
 
-def baselines(values, device, repeats):
+def baselines(values, device, repeats, *, forward=plain):
     results, errors = {}, {}
-    reference = plain(values)
+    reference = forward(values)
     for name, dtype in [('fp32', torch.float32), ('fp16', torch.float16)]:
         if name == 'fp16' and torch.device(device).type == 'cpu':
             continue
         inputs = [v.to(device=device, dtype=dtype) for v in values]
-        actual = plain(inputs).cpu().float()
+        actual = forward(inputs).cpu().float()
         errors[name] = dict(max_logit_error=float((actual-reference).abs().max()),
                             max_logprob_error=float((actual.log_softmax(-1)-reference.log_softmax(-1)).abs().max()))
-        results[name + '_eager_ms'] = timed(lambda: plain(inputs), device, max(20, repeats))
+        results[name + '_eager_ms'] = timed(lambda: forward(inputs), device, max(20, repeats))
         if torch.device(device).type == 'cuda':
             graph = torch.cuda.CUDAGraph()
             stream = torch.cuda.Stream()
             stream.wait_stream(torch.cuda.current_stream())
             with torch.cuda.stream(stream):
                 for _ in range(3):
-                    plain(inputs)
+                    forward(inputs)
             torch.cuda.current_stream().wait_stream(stream)
             with torch.cuda.graph(graph):
-                output = plain(inputs)
+                output = forward(inputs)
             # Amortize Python replay overhead, then use GPU events for device time.
             begin, end = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
             begin.record()
@@ -161,8 +161,9 @@ def baselines(values, device, repeats):
             end.synchronize()
             results[name + '_graph_ms'] = begin.elapsed_time(end) / 100
             results[name + '_graph_wall_ms'] = timed(graph.replay, device, max(20, repeats))
-    arrays = [v.numpy() for v in values]
-    results['numpy_cpu_ms'] = timed(lambda: np.maximum(arrays[0] @ arrays[1] + arrays[2], 0) @ arrays[3] + arrays[4], 'cpu', max(20, repeats))
+    if forward is plain:
+        arrays = [v.numpy() for v in values]
+        results['numpy_cpu_ms'] = timed(lambda: np.maximum(arrays[0] @ arrays[1] + arrays[2], 0) @ arrays[3] + arrays[4], 'cpu', max(20, repeats))
     return results, errors
 
 

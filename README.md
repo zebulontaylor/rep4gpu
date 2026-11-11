@@ -5,12 +5,20 @@ replicated sharing. It provides exact 32-bit and 64-bit ring matmuls, fixed-poin
 arithmetic, ReLU, and polynomial GELU/SiLU approximations. Inputs, weights, and
 intermediate activations remain shared until an explicit output opening.
 
-The [performance and validation report](RESULTS.md) records 31.8× FP16 decode
-and 85.1× FP16 prefill estimates with bounded probabilistic Q14 rounding and
-zero-network GPU delivery. A checked matrix-vector product reaches 8.29× FP16.
+The [performance and validation report](RESULTS.md) records a private prefill
+estimate of 16.43 ms, or 46.39× FP16, using optional exact Strassen products
+and 1.75 times the compact weight storage. The best earlier decode estimate is
+3.007 ms, or 10.75× FP16. These use prepared inference graphs, bounded
+probabilistic Q14 rounding, and zero-network GPU delivery. Complete inference
+has not reached 10× FP16. A checked matrix-vector product reaches 8.29× FP16.
 Actual colocated timings are reported separately. The optional
 [CUDA cryptography variant](docs/device-protocol.md) generates masks and
 consistency digests on the GPU; physical GPUDirect networking is not implemented.
+
+[Activation experiments](RESULTS.md#sparse-products-and-activation-experiments)
+include optional private quadratics and a public-fixture helper simulation.
+No TEE is required or measured; the simulated helper path reconstructs
+activations and does not preserve Rep4 activation privacy.
 
 Rep4 tolerates one malicious party among four. Two colluding parties can
 reconstruct the secrets. This differs from the all-but-one privacy target in
@@ -117,6 +125,8 @@ local test transports. `make_seeds` is a trusted test fixture, not distributed
 seed provisioning. The [protocol mapping](docs/protocol.md) describes component
 ownership, masked messages, and checks. The [activation guide](docs/activations.md)
 defines rounding and approximation behavior.
+The [witness activation guide](docs/witness-activations.md) describes checked
+prover intermediates, custom recomputation recipes, and communication comparisons.
 
 The [trained next-token example](examples/README.md) fits a small synthetic MLP,
 then checks private inference against both floating-point and integer outputs.

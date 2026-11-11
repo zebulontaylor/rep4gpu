@@ -3,6 +3,7 @@ import triton
 import triton.language as tl
 
 from .gpu_prg_batch import _block_words
+from .gpu_prg import _store_words
 
 
 @triton.jit
@@ -19,17 +20,11 @@ def _rows(K0, K1, K2, K3, K4, K5, NONCES, OUT, COUNT: tl.constexpr,
     block = tl.program_id(0).to(tl.uint64)*BLOCK + tl.arange(0, BLOCK).to(tl.uint64)
     if active:
         words = _block_words(key, nonce, block, BLOCK)
-        for i in tl.static_range(16 if BITS == 32 else 8):
-            idx = block*(16 if BITS == 32 else 8)+i
-            if BITS == 32:
-                value = words[i].to(tl.uint64)
-            else:
-                value = words[2*i].to(tl.uint64) | (words[2*i+1].to(tl.uint64) << 32)
-            tl.store(OUT+row*COUNT+idx, value.to(tl.int64), idx < COUNT)
+        _store_words(OUT+row*COUNT,block,words,COUNT,BITS)
     else:
-        for i in tl.static_range(16 if BITS == 32 else 8):
-            idx = block*(16 if BITS == 32 else 8)+i
-            tl.store(OUT+row*COUNT+idx, tl.full((BLOCK,), 0, tl.int64), idx < COUNT)
+        idx = block[:,None]*(16 if BITS == 32 else 8)+tl.arange(0,16 if BITS == 32 else 8)[None,:]
+        tl.store(OUT+row*COUNT+idx,tl.full(idx.shape,0,tl.int64),idx < COUNT)
+
 
 
 def generate_rows_into(keys, nonces, output, bits=64):

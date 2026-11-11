@@ -1,0 +1,619 @@
+{
+  "methodology": "Same four-party runtime before/after, ring64 Q24 exact floor. Global transmitted bytes include witness input, all constraints and acceptance opening; exclude already shared x and validation output opening. CUDA uses optimized DeviceInferenceParty, CPU uses reference Party. No distributed timing claim. Top-level operation profiles exclude nested operations; direct fused reductions may appear only in total. RMS mean-square rounding changes with fused reduction.",
+  "source_sha256": {
+    "results/witness_optimization_baseline_sources/numerical.py": "23e8be6663cc2096bbd3fa282cf22ae17309a1aca663857acaa9b6a5a289895e",
+    "results/witness_optimization_baseline_sources/witness_activations.py": "9622f7a6ea9e934c07647b8ec8ba22db6ecc45f4bf9c11f9ab0ff9b382b11903",
+    "results/witness_optimization_baseline_sources/witness_prover.py": "0aa6ff7ca4ba9574d54d3c177dd8be30a6845521d93ecec0cb73cd879b3a91b6",
+    "rep4gpu/numerical.py": "5078fe4e465b8e1aa56f24cc63735f06f6e2945b3bc781d42aeb358784f14060",
+    "rep4gpu/witness_activations.py": "2f51717341525d77785124fa1aa645b5c4c6c302ad3a380ac7921e630224a996",
+    "rep4gpu/witness_prover.py": "5a70ddcf3526f1aa7798e8775ff1081bbf3342acbee03842d96f0940bd4087f9",
+    "rep4gpu/runtime.py": "b85ea3df852260014891c2a6f6a7f95edb6280e2d19099a8ac6a056aeab94b00",
+    "rep4gpu/device_inference.py": "94e65b9c223f95263ad16f90b11831baba018ced25e9aae8b420248c1d44ac9f",
+    "rep4gpu/device_runtime.py": "0ab4b767103dfd462acd595856197645432753941805b8c179bbefdbf1bde324",
+    "rep4gpu/conversion.py": "7470d910faccfef53d68d3e7398b5c5bd89f706623f2c71c1e29b63e827ca342",
+    "rep4gpu/exact_truncation.py": "346d94088c90cac0f229dc79956309a37089117510a085cb868d75301883f245",
+    "/home/zeb/Desktop/SIV/benchmarks/witness_optimization.py": "664c6d77b787c154fa976e8055389b3c5c24366197c6ea19eaf26052fa7f227c"
+  },
+  "results": [
+    {
+      "version": "before",
+      "backend": "cpu",
+      "kind": "silu",
+      "shape": [
+        257
+      ],
+      "elements": 257,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 4240,
+      "execution_bytes": 39094192,
+      "total_bytes": 39098432,
+      "execution_rounds": 365,
+      "max_abs_error": 5.242374745834111e-07,
+      "rmse": 2.6399134501603617e-07,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 32890896,
+          "calls_per_party": 19
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 228144,
+          "calls_per_party": 1
+        },
+        "lt_public": {
+          "bytes": 5649264,
+          "calls_per_party": 9
+        },
+        "mul": {
+          "bytes": 325728,
+          "calls_per_party": 26
+        }
+      }
+    },
+    {
+      "version": "after",
+      "backend": "cpu",
+      "kind": "silu",
+      "shape": [
+        257
+      ],
+      "elements": 257,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 4240,
+      "execution_bytes": 32372608,
+      "total_bytes": 32376848,
+      "execution_rounds": 295,
+      "max_abs_error": 5.242374745834111e-07,
+      "rmse": 2.6399134501603617e-07,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 29506608,
+          "calls_per_party": 17
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 2502528,
+          "calls_per_party": 7
+        },
+        "mul": {
+          "bytes": 363312,
+          "calls_per_party": 29
+        }
+      }
+    },
+    {
+      "version": "before",
+      "backend": "cpu",
+      "kind": "gelu",
+      "shape": [
+        257
+      ],
+      "elements": 257,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 4240,
+      "execution_bytes": 55237312,
+      "total_bytes": 55241552,
+      "execution_rounds": 469,
+      "max_abs_error": 3.595203830475402e-07,
+      "rmse": 1.544424244688076e-07,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 48971376,
+          "calls_per_party": 28
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 228144,
+          "calls_per_party": 1
+        },
+        "lt_public": {
+          "bytes": 5649264,
+          "calls_per_party": 9
+        },
+        "mul": {
+          "bytes": 388368,
+          "calls_per_party": 31
+        }
+      }
+    },
+    {
+      "version": "after",
+      "backend": "cpu",
+      "kind": "gelu",
+      "shape": [
+        257
+      ],
+      "elements": 257,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 4240,
+      "execution_bytes": 48515728,
+      "total_bytes": 48519968,
+      "execution_rounds": 399,
+      "max_abs_error": 3.595203830475402e-07,
+      "rmse": 1.544424244688076e-07,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 45587088,
+          "calls_per_party": 26
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 2502528,
+          "calls_per_party": 7
+        },
+        "mul": {
+          "bytes": 425952,
+          "calls_per_party": 34
+        }
+      }
+    },
+    {
+      "version": "before",
+      "backend": "cpu",
+      "kind": "rmsnorm",
+      "shape": [
+        2,
+        256
+      ],
+      "elements": 512,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 160,
+      "execution_bytes": 9748944,
+      "total_bytes": 9749104,
+      "execution_rounds": 201,
+      "max_abs_error": 1.2800733939499764e-07,
+      "rmse": 5.374958425581098e-08,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 6773184,
+          "calls_per_party": 4
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "lt_public": {
+          "bytes": 2874224,
+          "calls_per_party": 11
+        },
+        "mul": {
+          "bytes": 101376,
+          "calls_per_party": 12
+        }
+      }
+    },
+    {
+      "version": "after",
+      "backend": "cpu",
+      "kind": "rmsnorm",
+      "shape": [
+        2,
+        256
+      ],
+      "elements": 512,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 160,
+      "execution_bytes": 4931856,
+      "total_bytes": 4932016,
+      "execution_rounds": 133,
+      "max_abs_error": 1.2800733939499764e-07,
+      "rmse": 5.374958425581098e-08,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 3419424,
+          "calls_per_party": 4
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 1383824,
+          "calls_per_party": 6
+        },
+        "mul": {
+          "bytes": 128160,
+          "calls_per_party": 20
+        }
+      }
+    },
+    {
+      "version": "before",
+      "backend": "cpu",
+      "kind": "softmax",
+      "shape": [
+        2,
+        256
+      ],
+      "elements": 512,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 320,
+      "execution_bytes": 69721872,
+      "total_bytes": 69722192,
+      "execution_rounds": 448,
+      "max_abs_error": 5.992501373071335e-08,
+      "rmse": 3.18171800318843e-08,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 62116992,
+          "calls_per_party": 18
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "lt_public": {
+          "bytes": 7107344,
+          "calls_per_party": 17
+        },
+        "mul": {
+          "bytes": 497376,
+          "calls_per_party": 27
+        }
+      }
+    },
+    {
+      "version": "after",
+      "backend": "cpu",
+      "kind": "softmax",
+      "shape": [
+        2,
+        256
+      ],
+      "elements": 512,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 320,
+      "execution_bytes": 59121456,
+      "total_bytes": 59121776,
+      "execution_rounds": 322,
+      "max_abs_error": 5.992501373071335e-08,
+      "rmse": 3.18171800318843e-08,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 55378944,
+          "calls_per_party": 16
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 3194000,
+          "calls_per_party": 10
+        },
+        "mul": {
+          "bytes": 548352,
+          "calls_per_party": 34
+        }
+      }
+    },
+    {
+      "version": "before",
+      "backend": "cuda",
+      "kind": "silu",
+      "shape": [
+        257
+      ],
+      "elements": 257,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 4240,
+      "execution_bytes": 3926864,
+      "total_bytes": 3931104,
+      "execution_rounds": 355,
+      "max_abs_error": 5.242374745834111e-07,
+      "rmse": 2.6399134501603617e-07,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 1955824,
+          "calls_per_party": 19
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 54864,
+          "calls_per_party": 1
+        },
+        "lt_public": {
+          "bytes": 1590288,
+          "calls_per_party": 9
+        },
+        "mul": {
+          "bytes": 325728,
+          "calls_per_party": 26
+        }
+      }
+    },
+    {
+      "version": "after",
+      "backend": "cuda",
+      "kind": "silu",
+      "shape": [
+        257
+      ],
+      "elements": 257,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 4240,
+      "execution_bytes": 2708688,
+      "total_bytes": 2712928,
+      "execution_rounds": 288,
+      "max_abs_error": 5.242374745834111e-07,
+      "rmse": 2.6399134501603617e-07,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 1748816,
+          "calls_per_party": 17
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 596400,
+          "calls_per_party": 7
+        },
+        "mul": {
+          "bytes": 363312,
+          "calls_per_party": 29
+        }
+      }
+    },
+    {
+      "version": "before",
+      "backend": "cuda",
+      "kind": "gelu",
+      "shape": [
+        257
+      ],
+      "elements": 257,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 4240,
+      "execution_bytes": 4909040,
+      "total_bytes": 4913280,
+      "execution_rounds": 459,
+      "max_abs_error": 3.595203830475402e-07,
+      "rmse": 1.544424244688076e-07,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 2875360,
+          "calls_per_party": 28
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 54864,
+          "calls_per_party": 1
+        },
+        "lt_public": {
+          "bytes": 1590288,
+          "calls_per_party": 9
+        },
+        "mul": {
+          "bytes": 388368,
+          "calls_per_party": 31
+        }
+      }
+    },
+    {
+      "version": "after",
+      "backend": "cuda",
+      "kind": "gelu",
+      "shape": [
+        257
+      ],
+      "elements": 257,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 4240,
+      "execution_bytes": 3690864,
+      "total_bytes": 3695104,
+      "execution_rounds": 392,
+      "max_abs_error": 3.595203830475402e-07,
+      "rmse": 1.544424244688076e-07,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 2668352,
+          "calls_per_party": 26
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 596400,
+          "calls_per_party": 7
+        },
+        "mul": {
+          "bytes": 425952,
+          "calls_per_party": 34
+        }
+      }
+    },
+    {
+      "version": "before",
+      "backend": "cuda",
+      "kind": "rmsnorm",
+      "shape": [
+        2,
+        256
+      ],
+      "elements": 512,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 160,
+      "execution_bytes": 1333392,
+      "total_bytes": 1333552,
+      "execution_rounds": 190,
+      "max_abs_error": 1.2800733939499764e-07,
+      "rmse": 5.374958425581098e-08,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 413536,
+          "calls_per_party": 4
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "lt_public": {
+          "bytes": 818320,
+          "calls_per_party": 11
+        },
+        "mul": {
+          "bytes": 101376,
+          "calls_per_party": 12
+        }
+      }
+    },
+    {
+      "version": "after",
+      "backend": "cuda",
+      "kind": "rmsnorm",
+      "shape": [
+        2,
+        256
+      ],
+      "elements": 512,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 160,
+      "execution_bytes": 672736,
+      "total_bytes": 672896,
+      "execution_rounds": 127,
+      "max_abs_error": 1.2800733939499764e-07,
+      "rmse": 5.374958425581098e-08,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 211984,
+          "calls_per_party": 4
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 332144,
+          "calls_per_party": 6
+        },
+        "mul": {
+          "bytes": 128160,
+          "calls_per_party": 20
+        }
+      }
+    },
+    {
+      "version": "before",
+      "backend": "cuda",
+      "kind": "softmax",
+      "shape": [
+        2,
+        256
+      ],
+      "elements": 512,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 320,
+      "execution_bytes": 6159152,
+      "total_bytes": 6159472,
+      "execution_rounds": 431,
+      "max_abs_error": 5.992501373071335e-08,
+      "rmse": 3.18171800318843e-08,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 3653376,
+          "calls_per_party": 18
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "lt_public": {
+          "bytes": 2008240,
+          "calls_per_party": 17
+        },
+        "mul": {
+          "bytes": 497376,
+          "calls_per_party": 27
+        }
+      }
+    },
+    {
+      "version": "after",
+      "backend": "cuda",
+      "kind": "softmax",
+      "shape": [
+        2,
+        256
+      ],
+      "elements": 512,
+      "fractional_bits": 24,
+      "rounding": "floor",
+      "witness_ingestion_bytes": 320,
+      "execution_bytes": 4555360,
+      "total_bytes": 4555680,
+      "execution_rounds": 312,
+      "max_abs_error": 5.992501373071335e-08,
+      "rmse": 3.18171800318843e-08,
+      "party_agreement": true,
+      "operation_profile": {
+        "trunc": {
+          "bytes": 3245056,
+          "calls_per_party": 16
+        },
+        "open": {
+          "bytes": 160,
+          "calls_per_party": 1
+        },
+        "sign_bit": {
+          "bytes": 761792,
+          "calls_per_party": 10
+        },
+        "mul": {
+          "bytes": 548352,
+          "calls_per_party": 34
+        }
+      }
+    }
+  ]
+}

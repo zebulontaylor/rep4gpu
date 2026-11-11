@@ -1,0 +1,1845 @@
+{
+  "provenance": {
+    "python": "3.10.13 (main, Oct  3 2025, 10:18:08) [GCC 14.2.1 20250110 (Red Hat 14.2.1-7)]",
+    "platform": "Linux-6.12.0-211.74.1.el10_2.x86_64-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.13.0",
+      "numpy": "2.2.6",
+      "triton": "3.7.1",
+      "threadpoolctl": "3.6.0",
+      "cryptography": "50.0.2"
+    },
+    "cuda_runtime": "13.0",
+    "source_sha256": {
+      "benchmarks/inference.py": "5585a84cf1e1fd4406b0070890e8a04a11c5f35128249c509aea30f9886d098e",
+      "rep4gpu/__init__.py": "2928ddf58a570311e6b6db4ebfc34876be8a8970050576e444bbeda7ba24281a",
+      "rep4gpu/activations.py": "0f8c9be8dfc66fb1c8df152450358d2b0c21aba3be26eac8edc3f9cc048d28df",
+      "rep4gpu/bounded_activation.py": "7d35094369d934c1efab829095460a1b2820f4377048f10802e13e080677bd6c",
+      "rep4gpu/carry_prefix_gpu.py": "ecaac9bb2307ead07774e212092a58f968aa2c997ff720ca1e2151e710a2aa1f",
+      "rep4gpu/carry_tree.py": "672a986a1218dbc75791a79c8d35bba3374cf051e787f6fd281c76fd16ec04d8",
+      "rep4gpu/carry_tree_gpu.py": "7c10f9e77f892c336839fcf5abfd4cf7f6c4d4545521025e3e218d7e27c2cbd6",
+      "rep4gpu/carry_tree_swar.py": "5585a0517d92ad49b2832f25596f5d8c0c82a1ae629e5d59c3d36586d2076975",
+      "rep4gpu/compact_conversion.py": "dbd14fa033678e1bfe3feb8627a6a5b1f0d14ba6ab82e108829098a1a3dd9351",
+      "rep4gpu/compact_conversion_gpu.py": "98986a38547612efd6c279d23e8ca85a5a8acaf3b933adcfc5165877d0b10663",
+      "rep4gpu/conversion.py": "7470d910faccfef53d68d3e7398b5c5bd89f706623f2c71c1e29b63e827ca342",
+      "rep4gpu/device_inference.py": "0946492d64168c25e176c30f9df560d56390d846b94397865aa089650c43c125",
+      "rep4gpu/device_open.py": "a939ac79e7a39bb37afc872ec96741533092ca92e6fe08836703dd78a02f5f26",
+      "rep4gpu/device_probabilistic.py": "8affd92eac12bf138b8254e1bd017a5beb56fdda9b3d61ae914fef5f0f527215",
+      "rep4gpu/device_runtime.py": "0ab4b767103dfd462acd595856197645432753941805b8c179bbefdbf1bde324",
+      "rep4gpu/device_transport.py": "765e6cfc7654f2d6721e2167ada0ec3907b3d8d4b282e848ce168e79a68389f2",
+      "rep4gpu/exact_truncation.py": "346d94088c90cac0f229dc79956309a37089117510a085cb868d75301883f245",
+      "rep4gpu/field_decode_auth.py": "42a53a9853c789e20c76fb0e2d4e35c8d1a7f5c21e8332c8686bef4df7e78d61",
+      "rep4gpu/field_fast.py": "69155af4d0ab80030d9a944c3dcd3229b2fd9c7395c92d664957afabceedb561",
+      "rep4gpu/field_fp127.py": "86088b3cbab4e51ed246968de74163620241de5ce6065027ebca55b95fd9c0c0",
+      "rep4gpu/field_fusion.py": "677f372b5c8af3a278894c8f945e559bdd3171b6ffa0db0adbe755b971a335ec",
+      "rep4gpu/field_hybrid_auth.py": "79c502ceb20eb6221a499b7c8dedaaee8a82c736b3c3fc65e0876cf549710279",
+      "rep4gpu/field_kernels.py": "6c59c01c751d4c577d955dab0b8f3ea2d8bae16cd434dc8c0e70817617d6473a",
+      "rep4gpu/field_prepared.py": "e95eaf7c05a2ba25b4a87d321c1c1bce2c73af908bf8b4c364f9429206f4e39a",
+      "rep4gpu/field_prepared_canonical.py": "66e957c4eb4f2ca6fd4e19a3aff3ddd178509a45500ef9f487fdeda7c7096ae7",
+      "rep4gpu/field_q256.py": "9e84db427b71dc4c903bbac6ad942c1de5abf6db5c590dd0eabda5442b6c908b",
+      "rep4gpu/field_q256_bytes.py": "e9e23db46a14afef5ba0586412ec9d6bd6e73bf4d1fa8917586d70d34b007da8",
+      "rep4gpu/field_q256_tensor.py": "ed3857eb37534ade5012b09eba7d01d329439a6bdd5aeed268079d77ac32153a",
+      "rep4gpu/field_weighted.py": "26b90cd6dcd14e1c440fd84fe85c274228a0d92aa161ec8e34331ea26cc5f207",
+      "rep4gpu/field_weighted_accumulate.py": "9bbd2279a55e6c958f40ca8f1cf0bf9b1ca2d8a31a7929448037a772d423bfd6",
+      "rep4gpu/five_product.py": "eb13039f6ee3ee7fe79f92080f16fde8cf431acab0336546d4b6dd86618e5fe4",
+      "rep4gpu/fused_runtime.py": "cdce82bb235b2d2cf152c682e7ef4341bdda105d477f8c5baf82b3efcb877b11",
+      "rep4gpu/gpu_hash.py": "d813fb632c499d89bd143f12b876e1afa6c0d782510c38db6f07ea7c453951df",
+      "rep4gpu/gpu_prg.py": "2964e96fa8a56eda9987c5dec6ef122be074378423db08f48bd12d29e46d2e6e",
+      "rep4gpu/gpu_prg_batch.py": "d737f8de21ca9fa008168b910a0cef5dbec392bf82c5911a693691becf873ffb",
+      "rep4gpu/gpu_prg_graph.py": "034d495909d4505a23037278e53596440913942d50c52a9f48b6b3c657f02ed0",
+      "rep4gpu/graph_runtime.py": "4da90c21cc2ad6eeb95ce8e1a9e6889ec62b885be67352ef3ddb216f0e3a047d",
+      "rep4gpu/inference.py": "6b610b72d538419fa949c9faf5ccba7ae1fd9de97fc994b81c2450df0a9b21c4",
+      "rep4gpu/kernels.py": "a59eb164231574d9d01afc5e5c3d22e0c43a344eeec710c905f6f290a6e45502",
+      "rep4gpu/lowgear_key_cache.py": "879fd01ffb122188bc06a715bbef010351a571ebfdc84bd40722577d09b9abe1",
+      "rep4gpu/matrix_native_ole.py": "b665f852de8df1a5fce733320c60d3e598169bcbf331ad0f458c3f54a16ef27c",
+      "rep4gpu/matrix_native_ole_service.py": "9c74db06f5c389aa3186f00caedf53839910e1853a62bc60e02741612f87a075",
+      "rep4gpu/matrix_pcg_linear.py": "fe7b32cda9846a2f639f34193cb85a914dd0dd42f5724a7f7bba51ff719b0d92",
+      "rep4gpu/matrix_spdz_reference.py": "504edf6f84a7f4c97c4ba27d66eca4a231b5e842ed60c2ac19727375324a18ce",
+      "rep4gpu/nn.py": "9cf7cdd5d706e121fd7720e635a5ec2f417e1cb4170afdc65bfd445345181575",
+      "rep4gpu/packed_kernels.py": "96cca224bee35dcc5db037884b9b80ee60b072a670616fa57a54d31e4efec86a",
+      "rep4gpu/phase_graph.py": "5e4389fbd373f80215d5940328151d964d6175f62d076d85477bb51162ee25e7",
+      "rep4gpu/preprocessing_lowgear.py": "ba376ca46fbcdf0b0b697fb463db5ffa8bdf625fee9493b4b1a5dca1cfa38b3b",
+      "rep4gpu/preprocessing_lowgear_goldilocks.py": "7113117d89f034b2dbecdebae0ffb6f1d6ae3023eadaca0611dbfa9e7d913384",
+      "rep4gpu/preprocessing_lowgear_goldilocks_loader.py": "d162c2dc8231a515c1e2a7876abac83969db1c646346207a00aab6261b737869",
+      "rep4gpu/preprocessing_lowgear_matrix.py": "0ec783ad16f681fea60b4cd3e4105a08b88d080333da6b3ec54e9492d58258f0",
+      "rep4gpu/preprocessing_lowgear_s40.py": "1bad11c5455762440a4cfbc3ba76feb2455153cca6b7f4aab88cd4682c11a843",
+      "rep4gpu/preprocessing_mama.py": "9fd9d5b413e1af47d9129abe94b282851a9457f8f192348be4cce6d850489ef9",
+      "rep4gpu/preprocessing_mascot.py": "538243854934357dfec8462b8786fe91602defe1cc1bc10f77eebf755367b022",
+      "rep4gpu/preprocessing_mascot_direct.py": "845dad525b01538fed5be61c72181376729d57446b264bc38b77ae152ef2197a",
+      "rep4gpu/preprocessing_mascot_prepared.py": "d87d2a685753c998c31bd71becb7ee906e7b90f3a4ed6dd46d5e22f8aba7549d",
+      "rep4gpu/prg.py": "be3963e28c244d818faa04cc9494f94545a436cd75531297fef97a395134606e",
+      "rep4gpu/probabilistic.py": "0fc6672e3fcf58f80aa68db05112e83ef05b7dbd0f0e917389f72a2e94bed566",
+      "rep4gpu/runtime.py": "b85ea3df852260014891c2a6f6a7f95edb6280e2d19099a8ac6a056aeab94b00",
+      "rep4gpu/setup.py": "52ee5986a701d99a34ee37bf89243cc73e74155776a19c69c77dab90e30b6521",
+      "rep4gpu/simt_kernels.py": "a58e0c534ee9850cb29ba5b8926816651580fa9abe788d0f1590aaf53944840b",
+      "rep4gpu/spdz.py": "735c29077aad7d76ce366dcdfc335df3698fc9393447e627f136a83d613de31f",
+      "rep4gpu/spdz_broadcast_metadata.py": "6bb1021e32a4f83162dfae99b2d6456cf77b9c828988c1ff2edc2c709696f224",
+      "rep4gpu/spdz_compression.py": "3199e9f43ccd73f225f92867b4746525c09b3409511f924d9d8b43d856e4d3e7",
+      "rep4gpu/spdz_deferred.py": "a023e17fa0dec843357900ea275746f51c9ebc4b0431afc6c5617703b43f423d",
+      "rep4gpu/spdz_device.py": "7b4482dd3991264049749f7266ca460ad7315d2432e2b63433842508f5f28ae7",
+      "rep4gpu/spdz_device_graph.py": "81d70e9cc48924038a2d7e74ed9ec7e2fe2640894334c81318eefcf2745b9103",
+      "rep4gpu/spdz_distributed.py": "2e0e2097da8699f740521071106bd3cd0f5b988e1b9a61615e6243145ce74759",
+      "rep4gpu/spdz_goldilocks_deferred.py": "5995b1ed230a9db31f113407d8dd27d4dd6574666b3dc1c04916eef28929a083",
+      "rep4gpu/spdz_goldilocks_stream.py": "043caf5f0cf3e385ac14024e8ab3d14855345e066fb7670a62395cd2e2ed9c8a",
+      "rep4gpu/spdz_hash_frames.py": "4de3c75a7a96b0604d34e5e492030ef5bcaf478e55f61cf8b50fa550cd6d7a91",
+      "rep4gpu/spdz_inputs.py": "2d8d497098b1eeacf1eada53cc276016536358f7cee5f7297518192c7152204a",
+      "rep4gpu/spdz_metadata.py": "d8c755e46fe08a4e7fc6290eedfec06edc85f7b47f1578c4e7978b0a38286016",
+      "rep4gpu/spdz_polynomial.py": "304cb10261cd672d31e6f28499c73ac8aed821f233a02524e71dbb9ebb720770",
+      "rep4gpu/spdz_prepared_right.py": "03726c83acafc439fd236c3928f7e9f980fd184bfb9d4e603b8f232d4d382aca",
+      "rep4gpu/spdz_prime256.py": "1cc43755d198b0de840865f574366f504631924c3f0037aaf0147e476f5c425c",
+      "rep4gpu/spdz_prime256_gpu.py": "cb76001d32efdb5a6ee3eb1b715cb719c9eda081c062b649439ad19da0c1c69d",
+      "rep4gpu/spdz_prime256_prepared.py": "b154bb3850ff9564cdd3890cade86d1c9626a1c5fb1058f38577ca8719feea48",
+      "rep4gpu/transport.py": "bffaa7d490d1e7ed2ee3fcc7ec696986d880e94f19d0d044e6c3434df9475c1f",
+      "rep4gpu/tuned_kernels.py": "eebde12d7e28567d4d87c1c824a420cd63d4eac4bf93c17645a837d55d7ca95d",
+      "rep4gpu/warp_mma_kernels.py": "246d9804b92628ed769afa230166bf617fb20d7849cc3575448cfbdc92532679",
+      "rep4gpu/weighted_kernels.py": "d5f612be5b74ad07cc50636e0e1bdfac0ead3589fb658c990253f5ef73628df9",
+      "benchmarks/activation_inference.py": "ed88abfe2a589f47a05e55c8aa999f02ed926b0d9229833e8656e4b0be0a503e",
+      "benchmarks/activation_common.py": "087be2f120c965def4926078993786a5aa3fe076c2d8ff04504894c63ab27228",
+      "benchmarks/device_inference.py": "04cc625acd6b70bda28f47f3899677b5801c0869abbf9a64123ac95ab2307c0f"
+    }
+  },
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "tee_executed": false,
+  "approximation_grids": [
+    {
+      "kind": "relu",
+      "plan": {
+        "kind": "relu",
+        "bound": 4.0,
+        "fractional_bits": 14,
+        "ring_bits": 32,
+        "prescale": 2,
+        "shift": 13,
+        "linear_coeff": 16384,
+        "constant_numerator": 33554432,
+        "input_bound": 65536,
+        "normalized_bound": 16384,
+        "numerator_abs_bound": 570425344
+      },
+      "coefficients": [
+        0.25,
+        0.5,
+        0.125
+      ],
+      "interval": [
+        -4,
+        4
+      ],
+      "samples": 20001,
+      "sampled_real_max_error": 0.25,
+      "sampled_floor_fixed_max_error": 0.25021249999999995,
+      "output_at_zero": 0.25,
+      "minimum_real_output": -0.25,
+      "error_kind": "sampled grid; not a model quality guarantee"
+    },
+    {
+      "kind": "gelu",
+      "plan": {
+        "kind": "gelu",
+        "bound": 4.0,
+        "fractional_bits": 14,
+        "ring_bits": 32,
+        "prescale": 2,
+        "shift": 13,
+        "linear_coeff": 16384,
+        "constant_numerator": 31162368,
+        "input_bound": 65536,
+        "normalized_bound": 16384,
+        "numerator_abs_bound": 568033280
+      },
+      "coefficients": [
+        0.232177734375,
+        0.5,
+        0.125
+      ],
+      "interval": [
+        -4,
+        4
+      ],
+      "samples": 20001,
+      "sampled_real_max_error": 0.23252047038654367,
+      "sampled_floor_fixed_max_error": 0.23278789321979731,
+      "output_at_zero": 0.232177734375,
+      "minimum_real_output": -0.267822265625,
+      "error_kind": "sampled grid; not a model quality guarantee"
+    },
+    {
+      "kind": "silu",
+      "plan": {
+        "kind": "silu",
+        "bound": 4.0,
+        "fractional_bits": 14,
+        "ring_bits": 32,
+        "prescale": 2,
+        "shift": 13,
+        "linear_coeff": 16384,
+        "constant_numerator": 13991936,
+        "input_bound": 65536,
+        "normalized_bound": 16384,
+        "numerator_abs_bound": 550862848
+      },
+      "coefficients": [
+        0.104248046875,
+        0.5,
+        0.125
+      ],
+      "interval": [
+        -4,
+        4
+      ],
+      "samples": 20001,
+      "sampled_real_max_error": 0.17619288672336625,
+      "sampled_floor_fixed_max_error": 0.1764265036746675,
+      "output_at_zero": 0.104248046875,
+      "minimum_real_output": -0.395751953125,
+      "error_kind": "sampled grid; not a model quality guarantee"
+    }
+  ],
+  "methodology": "Pure Rep4 with resident secret weights, fresh masks and checked output opening. GPU-delivered replay excludes network latency/bandwidth. Quadratic substitutes change the network function; each baseline and accuracy reference uses its original ReLU/GELU/SiLU activation. No language-model quality claim.",
+  "results": [
+    {
+      "maximum_accumulator": 318459092,
+      "first_accumulator_max_abs": 318459092,
+      "second_accumulator_max_abs": 156624782,
+      "quadratic_numerator_max_abs": 136800272,
+      "accumulator_fits_signed_ring": true,
+      "rounding_bounds_validated": true,
+      "maximum_output_rounding_interval_width": 18,
+      "range_validation": "public fixture only; not a private range check",
+      "quadratic_plan": {
+        "kind": "relu",
+        "bound": 4.0,
+        "fractional_bits": 14,
+        "ring_bits": 32,
+        "prescale": 2,
+        "shift": 13,
+        "linear_coeff": 16384,
+        "constant_numerator": 33554432,
+        "input_bound": 65536,
+        "normalized_bound": 16384,
+        "numerator_abs_bound": 570425344
+      },
+      "activation_coefficients": [
+        0.25,
+        0.5,
+        0.125
+      ],
+      "activation_is_approximation": true,
+      "strict_probabilistic_accumulator_limit": 1073741824,
+      "party_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "round_kinds": [
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device"
+      ],
+      "phase_kinds": [
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "local_only"
+      ],
+      "outgoing_bytes_per_party_per_phase": [
+        [
+          288,
+          160,
+          256,
+          160,
+          288,
+          160,
+          256,
+          160,
+          96,
+          64,
+          64,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          288,
+          160,
+          32,
+          160,
+          288,
+          160,
+          32,
+          160,
+          96,
+          64,
+          32,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          192,
+          0,
+          256,
+          160,
+          192,
+          0,
+          256,
+          160,
+          96,
+          0,
+          64,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          192,
+          0,
+          32,
+          160,
+          192,
+          0,
+          32,
+          160,
+          96,
+          0,
+          32,
+          64,
+          32,
+          32,
+          0
+        ]
+      ],
+      "incoming_bytes_per_party_per_phase": [
+        [
+          160,
+          0,
+          0,
+          160,
+          160,
+          0,
+          0,
+          160,
+          64,
+          0,
+          0,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          160,
+          0,
+          288,
+          160,
+          160,
+          0,
+          288,
+          160,
+          64,
+          0,
+          96,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          320,
+          160,
+          0,
+          160,
+          320,
+          160,
+          0,
+          160,
+          128,
+          64,
+          0,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          320,
+          160,
+          288,
+          160,
+          320,
+          160,
+          288,
+          160,
+          128,
+          64,
+          96,
+          64,
+          32,
+          32,
+          0
+        ]
+      ],
+      "phase_payload_convention": "phase i ends at exchange i; final phase follows the last exchange and has zero payload",
+      "live_transport": "colocated IdealNetwork role harness",
+      "physical_gpudirect": false,
+      "batch": 1,
+      "width": 8,
+      "hidden": 32,
+      "out": 8,
+      "device": "cuda:0",
+      "activation": "quadratic_relu",
+      "activation_bound": 4.0,
+      "baseline_activation": "relu",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "fractional_bits": 14,
+      "optimized": true,
+      "phase_graphs": true,
+      "bounded_sign": false,
+      "graph_check_at_send": true,
+      "sparse_products": true,
+      "local_matmul_backend": {
+        "route": "baseline direct decode"
+      },
+      "optimized_components": [
+        "batched CUDA ChaCha20 with coalesced stores",
+        "SWAR carry extraction",
+        "fused weighted B2A",
+        "SM89 compact-weight prefill tile dispatch with validated fallback",
+        "vectorized BLAKE3 loads",
+        "coalesced small-message BLAKE3",
+        "width-matched joint-input mask storage",
+        "GPU checked output opening",
+        "device probabilistic truncation",
+        "bounded quadratic with one secret square",
+        "four-joint products for complementary component supports",
+        "segmented CUDA inference graphs with fresh nonces",
+        "captured integrity verdict transfers to pinned host buffers",
+        "host integrity checks before every dependent send"
+      ],
+      "gpu_open": true,
+      "weight_storage_bytes_per_party": [
+        6144,
+        6144,
+        6144,
+        6144
+      ],
+      "weight_storage_bytes_all_parties": 24576,
+      "rounding": "probabilistic",
+      "truncation": "probabilistic floor/ceil",
+      "prepared_weights": true,
+      "weight_storage": "words32",
+      "prg": "CUDA ChaCha20 with SHA256 domain-key derivation",
+      "online_hash": "CUDA BLAKE3",
+      "input_hash": "inherited checked BLAKE2b byte protocol",
+      "output_hash": "CUDA BLAKE3 checked device protocol",
+      "reference_transcript_compatible": false,
+      "live_staging": "device",
+      "exact_integer_match": false,
+      "exact_recorded_replay_output_match": true,
+      "fresh_accuracy_samples": [
+        {
+          "max_logit_error": 0.1981671303510666,
+          "max_logprob_error": 0.1724158525466919,
+          "logit_rmse": 0.11411741375923157,
+          "top1_agreement": 0.0,
+          "mean_kl_from_reference": 0.006681392900645733
+        },
+        {
+          "max_logit_error": 0.1980450600385666,
+          "max_logprob_error": 0.17221391201019287,
+          "logit_rmse": 0.11403684318065643,
+          "top1_agreement": 0.0,
+          "mean_kl_from_reference": 0.00667077861726284
+        },
+        {
+          "max_logit_error": 0.1981060951948166,
+          "max_logprob_error": 0.17226731777191162,
+          "logit_rmse": 0.11410119384527206,
+          "top1_agreement": 0.0,
+          "mean_kl_from_reference": 0.0066803451627492905
+        }
+      ],
+      "fresh_accuracy_sample_order": [
+        "warmup",
+        "live_0",
+        "recording"
+      ],
+      "max_logit_error": 0.1981671303510666,
+      "max_logprob_error": 0.1724158525466919,
+      "max_logit_rmse": 0.11411741375923157,
+      "minimum_top1_agreement": 0.0,
+      "maximum_mean_kl_from_reference": 0.006681392900645733,
+      "setup_all_parties_ms": 6605.85311199975,
+      "local_four_party_ms": 6.75705599860521,
+      "local_samples_ms": [
+        6.75705599860521
+      ],
+      "recording_included_in_live_timing": false,
+      "replay_modes": {
+        "device": {
+          "ideal_network_phase_max_ms": 0.663874001475051,
+          "replay_party_samples_ms": [
+            [
+              0.4984130064258352
+            ],
+            [
+              0.5832949973409995
+            ],
+            [
+              0.5590080181718804
+            ],
+            [
+              0.6300009772530757
+            ]
+          ],
+          "replay_phase_samples_seconds": [
+            [
+              [
+                0.00010873399878619239,
+                4.732899833470583e-05,
+                1.3664997823070735e-05,
+                1.3454999134410173e-05,
+                4.568599979393184e-05,
+                4.3251005990896374e-05,
+                1.3195000065024942e-05,
+                1.3183998817112297e-05,
+                4.594599886331707e-05,
+                3.490599920041859e-05,
+                1.3445001968648285e-05,
+                1.308399805566296e-05,
+                3.462500171735883e-05,
+                1.217300450662151e-05,
+                4.573500336846337e-05
+              ]
+            ],
+            [
+              [
+                0.00010819300223374739,
+                4.9233000027015805e-05,
+                1.5368997992482036e-05,
+                3.9604004996363074e-05,
+                4.045599780511111e-05,
+                4.5535998651757836e-05,
+                1.5169003745540977e-05,
+                3.936400025850162e-05,
+                4.0204999095294625e-05,
+                3.695900522870943e-05,
+                1.3715995009988546e-05,
+                3.8841993955429643e-05,
+                3.7981997593306005e-05,
+                1.4096003724262118e-05,
+                4.8570997023489326e-05
+              ]
+            ],
+            [
+              [
+                0.0001073909952538088,
+                5.0274000386707485e-05,
+                3.584800288081169e-05,
+                1.4016004570294172e-05,
+                4.7309004003182054e-05,
+                3.611799911595881e-05,
+                3.3543001336511225e-05,
+                1.3475000741891563e-05,
+                4.7138004447333515e-05,
+                3.611799911595881e-05,
+                3.3392003388144076e-05,
+                1.3235003279987723e-05,
+                3.4423996112309396e-05,
+                1.2233002053108066e-05,
+                4.4494001485873014e-05
+              ]
+            ],
+            [
+              [
+                0.00010046899842564017,
+                4.969300061929971e-05,
+                3.7810998037457466e-05,
+                3.658900095615536e-05,
+                4.641699342755601e-05,
+                3.596700116759166e-05,
+                3.552699490683153e-05,
+                3.983399801654741e-05,
+                4.648699541576207e-05,
+                3.615800233092159e-05,
+                3.565700171748176e-05,
+                3.632799780461937e-05,
+                3.447499329922721e-05,
+                1.3003998901695013e-05,
+                4.558500222628936e-05
+              ]
+            ]
+          ]
+        },
+        "host": {
+          "ideal_network_phase_max_ms": 1.177780985017307,
+          "replay_party_samples_ms": [
+            [
+              0.9198179977829568
+            ],
+            [
+              1.04951998218894
+            ],
+            [
+              1.008141007332597
+            ],
+            [
+              1.1071059998357669
+            ]
+          ],
+          "replay_phase_samples_seconds": [
+            [
+              [
+                0.00014733700663782656,
+                7.162399560911581e-05,
+                2.473600034136325e-05,
+                6.501199823105708e-05,
+                9.231400326825678e-05,
+                6.745700375176966e-05,
+                2.3403998056892306e-05,
+                5.2789000619668514e-05,
+                8.713400166016072e-05,
+                6.660500366706401e-05,
+                2.3243999748956412e-05,
+                5.371099541662261e-05,
+                6.219699571374804e-05,
+                3.6157995054963976e-05,
+                4.609600000549108e-05
+              ]
+            ],
+            [
+              [
+                0.00015398899995489046,
+                7.14939960744232e-05,
+                4.547499702312052e-05,
+                8.347699622390792e-05,
+                8.743399666855112e-05,
+                6.583300273632631e-05,
+                4.4232998334337026e-05,
+                7.872800051700324e-05,
+                9.606999810785055e-05,
+                5.7978999393526465e-05,
+                4.8822003009263426e-05,
+                7.833699783077464e-05,
+                5.735799641115591e-05,
+                3.459500294411555e-05,
+                4.569599695969373e-05
+              ]
+            ],
+            [
+              [
+                0.00017161200230475515,
+                6.91800014465116e-05,
+                4.968299617758021e-05,
+                5.411099846241996e-05,
+                0.00010493699664948508,
+                5.599499854724854e-05,
+                4.7718996938783675e-05,
+                5.3160001698415726e-05,
+                0.0001093460014089942,
+                5.6265002058353275e-05,
+                4.738900315715e-05,
+                5.618500290438533e-05,
+                5.735799641115591e-05,
+                3.4695003705564886e-05,
+                4.050600546179339e-05
+              ]
+            ],
+            [
+              [
+                0.00015766599972266704,
+                6.926000060047954e-05,
+                6.898900028318167e-05,
+                7.759600703138858e-05,
+                9.468799544265494e-05,
+                5.493299977388233e-05,
+                6.607399700442329e-05,
+                7.54409993533045e-05,
+                0.00010790200030896813,
+                5.637599679175764e-05,
+                6.614399899262935e-05,
+                7.577199721708894e-05,
+                5.6907003454398364e-05,
+                3.419400309212506e-05,
+                4.516400076681748e-05
+              ]
+            ]
+          ]
+        }
+      },
+      "ideal_network_phase_max_ms": 0.663874001475051,
+      "host_bridge_ideal_network_phase_max_ms": 1.177780985017307,
+      "rounds": 14,
+      "device_rounds": 14,
+      "byte_rounds": 0,
+      "payload_bytes": 6208,
+      "baseline_accuracy": {
+        "fp32": {
+          "max_logit_error": 5.960464477539063e-08,
+          "max_logprob_error": 2.384185791015625e-07
+        },
+        "fp16": {
+          "max_logit_error": 0.0003618597984313965,
+          "max_logprob_error": 0.00040221214294433594
+        }
+      },
+      "baselines": {
+        "fp32_eager_ms": 0.030737501219846308,
+        "fp32_graph_ms": 0.006737920045852661,
+        "fp32_graph_wall_ms": 0.011902000551344827,
+        "fp16_eager_ms": 0.029509999876609072,
+        "fp16_graph_ms": 0.007280640006065368,
+        "fp16_graph_wall_ms": 0.011757001630030572,
+        "numpy_cpu_ms": 0.003926998033421114
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 21.598177312032345,
+        "fp32_graph_ms": 98.52803193823593,
+        "fp32_graph_wall_ms": 55.77835411879886,
+        "fp16_eager_ms": 22.4965775754295,
+        "fp16_graph_ms": 91.18346751411822,
+        "fp16_graph_wall_ms": 56.46626770717941,
+        "numpy_cpu_ms": 169.05381561821122
+      },
+      "host_bridge_ideal_slowdowns": {
+        "fp32_eager_ms": 38.3173953078804,
+        "fp32_graph_ms": 174.79889595042872,
+        "fp32_graph_wall_ms": 98.95655607949267,
+        "fp16_eager_ms": 39.91125008275138,
+        "fp16_graph_ms": 161.7688807626966,
+        "fp16_graph_wall_ms": 100.1769857723703,
+        "numpy_cpu_ms": 299.9189138863027
+      },
+      "samples": 1,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party_per_staging": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "baseline_graph_device_replays": 100,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "timing_boundary": "inference entry through checked output opening and final CUDA synchronization; setup excluded",
+      "methodology": "Experimental Rep4 variant; ChaCha20 masks and BLAKE3 integrity checks execute during every online/replay run. Not byte compatible with MP-SPDZ/reference masks or tags. Device replay assumes peer payloads already delivered to GPU; host replay includes outgoing/incoming host staging. Both exclude network latency/bandwidth. Fresh unrecorded live timings and a separate untimed transcript; outgoing bytes checked during replay warmup. Domain keys, input sharing and static weight preparation are setup. Floor outputs match the exact integer fixture; probabilistic outputs agree across parties and obey propagated rounding intervals. Every replay exactly matches the recorded output. Reported errors are worst-case over fresh warmup, live and recorded runs."
+    },
+    {
+      "maximum_accumulator": 318459092,
+      "first_accumulator_max_abs": 318459092,
+      "second_accumulator_max_abs": 148828966,
+      "quadratic_numerator_max_abs": 134408208,
+      "accumulator_fits_signed_ring": true,
+      "rounding_bounds_validated": true,
+      "maximum_output_rounding_interval_width": 18,
+      "range_validation": "public fixture only; not a private range check",
+      "quadratic_plan": {
+        "kind": "gelu",
+        "bound": 4.0,
+        "fractional_bits": 14,
+        "ring_bits": 32,
+        "prescale": 2,
+        "shift": 13,
+        "linear_coeff": 16384,
+        "constant_numerator": 31162368,
+        "input_bound": 65536,
+        "normalized_bound": 16384,
+        "numerator_abs_bound": 568033280
+      },
+      "activation_coefficients": [
+        0.232177734375,
+        0.5,
+        0.125
+      ],
+      "activation_is_approximation": true,
+      "strict_probabilistic_accumulator_limit": 1073741824,
+      "party_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "round_kinds": [
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device"
+      ],
+      "phase_kinds": [
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "local_only"
+      ],
+      "outgoing_bytes_per_party_per_phase": [
+        [
+          288,
+          160,
+          256,
+          160,
+          288,
+          160,
+          256,
+          160,
+          96,
+          64,
+          64,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          288,
+          160,
+          32,
+          160,
+          288,
+          160,
+          32,
+          160,
+          96,
+          64,
+          32,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          192,
+          0,
+          256,
+          160,
+          192,
+          0,
+          256,
+          160,
+          96,
+          0,
+          64,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          192,
+          0,
+          32,
+          160,
+          192,
+          0,
+          32,
+          160,
+          96,
+          0,
+          32,
+          64,
+          32,
+          32,
+          0
+        ]
+      ],
+      "incoming_bytes_per_party_per_phase": [
+        [
+          160,
+          0,
+          0,
+          160,
+          160,
+          0,
+          0,
+          160,
+          64,
+          0,
+          0,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          160,
+          0,
+          288,
+          160,
+          160,
+          0,
+          288,
+          160,
+          64,
+          0,
+          96,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          320,
+          160,
+          0,
+          160,
+          320,
+          160,
+          0,
+          160,
+          128,
+          64,
+          0,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          320,
+          160,
+          288,
+          160,
+          320,
+          160,
+          288,
+          160,
+          128,
+          64,
+          96,
+          64,
+          32,
+          32,
+          0
+        ]
+      ],
+      "phase_payload_convention": "phase i ends at exchange i; final phase follows the last exchange and has zero payload",
+      "live_transport": "colocated IdealNetwork role harness",
+      "physical_gpudirect": false,
+      "batch": 1,
+      "width": 8,
+      "hidden": 32,
+      "out": 8,
+      "device": "cuda:0",
+      "activation": "quadratic_gelu",
+      "activation_bound": 4.0,
+      "baseline_activation": "gelu",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "fractional_bits": 14,
+      "optimized": true,
+      "phase_graphs": true,
+      "bounded_sign": false,
+      "graph_check_at_send": true,
+      "sparse_products": true,
+      "local_matmul_backend": {
+        "route": "baseline direct decode"
+      },
+      "optimized_components": [
+        "batched CUDA ChaCha20 with coalesced stores",
+        "SWAR carry extraction",
+        "fused weighted B2A",
+        "SM89 compact-weight prefill tile dispatch with validated fallback",
+        "vectorized BLAKE3 loads",
+        "coalesced small-message BLAKE3",
+        "width-matched joint-input mask storage",
+        "GPU checked output opening",
+        "device probabilistic truncation",
+        "bounded quadratic with one secret square",
+        "four-joint products for complementary component supports",
+        "segmented CUDA inference graphs with fresh nonces",
+        "captured integrity verdict transfers to pinned host buffers",
+        "host integrity checks before every dependent send"
+      ],
+      "gpu_open": true,
+      "weight_storage_bytes_per_party": [
+        6144,
+        6144,
+        6144,
+        6144
+      ],
+      "weight_storage_bytes_all_parties": 24576,
+      "rounding": "probabilistic",
+      "truncation": "probabilistic floor/ceil",
+      "prepared_weights": true,
+      "weight_storage": "words32",
+      "prg": "CUDA ChaCha20 with SHA256 domain-key derivation",
+      "online_hash": "CUDA BLAKE3",
+      "input_hash": "inherited checked BLAKE2b byte protocol",
+      "output_hash": "CUDA BLAKE3 checked device protocol",
+      "reference_transcript_compatible": false,
+      "live_staging": "device",
+      "exact_integer_match": false,
+      "exact_recorded_replay_output_match": true,
+      "fresh_accuracy_samples": [
+        {
+          "max_logit_error": 0.2740984559059143,
+          "max_logprob_error": 0.28009986877441406,
+          "logit_rmse": 0.16358068585395813,
+          "top1_agreement": 0.0,
+          "mean_kl_from_reference": 0.011887885630130768
+        },
+        {
+          "max_logit_error": 0.2740374207496643,
+          "max_logprob_error": 0.28000545501708984,
+          "logit_rmse": 0.16360485553741455,
+          "top1_agreement": 0.0,
+          "mean_kl_from_reference": 0.011893963441252708
+        },
+        {
+          "max_logit_error": 0.2740374207496643,
+          "max_logprob_error": 0.27995896339416504,
+          "logit_rmse": 0.16358007490634918,
+          "top1_agreement": 0.0,
+          "mean_kl_from_reference": 0.011889336630702019
+        }
+      ],
+      "fresh_accuracy_sample_order": [
+        "warmup",
+        "live_0",
+        "recording"
+      ],
+      "max_logit_error": 0.2740984559059143,
+      "max_logprob_error": 0.28009986877441406,
+      "max_logit_rmse": 0.16360485553741455,
+      "minimum_top1_agreement": 0.0,
+      "maximum_mean_kl_from_reference": 0.011893963441252708,
+      "setup_all_parties_ms": 172.66931100311922,
+      "local_four_party_ms": 6.540188995131757,
+      "local_samples_ms": [
+        6.540188995131757
+      ],
+      "recording_included_in_live_timing": false,
+      "replay_modes": {
+        "device": {
+          "ideal_network_phase_max_ms": 0.6811870189267211,
+          "replay_party_samples_ms": [
+            [
+              0.488070014398545
+            ],
+            [
+              0.5764029920101166
+            ],
+            [
+              0.5818780045956373
+            ],
+            [
+              0.6476740236394107
+            ]
+          ],
+          "replay_phase_samples_seconds": [
+            [
+              [
+                9.836500248638913e-05,
+                4.79400041513145e-05,
+                1.3504999515134841e-05,
+                1.3666001905221492e-05,
+                4.5916000090073794e-05,
+                4.362199979368597e-05,
+                1.3085002137813717e-05,
+                1.3065000530332327e-05,
+                4.523499956121668e-05,
+                3.428500349400565e-05,
+                1.304500619880855e-05,
+                1.4327000826597214e-05,
+                3.522600309224799e-05,
+                1.2483993486966938e-05,
+                4.430399712873623e-05
+              ]
+            ],
+            [
+              [
+                9.898599819280207e-05,
+                4.655700467992574e-05,
+                1.4035998901817948e-05,
+                3.622700023697689e-05,
+                4.576599894789979e-05,
+                4.2889994801953435e-05,
+                1.389599492540583e-05,
+                3.57469980372116e-05,
+                4.551600432023406e-05,
+                4.417300078785047e-05,
+                1.855500158853829e-05,
+                3.626899706432596e-05,
+                3.4324999433010817e-05,
+                1.2384000001475215e-05,
+                5.107600009068847e-05
+              ]
+            ],
+            [
+              [
+                0.00010910399578278884,
+                5.462300032377243e-05,
+                3.734000347321853e-05,
+                1.4657001884188503e-05,
+                5.294899892760441e-05,
+                3.684900002554059e-05,
+                3.4274002246093005e-05,
+                1.4106000890024006e-05,
+                4.651700146496296e-05,
+                3.591700078686699e-05,
+                3.351299528731033e-05,
+                1.3365002814680338e-05,
+                3.549599932739511e-05,
+                1.2673997844103724e-05,
+                5.049400351708755e-05
+              ]
+            ],
+            [
+              [
+                0.00010332399688195437,
+                4.998299846192822e-05,
+                3.65290034096688e-05,
+                3.6669000110123307e-05,
+                4.6788001782260835e-05,
+                3.5796998417936265e-05,
+                3.5947006836067885e-05,
+                3.688900324050337e-05,
+                4.703900049207732e-05,
+                3.5877004847861826e-05,
+                3.528600063873455e-05,
+                3.653800376923755e-05,
+                4.459400224732235e-05,
+                1.3445001968648285e-05,
+                5.29690005350858e-05
+              ]
+            ]
+          ]
+        },
+        "host": {
+          "ideal_network_phase_max_ms": 1.218426987179555,
+          "replay_party_samples_ms": [
+            [
+              0.9120930117205717
+            ],
+            [
+              1.079022986232303
+            ],
+            [
+              1.0804170015035197
+            ],
+            [
+              1.1016289790859446
+            ]
+          ],
+          "replay_phase_samples_seconds": [
+            [
+              [
+                0.00016871700063347816,
+                7.147400174289942e-05,
+                2.4515997210983187e-05,
+                5.367099947761744e-05,
+                8.621099550509825e-05,
+                6.524299533339217e-05,
+                2.2813001123722643e-05,
+                5.2368006436154246e-05,
+                8.713400166016072e-05,
+                6.59240031382069e-05,
+                2.298300387337804e-05,
+                5.19680033903569e-05,
+                5.960199632681906e-05,
+                3.4294003853574395e-05,
+                4.5175002014730126e-05
+              ]
+            ],
+            [
+              [
+                0.00018157099839299917,
+                7.504100358346477e-05,
+                4.61269955849275e-05,
+                7.90880003478378e-05,
+                8.927699673222378e-05,
+                6.720599776599556e-05,
+                4.364200140116736e-05,
+                7.662399730179459e-05,
+                9.529899398330599e-05,
+                5.649599916068837e-05,
+                4.2299005144741386e-05,
+                7.67739984439686e-05,
+                5.9420999605208635e-05,
+                4.244899901095778e-05,
+                4.770899977302179e-05
+              ]
+            ],
+            [
+              [
+                0.00017410600412404165,
+                6.830799975432456e-05,
+                5.007399886380881e-05,
+                5.509400216396898e-05,
+                0.00010751200170489028,
+                5.979200068395585e-05,
+                5.012399924453348e-05,
+                7.238599937409163e-05,
+                0.00012386299931677058,
+                5.7507997553329915e-05,
+                4.8219997552223504e-05,
+                6.012200174154714e-05,
+                7.082299998728558e-05,
+                3.4485005016904324e-05,
+                4.799999442184344e-05
+              ]
+            ],
+            [
+              [
+                0.00015814699872862548,
+                6.780699914088473e-05,
+                6.83879989082925e-05,
+                7.723499584244564e-05,
+                9.500799933448434e-05,
+                6.215699977474287e-05,
+                6.958100129850209e-05,
+                7.656399975530803e-05,
+                9.466800111113116e-05,
+                5.46730007044971e-05,
+                6.558299355674535e-05,
+                7.598299998790026e-05,
+                5.694699939340353e-05,
+                3.406399628147483e-05,
+                4.482399526750669e-05
+              ]
+            ]
+          ]
+        }
+      },
+      "ideal_network_phase_max_ms": 0.6811870189267211,
+      "host_bridge_ideal_network_phase_max_ms": 1.218426987179555,
+      "rounds": 14,
+      "device_rounds": 14,
+      "byte_rounds": 0,
+      "payload_bytes": 6208,
+      "baseline_accuracy": {
+        "fp32": {
+          "max_logit_error": 1.7881393432617188e-07,
+          "max_logprob_error": 2.384185791015625e-07
+        },
+        "fp16": {
+          "max_logit_error": 0.00037410855293273926,
+          "max_logprob_error": 0.000408172607421875
+        }
+      },
+      "baselines": {
+        "fp32_eager_ms": 0.028183003450976685,
+        "fp32_graph_ms": 0.006789119839668274,
+        "fp32_graph_wall_ms": 0.01117099600378424,
+        "fp16_eager_ms": 0.030372000765055418,
+        "fp16_graph_ms": 0.007372159957885743,
+        "fp16_graph_wall_ms": 0.012593001883942634
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 24.17013573842906,
+        "fp32_graph_ms": 100.33510013280379,
+        "fp32_graph_wall_ms": 60.978181237909766,
+        "fp16_eager_ms": 22.428124646647003,
+        "fp16_graph_ms": 92.3999238782223,
+        "fp16_graph_wall_ms": 54.09250512344513
+      },
+      "host_bridge_ideal_slowdowns": {
+        "fp32_eager_ms": 43.232687718999316,
+        "fp32_graph_ms": 179.4675916693038,
+        "fp32_graph_wall_ms": 109.07057766082862,
+        "fp16_eager_ms": 40.1167837642563,
+        "fp16_graph_ms": 165.2740844121601,
+        "fp16_graph_wall_ms": 96.75429245612789
+      },
+      "samples": 1,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party_per_staging": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "baseline_graph_device_replays": 100,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "timing_boundary": "inference entry through checked output opening and final CUDA synchronization; setup excluded",
+      "methodology": "Experimental Rep4 variant; ChaCha20 masks and BLAKE3 integrity checks execute during every online/replay run. Not byte compatible with MP-SPDZ/reference masks or tags. Device replay assumes peer payloads already delivered to GPU; host replay includes outgoing/incoming host staging. Both exclude network latency/bandwidth. Fresh unrecorded live timings and a separate untimed transcript; outgoing bytes checked during replay warmup. Domain keys, input sharing and static weight preparation are setup. Floor outputs match the exact integer fixture; probabilistic outputs agree across parties and obey propagated rounding intervals. Every replay exactly matches the recorded output. Reported errors are worst-case over fresh warmup, live and recorded runs."
+    },
+    {
+      "maximum_accumulator": 318459092,
+      "first_accumulator_max_abs": 318459092,
+      "second_accumulator_max_abs": 103030920,
+      "quadratic_numerator_max_abs": 117237776,
+      "accumulator_fits_signed_ring": true,
+      "rounding_bounds_validated": true,
+      "maximum_output_rounding_interval_width": 18,
+      "range_validation": "public fixture only; not a private range check",
+      "quadratic_plan": {
+        "kind": "silu",
+        "bound": 4.0,
+        "fractional_bits": 14,
+        "ring_bits": 32,
+        "prescale": 2,
+        "shift": 13,
+        "linear_coeff": 16384,
+        "constant_numerator": 13991936,
+        "input_bound": 65536,
+        "normalized_bound": 16384,
+        "numerator_abs_bound": 550862848
+      },
+      "activation_coefficients": [
+        0.104248046875,
+        0.5,
+        0.125
+      ],
+      "activation_is_approximation": true,
+      "strict_probabilistic_accumulator_limit": 1073741824,
+      "party_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "round_kinds": [
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device"
+      ],
+      "phase_kinds": [
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "device",
+        "local_only"
+      ],
+      "outgoing_bytes_per_party_per_phase": [
+        [
+          288,
+          160,
+          256,
+          160,
+          288,
+          160,
+          256,
+          160,
+          96,
+          64,
+          64,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          288,
+          160,
+          32,
+          160,
+          288,
+          160,
+          32,
+          160,
+          96,
+          64,
+          32,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          192,
+          0,
+          256,
+          160,
+          192,
+          0,
+          256,
+          160,
+          96,
+          0,
+          64,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          192,
+          0,
+          32,
+          160,
+          192,
+          0,
+          32,
+          160,
+          96,
+          0,
+          32,
+          64,
+          32,
+          32,
+          0
+        ]
+      ],
+      "incoming_bytes_per_party_per_phase": [
+        [
+          160,
+          0,
+          0,
+          160,
+          160,
+          0,
+          0,
+          160,
+          64,
+          0,
+          0,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          160,
+          0,
+          288,
+          160,
+          160,
+          0,
+          288,
+          160,
+          64,
+          0,
+          96,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          320,
+          160,
+          0,
+          160,
+          320,
+          160,
+          0,
+          160,
+          128,
+          64,
+          0,
+          64,
+          32,
+          32,
+          0
+        ],
+        [
+          320,
+          160,
+          288,
+          160,
+          320,
+          160,
+          288,
+          160,
+          128,
+          64,
+          96,
+          64,
+          32,
+          32,
+          0
+        ]
+      ],
+      "phase_payload_convention": "phase i ends at exchange i; final phase follows the last exchange and has zero payload",
+      "live_transport": "colocated IdealNetwork role harness",
+      "physical_gpudirect": false,
+      "batch": 1,
+      "width": 8,
+      "hidden": 32,
+      "out": 8,
+      "device": "cuda:0",
+      "activation": "quadratic_silu",
+      "activation_bound": 4.0,
+      "baseline_activation": "silu",
+      "ring_bits": 32,
+      "binary_bits": 32,
+      "fractional_bits": 14,
+      "optimized": true,
+      "phase_graphs": true,
+      "bounded_sign": false,
+      "graph_check_at_send": true,
+      "sparse_products": true,
+      "local_matmul_backend": {
+        "route": "baseline direct decode"
+      },
+      "optimized_components": [
+        "batched CUDA ChaCha20 with coalesced stores",
+        "SWAR carry extraction",
+        "fused weighted B2A",
+        "SM89 compact-weight prefill tile dispatch with validated fallback",
+        "vectorized BLAKE3 loads",
+        "coalesced small-message BLAKE3",
+        "width-matched joint-input mask storage",
+        "GPU checked output opening",
+        "device probabilistic truncation",
+        "bounded quadratic with one secret square",
+        "four-joint products for complementary component supports",
+        "segmented CUDA inference graphs with fresh nonces",
+        "captured integrity verdict transfers to pinned host buffers",
+        "host integrity checks before every dependent send"
+      ],
+      "gpu_open": true,
+      "weight_storage_bytes_per_party": [
+        6144,
+        6144,
+        6144,
+        6144
+      ],
+      "weight_storage_bytes_all_parties": 24576,
+      "rounding": "probabilistic",
+      "truncation": "probabilistic floor/ceil",
+      "prepared_weights": true,
+      "weight_storage": "words32",
+      "prg": "CUDA ChaCha20 with SHA256 domain-key derivation",
+      "online_hash": "CUDA BLAKE3",
+      "input_hash": "inherited checked BLAKE2b byte protocol",
+      "output_hash": "CUDA BLAKE3 checked device protocol",
+      "reference_transcript_compatible": false,
+      "live_staging": "device",
+      "exact_integer_match": false,
+      "exact_recorded_replay_output_match": true,
+      "fresh_accuracy_samples": [
+        {
+          "max_logit_error": 0.12202835083007812,
+          "max_logprob_error": 0.1199941635131836,
+          "logit_rmse": 0.072751484811306,
+          "top1_agreement": 1.0,
+          "mean_kl_from_reference": 0.002368226647377014
+        },
+        {
+          "max_logit_error": 0.12178421020507812,
+          "max_logprob_error": 0.12003087997436523,
+          "logit_rmse": 0.07270790636539459,
+          "top1_agreement": 1.0,
+          "mean_kl_from_reference": 0.0023653721436858177
+        },
+        {
+          "max_logit_error": 0.12202835083007812,
+          "max_logprob_error": 0.11989784240722656,
+          "logit_rmse": 0.07272098958492279,
+          "top1_agreement": 1.0,
+          "mean_kl_from_reference": 0.0023664217442274094
+        }
+      ],
+      "fresh_accuracy_sample_order": [
+        "warmup",
+        "live_0",
+        "recording"
+      ],
+      "max_logit_error": 0.12202835083007812,
+      "max_logprob_error": 0.12003087997436523,
+      "max_logit_rmse": 0.072751484811306,
+      "minimum_top1_agreement": 1.0,
+      "maximum_mean_kl_from_reference": 0.002368226647377014,
+      "setup_all_parties_ms": 165.2539309943677,
+      "local_four_party_ms": 5.993644001137,
+      "local_samples_ms": [
+        5.993644001137
+      ],
+      "recording_included_in_live_timing": false,
+      "replay_modes": {
+        "device": {
+          "ideal_network_phase_max_ms": 0.6721720055793412,
+          "replay_party_samples_ms": [
+            [
+              0.49147899699164554
+            ],
+            [
+              0.5776449979748577
+            ],
+            [
+              0.5769629860878922
+            ],
+            [
+              0.6326869988697581
+            ]
+          ],
+          "replay_phase_samples_seconds": [
+            [
+              [
+                0.00010332400415791199,
+                4.881100176135078e-05,
+                1.3705001038033515e-05,
+                1.3705997844226658e-05,
+                4.575500497594476e-05,
+                4.385299689602107e-05,
+                1.306399644818157e-05,
+                1.308399805566296e-05,
+                4.564599657896906e-05,
+                3.4233999031130224e-05,
+                1.3114004104863852e-05,
+                1.2552998668979853e-05,
+                3.462500171735883e-05,
+                1.237299875356257e-05,
+                4.363199695944786e-05
+              ]
+            ],
+            [
+              [
+                0.00010651999764377251,
+                4.9472997488919646e-05,
+                1.632100611459464e-05,
+                3.914300032192841e-05,
+                4.176899528829381e-05,
+                4.6346998715307564e-05,
+                1.5098994481377304e-05,
+                3.860300057567656e-05,
+                3.93939990317449e-05,
+                3.604700032155961e-05,
+                1.2764001439791173e-05,
+                3.829100023722276e-05,
+                3.6549005017150193e-05,
+                1.3195000065024942e-05,
+                4.813000123249367e-05
+              ]
+            ],
+            [
+              [
+                0.00010800300515256822,
+                5.120599962538108e-05,
+                3.600699710659683e-05,
+                1.521899685030803e-05,
+                4.229899786878377e-05,
+                3.729000309249386e-05,
+                3.495599958114326e-05,
+                1.4516997907776386e-05,
+                4.776999412570149e-05,
+                3.573700087144971e-05,
+                3.407399344723672e-05,
+                1.3435004802886397e-05,
+                3.547700180206448e-05,
+                1.2693999451585114e-05,
+                5.827899440191686e-05
+              ]
+            ],
+            [
+              [
+                9.66119987424463e-05,
+                5.101600254420191e-05,
+                3.741000546142459e-05,
+                3.7600999348796904e-05,
+                4.623700078809634e-05,
+                3.58969991793856e-05,
+                3.587699757190421e-05,
+                3.6277997423894703e-05,
+                5.142699956195429e-05,
+                3.61380007234402e-05,
+                3.5466997360344976e-05,
+                3.617699985625222e-05,
+                3.4594995668157935e-05,
+                1.2463002349250019e-05,
+                4.949200229020789e-05
+              ]
+            ]
+          ]
+        },
+        "host": {
+          "ideal_network_phase_max_ms": 1.1783599984482862,
+          "replay_party_samples_ms": [
+            [
+              0.8872440230334178
+            ],
+            [
+              1.0734930110629648
+            ],
+            [
+              0.9973189953598194
+            ],
+            [
+              1.1011370006599464
+            ]
+          ],
+          "replay_phase_samples_seconds": [
+            [
+              [
+                0.00014853900211164728,
+                7.028199615888298e-05,
+                2.401499659754336e-05,
+                5.939100083196536e-05,
+                8.659200102556497e-05,
+                6.665500404778868e-05,
+                2.3093998606782407e-05,
+                5.270900146570057e-05,
+                8.418800280196592e-05,
+                6.042400491423905e-05,
+                2.252200647490099e-05,
+                5.20370012964122e-05,
+                5.770799907622859e-05,
+                3.421400469960645e-05,
+                4.487400292418897e-05
+              ]
+            ],
+            [
+              [
+                0.00015248599811457098,
+                7.097399793565273e-05,
+                4.523499956121668e-05,
+                7.795599958626553e-05,
+                8.719400648260489e-05,
+                6.748599844286218e-05,
+                5.3109004511497915e-05,
+                9.24139967537485e-05,
+                9.707199933473021e-05,
+                6.590299744857475e-05,
+                4.234899824950844e-05,
+                8.315600280184299e-05,
+                5.800900544272736e-05,
+                3.407400072319433e-05,
+                4.60760056739673e-05
+              ]
+            ],
+            [
+              [
+                0.0001657109969528392,
+                6.919900624779984e-05,
+                5.004400009056553e-05,
+                5.3449999541044235e-05,
+                9.680099901743233e-05,
+                5.5033000535331666e-05,
+                4.757900023832917e-05,
+                5.375099863158539e-05,
+                0.00010990600276272744,
+                5.693699495168403e-05,
+                4.842099588131532e-05,
+                5.246799992164597e-05,
+                5.671699909726158e-05,
+                3.45049993484281e-05,
+                4.679700214182958e-05
+              ]
+            ],
+            [
+              [
+                0.00015607300156261772,
+                6.922999455127865e-05,
+                6.873899837955832e-05,
+                7.678399560973048e-05,
+                9.485800546826795e-05,
+                5.46830051462166e-05,
+                6.67549975332804e-05,
+                7.644300058018416e-05,
+                9.394600056111813e-05,
+                5.438199877971783e-05,
+                7.324800390051678e-05,
+                7.962000381667167e-05,
+                5.7568002375774086e-05,
+                3.424399619689211e-05,
+                4.456399619812146e-05
+              ]
+            ]
+          ]
+        }
+      },
+      "ideal_network_phase_max_ms": 0.6721720055793412,
+      "host_bridge_ideal_network_phase_max_ms": 1.1783599984482862,
+      "rounds": 14,
+      "device_rounds": 14,
+      "byte_rounds": 0,
+      "payload_bytes": 6208,
+      "baseline_accuracy": {
+        "fp32": {
+          "max_logit_error": 8.940696716308594e-08,
+          "max_logprob_error": 2.384185791015625e-07
+        },
+        "fp16": {
+          "max_logit_error": 0.0003163665533065796,
+          "max_logprob_error": 0.0003261566162109375
+        }
+      },
+      "baselines": {
+        "fp32_eager_ms": 0.029670998628716916,
+        "fp32_graph_ms": 0.006768640279769898,
+        "fp32_graph_wall_ms": 0.011347001418471336,
+        "fp16_eager_ms": 0.03179449777235277,
+        "fp16_graph_ms": 0.007352319955825806,
+        "fp16_graph_wall_ms": 0.011953001376241446
+      },
+      "ideal_slowdowns": {
+        "fp32_eager_ms": 22.654175344431554,
+        "fp32_graph_ms": 99.30679985880295,
+        "fp32_graph_wall_ms": 59.237853313840155,
+        "fp16_eager_ms": 21.141142420052166,
+        "fp16_graph_ms": 91.42311673293378,
+        "fp16_graph_wall_ms": 56.23457945176795
+      },
+      "host_bridge_ideal_slowdowns": {
+        "fp32_eager_ms": 39.71420083272212,
+        "fp32_graph_ms": 174.09109507121642,
+        "fp32_graph_wall_ms": 103.84769993331281,
+        "fp16_eager_ms": 37.061758511969366,
+        "fp16_graph_ms": 160.27050040369656,
+        "fp16_graph_wall_ms": 98.5827710846307
+      },
+      "samples": 1,
+      "protocol_warmups": 1,
+      "replay_warmups_per_party_per_staging": 1,
+      "baseline_samples": 20,
+      "baseline_warmups": 3,
+      "baseline_graph_device_replays": 100,
+      "ideal_timing_kind": "estimate: sum of per-phase maxima of isolated-party median times",
+      "timing_boundary": "inference entry through checked output opening and final CUDA synchronization; setup excluded",
+      "methodology": "Experimental Rep4 variant; ChaCha20 masks and BLAKE3 integrity checks execute during every online/replay run. Not byte compatible with MP-SPDZ/reference masks or tags. Device replay assumes peer payloads already delivered to GPU; host replay includes outgoing/incoming host staging. Both exclude network latency/bandwidth. Fresh unrecorded live timings and a separate untimed transcript; outgoing bytes checked during replay warmup. Domain keys, input sharing and static weight preparation are setup. Floor outputs match the exact integer fixture; probabilistic outputs agree across parties and obey propagated rounding intervals. Every replay exactly matches the recorded output. Reported errors are worst-case over fresh warmup, live and recorded runs."
+    }
+  ]
+}

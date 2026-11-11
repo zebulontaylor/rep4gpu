@@ -1,0 +1,43 @@
+{
+  "version": "after",
+  "backend": "cuda",
+  "kind": "silu",
+  "shape": [
+    14336
+  ],
+  "elements": 14336,
+  "fractional_bits": 24,
+  "rounding": "floor",
+  "witness_ingestion_bytes": 229504,
+  "execution_bytes": 107519600,
+  "total_bytes": 107749104,
+  "execution_rounds": 266,
+  "max_abs_error": 6.700914430002314e-07,
+  "rmse": 3.1875550655527566e-07,
+  "party_agreement": true,
+  "operation_profile": {
+    "trunc": {
+      "bytes": 64475328,
+      "calls_per_party": 15
+    },
+    "mul": {
+      "bytes": 18563904,
+      "calls_per_party": 31
+    },
+    "sign_bit": {
+      "bytes": 23691472,
+      "calls_per_party": 5
+    },
+    "open": {
+      "bytes": 160,
+      "calls_per_party": 1
+    }
+  },
+  "stage": "2_direct_output",
+  "source_sha256": {
+    "rep4gpu/numerical.py": "f3c1829237182b413480e61b3114d90630b8a606b528d42637e0050fa2962d5a",
+    "rep4gpu/witness_activations.py": "5c1bce5d37779d8b32130a08c14778fe95b637a667bc21d1691af28938dbf179",
+    "rep4gpu/witness_prover.py": "30baad5f66cc6602f487dcead9ce8206af86d091d8a276a1c6f7a775111d59c8",
+    "rep4gpu/exact_truncation.py": "69f746f0dc9b6ac55ef942939a0a1d63c0b8104c385863a19caf54cfad07d769"
+  }
+}

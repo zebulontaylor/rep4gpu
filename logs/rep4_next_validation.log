@@ -1,0 +1,21 @@
+........................................................................ [ 13%]
+........................................................................ [ 26%]
+........................................................................ [ 39%]
+........................................................................ [ 53%]
+........................................................................ [ 66%]
+........................................................................ [ 79%]
+........................................................................ [ 92%]
+......................................                                   [100%]
+=============================== warnings summary ===============================
+tests/test_phase_graph.py::test_failed_check_stops_dependent_segment_and_poisons_plan
+tests/test_phase_graph.py::test_invalid_frame_poisons_plan[peers]
+tests/test_phase_graph.py::test_invalid_frame_poisons_plan[size]
+tests/test_phase_graph.py::test_invalid_frame_poisons_plan[dtype]
+tests/test_phase_graph.py::test_deferred_checks_keep_first_failure_and_prevent_send[True]
+tests/test_phase_graph.py::test_bound_receive_replay_checks_tampered_payload[device]
+tests/test_phase_graph.py::test_bound_receive_replay_checks_tampered_payload[host]
+  /home/zeb/.pyenv/versions/3.10.13/lib/python3.10/site-packages/torch/cuda/graphs.py:169: UserWarning: The CUDA Graph is empty. This usually means that the graph was attempted to be captured on wrong device or stream. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/cuda/CUDAGraph.cpp:210.)
+    super().capture_end()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+542 passed, 7 warnings in 146.96s (0:02:26)

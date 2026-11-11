@@ -1,0 +1,32 @@
+[
+  {
+    "variant": "old",
+    "count": 8192,
+    "phase_max_ms": 0.8292860075016506
+  },
+  {
+    "variant": "packed",
+    "count": 8192,
+    "phase_max_ms": 0.8321919885929674
+  },
+  {
+    "variant": "word",
+    "count": 8192,
+    "phase_max_ms": 0.8317409883602522
+  },
+  {
+    "variant": "packed",
+    "count": 8192,
+    "phase_max_ms": 0.8509449908160605
+  },
+  {
+    "variant": "word",
+    "count": 8192,
+    "phase_max_ms": 0.8487730010529049
+  },
+  {
+    "variant": "old",
+    "count": 8192,
+    "phase_max_ms": 0.8643400069558993
+  }
+]

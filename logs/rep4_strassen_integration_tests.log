@@ -1,0 +1,116 @@
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________ test_strassen_private_ffn_graph_matches_eager[floor] _____________
+
+rounding = 'floor'
+
+    @pytest.mark.parametrize('rounding',['floor','probabilistic'])
+    @pytest.mark.skipif(not torch.cuda.is_available(), reason='CUDA required')
+    def test_strassen_private_ffn_graph_matches_eager(rounding):
+>       test_tiny_private_ffn_transcripts_match_eager(rounding,True,True,True,storage='strassen32')
+
+tests/test_phase_graph.py:313: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_phase_graph.py:213: in test_tiny_private_ffn_transcripts_match_eager
+    expected,ec,et = execute(DeviceInferenceParty)
+tests/test_phase_graph.py:198: in execute
+    shares = guarded(distribute)
+tests/test_phase_graph.py:189: in guarded
+    return list(pool.map(work,range(4)))
+../../.pyenv/versions/3.10.13/lib/python3.10/concurrent/futures/_base.py:621: in result_iterator
+    yield _result_or_cancel(fs.pop())
+../../.pyenv/versions/3.10.13/lib/python3.10/concurrent/futures/_base.py:319: in _result_or_cancel
+    return fut.result(timeout)
+../../.pyenv/versions/3.10.13/lib/python3.10/concurrent/futures/_base.py:458: in result
+    return self.__get_result()
+../../.pyenv/versions/3.10.13/lib/python3.10/concurrent/futures/_base.py:403: in __get_result
+    raise self._exception
+../../.pyenv/versions/3.10.13/lib/python3.10/concurrent/futures/thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+tests/test_phase_graph.py:184: in work
+    return fn(p)
+tests/test_phase_graph.py:195: in distribute
+    result[1] = r.prepare_weight_share(result[1],storage=storage)
+rep4gpu/device_inference.py:77: in prepare_weight_share
+    return PreparedMatrix(tuple(prepare_strassen_weight(part,levels=1) for part in packed.parts))
+rep4gpu/device_inference.py:77: in <genexpr>
+    return PreparedMatrix(tuple(prepare_strassen_weight(part,levels=1) for part in packed.parts))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+weight = CompactWeight(words=tensor([[0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]], device='cuda:0', dtype=torch.int32), bits=32)
+levels = 1
+
+    def prepare_strassen_weight(weight,levels=1):
+        """Prepare static combinations; retained bytes grow by (7/4)**levels."""
+        if levels not in (1,2):
+            raise ValueError('Strassen experiments support one or two levels')
+        if not isinstance(weight,CompactWeight):
+            raise TypeError('Strassen experiments require compact ring32 weights')
+        k,n=weight.shape
+        divisor=1<<levels
+        if k%divisor or n%divisor:
+>           raise ValueError('weight dimensions must be divisible by the Strassen subdivision')
+E           ValueError: weight dimensions must be divisible by the Strassen subdivision
+
+rep4gpu/strassen_kernels.py:109: ValueError
+_________ test_strassen_private_ffn_graph_matches_eager[probabilistic] _________
+
+rounding = 'probabilistic'
+
+    @pytest.mark.parametrize('rounding',['floor','probabilistic'])
+    @pytest.mark.skipif(not torch.cuda.is_available(), reason='CUDA required')
+    def test_strassen_private_ffn_graph_matches_eager(rounding):
+>       test_tiny_private_ffn_transcripts_match_eager(rounding,True,True,True,storage='strassen32')
+
+tests/test_phase_graph.py:313: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_phase_graph.py:213: in test_tiny_private_ffn_transcripts_match_eager
+    expected,ec,et = execute(DeviceInferenceParty)
+tests/test_phase_graph.py:198: in execute
+    shares = guarded(distribute)
+tests/test_phase_graph.py:189: in guarded
+    return list(pool.map(work,range(4)))
+../../.pyenv/versions/3.10.13/lib/python3.10/concurrent/futures/_base.py:621: in result_iterator
+    yield _result_or_cancel(fs.pop())
+../../.pyenv/versions/3.10.13/lib/python3.10/concurrent/futures/_base.py:319: in _result_or_cancel
+    return fut.result(timeout)
+../../.pyenv/versions/3.10.13/lib/python3.10/concurrent/futures/_base.py:458: in result
+    return self.__get_result()
+../../.pyenv/versions/3.10.13/lib/python3.10/concurrent/futures/_base.py:403: in __get_result
+    raise self._exception
+../../.pyenv/versions/3.10.13/lib/python3.10/concurrent/futures/thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+tests/test_phase_graph.py:184: in work
+    return fn(p)
+tests/test_phase_graph.py:195: in distribute
+    result[1] = r.prepare_weight_share(result[1],storage=storage)
+rep4gpu/device_inference.py:77: in prepare_weight_share
+    return PreparedMatrix(tuple(prepare_strassen_weight(part,levels=1) for part in packed.parts))
+rep4gpu/device_inference.py:77: in <genexpr>
+    return PreparedMatrix(tuple(prepare_strassen_weight(part,levels=1) for part in packed.parts))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+weight = CompactWeight(words=tensor([[0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]], device='cuda:0', dtype=torch.int32), bits=32)
+levels = 1
+
+    def prepare_strassen_weight(weight,levels=1):
+        """Prepare static combinations; retained bytes grow by (7/4)**levels."""
+        if levels not in (1,2):
+            raise ValueError('Strassen experiments support one or two levels')
+        if not isinstance(weight,CompactWeight):
+            raise TypeError('Strassen experiments require compact ring32 weights')
+        k,n=weight.shape
+        divisor=1<<levels
+        if k%divisor or n%divisor:
+>           raise ValueError('weight dimensions must be divisible by the Strassen subdivision')
+E           ValueError: weight dimensions must be divisible by the Strassen subdivision
+
+rep4gpu/strassen_kernels.py:109: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_phase_graph.py::test_strassen_private_ffn_graph_matches_eager[floor]
+FAILED tests/test_phase_graph.py::test_strassen_private_ffn_graph_matches_eager[probabilistic]
+2 failed, 2 passed, 41 deselected in 31.35s

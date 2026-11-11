@@ -1,0 +1,114 @@
+[
+  {
+    "length": 8192,
+    "batch": 2,
+    "block_tree": false,
+    "four_lanes": false,
+    "graph_ms": 0.021329328793020574
+  },
+  {
+    "length": 8192,
+    "batch": 2,
+    "block_tree": false,
+    "four_lanes": true,
+    "graph_ms": 0.03297807554801724
+  },
+  {
+    "length": 8192,
+    "batch": 2,
+    "block_tree": true,
+    "four_lanes": false,
+    "graph_ms": 0.016640846106554686
+  },
+  {
+    "length": 8192,
+    "batch": 2,
+    "block_tree": true,
+    "four_lanes": true,
+    "graph_ms": 0.03119592751109892
+  },
+  {
+    "length": 32768,
+    "batch": 2,
+    "block_tree": false,
+    "four_lanes": false,
+    "graph_ms": 0.02361066590590165
+  },
+  {
+    "length": 32768,
+    "batch": 2,
+    "block_tree": false,
+    "four_lanes": true,
+    "graph_ms": 0.037129781987194674
+  },
+  {
+    "length": 32768,
+    "batch": 2,
+    "block_tree": true,
+    "four_lanes": false,
+    "graph_ms": 0.01814943199625683
+  },
+  {
+    "length": 32768,
+    "batch": 2,
+    "block_tree": true,
+    "four_lanes": true,
+    "graph_ms": 0.032540752643006085
+  },
+  {
+    "length": 65536,
+    "batch": 2,
+    "block_tree": false,
+    "four_lanes": false,
+    "graph_ms": 0.030258142880582616
+  },
+  {
+    "length": 65536,
+    "batch": 2,
+    "block_tree": false,
+    "four_lanes": true,
+    "graph_ms": 0.04685169211078635
+  },
+  {
+    "length": 65536,
+    "batch": 2,
+    "block_tree": true,
+    "four_lanes": false,
+    "graph_ms": 0.019844119062060715
+  },
+  {
+    "length": 65536,
+    "batch": 2,
+    "block_tree": true,
+    "four_lanes": true,
+    "graph_ms": 0.03444085711473257
+  },
+  {
+    "length": 4194304,
+    "batch": 2,
+    "block_tree": false,
+    "four_lanes": false,
+    "graph_ms": 0.0644950719106765
+  },
+  {
+    "length": 4194304,
+    "batch": 2,
+    "block_tree": false,
+    "four_lanes": true,
+    "graph_ms": 0.11256000045442233
+  },
+  {
+    "length": 4194304,
+    "batch": 2,
+    "block_tree": true,
+    "four_lanes": false,
+    "graph_ms": 0.057845923612251396
+  },
+  {
+    "length": 4194304,
+    "batch": 2,
+    "block_tree": true,
+    "four_lanes": true,
+    "graph_ms": 0.1124268468123441
+  }
+]

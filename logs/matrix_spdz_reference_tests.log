@@ -1,0 +1,13 @@
+...........................                                              [100%]
+=============================== warnings summary ===============================
+tests/test_matrix_spdz_reference.py::test_four_role_mutually_authenticated_tls_matrix_pipeline
+tests/test_matrix_spdz_reference.py::test_four_role_mutually_authenticated_tls_matrix_pipeline
+tests/test_matrix_spdz_reference.py::test_four_role_mutually_authenticated_tls_matrix_pipeline
+tests/test_matrix_spdz_reference.py::test_four_role_mutually_authenticated_tls_matrix_pipeline
+tests/test_matrix_spdz_reference.py::test_four_role_mutually_authenticated_tls_matrix_pipeline
+tests/test_matrix_spdz_reference.py::test_four_role_mutually_authenticated_tls_matrix_pipeline
+  /home/zeb/Desktop/SIV/rep4gpu/transport.py:162: DeprecationWarning: ssl.match_hostname() is deprecated
+    ssl.match_hostname(sock.getpeercert(), peer_hostnames[peer])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+27 passed, 6 warnings in 1.58s

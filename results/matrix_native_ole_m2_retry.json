@@ -1,0 +1,3325 @@
+{
+  "passed": true,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "timed_out": false,
+  "exact_integer_match": true,
+  "width": 2,
+  "prime": 170141183460469231731687303715884105727,
+  "columns": 1,
+  "statistical_security_bits": 40,
+  "statistical_check_budget": 4294967296,
+  "expected_output": [
+    [
+      12,
+      24
+    ],
+    [
+      28,
+      54
+    ]
+  ],
+  "roles": [
+    {
+      "role": 0,
+      "passed": true,
+      "output": [
+        [
+          12,
+          24
+        ],
+        [
+          28,
+          54
+        ]
+      ],
+      "setup_ms": 27.08578100282466,
+      "candidate_generation_ms": 161.52390600473154,
+      "authentication_sacrifice_transpose_ms": 228.44800599705195,
+      "input_mask_preparation_ms": 167.93423400667962,
+      "private_input_sharing_ms": 3.0739630019525066,
+      "checked_multiply_and_output_ms": 20.645525997679215,
+      "all_correlations_consumed": true,
+      "control_bytes_sent": 69417,
+      "control_messages_sent": 381,
+      "online_control_bytes": 16626,
+      "online_control_messages": 90,
+      "statistical_accounting": {
+        "statistical_security_bits": 40,
+        "statistical_check_budget": 4294967296,
+        "key_columns": 1,
+        "linear_check_repetitions": 1,
+        "sacrifice_repetitions": 1,
+        "check_events": 22,
+        "bound": {
+          "numerator": 44,
+          "denominator": 170141183460469231731687303715884105727
+        },
+        "cryptographic_and_backend_assumptions_excluded": true,
+        "security_target_met": false
+      },
+      "native_ole_batches": [
+        {
+          "purpose": "candidate",
+          "batch_id": "2244f45b7d334be475f4505cb180479575e86b0aab66409007290dbd0f071bf6",
+          "length": 4,
+          "calls": 4,
+          "endpoint_count": 6,
+          "endpoint_return_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wall_ms": 142.30518499971367,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 1,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0498412,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0688099,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.068661,
+                    4.3953e-05,
+                    0.000104025
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00292058,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00278791,
+                    4.6067e-05,
+                    8.6021e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00133494,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00120756,
+                    3.8732e-05,
+                    8.8076e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00228145,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00198057,
+                    4.249e-05,
+                    0.000257853
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 2,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0249192,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0560081,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0558622,
+                    4.2059e-05,
+                    0.000102953
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.0064484,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00632162,
+                    4.5536e-05,
+                    8.0491e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00196044,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00175048,
+                    7.2085e-05,
+                    0.000137147
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.0111777,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0102801,
+                    4.6387e-05,
+                    0.000850264
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 3,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0318791,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.057958,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0561576,
+                    0.000135073,
+                    0.00166433
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00741875,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00728821,
+                    4.7189e-05,
+                    8.2505e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00337518,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.003245,
+                    4.7459e-05,
+                    8.1933e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.0018368,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00116512,
+                    4.2449e-05,
+                    0.000628448
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 0,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0312564,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0621796,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0620855,
+                    3.5827e-05,
+                    5.6897e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00125142,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00115721,
+                    3.8252e-05,
+                    5.5284e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00122146,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00112887,
+                    3.9083e-05,
+                    5.2819e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00204597,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00195397,
+                    3.5927e-05,
+                    5.5394e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 0,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0243563,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0664836,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0660891,
+                    0.000145473,
+                    0.000247885
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00511554,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00500591,
+                    4.0646e-05,
+                    6.8117e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.0013239,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00121339,
+                    4.0105e-05,
+                    6.9791e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.0027685,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00247408,
+                    3.1579e-05,
+                    0.000262131
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 0,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0433849,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0482978,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0481968,
+                    3.6338e-05,
+                    6.3359e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.0012836,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00118578,
+                    3.5818e-05,
+                    6.1194e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00129185,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00119278,
+                    3.6138e-05,
+                    6.2287e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00202844,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00120737,
+                    3.1679e-05,
+                    0.000788589
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "authenticate",
+          "batch_id": "2d4a10c1ca26ea234ae47ebd5977e0aabc8c741905005c8e7d16b3b9428406ad",
+          "length": 22,
+          "calls": 2,
+          "endpoint_count": 6,
+          "endpoint_return_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wall_ms": 144.74372599943308,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 1,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0319321,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0747173,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0745226,
+                    5.3179e-05,
+                    0.000140173
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00403356,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00264097,
+                    4.9603e-05,
+                    0.0013421
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 2,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0261003,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.080465,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0802844,
+                    4.818e-05,
+                    0.000130234
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00462814,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00388288,
+                    4.7268e-05,
+                    0.000696917
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 3,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0317631,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0821787,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0816704,
+                    4.4613e-05,
+                    0.000461866
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00274723,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00270263,
+                    2.5157e-05,
+                    1.8435e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 0,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0210324,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0767565,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0766315,
+                    5.4392e-05,
+                    6.8579e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00400535,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00349636,
+                    0.00042674,
+                    8.034e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 0,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0153985,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0840699,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0839717,
+                    4.0375e-05,
+                    5.6386e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00814729,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.007687,
+                    4.5545e-05,
+                    0.000413616
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 0,
+              "ole_role": 1,
+              "context_setup_seconds": 0.00775743,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0814617,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0811222,
+                    0.000214703,
+                    0.000123501
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00686971,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0067704,
+                    2.0348e-05,
+                    7.7425e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "input-owner0",
+          "batch_id": "c6456fc1b7fab695c5c541119666debb1bc1745313ebce96e07a5875f8443cb1",
+          "length": 4,
+          "calls": 2,
+          "endpoint_count": 3,
+          "endpoint_return_codes": [
+            0,
+            0,
+            0
+          ],
+          "wall_ms": 68.74842999968678,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 1,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0190995,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0168492,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0167849,
+                    3.2671e-05,
+                    3.0377e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00108056,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00102633,
+                    3.0768e-05,
+                    2.2813e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 2,
+              "ole_role": 2,
+              "context_setup_seconds": 0.00622428,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0170684,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0169674,
+                    3.7701e-05,
+                    6.1996e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00131657,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00122492,
+                    3.4164e-05,
+                    5.6697e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 3,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0198491,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0165222,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0164773,
+                    2.5388e-05,
+                    1.8114e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00090144,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000852167,
+                    3.1119e-05,
+                    1.7663e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "input-owner1",
+          "batch_id": "b3c19cd2b4d5ce9a6dc68c554a28b926fb2ad859e5dd3f24590e60d1aeecbb47",
+          "length": 4,
+          "calls": 2,
+          "endpoint_count": 1,
+          "endpoint_return_codes": [
+            0
+          ],
+          "wall_ms": 66.98570499429479,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 0,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0154784,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0180183,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0179631,
+                    2.0148e-05,
+                    3.4014e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.000820058,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000768752,
+                    2.0969e-05,
+                    2.9625e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "transport_authenticated": true,
+      "evidence": {
+        "test_only": true,
+        "privacy_reviewed": false,
+        "security_target_met": false,
+        "central_trusted_fixture_used": false
+      }
+    },
+    {
+      "role": 1,
+      "passed": true,
+      "output": [
+        [
+          12,
+          24
+        ],
+        [
+          28,
+          54
+        ]
+      ],
+      "setup_ms": 29.436657998303417,
+      "candidate_generation_ms": 160.88868500082754,
+      "authentication_sacrifice_transpose_ms": 228.06213100557216,
+      "input_mask_preparation_ms": 167.36253099952592,
+      "private_input_sharing_ms": 2.9942340042907745,
+      "checked_multiply_and_output_ms": 21.242244998575188,
+      "all_correlations_consumed": true,
+      "control_bytes_sent": 69417,
+      "control_messages_sent": 381,
+      "online_control_bytes": 16626,
+      "online_control_messages": 90,
+      "statistical_accounting": {
+        "statistical_security_bits": 40,
+        "statistical_check_budget": 4294967296,
+        "key_columns": 1,
+        "linear_check_repetitions": 1,
+        "sacrifice_repetitions": 1,
+        "check_events": 22,
+        "bound": {
+          "numerator": 44,
+          "denominator": 170141183460469231731687303715884105727
+        },
+        "cryptographic_and_backend_assumptions_excluded": true,
+        "security_target_met": false
+      },
+      "native_ole_batches": [
+        {
+          "purpose": "candidate",
+          "batch_id": "2244f45b7d334be475f4505cb180479575e86b0aab66409007290dbd0f071bf6",
+          "length": 4,
+          "calls": 4,
+          "endpoint_count": 6,
+          "endpoint_return_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wall_ms": 146.26646100077778,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 1,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0372135,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0724471,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0723463,
+                    3.6719e-05,
+                    6.3198e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00293123,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00282931,
+                    3.8803e-05,
+                    6.2226e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00133495,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00123662,
+                    3.2511e-05,
+                    6.5222e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00230798,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00203516,
+                    1.7613e-05,
+                    0.000254637
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 0,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0323865,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0668375,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0666743,
+                    4.274e-05,
+                    0.000119374
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00124529,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00111918,
+                    4.279e-05,
+                    8.2615e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00122463,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00110598,
+                    4.0496e-05,
+                    7.7565e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00258345,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00193334,
+                    4.1758e-05,
+                    0.00060781
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 2,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0382021,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0406707,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.040523,
+                    4.4324e-05,
+                    0.000102462
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00288622,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00275822,
+                    4.4754e-05,
+                    8.2635e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00839721,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00826828,
+                    4.4212e-05,
+                    8.4208e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00186793,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0012058,
+                    4.287e-05,
+                    0.00061859
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 3,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0144639,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0555959,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0554389,
+                    4.2369e-05,
+                    0.000112611
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00457313,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00110721,
+                    4.1377e-05,
+                    0.00342372
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00444667,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00432664,
+                    4.1969e-05,
+                    7.7064e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00191968,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00110528,
+                    4.1197e-05,
+                    0.000772558
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 1,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0118684,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0718258,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.071732,
+                    3.5767e-05,
+                    5.6876e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00129516,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00119863,
+                    3.6328e-05,
+                    5.9501e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00238869,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00226049,
+                    3.8573e-05,
+                    8.9037e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00870495,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00814297,
+                    7.0141e-05,
+                    0.000491081
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 1,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0275098,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.051976,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0518434,
+                    3.1969e-05,
+                    9.9647e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00100137,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000947126,
+                    2.2873e-05,
+                    3.0637e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00117172,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00104614,
+                    3.2792e-05,
+                    9.1972e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00196846,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00119765,
+                    3.3192e-05,
+                    0.000736982
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "authenticate",
+          "batch_id": "2d4a10c1ca26ea234ae47ebd5977e0aabc8c741905005c8e7d16b3b9428406ad",
+          "length": 22,
+          "calls": 2,
+          "endpoint_count": 6,
+          "endpoint_return_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wall_ms": 146.36157899803948,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 1,
+              "ole_role": 1,
+              "context_setup_seconds": 0.030468,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0758897,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0757783,
+                    4.5115e-05,
+                    6.3759e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00279267,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00268985,
+                    4.1788e-05,
+                    5.9943e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 0,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0366537,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0759187,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.075719,
+                    6.2888e-05,
+                    0.000135153
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00466485,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00341967,
+                    0.000439313,
+                    0.000804328
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 2,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0276831,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0794614,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.079297,
+                    5.0215e-05,
+                    0.00011243
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00340027,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00268369,
+                    4.298e-05,
+                    0.000672772
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 3,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0177923,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0775534,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0773791,
+                    5.6636e-05,
+                    0.000115927
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00719663,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00522757,
+                    0.000857918,
+                    0.00110994
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 1,
+              "ole_role": 1,
+              "context_setup_seconds": 0.028673,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0641813,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0638713,
+                    3.9083e-05,
+                    0.000269636
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.0056842,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00523404,
+                    7.3137e-05,
+                    0.000375705
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 1,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0313129,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0725692,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0724092,
+                    3.9434e-05,
+                    0.000118552
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.0025747,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00252748,
+                    2.2272e-05,
+                    2.3794e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "input-owner0",
+          "batch_id": "c6456fc1b7fab695c5c541119666debb1bc1745313ebce96e07a5875f8443cb1",
+          "length": 4,
+          "calls": 2,
+          "endpoint_count": 1,
+          "endpoint_return_codes": [
+            0
+          ],
+          "wall_ms": 64.65408400254091,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 1,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0175904,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0168478,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0167832,
+                    2.9365e-05,
+                    3.3122e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00108227,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00102699,
+                    2.3715e-05,
+                    3.0517e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "input-owner1",
+          "batch_id": "b3c19cd2b4d5ce9a6dc68c554a28b926fb2ad859e5dd3f24590e60d1aeecbb47",
+          "length": 4,
+          "calls": 2,
+          "endpoint_count": 3,
+          "endpoint_return_codes": [
+            0,
+            0,
+            0
+          ],
+          "wall_ms": 70.70715200097766,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 0,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0115232,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0176198,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0175616,
+                    2.712e-05,
+                    2.9756e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.000818325,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000767619,
+                    2.7191e-05,
+                    2.2993e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 2,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0102488,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0173358,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0172812,
+                    2.9305e-05,
+                    2.3975e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.000815369,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000761016,
+                    2.8464e-05,
+                    2.5117e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 3,
+              "ole_role": 2,
+              "context_setup_seconds": 0.00747923,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.016318,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0162609,
+                    3.1169e-05,
+                    2.4465e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00104166,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000987531,
+                    3.0397e-05,
+                    2.3213e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "transport_authenticated": true,
+      "evidence": {
+        "test_only": true,
+        "privacy_reviewed": false,
+        "security_target_met": false,
+        "central_trusted_fixture_used": false
+      }
+    },
+    {
+      "role": 2,
+      "passed": true,
+      "output": [
+        [
+          12,
+          24
+        ],
+        [
+          28,
+          54
+        ]
+      ],
+      "setup_ms": 30.15604699612595,
+      "candidate_generation_ms": 158.66273199935677,
+      "authentication_sacrifice_transpose_ms": 228.0369250001968,
+      "input_mask_preparation_ms": 167.7026890029083,
+      "private_input_sharing_ms": 2.9757690062979236,
+      "checked_multiply_and_output_ms": 22.099923000496347,
+      "all_correlations_consumed": true,
+      "control_bytes_sent": 68562,
+      "control_messages_sent": 378,
+      "online_control_bytes": 16626,
+      "online_control_messages": 90,
+      "statistical_accounting": {
+        "statistical_security_bits": 40,
+        "statistical_check_budget": 4294967296,
+        "key_columns": 1,
+        "linear_check_repetitions": 1,
+        "sacrifice_repetitions": 1,
+        "check_events": 22,
+        "bound": {
+          "numerator": 44,
+          "denominator": 170141183460469231731687303715884105727
+        },
+        "cryptographic_and_backend_assumptions_excluded": true,
+        "security_target_met": false
+      },
+      "native_ole_batches": [
+        {
+          "purpose": "candidate",
+          "batch_id": "2244f45b7d334be475f4505cb180479575e86b0aab66409007290dbd0f071bf6",
+          "length": 4,
+          "calls": 4,
+          "endpoint_count": 6,
+          "endpoint_return_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wall_ms": 144.96911899914267,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 2,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0298729,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0544359,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0543382,
+                    3.4926e-05,
+                    6.1405e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00645565,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00613877,
+                    0.000259436,
+                    5.6716e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00190586,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00173423,
+                    8.3626e-05,
+                    8.7184e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.010461,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0103619,
+                    3.8212e-05,
+                    6.0113e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 2,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0509942,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0414966,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0413998,
+                    3.6929e-05,
+                    5.854e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00290002,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00280031,
+                    3.7771e-05,
+                    6.0904e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00839048,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00829039,
+                    3.7159e-05,
+                    6.2357e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00132254,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00122839,
+                    3.6238e-05,
+                    5.7398e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 0,
+              "ole_role": 2,
+              "context_setup_seconds": 0.041886,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0656748,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0652049,
+                    5.323e-05,
+                    0.000415639
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00499019,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00484358,
+                    4.9693e-05,
+                    9.611e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00132815,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00118571,
+                    4.6787e-05,
+                    9.4969e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.002509,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00241673,
+                    3.4645e-05,
+                    5.6826e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 1,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0228198,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0731016,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0729631,
+                    4.275e-05,
+                    9.4728e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00128549,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00116327,
+                    4.3893e-05,
+                    7.7725e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00239176,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00223478,
+                    4.4703e-05,
+                    0.00011175
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00836165,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00815266,
+                    0.000157646,
+                    5.0464e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 3,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0383727,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0521772,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0520813,
+                    3.5286e-05,
+                    5.9832e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00128185,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00118493,
+                    3.5597e-05,
+                    6.0754e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00129419,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00119274,
+                    3.9594e-05,
+                    6.1325e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00114886,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0010973,
+                    2.697e-05,
+                    2.4085e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 2,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0446231,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0509716,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0508659,
+                    3.6719e-05,
+                    6.7897e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00122481,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00117737,
+                    2.16e-05,
+                    2.4967e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00092319,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000879369,
+                    1.7743e-05,
+                    2.5488e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.000742582,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000698981,
+                    2.0318e-05,
+                    2.2893e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "authenticate",
+          "batch_id": "2d4a10c1ca26ea234ae47ebd5977e0aabc8c741905005c8e7d16b3b9428406ad",
+          "length": 22,
+          "calls": 2,
+          "endpoint_count": 6,
+          "endpoint_return_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wall_ms": 150.24521000304958,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 2,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0252185,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0825129,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0824072,
+                    4.1508e-05,
+                    6.2858e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00404374,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00394001,
+                    4.0556e-05,
+                    6.2306e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 2,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0413541,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0814095,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0812961,
+                    4.1898e-05,
+                    6.9541e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00283086,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00273379,
+                    3.6879e-05,
+                    5.9071e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 0,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0226314,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0825759,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0824206,
+                    4.5605e-05,
+                    0.000107872
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00877298,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00763649,
+                    5.2899e-05,
+                    0.00108275
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 1,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0429392,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0616457,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0612702,
+                    0.000140884,
+                    0.000233177
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00650831,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00515247,
+                    4.1387e-05,
+                    0.00131336
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 3,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0305009,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0743581,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0735558,
+                    0.000403396,
+                    0.000397516
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00556232,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00483832,
+                    4.3061e-05,
+                    0.000679484
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 2,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0236046,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0710728,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0703101,
+                    0.000149661,
+                    0.000610605
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.0048953,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00483406,
+                    2.3364e-05,
+                    3.6809e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "input-owner0",
+          "batch_id": "c6456fc1b7fab695c5c541119666debb1bc1745313ebce96e07a5875f8443cb1",
+          "length": 4,
+          "calls": 2,
+          "endpoint_count": 1,
+          "endpoint_return_codes": [
+            0
+          ],
+          "wall_ms": 33.06872700341046,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 2,
+              "ole_role": 1,
+              "context_setup_seconds": 0.00826529,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0168376,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0166763,
+                    3.3734e-05,
+                    0.000126286
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00201469,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00118676,
+                    3.1018e-05,
+                    0.000795772
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "input-owner1",
+          "batch_id": "b3c19cd2b4d5ce9a6dc68c554a28b926fb2ad859e5dd3f24590e60d1aeecbb47",
+          "length": 4,
+          "calls": 2,
+          "endpoint_count": 1,
+          "endpoint_return_codes": [
+            0
+          ],
+          "wall_ms": 66.43280900607351,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 2,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0125315,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.017568,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0175127,
+                    2.2142e-05,
+                    3.1589e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.000816631,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000762119,
+                    2.2271e-05,
+                    3.1179e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "transport_authenticated": true,
+      "evidence": {
+        "test_only": true,
+        "privacy_reviewed": false,
+        "security_target_met": false,
+        "central_trusted_fixture_used": false
+      }
+    },
+    {
+      "role": 3,
+      "passed": true,
+      "output": [
+        [
+          12,
+          24
+        ],
+        [
+          28,
+          54
+        ]
+      ],
+      "setup_ms": 30.40328999486519,
+      "candidate_generation_ms": 159.56342999561457,
+      "authentication_sacrifice_transpose_ms": 228.6677169977338,
+      "input_mask_preparation_ms": 167.1625570015749,
+      "private_input_sharing_ms": 3.0235789963626303,
+      "checked_multiply_and_output_ms": 21.200686998781748,
+      "all_correlations_consumed": true,
+      "control_bytes_sent": 68562,
+      "control_messages_sent": 378,
+      "online_control_bytes": 16626,
+      "online_control_messages": 90,
+      "statistical_accounting": {
+        "statistical_security_bits": 40,
+        "statistical_check_budget": 4294967296,
+        "key_columns": 1,
+        "linear_check_repetitions": 1,
+        "sacrifice_repetitions": 1,
+        "check_events": 22,
+        "bound": {
+          "numerator": 44,
+          "denominator": 170141183460469231731687303715884105727
+        },
+        "cryptographic_and_backend_assumptions_excluded": true,
+        "security_target_met": false
+      },
+      "native_ole_batches": [
+        {
+          "purpose": "candidate",
+          "batch_id": "2244f45b7d334be475f4505cb180479575e86b0aab66409007290dbd0f071bf6",
+          "length": 4,
+          "calls": 4,
+          "endpoint_count": 6,
+          "endpoint_return_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wall_ms": 155.30756099906284,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 3,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0440436,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0558777,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0542104,
+                    0.000125445,
+                    0.00153982
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00743291,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00733284,
+                    4.0176e-05,
+                    5.8379e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00337713,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00327702,
+                    3.9223e-05,
+                    5.9932e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00129889,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00120144,
+                    3.5105e-05,
+                    6.1686e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 3,
+              "ole_role": 1,
+              "context_setup_seconds": 0.016075,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0553715,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0552784,
+                    3.5697e-05,
+                    5.6336e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00123606,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00114464,
+                    3.4785e-05,
+                    5.5585e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00779764,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.007705,
+                    3.5477e-05,
+                    5.6566e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.0012193,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00112888,
+                    3.4725e-05,
+                    5.5194e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 3,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0499634,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0532212,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0530836,
+                    3.181e-05,
+                    0.000104946
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00127063,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00115674,
+                    3.201e-05,
+                    8.1082e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00130851,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00118351,
+                    3.2732e-05,
+                    9.1682e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00111276,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00105975,
+                    2.3263e-05,
+                    2.9265e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 0,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0366316,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.049623,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0494738,
+                    4.4073e-05,
+                    0.000103845
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.0012769,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0011481,
+                    4.227e-05,
+                    8.5871e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00129789,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00116999,
+                    4.3101e-05,
+                    8.4238e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00125187,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00115763,
+                    3.6038e-05,
+                    5.7688e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 1,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0400303,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0517072,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0516135,
+                    3.4825e-05,
+                    5.7748e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00104989,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000995336,
+                    2.9686e-05,
+                    2.3995e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.00112449,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00102564,
+                    3.744e-05,
+                    6.0995e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00131968,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00121849,
+                    3.7059e-05,
+                    6.3349e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 2,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0291408,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0501705,
+                  "sent_bytes": 74394,
+                  "received_bytes": 40208,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0500175,
+                    4.3702e-05,
+                    0.000108503
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00117648,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00112546,
+                    2.7381e-05,
+                    2.2813e-05
+                  ]
+                },
+                {
+                  "index": 2,
+                  "seconds": 0.000919945,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000876884,
+                    2.3013e-05,
+                    1.9556e-05
+                  ]
+                },
+                {
+                  "index": 3,
+                  "seconds": 0.00074156,
+                  "sent_bytes": 65530,
+                  "received_bytes": 651,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000699822,
+                    2.3364e-05,
+                    1.7974e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "authenticate",
+          "batch_id": "2d4a10c1ca26ea234ae47ebd5977e0aabc8c741905005c8e7d16b3b9428406ad",
+          "length": 22,
+          "calls": 2,
+          "endpoint_count": 6,
+          "endpoint_return_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wall_ms": 186.78978499519872,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 3,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0487115,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0832407,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0827858,
+                    3.764e-05,
+                    0.000415089
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00280706,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00275985,
+                    2.2091e-05,
+                    2.3925e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 3,
+              "ole_role": 1,
+              "context_setup_seconds": 0.042085,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0793289,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0789347,
+                    0.00033072,
+                    6.1666e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00652182,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00528821,
+                    3.9433e-05,
+                    0.0011923
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 2,
+              "ordered_receiver": 3,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0561871,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0734477,
+                  "sent_bytes": 41360,
+                  "received_bytes": 220986,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0727083,
+                    5.0765e-05,
+                    0.000686748
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00498933,
+                  "sent_bytes": 1803,
+                  "received_bytes": 212122,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00489231,
+                    3.7501e-05,
+                    5.7798e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 0,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0259828,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0805171,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.080215,
+                    0.000164258,
+                    0.000136506
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00771927,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00638607,
+                    0.000356108,
+                    0.000975599
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 1,
+              "ole_role": 2,
+              "context_setup_seconds": 0.0439087,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0699791,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0698911,
+                    4.5095e-05,
+                    4.1518e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00262868,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00258487,
+                    2.5357e-05,
+                    1.7824e-05
+                  ]
+                }
+              ]
+            },
+            {
+              "ordered_sender": 3,
+              "ordered_receiver": 2,
+              "ole_role": 2,
+              "context_setup_seconds": 0.039084,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0682526,
+                  "sent_bytes": 220986,
+                  "received_bytes": 41360,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0676832,
+                    0.000145021,
+                    0.000422713
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00495362,
+                  "sent_bytes": 212122,
+                  "received_bytes": 1803,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.00489268,
+                    3.0758e-05,
+                    2.9034e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "input-owner0",
+          "batch_id": "c6456fc1b7fab695c5c541119666debb1bc1745313ebce96e07a5875f8443cb1",
+          "length": 4,
+          "calls": 2,
+          "endpoint_count": 1,
+          "endpoint_return_codes": [
+            0
+          ],
+          "wall_ms": 65.56246599939186,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 0,
+              "ordered_receiver": 3,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0201449,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.0158886,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0158401,
+                    2.1209e-05,
+                    2.5488e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.000905147,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000852007,
+                    2.6761e-05,
+                    2.5307e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "purpose": "input-owner1",
+          "batch_id": "b3c19cd2b4d5ce9a6dc68c554a28b926fb2ad859e5dd3f24590e60d1aeecbb47",
+          "length": 4,
+          "calls": 2,
+          "endpoint_count": 1,
+          "endpoint_return_codes": [
+            0
+          ],
+          "wall_ms": 35.37087299628183,
+          "lower_layer_checks_verified": true,
+          "transport_authenticated": true,
+          "privacy_reviewed": false,
+          "security_target_met": false,
+          "endpoint_metrics": [
+            {
+              "ordered_sender": 1,
+              "ordered_receiver": 3,
+              "ole_role": 1,
+              "context_setup_seconds": 0.0101002,
+              "context_sent_bytes": 176,
+              "context_received_bytes": 176,
+              "calls": [
+                {
+                  "index": 0,
+                  "seconds": 0.015994,
+                  "sent_bytes": 40208,
+                  "received_bytes": 74394,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.0159372,
+                    2.3805e-05,
+                    3.1389e-05
+                  ]
+                },
+                {
+                  "index": 1,
+                  "seconds": 0.00104302,
+                  "sent_bytes": 651,
+                  "received_bytes": 65530,
+                  "fresh_rot_choices": 508,
+                  "phase_seconds": [
+                    0.000986529,
+                    2.5678e-05,
+                    3.0037e-05
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "transport_authenticated": true,
+      "evidence": {
+        "test_only": true,
+        "privacy_reviewed": false,
+        "security_target_met": false,
+        "central_trusted_fixture_used": false
+      }
+    }
+  ],
+  "actual_worker_process_wall_ms": 2795.994131003681,
+  "coordinator_static_setup_ms": 57.46280099992873,
+  "observed_static_plus_worker_ms": 2853.45693200361,
+  "stage_maximum_ms": {
+    "setup_ms": 30.40328999486519,
+    "candidate_generation_ms": 161.52390600473154,
+    "authentication_sacrifice_transpose_ms": 228.6677169977338,
+    "input_mask_preparation_ms": 167.93423400667962,
+    "private_input_sharing_ms": 3.0739630019525066,
+    "checked_multiply_and_output_ms": 22.099923000496347
+  },
+  "observed_stage_sum_ms": 671.1658340063877,
+  "clear_same_operation_measurements": {
+    "exact_python_field": {
+      "median_ms": 0.003225999535061419,
+      "minimum_ms": 0.0030960000003688037,
+      "maximum_ms": 0.003646993718575686,
+      "samples_ms": [
+        0.003646993718575686,
+        0.0034769982448779047,
+        0.0032960015232674778,
+        0.0032759999157860875,
+        0.0032860043575055897,
+        0.003225999535061419,
+        0.0032860043575055897,
+        0.0033660035114735365,
+        0.0031860035960562527,
+        0.0031760064302943647,
+        0.0031859963200986385,
+        0.0031559975468553603,
+        0.0031860035960562527,
+        0.003225999535061419,
+        0.003215995093341917,
+        0.003225999535061419,
+        0.003136003215331584,
+        0.0031050003599375486,
+        0.0030960000003688037,
+        0.003225999535061419,
+        0.003116001607850194,
+        0.0031960007618181407,
+        0.0031559975468553603,
+        0.0032559983083046973,
+        0.0033059986890293658
+      ],
+      "warmups": 3,
+      "minimum_requested_warmups": 3,
+      "minimum_gpu_warmup_ms": 0.0,
+      "actual_warmup_wall_ms": 0.02810300065902993
+    },
+    "fp32_torch": {
+      "median_ms": 0.0020229999790899456,
+      "minimum_ms": 0.0019430008251219988,
+      "maximum_ms": 0.0038470025174319744,
+      "samples_ms": [
+        0.002373999450355768,
+        0.0038470025174319744,
+        0.002163993485737592,
+        0.0020139996195212007,
+        0.001963999238796532,
+        0.0021039959392510355,
+        0.0021040032152086496,
+        0.002043001586571336,
+        0.0020130028133280575,
+        0.0020139996195212007,
+        0.0020139996195212007,
+        0.002034001227002591,
+        0.002054002834483981,
+        0.002034001227002591,
+        0.002043998392764479,
+        0.002154003595933318,
+        0.002034001227002591,
+        0.0020229999790899456,
+        0.0020129955373704433,
+        0.0019930012058466673,
+        0.0020130028133280575,
+        0.0019430008251219988,
+        0.001982996764127165,
+        0.0019939980120398104,
+        0.0020139996195212007
+      ],
+      "warmups": 3,
+      "minimum_requested_warmups": 3,
+      "minimum_gpu_warmup_ms": 0.0,
+      "actual_warmup_wall_ms": 0.19282099674455822
+    },
+    "fp32_numpy": {
+      "median_ms": 0.0014219986042007804,
+      "minimum_ms": 0.0013620010577142239,
+      "maximum_ms": 0.0017029960872605443,
+      "samples_ms": [
+        0.0017029960872605443,
+        0.0015030018403194845,
+        0.0014229954103939235,
+        0.0013919998309575021,
+        0.0014320030459202826,
+        0.0014420002116821706,
+        0.0014219986042007804,
+        0.0014329998521134257,
+        0.0013830067473463714,
+        0.0013730023056268692,
+        0.001362997863907367,
+        0.0014129982446320355,
+        0.0014219986042007804,
+        0.0013620010577142239,
+        0.0013919998309575021,
+        0.0014129982446320355,
+        0.0014830002328380942,
+        0.0014029938029125333,
+        0.0014429970178753138,
+        0.0014830002328380942,
+        0.0014229954103939235,
+        0.0014129982446320355,
+        0.001362997863907367,
+        0.001453001459594816,
+        0.001443004293832928
+      ],
+      "warmups": 3,
+      "minimum_requested_warmups": 3,
+      "minimum_gpu_warmup_ms": 0.0,
+      "actual_warmup_wall_ms": 0.05869999586138874
+    }
+  },
+  "provisional_worker_wall_slowdowns": {
+    "exact_python_field": 866706.3031521636,
+    "fp32_torch": 1382102.8966403995,
+    "fp32_numpy": 1966242.5284693867
+  },
+  "source_stable": true,
+  "source_sha256_before": {
+    "/home/zeb/Desktop/SIV/scripts/run_matrix_native_ole.py": "66dc57c251495eb457bf348e5b3ff82cb58703a60a139c119167b4b3e6f4b951",
+    "rep4gpu/matrix_native_ole.py": "b665f852de8df1a5fce733320c60d3e598169bcbf331ad0f458c3f54a16ef27c",
+    "rep4gpu/matrix_spdz_reference.py": "504edf6f84a7f4c97c4ba27d66eca4a231b5e842ed60c2ac19727375324a18ce",
+    "rep4gpu/transport.py": "bffaa7d490d1e7ed2ee3fcc7ec696986d880e94f19d0d044e6c3434df9475c1f",
+    "rep4gpu/spdz_distributed.py": "2e0e2097da8699f740521071106bd3cd0f5b988e1b9a61615e6243145ce74759",
+    "native/matrix_vope/direct_ole.hpp": "da569173f90389d31300cc9a93ab5597d3e713a3ca0a2db3e413085e08950fc1",
+    "native/matrix_vope/direct_ole.cpp": "15fbfc0ade775f59f30fa08b5d3aefca99ef82a2f2b00bb831b3c6e923771cfe",
+    "native/matrix_vope/direct_ole_io.py": "862752ed0f7fcd60c179a81c46d985df2e7a3d6e695d828e031dfe5085ca75ed",
+    "native/matrix_vope/tls_io.h": "3e6b0e5acf972933c9b3d5de38be9e77047c6067081d8895a8b31625fbc90caf",
+    "native/matrix_vope/tls_io.cpp": "3039dba5c82e20c1458ed15780e11d2fe89b6ad81684655e6c8cc1eb6713a858",
+    "native/matrix_vope/wolverine_base.hpp": "d8f296aec37eabacc6ed246f830118b834db3dab2da5db795a883b634817254a",
+    "native/matrix_vope/seeded_vole.hpp": "153ab0d8b3f9cfcd1b7ac1fe155d5135e1d28f893a7f45fda612145753dcb388",
+    "native/matrix_vope/fp127.h": "ef7d6caf34031b26d586022d979fea148bc34ca77691a53bd7754a8229a6cdc3",
+    "native/matrix_vope/fp127ext4.h": "97859cf746d6cfe05de75e6bc5fe5684d4e37129cd1b5ff865501a6176969d0d",
+    "native/matrix_vope/build_direct_ole_tls.py": "d4ad101c4e59e9e6607a245a995c0bc64109f065b6b74632025063e0ba2f2fb3",
+    "/home/zeb/Desktop/SIV/work/direct_ole_tls/build-manifest.json": "2f1f8896b0a8de41a4f8edb36f8cb9ad460b5f65c8c41db4f46ae2ef676dee1f",
+    "native_binary": "1591d3fc2d715d0df325483aa56b6b7c73917073f56adab6519680ca5f4dfdf9"
+  },
+  "source_sha256": {
+    "/home/zeb/Desktop/SIV/scripts/run_matrix_native_ole.py": "66dc57c251495eb457bf348e5b3ff82cb58703a60a139c119167b4b3e6f4b951",
+    "rep4gpu/matrix_native_ole.py": "b665f852de8df1a5fce733320c60d3e598169bcbf331ad0f458c3f54a16ef27c",
+    "rep4gpu/matrix_spdz_reference.py": "504edf6f84a7f4c97c4ba27d66eca4a231b5e842ed60c2ac19727375324a18ce",
+    "rep4gpu/transport.py": "bffaa7d490d1e7ed2ee3fcc7ec696986d880e94f19d0d044e6c3434df9475c1f",
+    "rep4gpu/spdz_distributed.py": "2e0e2097da8699f740521071106bd3cd0f5b988e1b9a61615e6243145ce74759",
+    "native/matrix_vope/direct_ole.hpp": "da569173f90389d31300cc9a93ab5597d3e713a3ca0a2db3e413085e08950fc1",
+    "native/matrix_vope/direct_ole.cpp": "15fbfc0ade775f59f30fa08b5d3aefca99ef82a2f2b00bb831b3c6e923771cfe",
+    "native/matrix_vope/direct_ole_io.py": "862752ed0f7fcd60c179a81c46d985df2e7a3d6e695d828e031dfe5085ca75ed",
+    "native/matrix_vope/tls_io.h": "3e6b0e5acf972933c9b3d5de38be9e77047c6067081d8895a8b31625fbc90caf",
+    "native/matrix_vope/tls_io.cpp": "3039dba5c82e20c1458ed15780e11d2fe89b6ad81684655e6c8cc1eb6713a858",
+    "native/matrix_vope/wolverine_base.hpp": "d8f296aec37eabacc6ed246f830118b834db3dab2da5db795a883b634817254a",
+    "native/matrix_vope/seeded_vole.hpp": "153ab0d8b3f9cfcd1b7ac1fe155d5135e1d28f893a7f45fda612145753dcb388",
+    "native/matrix_vope/fp127.h": "ef7d6caf34031b26d586022d979fea148bc34ca77691a53bd7754a8229a6cdc3",
+    "native/matrix_vope/fp127ext4.h": "97859cf746d6cfe05de75e6bc5fe5684d4e37129cd1b5ff865501a6176969d0d",
+    "native/matrix_vope/build_direct_ole_tls.py": "d4ad101c4e59e9e6607a245a995c0bc64109f065b6b74632025063e0ba2f2fb3",
+    "/home/zeb/Desktop/SIV/work/direct_ole_tls/build-manifest.json": "2f1f8896b0a8de41a4f8edb36f8cb9ad460b5f65c8c41db4f46ae2ef676dee1f",
+    "native_binary": "1591d3fc2d715d0df325483aa56b6b7c73917073f56adab6519680ca5f4dfdf9"
+  },
+  "experimental": true,
+  "test_only": true,
+  "privacy_reviewed": false,
+  "security_target_met": false,
+  "central_trusted_fixture_used": false,
+  "measurement": "Four actual CPU/TLS role processes and genuine native two-party OLE endpoints; no central key/share holder or trusted oracle. Functional experimental run, not qualified private preprocessing or performance target evidence.",
+  "provisioning": "Public test matrices are known to the coordinator; plaintext files are assigned only to owners0/1. Keys, random candidate shares, masks and native endpoint outputs are generated/read only inside each role. Same-user host is not hostile-party OS isolation."
+}

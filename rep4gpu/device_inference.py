@@ -13,12 +13,16 @@ class DeviceInferenceParty(DeviceParty):
     or ceiling. The caller must establish that range before execution.
     """
     def __init__(self, party, transport, seeds, device='cuda', *, bits=64,
-                 binary_bits=None, optimized=True, gpu_open=False, rounding='floor'):
+                 binary_bits=None, optimized=True, gpu_open=False, rounding='floor',
+                 bounded_sign=False, sparse_products=False, narrow_products=False):
         if rounding not in ('floor', 'probabilistic'):
             raise ValueError("rounding must be 'floor' or 'probabilistic'")
         self.optimized = optimized
         self.gpu_open = gpu_open
         self.rounding = rounding
+        self.bounded_sign = bool(bounded_sign)
+        self.sparse_products = bool(sparse_products)
+        self.narrow_products = bool(narrow_products)
         super().__init__(party, transport, seeds, device=device, bits=bits,
                          binary_bits=bits if binary_bits is None else binary_bits,
                          prg_batch=optimized)
@@ -46,7 +50,12 @@ class DeviceInferenceParty(DeviceParty):
     def trunc_relu(self, x, shift):
         if self.rounding == 'probabilistic':
             result = self.trunc(x, shift)
-            return self.mul(result, self.sub(self.public(1, like=result), self.sign_bit(result)))
+            if self.bounded_sign and shift > 0:
+                from .bounded_activation import posttrunc_sign
+                sign = posttrunc_sign(self, result, shift)
+            else:
+                sign = self.sign_bit(result)
+            return self.mul(result, self.sub(self.public(1, like=result), sign))
         from .exact_truncation import trunc_relu
         return trunc_relu(self, x, shift, **self._conversion_options())
 
@@ -59,6 +68,13 @@ class DeviceInferenceParty(DeviceParty):
         return sign_bit_packed(self, x, carry_impl=carry_bits, convert_impl=weighted_b2a_gpu)
 
     def prepare_weight_share(self, weight, *, storage='limbs'):
+        if storage == 'strassen32':
+            if self.bits != 32 or weight.binary:
+                raise ValueError('strassen32 weights require arithmetic ring32 shares')
+            from .runtime import PreparedMatrix
+            from .strassen_kernels import prepare_strassen_weight
+            packed = super().prepare_weight_share(weight,storage='words32')
+            return PreparedMatrix(tuple(prepare_strassen_weight(part,levels=1) for part in packed.parts))
         if storage != 'five32':
             return super().prepare_weight_share(weight, storage=storage)
         if self.bits != 32 or weight.binary:
@@ -68,7 +84,12 @@ class DeviceInferenceParty(DeviceParty):
 
     def matmul(self, x, y):
         from .five_product import FiveWeights, local_products_five
-        if isinstance(y, FiveWeights):
+        from .strassen_kernels import StrassenWeight, local_products_strassen
+        if hasattr(y,'parts') and isinstance(y.parts[0],StrassenWeight):
+            if self.bits != 32 or x.binary or y.binary:
+                raise ValueError('strassen32 multiplication requires arithmetic ring32 shares')
+            local = local_products_strassen(x.parts,y.parts,opaque=self.optimized)
+        elif isinstance(y, FiveWeights):
             if self.bits != 32 or x.binary:
                 raise ValueError('five32 multiplication requires arithmetic ring32 shares')
             if self.optimized:

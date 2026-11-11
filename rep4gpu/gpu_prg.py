@@ -77,6 +77,34 @@ def _quarter(a,b,c,d):
     return a,b,c,d
 
 
+@triton.jit
+def _store_words(OUT, block, words, COUNT:tl.constexpr, BITS:tl.constexpr):
+    # Join axes encode word indices least-significant bit first. Reverse them
+    # so each ChaCha block occupies consecutive output elements.
+    if BITS == 32:
+        a=tl.join(tl.join(words[0],words[1]),tl.join(words[2],words[3]))
+        b=tl.join(tl.join(words[4],words[5]),tl.join(words[6],words[7]))
+        c=tl.join(tl.join(words[8],words[9]),tl.join(words[10],words[11]))
+        d=tl.join(tl.join(words[12],words[13]),tl.join(words[14],words[15]))
+        values=tl.join(tl.join(a,b),tl.join(c,d)).trans(0,4,3,2,1).reshape((block.shape[0],16))
+        values=values.to(tl.uint64).to(tl.int64)
+        idx=block[:,None]*16+tl.arange(0,16)[None,:]
+    else:
+        v0=words[0].to(tl.uint64)|(words[1].to(tl.uint64)<<32)
+        v1=words[2].to(tl.uint64)|(words[3].to(tl.uint64)<<32)
+        v2=words[4].to(tl.uint64)|(words[5].to(tl.uint64)<<32)
+        v3=words[6].to(tl.uint64)|(words[7].to(tl.uint64)<<32)
+        v4=words[8].to(tl.uint64)|(words[9].to(tl.uint64)<<32)
+        v5=words[10].to(tl.uint64)|(words[11].to(tl.uint64)<<32)
+        v6=words[12].to(tl.uint64)|(words[13].to(tl.uint64)<<32)
+        v7=words[14].to(tl.uint64)|(words[15].to(tl.uint64)<<32)
+        a=tl.join(tl.join(v0,v1),tl.join(v2,v3))
+        b=tl.join(tl.join(v4,v5),tl.join(v6,v7))
+        values=tl.join(a,b).trans(0,3,2,1).reshape((block.shape[0],8)).to(tl.int64)
+        idx=block[:,None]*8+tl.arange(0,8)[None,:]
+    tl.store(OUT+idx,values,idx<COUNT)
+
+
 @triton.jit(do_not_specialize=["NONCE","BLOCK_START"])
 def _chacha_words(KEY,OUT,NONCE,BLOCK_START,COUNT:tl.constexpr,BITS:tl.constexpr,BLOCK:tl.constexpr):
     block=tl.program_id(0).to(tl.uint64)*BLOCK+tl.arange(0,BLOCK).to(tl.uint64)
@@ -115,15 +143,7 @@ def _chacha_words(KEY,OUT,NONCE,BLOCK_START,COUNT:tl.constexpr,BITS:tl.constexpr
         x3,x4,x9,x14=_quarter(x3,x4,x9,x14)
     words=(x0+s0,x1+s1,x2+s2,x3+s3,x4+s4,x5+s5,x6+s6,x7+s7,
            x8+s8,x9+s9,x10+s10,x11+s11,x12+s12,x13+s13,x14+s14,x15+s15)
-    if BITS==32:
-        for i in tl.static_range(16):
-            idx=block*16+i
-            tl.store(OUT+idx,words[i].to(tl.uint64).to(tl.int64),idx<COUNT)
-    else:
-        for i in tl.static_range(8):
-            idx=block*8+i
-            word=words[2*i].to(tl.uint64)|(words[2*i+1].to(tl.uint64)<<32)
-            tl.store(OUT+idx,word.to(tl.int64),idx<COUNT)
+    _store_words(OUT,block,words,COUNT,BITS)
 
 
 def _generate(key_tensor,nonce,count,bits=64,*,block_start=0):

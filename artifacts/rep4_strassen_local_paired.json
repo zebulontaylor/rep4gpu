@@ -1,0 +1,56 @@
+[
+  {
+    "shape": [
+      128,
+      2048,
+      8192
+    ],
+    "columns": [
+      "baseline_local_products_ms",
+      "strassen1_local_products_ms"
+    ],
+    "pairs": [
+      [
+        5.382655995232718,
+        4.430004680857939
+      ],
+      [
+        5.186048001050949,
+        4.445127089818318
+      ],
+      [
+        5.178367972373962,
+        4.46361603456385
+      ]
+    ],
+    "retained_static_bytes": 352321536,
+    "exact_full_outputs": true
+  },
+  {
+    "shape": [
+      128,
+      8192,
+      2048
+    ],
+    "columns": [
+      "baseline_local_products_ms",
+      "strassen1_local_products_ms"
+    ],
+    "pairs": [
+      [
+        5.448764240040498,
+        4.701665850246654
+      ],
+      [
+        5.313337643941243,
+        4.536092440287272
+      ],
+      [
+        5.295923201243083,
+        4.568120850457086
+      ]
+    ],
+    "retained_static_bytes": 352321536,
+    "exact_full_outputs": true
+  }
+]

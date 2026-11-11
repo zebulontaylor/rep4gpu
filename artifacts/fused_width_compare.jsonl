@@ -1,0 +1,16 @@
+{"n": 8192, "bits": 32, "kernel": "masked", "name": "old", "ms": 0.001707875735103597}
+{"n": 8192, "bits": 32, "kernel": "assemble", "name": "old", "ms": 0.0014918342064266018}
+{"n": 8192, "bits": 32, "kernel": "masked", "name": "new", "ms": 0.0017623616537229447}
+{"n": 8192, "bits": 32, "kernel": "assemble", "name": "new", "ms": 0.0014948029301383278}
+{"n": 8192, "bits": 64, "kernel": "masked", "name": "old", "ms": 0.0019810244557180844}
+{"n": 8192, "bits": 64, "kernel": "assemble", "name": "old", "ms": 0.0017431375747637902}
+{"n": 8192, "bits": 64, "kernel": "masked", "name": "new", "ms": 0.001980185608544418}
+{"n": 8192, "bits": 64, "kernel": "assemble", "name": "new", "ms": 0.001716489860912396}
+{"n": 1048576, "bits": 32, "kernel": "masked", "name": "old", "ms": 0.307903938293457}
+{"n": 1048576, "bits": 32, "kernel": "assemble", "name": "old", "ms": 0.26645787762057394}
+{"n": 1048576, "bits": 32, "kernel": "masked", "name": "new", "ms": 0.3079241142509887}
+{"n": 1048576, "bits": 32, "kernel": "assemble", "name": "new", "ms": 0.2627451780611876}
+{"n": 1048576, "bits": 64, "kernel": "masked", "name": "old", "ms": 0.40920984268188476}
+{"n": 1048576, "bits": 64, "kernel": "assemble", "name": "old", "ms": 0.4092238394419352}
+{"n": 1048576, "bits": 64, "kernel": "masked", "name": "new", "ms": 0.4091935685843476}
+{"n": 1048576, "bits": 64, "kernel": "assemble", "name": "new", "ms": 0.40926618893941247}

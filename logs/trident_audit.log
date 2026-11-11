@@ -1,0 +1,63 @@
+{
+  "methodology": "Public arithmetic audit; no private nonlinear execution or network timing.",
+  "seed": 20261110,
+  "shape": [
+    1,
+    2048,
+    8192,
+    2048
+  ],
+  "ring_bits": 32,
+  "fractional_bits": 14,
+  "sources": {
+    "ndss": "https://www.ndss-symposium.org/wp-content/uploads/2020/02/23005-paper.pdf",
+    "revised": "https://arxiv.org/abs/1912.02631v2"
+  },
+  "source_sha256": {
+    "/home/zeb/Desktop/SIV/benchmarks/trident_protocol_audit.py": "4c51b3a3a466ba60fa80679b13df6c714e0e6425e3a18426e7992781c58ff536",
+    "benchmarks/inference.py": "5585a84cf1e1fd4406b0070890e8a04a11c5f35128249c509aea30f9886d098e",
+    "work/trident-audit/trident.pdf": "f1de301c7615346cf27533d73d9ed3e18ad9d5007d54a268aa8aee0bdbf4eb04",
+    "work/trident-audit/trident-ndss.pdf": "dab1cd5ffed4ec6439891c75190cc1c11ac77c99249ebe3d01bdd37ea4138973"
+  },
+  "original_sign": {
+    "counterexample": {
+      "value": 2,
+      "mask": 1073741824,
+      "expected": 0,
+      "actual": 1
+    },
+    "hidden_elements": 8192,
+    "wrong_signs": 4014,
+    "wrong_logits": 2048,
+    "max_logit_error": 1.353271484375,
+    "privacy_counterexample": "Opened r*v is always zero for v=0 and always even for even v."
+  },
+  "revised_sign_oracle": {
+    "wrong_signs": 0,
+    "private_protocol_implemented": false,
+    "convention": "Subtract the positive mask sum; Boolean prefix circuit evaluated on public operands."
+  },
+  "literal_truncation_check": {
+    "parts": [
+      16383,
+      1,
+      0
+    ],
+    "shift": 14,
+    "honest_residual": 4294950912,
+    "expected_residual": 0,
+    "random_honest_cases": 10000,
+    "random_honest_rejections": 8341
+  },
+  "uncorrected_ring32_truncation": {
+    "value": 536870912,
+    "mask": -2147483648,
+    "shift": 14,
+    "expected": 32768,
+    "actual": -229376,
+    "interpretation": "Wrap correction or a stronger range/slack contract is required."
+  },
+  "full_private_ffn_validated": false,
+  "sub500kb_validated": false,
+  "earlier_453kb_projection_valid": false
+}

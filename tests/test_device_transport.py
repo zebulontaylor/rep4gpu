@@ -217,3 +217,51 @@ def test_cuda_nondefault_stream_events_and_sender_reuse():
         outputs = list(pool.map(work, range(4)))
     assert torch.equal(outputs[1].cpu(), torch.full((4096,), 14, dtype=torch.uint8))
     assert torch.equal(source.cpu(), torch.full((4096,), 99, dtype=torch.uint8))
+
+
+@pytest.mark.parametrize('adapter',[DeviceIdealEndpoint,DeviceByteBridge])
+def test_receive_into_retains_receiver_storage(adapter):
+    network = IdealNetwork()
+    endpoints = [adapter(network.endpoint(p),'cpu') for p in range(4)]
+    buffers = [{(p-1)%4:torch.empty(4,dtype=torch.uint8), (p-2)%4:torch.empty(0,dtype=torch.uint8)} for p in range(4)]
+    sources = [_payload(p,(p+1)%4) for p in range(4)]
+    def work(p):
+        outgoing = {(p+1)%4:sources[p],(p+2)%4:torch.empty(0,dtype=torch.uint8)}
+        return endpoints[p].exchange_device_into(outgoing,{(p-1)%4:4,(p-2)%4:0},buffers[p])
+    with concurrent.futures.ThreadPoolExecutor(4) as pool:
+        outputs = list(pool.map(work,range(4)))
+    for p,output in enumerate(outputs):
+        assert output is buffers[p]
+        source = sources[(p-1)%4]
+        source.zero_()
+        torch.testing.assert_close(output[(p-1)%4],_payload((p-1)%4,p))
+
+
+@pytest.mark.parametrize('staging',['device','host'])
+def test_replay_binds_receiver_buffers_and_preserves_checks(staging,monkeypatch):
+    frames = [DeviceFrame('device',{1:b'abc'},{3:b'xyz'}),DeviceFrame('device',{2:b''},{0:b''})]
+    buffers = [{3:torch.zeros(3,dtype=torch.uint8)},{0:torch.empty(0,dtype=torch.uint8)}]
+    replay = DeviceReplay(frames,device='cpu',staging=staging,incoming_buffers=buffers)
+    if staging == 'device':
+        torch.testing.assert_close(buffers[0][3],torch.tensor(list(b'xyz'),dtype=torch.uint8))
+        def unexpected(*args,**kwargs):
+            raise AssertionError('device preload performed an in-exchange copy')
+        monkeypatch.setattr(torch.Tensor,'copy_',unexpected)
+    outgoing = {1:torch.tensor(list(b'abc'),dtype=torch.uint8)}
+    assert replay.exchange_device_into(outgoing,{3:3},buffers[0]) is buffers[0]
+    assert replay.exchange_device_into({2:torch.empty(0,dtype=torch.uint8)},{0:0},buffers[1]) is buffers[1]
+    assert replay.round == 2
+    monkeypatch.undo()
+    wrong = DeviceReplay(frames,device='cpu',staging=staging,incoming_buffers=None)
+    with pytest.raises(ValueError,match='outgoing mismatch'):
+        wrong.exchange_device_into({1:torch.zeros(3,dtype=torch.uint8)},{3:3},buffers[0])
+
+
+@pytest.mark.parametrize('incoming',[{}, {3:b'badsize'}, {3:torch.zeros(3,dtype=torch.uint8)}])
+def test_bridge_receive_into_rejects_invalid_frame(incoming):
+    class Static:
+        def exchange(self,outgoing):
+            return incoming
+    bridge = DeviceByteBridge(Static(),'cpu')
+    with pytest.raises((ValueError,TypeError)):
+        bridge.exchange_device_into({}, {3:3}, {3:torch.empty(3,dtype=torch.uint8)})

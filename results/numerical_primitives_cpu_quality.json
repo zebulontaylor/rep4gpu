@@ -1,0 +1,142 @@
+{
+  "methodology": "Dense uniformly spaced encoded caller-domain inputs, including endpoints and zero for signed domains. Exact integer floor oracle and conservative intervals over every floor/ceil truncation outcome. References are torch float64 exp/reciprocal/erf/exact GELU/SiLU. SwiGLU value spans +4 to -4 opposite gate.",
+  "source_sha256": {
+    "rep4gpu/numerical.py": "23e8be6663cc2096bbd3fa282cf22ae17309a1aca663857acaa9b6a5a289895e",
+    "benchmarks/numerical_primitives.py": "3ab0686810801f4b6e28cab246ea9ebf2f54fe2019df95c46bd20c0d7efedb98",
+    "benchmarks/numerical_quality.py": "c25e4df709d27aff8d6c5b189fc98f088d8d463c65fb9810db36d7aa7f2374ee"
+  },
+  "results": [
+    {
+      "kind": "exp",
+      "fractional_bits": 20,
+      "elements": 65537,
+      "floor_max_error": 0.14207671977146674,
+      "floor_rmse": 0.014914559962703584,
+      "floor_max_relative_error": 0.007770052149251203,
+      "conservative_probabilistic_max_error": 0.15624135952384677,
+      "maximum_rounding_interval_width": 256085,
+      "maximum_pretruncation_abs_bound": 8909513631648400
+    },
+    {
+      "kind": "reciprocal",
+      "fractional_bits": 20,
+      "elements": 65537,
+      "floor_max_error": 9.5367431640625e-07,
+      "floor_rmse": 3.2039378920407883e-07,
+      "floor_max_relative_error": 9.536743165120681e-07,
+      "conservative_probabilistic_max_error": 3.687477447766874e-05,
+      "maximum_rounding_interval_width": 77,
+      "maximum_pretruncation_abs_bound": 1099544084160
+    },
+    {
+      "kind": "erf",
+      "fractional_bits": 20,
+      "elements": 65537,
+      "floor_max_error": 3.691789968768289e-05,
+      "floor_rmse": 7.696165765490915e-06,
+      "floor_max_relative_error": 5722045.8984375,
+      "conservative_probabilistic_max_error": 0.0008626454242277731,
+      "maximum_rounding_interval_width": 1767,
+      "maximum_pretruncation_abs_bound": 9895604649984
+    },
+    {
+      "kind": "silu",
+      "fractional_bits": 20,
+      "elements": 65537,
+      "floor_max_error": 1.0508260006591996e-05,
+      "floor_rmse": 3.9595726928835636e-06,
+      "floor_max_relative_error": 0.0009163660458922299,
+      "conservative_probabilistic_max_error": 0.0008723575520778459,
+      "maximum_rounding_interval_width": 1829,
+      "maximum_pretruncation_abs_bound": 4319189401600
+    },
+    {
+      "kind": "gelu",
+      "fractional_bits": 20,
+      "elements": 65537,
+      "floor_max_error": 8.945452333986026e-06,
+      "floor_rmse": 2.3290084729038725e-06,
+      "floor_max_relative_error": 0.02870700780167021,
+      "conservative_probabilistic_max_error": 0.00021025426711313022,
+      "maximum_rounding_interval_width": 438,
+      "maximum_pretruncation_abs_bound": 8796088272400
+    },
+    {
+      "kind": "swiglu",
+      "fractional_bits": 20,
+      "elements": 65537,
+      "floor_max_error": 3.8143277264923725e-05,
+      "floor_rmse": 1.019511862735241e-05,
+      "floor_max_relative_error": 127.00781297685654,
+      "conservative_probabilistic_max_error": 0.003203383530150483,
+      "maximum_rounding_interval_width": 6716,
+      "maximum_pretruncation_abs_bound": 17276757606400
+    },
+    {
+      "kind": "exp",
+      "fractional_bits": 24,
+      "elements": 65537,
+      "floor_max_error": 0.009013162148221454,
+      "floor_rmse": 0.0009160669418366475,
+      "floor_max_relative_error": 0.000490914288519569,
+      "conservative_probabilistic_max_error": 0.009781417083104316,
+      "maximum_rounding_interval_width": 256265,
+      "maximum_pretruncation_abs_bound": 2280816650963222089
+    },
+    {
+      "kind": "reciprocal",
+      "fractional_bits": 24,
+      "elements": 65537,
+      "floor_max_error": 5.960464477539063e-08,
+      "floor_rmse": 1.981138963848185e-08,
+      "floor_max_relative_error": 5.960464486559625e-08,
+      "conservative_probabilistic_max_error": 2.3039137794222952e-06,
+      "maximum_rounding_interval_width": 77,
+      "maximum_pretruncation_abs_bound": 281475495812096
+    },
+    {
+      "kind": "erf",
+      "fractional_bits": 24,
+      "elements": 65537,
+      "floor_max_error": 2.5894412562232905e-06,
+      "floor_rmse": 5.14804818604271e-07,
+      "floor_max_relative_error": 357627.86865234375,
+      "conservative_probabilistic_max_error": 5.362560259224852e-05,
+      "maximum_rounding_interval_width": 1779,
+      "maximum_pretruncation_abs_bound": 2533274790395904
+    },
+    {
+      "kind": "silu",
+      "fractional_bits": 24,
+      "elements": 65537,
+      "floor_max_error": 6.407813058217915e-07,
+      "floor_rmse": 2.5422668063905724e-07,
+      "floor_max_relative_error": 0.00018313900045578702,
+      "conservative_probabilistic_max_error": 5.3081738198401673e-05,
+      "maximum_rounding_interval_width": 1781,
+      "maximum_pretruncation_abs_bound": 1105654571859968
+    },
+    {
+      "kind": "gelu",
+      "fractional_bits": 24,
+      "elements": 65537,
+      "floor_max_error": 5.321453505069407e-07,
+      "floor_rmse": 1.7622650691693338e-07,
+      "floor_max_relative_error": 0.0013934473486811542,
+      "conservative_probabilistic_max_error": 1.3065464762956891e-05,
+      "maximum_rounding_interval_width": 437,
+      "maximum_pretruncation_abs_bound": 2251799736609424
+    },
+    {
+      "kind": "swiglu",
+      "fractional_bits": 24,
+      "elements": 65537,
+      "floor_max_error": 2.423329271750152e-06,
+      "floor_rmse": 6.653771166486193e-07,
+      "floor_max_relative_error": 7.000488311053534,
+      "conservative_probabilistic_max_error": 0.00020034416553682544,
+      "maximum_rounding_interval_width": 6720,
+      "maximum_pretruncation_abs_bound": 4422618287439872
+    }
+  ]
+}

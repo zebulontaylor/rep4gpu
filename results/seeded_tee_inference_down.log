@@ -1,0 +1,2 @@
+{"batch": 1, "width": 2048, "hidden": 8192, "out": 2048, "rounds": 9, "payload_bytes": 1262336, "max_error": 9.315705614409975e-07, "party_agreement": true}
+{"batch": 8, "width": 2048, "hidden": 8192, "out": 2048, "rounds": 9, "payload_bytes": 10093312, "max_error": 9.828777529641286e-07, "party_agreement": true}

@@ -8,16 +8,17 @@ from rep4gpu.runtime import make_seeds
 from rep4gpu.transport import IdealNetwork
 
 
-def _ffn_parity(bits,shift,reference_optimized,actual_optimized,reference_storage=None,actual_storage=None,batch=5):
+def _ffn_parity(bits,shift,reference_optimized,actual_optimized,reference_storage=None,actual_storage=None,batch=5,dimensions=(3,7,5)):
     if not torch.cuda.is_available():
         pytest.skip('CUDA required')
     device = torch.device('cuda',torch.cuda.current_device())
     generator = torch.Generator().manual_seed(481)
+    width,hidden,out = dimensions
     scale = 1 << shift
-    x = torch.randint(-3,4,(batch,3),generator=generator)*max(1,scale//8)
-    w1 = torch.randint(-4,5,(3,7),generator=generator)*max(1,scale//16)
-    b1 = torch.randint(-3,4,(7,),generator=generator)*max(1,scale//64)
-    w2 = torch.randint(-3,4,(7,5),generator=generator)*max(1,scale//16)
+    x = torch.randint(-3,4,(batch,width),generator=generator)*max(1,scale//8)
+    w1 = torch.randint(-4,5,(width,hidden),generator=generator)*max(1,scale//16)
+    b1 = torch.randint(-3,4,(hidden,),generator=generator)*max(1,scale//64)
+    w2 = torch.randint(-3,4,(hidden,out),generator=generator)*max(1,scale//16)
     accumulated = x@w1+b1*scale
     expected_hidden = torch.clamp(accumulated>>shift,min=0)
     expected = (expected_hidden@w2)>>shift
@@ -104,3 +105,9 @@ def test_sign_including_signed_boundaries(bits, optimized, binary):
             raise
     with ThreadPoolExecutor(4) as pool:
         assert all(torch.equal(value, expected) for value in pool.map(role, range(4)))
+
+
+@pytest.mark.parametrize('batch',[2,32])
+def test_strassen32_ffn_matches_words32_transcript_and_local_shares(batch):
+    _ffn_parity(32,14,True,True,reference_storage='words32',actual_storage='strassen32',
+               batch=batch,dimensions=(4,8,6))

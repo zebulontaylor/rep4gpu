@@ -36,7 +36,7 @@ def _masked(X0, X1, X2, Y0, Y1, Y2, MASKS, OUT,
             a4 = x0 * y2 + x2 * y0
     else:
         a0, a1, a4 = x0, x1, x2
-    for j in tl.static_range(3):
+    for j in tl.static_range(len(JOINTS)):
         if COLUMNS[j] == 0:
             value = a0
         elif COLUMNS[j] == 1:
@@ -60,7 +60,7 @@ def _assemble(MASKS, LOCAL, RECEIVED, OUT, N: tl.constexpr,
     i = tl.program_id(0) * BLOCK + tl.arange(0, BLOCK)
     for slot in tl.static_range(3):
         value = tl.full((BLOCK,), 0, tl.uint64)
-        for k in tl.static_range(6):
+        for k in tl.static_range(len(MASK_SLOTS)):
             if MASK_SLOTS[k] == slot:
                 term = tl.load(MASKS + k * N + i, i < N, 0).to(tl.uint64)
                 if BINARY:

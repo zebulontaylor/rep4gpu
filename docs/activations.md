@@ -91,6 +91,119 @@ SiLU's identity and zero tails account for its larger overall error. Use
 `polynomial` with application-specific coefficients when a different interval
 or error target is required.
 
+For numerical evaluation of the original SiLU and GELU formulas, use
+[`NumericalFixedPoint`](numerical-primitives.md). It provides private exponential,
+reciprocal, and erf primitives plus SwiGLU, with explicit ring64 precision and
+input-range contracts.
+
+## Bounded quadratic alternatives
+
+`bounded_quadratic` substitutes a degree-two polynomial for an activation using
+one secret square. It performs no comparisons, clipping, or tail selection.
+The existing `relu`, `gelu`, and `silu` methods retain their behavior.
+
+```python
+fp = FixedPoint(party, fractional_bits=14)
+plan = fp.quadratic_plan('gelu', bound=4., profile='local')
+# The caller has established the public range contract for x.
+y = fp.bounded_quadratic(x, kind='gelu', bound=4., profile='local')
+# For a matrix product, combine input rescaling with the accumulator truncation.
+h = fp.matmul_quadratic(x, weight, bias, kind='gelu', bound=4., profile='local')
+```
+
+Both methods default to `kind='relu'`, `bound=4.`, and `profile='uniform'`.
+The local profile supports GELU and SiLU. Coefficients are public constants:
+
+| Kind | Uniform profile | Local profile |
+| --- | --- | --- |
+| ReLU | `x/2 + x*x/8 + 1/4` | Unavailable |
+| GELU | `x/2 + x*x/8 + 951/4096` | `x/2 + 3*x*x/8` |
+| SiLU | `x/2 + x*x/8 + 427/4096` | `x/2 + x*x/4` |
+
+Uniform profiles have nonzero output at zero and can produce negative outputs.
+Local profiles preserve zero and approximate typical inputs near zero more
+closely, but have much larger errors near the ends of `[-4,4]`. Neither profile
+supplies the exact activation or the degree-ten method's tail behavior.
+
+### Integer formula and range contract
+
+`fp.quadratic_plan(kind, bound, profile=...)` returns a `QuadraticPlan`. The
+standalone `rep4gpu.activations.quadratic_plan` also accepts `fractional_bits`
+and `bits`. Plans depend only on these public parameters. Supported bounds
+satisfy `0 < bound <= 4`; the planner rejects precision and range combinations
+that cannot fit the selected 32-bit or 64-bit ring.
+
+Let `f` be the fractional bit count, `S=2**f`, and `X` the signed encoded input.
+The caller must establish `abs(X) <= plan.input_bound`, where
+`plan.input_bound=floor(bound*S)`. This is a public assumption about private
+inputs, not a check performed by the secure computation. Inputs outside the
+bound invalidate the overflow and approximation assumptions.
+
+For quadratic coefficient `m/2**q`, offset `c`, and prescale `t`, evaluation is:
+
+```text
+t = plan.prescale
+q = plan.denominator_power2
+m = plan.quadratic_coeff
+d = plan.shift = f + q - 2*t
+u = trunc(X, t)
+N = m*u*u + 2**(t+d-1)*u + round(c*S)*2**d
+Y = trunc(N, d)
+```
+
+`Y` retains scale `S`; `round(c*S)` uses nearest-even rounding. `trunc` follows the runtime's floor or probabilistic
+rounding policy. A zero prescale leaves `X` unchanged. Prescaling reduces input
+precision before the square; the integer result can differ from encoding a
+single evaluation of the real polynomial.
+
+The planner chooses the smallest `t` whose conservative numerator bound is
+strictly below `2**(bits-2)`. It includes either allowed rounding outcome of
+input rescaling and also prevents square overflow. The plan exposes
+`normalized_bound`, `linear_coeff`, `constant_numerator`, and
+`numerator_abs_bound`. `plan.encoded_numerator(u)` evaluates the public
+plaintext integer formula and checks `u` against `normalized_bound`; it accepts
+no shares and is intended for fixture or application range analysis.
+
+`matmul_quadratic` forms `A=x@weight + bias*S` at product scale, then computes
+`u=trunc(A, f+t)` directly. It avoids a separate prescale truncation after the
+usual matrix-product rescaling. The caller must additionally establish that
+`A` fits the signed ring and `abs(A) <= plan.input_bound*S`. Probabilistic
+rounding also requires `abs(A) < 2**(bits-2)`. Modular accumulator overflow
+cannot be repaired by the later polynomial. Bias has the same scale as the
+encoded inputs.
+
+At ring32 Q14 with `bound=4`, uniform profiles use `t=2,d=13`; local GELU uses
+`t=3,d=11`, and local SiLU uses `t=2,d=12`. The fused path uses one input
+truncation, one secret square, and one final truncation. Public coefficient
+multiplications require no secret multiplication protocol. No intermediate
+activation is opened.
+
+### Approximation tradeoffs
+
+The [CPU quality report](../artifacts/local_quadratic_cpu_quality.json) compares
+these fixed polynomials with their corresponding floating-point activations.
+The Gaussian sample contains one million independent inputs with standard
+deviation 0.5. The synthetic fixture has batch 128, width 2048, hidden width
+8192, and 2048 outputs. Its top-1 agreement compares polynomial and reference
+outputs from the same synthetic weights.
+
+| Kind and profile | Maximum error on dense `[-4,4]` grid | Gaussian activation RMSE | Fixture logit RMSE | Fixture top-1 agreement |
+| --- | ---: | ---: | ---: | ---: |
+| GELU uniform | 0.23252 | 0.18795 | 0.18849 | 35.94% |
+| GELU local | 4.00013 | 0.02352 | 0.02328 | 89.84% |
+| SiLU uniform | 0.17619 | 0.08419 | 0.08443 | 56.25% |
+| SiLU local | 2.07194 | 0.01113 | 0.01101 | 92.19% |
+
+These measurements evaluate floating-point polynomial substitution; fixed-point
+rounding adds error. Dense-grid maxima are sampled errors, not certified
+bounds. Synthetic output agreement does not establish trained language-model
+quality. Choose a profile using the target model's activation distribution and
+end-to-end quality measurements, including its tails.
+
+The [higher-degree approximation evaluation](activation-approximation-evaluation.md)
+compares degree-four through degree-ten fits with these quadratics, including
+fixed-point FFN error, synthetic SwiGLU error, and private GPU activation costs.
+
 ## Protocol assumptions
 
 The activation layer inherits the runtime's adversary model, randomness,

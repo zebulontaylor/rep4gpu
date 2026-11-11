@@ -1,0 +1,27 @@
+usage: run_spdz_prime256_autoregressive.py [-h] [--worker WORKER]
+                                           [--result RESULT] [--output OUTPUT]
+                                           [--bundle BUNDLE]
+                                           [--native-root NATIVE_ROOT]
+                                           [--checkpoint CHECKPOINT]
+                                           [--timeout TIMEOUT] [--steps STEPS]
+                                           [--seed SEED]
+                                           [--gpu-baseline-device GPU_BASELINE_DEVICE]
+                                           [--baseline-repeats BASELINE_REPEATS]
+
+Consume a fresh native fixed-model pool in a dependent trained micro stream.
+Every next token comes from checked public output logits. This CPU/TLS runner
+uses fresh row capabilities and square masks; it does not batch future inputs.
+
+options:
+  -h, --help            show this help message and exit
+  --worker WORKER
+  --result RESULT
+  --output OUTPUT
+  --bundle BUNDLE
+  --native-root NATIVE_ROOT
+  --checkpoint CHECKPOINT
+  --timeout TIMEOUT
+  --steps STEPS
+  --seed SEED
+  --gpu-baseline-device GPU_BASELINE_DEVICE
+  --baseline-repeats BASELINE_REPEATS

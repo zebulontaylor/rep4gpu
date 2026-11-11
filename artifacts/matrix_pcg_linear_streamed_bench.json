@@ -1,0 +1,161 @@
+[
+  {
+    "m": 128,
+    "a": 128,
+    "l": 256,
+    "k": 128,
+    "n": 128,
+    "t": 8,
+    "raw_terms": 768,
+    "parties": 4,
+    "fixture": "8 preallocated full-field random buffers reused as synthetic streamed terms; not a cryptographic producer",
+    "scope": "one party local algebra, including sparse E@B or local A@B, all6K signed accumulations, and every required H expansion",
+    "common_setup_excluded": "public H binding, sparse seed validation, and A=H@E required for authentication on both paths",
+    "median_ms": {
+      "unfused": {
+        "event_ms": 28.2359676361084,
+        "wall_ms": 28.265596003620885
+      },
+      "fused": {
+        "event_ms": 10.721376419067383,
+        "wall_ms": 10.747150998213328
+      }
+    },
+    "samples_ms": {
+      "unfused": {
+        "event_ms": [
+          28.439136505126953,
+          28.2359676361084,
+          27.84943962097168
+        ],
+        "wall_ms": [
+          28.50005499931285,
+          28.265596003620885,
+          27.875232000951655
+        ]
+      },
+      "fused": {
+        "event_ms": [
+          11.23846435546875,
+          10.721376419067383,
+          10.676511764526367
+        ],
+        "wall_ms": [
+          11.267627000052016,
+          10.747150998213328,
+          10.698639998736326
+        ]
+      }
+    },
+    "exact_fused_unfused_parity": true,
+    "wall_speedup": 2.630054793900256,
+    "arithmetic": "p=2^31-1; exact full-field int32 shares and int64 reduced products/sums",
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU"
+  },
+  {
+    "m": 256,
+    "a": 256,
+    "l": 512,
+    "k": 256,
+    "n": 256,
+    "t": 8,
+    "raw_terms": 1536,
+    "parties": 4,
+    "fixture": "8 preallocated full-field random buffers reused as synthetic streamed terms; not a cryptographic producer",
+    "scope": "one party local algebra, including sparse E@B or local A@B, all6K signed accumulations, and every required H expansion",
+    "common_setup_excluded": "public H binding, sparse seed validation, and A=H@E required for authentication on both paths",
+    "median_ms": {
+      "unfused": {
+        "event_ms": 87.05903625488281,
+        "wall_ms": 87.10607899411116
+      },
+      "fused": {
+        "event_ms": 21.6876163482666,
+        "wall_ms": 21.721338998759165
+      }
+    },
+    "samples_ms": {
+      "unfused": {
+        "event_ms": [
+          86.55235290527344,
+          87.05903625488281,
+          87.23619079589844
+        ],
+        "wall_ms": [
+          86.61063799809199,
+          87.10607899411116,
+          87.2885499993572
+        ]
+      },
+      "fused": {
+        "event_ms": [
+          21.665119171142578,
+          21.6876163482666,
+          22.03923225402832
+        ],
+        "wall_ms": [
+          21.721338998759165,
+          21.7182020060136,
+          22.077446003095247
+        ]
+      }
+    },
+    "exact_fused_unfused_parity": true,
+    "wall_speedup": 4.0101615742513435,
+    "arithmetic": "p=2^31-1; exact full-field int32 shares and int64 reduced products/sums",
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU"
+  },
+  {
+    "m": 512,
+    "a": 512,
+    "l": 1024,
+    "k": 512,
+    "n": 512,
+    "t": 8,
+    "raw_terms": 3072,
+    "parties": 4,
+    "fixture": "8 preallocated full-field random buffers reused as synthetic streamed terms; not a cryptographic producer",
+    "scope": "one party local algebra, including sparse E@B or local A@B, all6K signed accumulations, and every required H expansion",
+    "common_setup_excluded": "public H binding, sparse seed validation, and A=H@E required for authentication on both paths",
+    "median_ms": {
+      "unfused": {
+        "event_ms": 1043.2236328125,
+        "wall_ms": 1043.2611260039266
+      },
+      "fused": {
+        "event_ms": 44.16371154785156,
+        "wall_ms": 44.20185300114099
+      }
+    },
+    "samples_ms": {
+      "unfused": {
+        "event_ms": [
+          1030.0474853515625,
+          1043.2236328125,
+          1047.3753662109375
+        ],
+        "wall_ms": [
+          1030.1165589989978,
+          1043.2611260039266,
+          1047.4383459950332
+        ]
+      },
+      "fused": {
+        "event_ms": [
+          44.23811340332031,
+          42.708030700683594,
+          44.16371154785156
+        ],
+        "wall_ms": [
+          44.272202998399734,
+          42.7328049991047,
+          44.20185300114099
+        ]
+      }
+    },
+    "exact_fused_unfused_parity": true,
+    "wall_speedup": 23.6022034184177,
+    "arithmetic": "p=2^31-1; exact full-field int32 shares and int64 reduced products/sums",
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU"
+  }
+]

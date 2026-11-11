@@ -1,0 +1,40 @@
+USDT:2026-11-10 12:53:06 506018:506018 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-11-10 12:53:06 506018:506018 SyncActivityProfilerHandler.cpp:59] profiler_stop
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                        _local_products         0.00%       0.000us         0.00%       0.000us       0.000us      54.319ms        48.26%      54.319ms       5.432ms            10  
+                                                _masked         0.00%       0.000us         0.00%       0.000us       0.000us       9.591ms         8.52%       9.591ms     159.851us            60  
+                                              _assemble         0.00%       0.000us         0.00%       0.000us       0.000us       7.429ms         6.60%       7.429ms     123.813us            60  
+                                                _finish         0.00%       0.000us         0.00%       0.000us       0.000us       6.372ms         5.66%       6.372ms     424.797us            15  
+                                         _joint_prepare         0.00%       0.000us         0.00%       0.000us       0.000us       6.276ms         5.58%       6.276ms     156.901us            40  
+                                                  _rows         0.00%       0.000us         0.00%       0.000us       0.000us       4.521ms         4.02%       4.521ms      37.674us           120  
+                                       _local_operation         0.00%       0.000us         0.00%       0.000us       0.000us       4.196ms         3.73%       4.196ms     209.809us            20  
+                                                 chunks         0.00%       0.000us         0.00%       0.000us       0.000us       4.017ms         3.57%       4.017ms      29.753us           135  
+                                                _reduce         0.00%       0.000us         0.00%       0.000us       0.000us       3.138ms         2.79%       3.138ms     627.563us             5  
+                                                  _sign         0.00%       0.000us         0.00%       0.000us       0.000us       2.542ms         2.26%       2.542ms     508.338us             5  
+                                            _initialize         0.00%       0.000us         0.00%       0.000us       0.000us       1.507ms         1.34%       1.507ms     301.350us             5  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us       1.129ms         1.00%       1.129ms      37.625us            30  
+                                           _tail_result         0.00%       0.000us         0.00%       0.000us       0.000us       1.008ms         0.90%       1.008ms     201.542us             5  
+                                               _prepare         0.00%       0.000us         0.00%       0.000us       0.000us     909.758us         0.81%     909.758us      90.976us            10  
+                                                parents         0.00%       0.000us         0.00%       0.000us       0.000us     903.097us         0.80%     903.097us       1.942us           465  
+                                            _pack_gates         0.00%       0.000us         0.00%       0.000us       0.000us     856.414us         0.76%     856.414us      42.821us            20  
+void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us     831.231us         0.74%     831.231us      12.788us            65  
+                                            _tail_gates         0.00%       0.000us         0.00%       0.000us       0.000us     712.573us         0.63%     712.573us     142.515us             5  
+                                             _next_tree         0.00%       0.000us         0.00%       0.000us       0.000us     525.981us         0.47%     525.981us      26.299us            20  
+void at::native::vectorized_elementwise_kernel<2, at...         0.00%       0.000us         0.00%       0.000us       0.000us     509.184us         0.45%     509.184us      14.548us            35  
+void at::native::vectorized_elementwise_kernel<2, at...         0.00%       0.000us         0.00%       0.000us       0.000us     426.880us         0.38%     426.880us      85.376us             5  
+                                      memcpy128_aligned         0.00%       0.000us         0.00%       0.000us       0.000us     258.881us         0.23%     258.881us       5.753us            45  
+                                         _pair_products         0.00%       0.000us         0.00%       0.000us       0.000us     222.335us         0.20%     222.335us      44.467us             5  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     125.506us         0.11%     125.506us       1.931us            65  
+                                          memcpy32_post         0.00%       0.000us         0.00%       0.000us       0.000us      97.021us         0.09%      97.021us       1.294us            75  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      77.251us         0.07%      77.251us       1.188us            65  
+                                           _reconstruct         0.00%       0.000us         0.00%       0.000us       0.000us      33.664us         0.03%      33.664us       6.733us             5  
+                                              _encode32         0.00%       0.000us         0.00%       0.000us       0.000us      22.304us         0.02%      22.304us       4.461us             5  
+                                        cudaGraphLaunch         1.20%       1.366ms         1.96%       2.238ms      21.311us       0.000us         0.00%       0.000us       0.000us           105  
+                                Activity Buffer Request         0.76%     872.166us         0.76%     872.166us     872.166us       0.000us         0.00%       0.000us       0.000us             1  
+                                  cudaDeviceSynchronize        98.04%     111.854ms        98.04%     111.854ms      55.927ms       0.000us         0.00%       0.000us       0.000us             2  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 114.091ms
+Self CUDA time total: 112.555ms
+

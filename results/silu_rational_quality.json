@@ -1,0 +1,106 @@
+{
+  "methodology": "Floating float64 rational candidates on65537 uniformly spaced points over[-4,4]. No secure rational evaluator or fixed-point coefficient schedule is implemented. Reported maxima are sampled, not proven uniform bounds. Q24 numerical comparison uses the existing exact-floor integer oracle on encoded grid inputs.",
+  "source_sha256": {
+    "/home/zeb/Desktop/SIV/benchmarks/silu_rational_quality.py": "9f24c08e530d58564c7e93bede86c98416b3538cd582cfaa4b8b7f322e6bc968",
+    "benchmarks/witness_activations.py": "576eba9af0b35344b8a5804b2b26e0d74827e4759834926a77f187a0c805083a",
+    "rep4gpu/numerical.py": "f3c1829237182b413480e61b3114d90630b8a606b528d42637e0050fa2962d5a",
+    "benchmarks/numerical_primitives.py": "3ab0686810801f4b6e28cab246ea9ebf2f54fe2019df95c46bd20c0d7efedb98",
+    "rep4gpu/witness_prover.py": "5a70ddcf3526f1aa7798e8775ff1081bbf3342acbee03842d96f0940bd4087f9"
+  },
+  "numpy_version": "2.2.6",
+  "scipy_version": "1.15.3",
+  "fit": {
+    "method": "scipy.optimize.least_squares",
+    "deterministic": true,
+    "random_seed": null,
+    "training_grid_points": 8193,
+    "domain": [
+      -4,
+      4
+    ],
+    "normalized_argument": "t=x/4",
+    "numerator_constant": 0,
+    "denominator_constant": 1,
+    "initial": [
+      2.0,
+      3.2,
+      1.6,
+      -0.4,
+      1.6,
+      -0.5333333333333333
+    ],
+    "denominator_penalty": "100*max(0.25-Q,0) at training points",
+    "max_nfev": 1000,
+    "xtol": 1e-12,
+    "ftol": 1e-12,
+    "gtol": 1e-12,
+    "nfev": 8,
+    "status": 2
+  },
+  "evaluation_grid_points": 65537,
+  "candidates": [
+    {
+      "name": "Maclaurin Pade [3/2]",
+      "formula": "(6*x+3*x^2+x^3/2)/(12+x^2)",
+      "coefficients": null,
+      "max_abs_error": 0.21376944586591956,
+      "maximum_error_at": -4.0,
+      "rmse": 0.07364621330033183,
+      "sampled_denominator_min": 12.0,
+      "sampled_denominator_max": 28.0
+    },
+    {
+      "name": "Maclaurin Pade [3/3]",
+      "formula": "(60*x+24*x^2+3*x^3)/(120-12*x+12*x^2-x^3)",
+      "coefficients": null,
+      "max_abs_error": 0.15194483984836626,
+      "maximum_error_at": 4.0,
+      "rmse": 0.033246117777054586,
+      "sampled_denominator_min": 116.86156123767432,
+      "sampled_denominator_max": 424.0
+    },
+    {
+      "name": "Zero-preserving fitted [3/3]",
+      "formula": "t*(a+t*(b+t*c))/(1+t*(d+t*(e+t*f))), t=x/4",
+      "coefficients": {
+        "a": 1.987881993780551,
+        "b": 3.0619428449581934,
+        "c": 1.3279741477188396,
+        "d": -0.4543310160507632,
+        "e": 1.4771384547085664,
+        "f": -0.4011281973703825
+      },
+      "max_abs_error": 0.00478113945738734,
+      "maximum_error_at": 4.0,
+      "rmse": 0.0013732549064338895,
+      "sampled_denominator_min": 0.9634485330874318,
+      "sampled_denominator_max": 3.3325976681297123
+    }
+  ],
+  "existing_q24_numerical_accuracy": [
+    {
+      "kind": "silu",
+      "mode": "numerical",
+      "elements": 65537,
+      "fractional_bits": 24,
+      "max_abs_error": 6.407813058217915e-07,
+      "rmse": 2.5422668063905724e-07
+    },
+    {
+      "kind": "silu",
+      "mode": "witness",
+      "elements": 65537,
+      "fractional_bits": 24,
+      "max_abs_error": 6.407813058217915e-07,
+      "rmse": 2.5650720649358213e-07
+    }
+  ],
+  "direct_output_witness_with_recomputed_exp": {
+    "formula": "D=S+E; P=where(X<0,X*E,X*S); Y=nearest(P/D)",
+    "exponential": "Existing exact-floor exp(-abs(X)) is still recomputed",
+    "secure_protocol_implemented": false,
+    "rounding_contract": "Nearest final ratio; differs from existing sequential floors",
+    "max_abs_error": 5.407012642622e-07,
+    "rmse": 2.47147485526515e-07
+  }
+}

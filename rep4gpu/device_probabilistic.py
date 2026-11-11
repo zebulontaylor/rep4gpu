@@ -52,6 +52,7 @@ def _unmask(WIRE,X0,X1,X2,SPLIT,N:tl.constexpr,BITS:tl.constexpr,
 def _finish(R0,R1,R2,C0,C1,C2,B0,B1,B2,OUT,N:tl.constexpr,
             BITS:tl.constexpr,SHIFT:tl.constexpr,PARTY:tl.constexpr,BLOCK:tl.constexpr):
     i=tl.program_id(0)*BLOCK+tl.arange(0,BLOCK)
+    DT:tl.constexpr=tl.uint32 if BITS==32 else tl.uint64
     for slot in tl.static_range(3):
         if slot==0:
             r,c,b=R0,C0,B0
@@ -59,12 +60,16 @@ def _finish(R0,R1,R2,C0,C1,C2,B0,B1,B2,OUT,N:tl.constexpr,
             r,c,b=R1,C1,B1
         else:
             r,c,b=R2,C2,B2
-        sign_r=tl.load(r+i,i<N,0).to(tl.uint64)
-        sign_c=tl.load(c+i,i<N,0).to(tl.uint64)
-        both=tl.load(b+i,i<N,0).to(tl.uint64)
-        upper_r=tl.load(r+N+i,i<N,0).to(tl.uint64)
-        upper_c=tl.load(c+N+i,i<N,0).to(tl.uint64)
-        value=upper_c-upper_r+((sign_r+sign_c-2*both)<<(BITS-1-SHIFT))
+        # The joint-input routes put r only in components 2/3 and c in 0/1.
+        # Their other components are public zeros, so each slot reads one pair.
+        if (PARTY+slot+1)%4>=2:
+            sign=tl.load(r+i,i<N,0).to(DT)
+            upper=0-tl.load(r+N+i,i<N,0).to(DT)
+        else:
+            sign=tl.load(c+i,i<N,0).to(DT)
+            upper=tl.load(c+N+i,i<N,0).to(DT)
+        both=tl.load(b+i,i<N,0).to(DT)
+        value=upper+((sign-2*both)<<(BITS-1-SHIFT))
         if (PARTY+slot+1)%4==0:
             value-=1<<(BITS-SHIFT-2)
         if BITS==32:
@@ -95,7 +100,7 @@ def trunc_pr(rt,x,shift):
     # All three holders advance each mask stream, including holders that do
     # not need the sampled value in this local opening calculation.
     parts=tuple(part.contiguous() for part in x.parts)
-    masks={e:rt._random(e,x.shape,x.device) for e in (2,3) if rt.party!=e}
+    masks={e:rt._random(e,x.shape,x.device,packed=True) for e in (2,3) if rt.party!=e}
     split=torch.empty((2,*x.shape),dtype=torch.int64,device=x.device)
     wire=None
     if rt.party<2:
@@ -115,7 +120,12 @@ def trunc_pr(rt,x,shift):
         [(0,1,3,2,split if rt.party<2 else None),
          (2,3,1,0,split if rt.party>=2 else None)],
         (2,*x.shape),False,x.device)
-    both=rt.mul(r[0],c[0])
+    if getattr(rt,'narrow_products',False) and shift<=16:
+        from .narrow_product_gpu import product16
+        both=product16(rt,r[0],c[0])
+    else:
+        both=(rt._mul_sparse_pairs(r[0],c[0]) if getattr(rt,'sparse_products',False)
+              else rt.mul(r[0],c[0]))
     output=torch.empty((3,*x.shape),dtype=torch.int64,device=x.device)
     _finish[(triton.cdiv(count,256),)](*r.parts,*c.parts,*both.parts,output,
                                       count,rt.bits,shift,rt.party,256)

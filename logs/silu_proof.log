@@ -1,0 +1,84 @@
+{
+  "elements": 14336,
+  "backend": "cuda",
+  "fractional_bits": 24,
+  "mpc_bytes": 1540928,
+  "client_bytes": 4568488,
+  "total_bytes": 6109416,
+  "under_decimal_10mb": true,
+  "client_endpoints": [
+    {
+      "role": 0,
+      "bytes_sent": 44,
+      "messages_sent": 1
+    },
+    {
+      "role": 1,
+      "bytes_sent": 44,
+      "messages_sent": 1
+    },
+    {
+      "role": 2,
+      "bytes_sent": 44,
+      "messages_sent": 1
+    },
+    {
+      "role": 3,
+      "bytes_sent": 44,
+      "messages_sent": 1
+    },
+    {
+      "role": 4,
+      "bytes_sent": 4568312,
+      "messages_sent": 9
+    }
+  ],
+  "roles": [
+    {
+      "role": 0,
+      "mpc_bytes": 840704,
+      "verification_seconds": 71.42684810199717,
+      "native_proof_verification_seconds": 69.06045054800052,
+      "native_public_projection_seconds": 0.5532483339920873,
+      "private_binding_seconds": 1.1932972319918917
+    },
+    {
+      "role": 1,
+      "mpc_bytes": 87136,
+      "verification_seconds": 71.42668306200358,
+      "native_proof_verification_seconds": 67.84746483899653,
+      "native_public_projection_seconds": 0.5586140800005523,
+      "private_binding_seconds": 1.1913717740098946
+    },
+    {
+      "role": 2,
+      "mpc_bytes": 568640,
+      "verification_seconds": 71.42691891400318,
+      "native_proof_verification_seconds": 69.12962684300146,
+      "native_public_projection_seconds": 0.5586273139924742,
+      "private_binding_seconds": 1.1866000310110394
+    },
+    {
+      "role": 3,
+      "mpc_bytes": 44448,
+      "verification_seconds": 71.4265803599992,
+      "native_proof_verification_seconds": 69.25678095499461,
+      "native_public_projection_seconds": 0.5615831140021328,
+      "private_binding_seconds": 1.1892480530077592
+    }
+  ],
+  "all_party_outputs_match": true,
+  "matches_native_candidate": true,
+  "matches_production_rational_oracle": true,
+  "max_abs_error": 7.719016936746925e-07,
+  "rmse": 2.9487927935885926e-07,
+  "raw_commitment_bytes": 917504,
+  "raw_proof_bytes": 168560,
+  "proof_chunks": 112,
+  "proof_chunk_size": 128,
+  "proof_generation_included_in_timing": false,
+  "colocated_elapsed_seconds": 71.95162931300001,
+  "helper_seconds": 70.19422175099317,
+  "public_artifact_sha256": "2e262b8f256fb02fb04a3946d02a0949201391faf4242ef183f4d69b7ac7d10d",
+  "methodology": "Actual immutable client frames plus four-role MPC transport payloads. Includes public commitments/proofs sent separately to all four roles, plaintext candidate delivery to owner zero, checked candidate sharing, fresh public challenge, masked blinding shares, ring lifts and private group binding. Initial activation sharing and final validation opening are excluded. Timings measure colocated proof verification and MPC execution; they are not WAN latency. Private blindings are never reported."
+}

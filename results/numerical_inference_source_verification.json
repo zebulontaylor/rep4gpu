@@ -1,0 +1,36 @@
+{
+  "b1": {
+    "benchmarks/numerical_inference.py": {
+      "recorded": "89fee6f3ab29a3f0ee7756db3e9b9089ad9172746e31c1a1e5c9f5c756e03d13",
+      "current": "89fee6f3ab29a3f0ee7756db3e9b9089ad9172746e31c1a1e5c9f5c756e03d13",
+      "matches": true
+    },
+    "benchmarks/numerical_inference_common.py": {
+      "recorded": "67bd3fff9fd6e4c2f24e4a7000f45acba5bbb9fa35f0f298f8dd2de2b9abc64d",
+      "current": "67bd3fff9fd6e4c2f24e4a7000f45acba5bbb9fa35f0f298f8dd2de2b9abc64d",
+      "matches": true
+    },
+    "rep4gpu/numerical.py": {
+      "recorded": "23e8be6663cc2096bbd3fa282cf22ae17309a1aca663857acaa9b6a5a289895e",
+      "current": "23e8be6663cc2096bbd3fa282cf22ae17309a1aca663857acaa9b6a5a289895e",
+      "matches": true
+    }
+  },
+  "b8": {
+    "benchmarks/numerical_inference.py": {
+      "recorded": "89fee6f3ab29a3f0ee7756db3e9b9089ad9172746e31c1a1e5c9f5c756e03d13",
+      "current": "89fee6f3ab29a3f0ee7756db3e9b9089ad9172746e31c1a1e5c9f5c756e03d13",
+      "matches": true
+    },
+    "benchmarks/numerical_inference_common.py": {
+      "recorded": "67bd3fff9fd6e4c2f24e4a7000f45acba5bbb9fa35f0f298f8dd2de2b9abc64d",
+      "current": "67bd3fff9fd6e4c2f24e4a7000f45acba5bbb9fa35f0f298f8dd2de2b9abc64d",
+      "matches": true
+    },
+    "rep4gpu/numerical.py": {
+      "recorded": "23e8be6663cc2096bbd3fa282cf22ae17309a1aca663857acaa9b6a5a289895e",
+      "current": "23e8be6663cc2096bbd3fa282cf22ae17309a1aca663857acaa9b6a5a289895e",
+      "matches": true
+    }
+  }
+}

@@ -1,0 +1,38 @@
+/home/zeb/.pyenv/versions/3.10.13/lib/python3.10/site-packages/torch/cuda/graphs.py:169: UserWarning: The CUDA Graph is empty. This usually means that the graph was attempted to be captured on wrong device or stream. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/cuda/CUDAGraph.cpp:210.)
+  super().capture_end()
+{"batch": 1, "width": 2048, "ring_bits": 32, "binary_bits": 32, "live_staging": "device", "optimized": true, "optimized_components": ["batched CUDA ChaCha20", "SWAR carry extraction", "fused weighted B2A", "SM89 compact-weight prefill tile dispatch with validated fallback", "GPU checked output opening", "device probabilistic truncation"], "prepared_weights": true, "weight_storage": "words32", "weight_storage_bytes_all_parties": 1610612736, "local_matmul_backend": {"route": "baseline direct decode"}, "gpu_open": true, "output_hash": "CUDA BLAKE3 checked device protocol", "rounding": "probabilistic", "exact_integer_match": false, "max_logprob_error": 0.00251007080078125, "local_four_party_ms": 17.04266599699622, "ideal_network_phase_max_ms": 3.7851740125915967, "host_bridge_ideal_network_phase_max_ms": 4.788607970112935, "ideal_slowdowns": {"fp32_eager_ms": 6.749386434576742, "fp32_graph_ms": 6.908106952267923, "fp32_graph_wall_ms": 6.822634975422275, "fp16_eager_ms": 12.913393888205526, "fp16_graph_ms": 13.505528821105713, "fp16_graph_wall_ms": 13.271719319157667, "numpy_cpu_ms": 1.2661833238293794}}
+[W1110 12:36:10.885230908 CUDACachingAllocator.cpp:3933] memory allocation failed with OOM on device 0 while trying to allocate 20971520 bytes (free: 20119552, total: 8238792704).
+Traceback (most recent call last):
+  File "/home/zeb/.pyenv/versions/3.10.13/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/zeb/.pyenv/versions/3.10.13/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/zeb/Desktop/SIV/benchmarks/device_inference.py", line 352, in <module>
+    main()
+  File "/home/zeb/Desktop/SIV/benchmarks/device_inference.py", line 338, in main
+    row=run_case(b,w,h,n,args.device,args.repeats,args.bits,args.binary_bits,
+  File "/home/zeb/Desktop/SIV/benchmarks/device_inference.py", line 202, in run_case
+    plans=([p.prepare_inference(lambda values,role=p:infer(role,values,fractional_bits),shares[p.party])
+  File "/home/zeb/Desktop/SIV/benchmarks/device_inference.py", line 202, in <listcomp>
+    plans=([p.prepare_inference(lambda values,role=p:infer(role,values,fractional_bits),shares[p.party])
+  File "/home/zeb/Desktop/SIV/rep4gpu/phase_graph.py", line 212, in prepare_inference
+    return InferencePlan(self, function, inputs)
+  File "/home/zeb/Desktop/SIV/rep4gpu/phase_graph.py", line 124, in __init__
+    self.output = function(*self.inputs)
+  File "/home/zeb/Desktop/SIV/benchmarks/device_inference.py", line 202, in <lambda>
+    plans=([p.prepare_inference(lambda values,role=p:infer(role,values,fractional_bits),shares[p.party])
+  File "/home/zeb/Desktop/SIV/benchmarks/inference.py", line 111, in infer
+    hidden = fp.matmul_relu(x, w1, b1)
+  File "/home/zeb/Desktop/SIV/rep4gpu/activations.py", line 68, in matmul_relu
+    return self.runtime.trunc_relu(accumulated, self.fractional_bits)
+  File "/home/zeb/Desktop/SIV/rep4gpu/device_inference.py", line 53, in trunc_relu
+    sign = posttrunc_sign(self, result, shift)
+  File "/home/zeb/Desktop/SIV/rep4gpu/bounded_activation.py", line 28, in posttrunc_sign
+    carry=(carry_power_plus_one(rt,a,b,position) if prefix>0 and not prefix&(prefix-1)
+  File "/home/zeb/Desktop/SIV/rep4gpu/carry_prefix_gpu.py", line 72, in carry_power_plus_one
+    product = rt.mul(Share(tuple(gates[0].unbind(0)), True), Share(tuple(gates[1].unbind(0)), True))
+  File "/home/zeb/Desktop/SIV/rep4gpu/fused_runtime.py", line 275, in mul
+    return self._fused_product(xp, x.binary, x.device, yp)
+  File "/home/zeb/Desktop/SIV/rep4gpu/device_runtime.py", line 213, in _fused_product
+    result = torch.empty((3, *shape), dtype=torch.int64, device=device)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 7.67 GiB of which 19.19 MiB is free. Including non-PyTorch memory, this process has 7.64 GiB memory in use. Of the allocated memory 3.64 GiB is allocated by PyTorch, with 1.73 GiB allocated in private pools (e.g., CUDA Graphs), and 3.85 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)

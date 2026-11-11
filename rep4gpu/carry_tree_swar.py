@@ -270,15 +270,79 @@ def carry_bits(rt, a, b, positions):
     return [results[p] for p in positions]
 
 
+@triton.jit
+def _pack_top_carry_gates(A0, A1, A2, B0, B1, B2, C0, C1, C2, OUT,
+                          COUNT: tl.constexpr, WORDS: tl.constexpr,
+                          BITS: tl.constexpr, WIDTH: tl.constexpr,
+                          BLOCK: tl.constexpr):
+    component = tl.program_id(1)
+    word = tl.program_id(0)*BLOCK + tl.arange(0, BLOCK)
+    bit = tl.arange(0, WIDTH)
+    gate = word[:, None]*WIDTH + bit[None, :]
+    first = gate < COUNT
+    item = tl.where(first, gate, gate-COUNT)
+    valid = gate < 2*COUNT
+    if component == 0:
+        ap, bp, cp = A0, B0, C0
+    elif component == 1:
+        ap, bp, cp = A1, B1, C1
+    else:
+        ap, bp, cp = A2, B2, C2
+    a = (tl.load(ap+item, valid, 0).to(tl.uint64) >> (BITS-1)) & 1
+    b = (tl.load(bp+item, valid, 0).to(tl.uint64) >> (BITS-1)) & 1
+    c = tl.load(cp+item, valid, 0).to(tl.uint64) & 1
+    left = tl.where(first, a, a ^ b)
+    right = tl.where(first, b, c)
+    left = tl.sum(tl.where(valid, left, 0) << bit[None, :], 1)
+    right = tl.sum(tl.where(valid, right, 0) << bit[None, :], 1)
+    tl.store(OUT+component*WORDS+word, left.to(tl.int64), word < WORDS)
+    tl.store(OUT+3*WORDS+component*WORDS+word, right.to(tl.int64), word < WORDS)
+
+
+@triton.jit
+def _finish_top_carries(A0, A1, A2, B0, B1, B2, C0, C1, C2,
+                        Q0, Q1, Q2, OUT,
+                        COUNT: tl.constexpr, BITS: tl.constexpr,
+                        WIDTH: tl.constexpr, BLOCK: tl.constexpr):
+    component = tl.program_id(1)
+    item = tl.program_id(0)*BLOCK + tl.arange(0, BLOCK)
+    valid = item < COUNT
+    if component == 0:
+        ap, bp, cp, qp = A0, B0, C0, Q0
+    elif component == 1:
+        ap, bp, cp, qp = A1, B1, C1, Q1
+    else:
+        ap, bp, cp, qp = A2, B2, C2, Q2
+    a = (tl.load(ap+item, valid, 0).to(tl.uint64) >> (BITS-1)) & 1
+    b = (tl.load(bp+item, valid, 0).to(tl.uint64) >> (BITS-1)) & 1
+    c = tl.load(cp+item, valid, 0).to(tl.uint64) & 1
+    generate = (tl.load(qp+item//WIDTH, valid, 0).to(tl.uint64) >> (item % WIDTH)) & 1
+    index = item+COUNT
+    propagated = (tl.load(qp+index//WIDTH, valid, 0).to(tl.uint64) >> (index % WIDTH)) & 1
+    tl.store(OUT+component*COUNT+item, (generate ^ propagated).to(tl.int64), valid)
+    tl.store(OUT+3*COUNT+component*COUNT+item, (a ^ b ^ c).to(tl.int64), valid)
+
+
 def truncation_bits(rt, a, b, shift):
     """Return carry into shift, ring carry, and modular-sum sign."""
     if not isinstance(shift, int) or not 0 <= shift < rt.bits:
         raise ValueError(f'shift must be an integer in [0, {rt.bits-1}]')
-    low, high, before_sign = carry_bits(rt, a, b, (shift, rt.bits, rt.bits-1))
+    low, before_sign = carry_bits(rt, a, b, (shift, rt.bits-1))
     count = math.prod(a.shape)
-    result = torch.empty((3, *a.shape), dtype=torch.int64, device=a.device)
+    result = torch.empty((2, 3, *a.shape), dtype=torch.int64, device=a.device)
     if count:
         ap = tuple(t.contiguous().reshape(-1) for t in a.parts)
         bp = tuple(t.contiguous().reshape(-1) for t in b.parts)
-        _sign[(triton.cdiv(count, 256), 3)](*ap, *bp, *before_sign.parts, result, count, rt.bits, 256)
-    return low, high, Share(tuple(result.unbind(0)), True)
+        cp = tuple(t.contiguous().reshape(-1) for t in before_sign.parts)
+        words = (2*count+rt.binary_bits-1)//rt.binary_bits
+        gates = torch.empty((2, 3, words), dtype=torch.int64, device=a.device)
+        _pack_top_carry_gates[(triton.cdiv(words, 4), 3)](
+            *ap, *bp, *cp, gates, count, words, rt.bits, rt.binary_bits, 4)
+        # Carry into the sign bit already supplies both the sum sign and the
+        # ring carry. Only two final gates per coordinate remain, packed across
+        # coordinates instead of rebuilding a second nearly identical tree.
+        product = rt.mul(Share(tuple(gates[0].unbind(0)), True),
+                         Share(tuple(gates[1].unbind(0)), True))
+        _finish_top_carries[(triton.cdiv(count, 256), 3)](
+            *ap, *bp, *cp, *product.parts, result, count, rt.bits, rt.binary_bits, 256)
+    return low, Share(tuple(result[0].unbind(0)), True), Share(tuple(result[1].unbind(0)), True)

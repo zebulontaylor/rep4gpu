@@ -24,7 +24,7 @@ The completed int32 diagonal is sign-extended to int64, interpreted as uint64, s
 
 The generated integer MMA instruction uses `.satfinite.s32`: an overflowing signed int32 accumulator saturates instead of wrapping. Its accumulator must contain a bounded diagonal sum. An arbitrary reconstructed uint32 ring value does not satisfy that bound.
 
-In particular, writing `out += dot(a0,b0,0)` with a uint32 `out` can let the compiler fold `out` into the dot's MMA accumulator. The maintained uint64 reconstruction prevents that unsafe fusion. Masking or truncating `out` back to uint32 inside the K loop can reintroduce it.
+In particular, writing `out += dot(a0,b0,0)` with a uint32 `out` can let the compiler fold `out` into the dot's MMA accumulator. The baseline uint64 reconstruction prevents that unsafe fusion. Masking or truncating `out` back to uint32 inside the K loop can reintroduce it.
 
 [`test_saturating_fusion_regression`](../tests/test_tuned_kernels.py) uses seed `3280909` and dimensions `128×71×39`. In the rejected uint32-reconstruction variant, one accumulator follows:
 
@@ -54,9 +54,66 @@ Static weight formats in [`kernels.py`](../rep4gpu/kernels.py) have these costs 
 |---|---|---:|---|
 | Baseline tensor core | `16/32/64` | 4 | Triton default |
 | One-row SIMT decode | `1/32/32` | 4 | Integer reduction |
-| Optional tuned compact ring32 | `32/128/64` | 4 | One stage |
+| Optimized compact ring32 local products | `32/128/32` | 4 | One stage |
+| Tuned compact ring32 single product | `32/128/64` | 4 | One stage |
 
-[`local_products_tuned`](../rep4gpu/tuned_kernels.py) selects the last row only for compact ring32 weights, at least sixteen activation rows, and SM 8.9. It calls the existing uint64-reconstruction kernel with different tile settings. Other architectures, rings, formats, and smaller batches fall back to `local_products`.
+[`local_products_tuned`](../rep4gpu/tuned_kernels.py) selects the optimized local-product row only for compact ring32 weights, at least sixteen activation rows, and SM 8.9. It uses the explicit modular-add kernel described below. Other architectures, rings, formats, and smaller batches fall back to `local_products`. `ring_matmul_tuned` retains the uint64 reconstruction and its `32/128/64` tile for single products.
+
+## Explicit modular accumulation for ring32
+
+[`ring32_opaque.py`](../rep4gpu/ring32_opaque.py) reconstructs each ring32
+output with an explicit CUDA `add.u32` inline-assembly operation. The compiler
+sees this addition as an opaque operation, so it cannot fold the arbitrary
+ring accumulator into a saturating MMA accumulator. Each diagonal still starts
+at zero and accumulates only its bounded signed-byte dot products. Casting the
+completed diagonal to uint32, shifting it, and adding modulo `2**32` gives the
+same low word as the baseline uint64 reconstruction.
+
+The selected K tile is 32. Its largest diagonal has magnitude at most
+`4*32*128**2 = 2,097,152`, well below the signed int32 limit. Input components
+are reduced to uint32 before balanced-byte extraction; full-width int64 input
+bit patterns therefore retain their exact ring32 interpretation. Outputs are
+canonical unsigned ring32 values stored in int64, as in the baseline.
+
+This is a local arithmetic optimization. It changes no masks, messages,
+rounding, recipients, or protocol checks. The original saturation regression,
+worst-case balanced digits, partial tiles, and full-width random inputs are
+covered by [exact integer tests](../tests/test_ring32_opaque.py).
+
+## Optional matrix Strassen preparation
+
+`DeviceInferenceParty.prepare_weight_share(weight, storage='strassen32')`
+prepares one level of exact matrix Strassen for ring32 prefill. Each weight
+component is divided into four blocks. The seven stored combinations are
+`B00+B11`, `B00`, `B01-B11`, `B10-B00`, `B11`, `B00+B01`, and `B10+B11`,
+all modulo `2**32`. No query-dependent work is moved to preparation.
+
+At inference time, a fused kernel forms the seven corresponding combinations
+of each activation component. A batched grid computes all seven leaf products
+and all three Rep4 local contributions, then another kernel reconstructs the
+three original contributions. Strassen's identities use only addition and
+multiplication, so they hold in this ring for every share bit pattern. The
+existing resharing protocol receives exactly the same three contributions.
+Optimized mode uses the explicit modular-add reconstruction for leaf products.
+
+One level performs seven half-size matrix products instead of eight, reducing
+scalar product count by 12.5%. The batched grid also changes kernel occupancy;
+the measured speedup need not equal the arithmetic reduction. Every activation
+sum, leaf product, and output combination remains inside the online timer.
+
+The format retains 1.75 times the storage of the three compact components:
+21 bytes per original matrix entry per party instead of 12. The full two-layer
+2048 → 8192 → 2048 fixture retains 704,643,072 weight bytes per party. This is
+static weight caching; it requires no one-use preprocessing correlations.
+Matrix dimensions and activation row counts must be divisible by two. Use
+`words32` for single-row decode. The lower-level experimental functions also
+allow two levels, but the inference storage option selects only one because
+additional subdivision regressed the down projection.
+
+The implementation is in [strassen_kernels.py](../rep4gpu/strassen_kernels.py).
+[Kernel tests](../tests/test_strassen_kernels.py) compare against full-width
+integer arithmetic, and [inference tests](../tests/test_device_inference.py)
+check the same local shares, wire transcript, output, and counters as `words32`.
 
 ## Optional five-GEMM local algebra
 

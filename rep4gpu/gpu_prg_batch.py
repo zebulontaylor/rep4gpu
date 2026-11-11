@@ -7,7 +7,7 @@ import torch
 import triton
 import triton.language as tl
 
-from .gpu_prg import _quarter
+from .gpu_prg import _quarter, _store_words
 
 
 @triton.jit
@@ -63,19 +63,11 @@ def _rows(K0,K1,K2,K3,K4,K5,N0,N1,N2,N3,N4,N5,OUT,COUNT:tl.constexpr,
     block=tl.program_id(0).to(tl.uint64)*BLOCK+tl.arange(0,BLOCK).to(tl.uint64)
     if active:
         words=_block_words(key,nonce,block,BLOCK)
-        if BITS==32:
-            for i in tl.static_range(16):
-                idx=block*16+i
-                tl.store(OUT+row*COUNT+idx,words[i].to(tl.uint64).to(tl.int64),idx<COUNT)
-        else:
-            for i in tl.static_range(8):
-                idx=block*8+i
-                value=words[2*i].to(tl.uint64)|(words[2*i+1].to(tl.uint64)<<32)
-                tl.store(OUT+row*COUNT+idx,value.to(tl.int64),idx<COUNT)
+        _store_words(OUT+row*COUNT,block,words,COUNT,BITS)
     else:
-        for i in tl.static_range(16 if BITS==32 else 8):
-            idx=block*(16 if BITS==32 else 8)+i
-            tl.store(OUT+row*COUNT+idx,tl.full((BLOCK,),0,tl.int64),idx<COUNT)
+        idx=block[:,None]*(16 if BITS==32 else 8)+tl.arange(0,16 if BITS==32 else 8)[None,:]
+        tl.store(OUT+row*COUNT+idx,tl.full(idx.shape,0,tl.int64),idx<COUNT)
+
 
 
 def generate_rows(keys,nonces,count,bits=64,*,packed=False):

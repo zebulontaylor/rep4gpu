@@ -127,6 +127,58 @@ def trunc(rt, x, shift, *, carry_impl=None, convert_impl=None):
         rt, x, shift, with_sign=False, carry_impl=carry_impl, convert_impl=convert_impl)[0]
 
 
+def trunc_bounded(rt, x, shift):
+    """Exact floor under the caller-established strict quarter-ring bound.
+
+    The reconstructed signed input must satisfy ``abs(x) < 2**(bits-2)``.
+    This function does not establish that bound or accept arbitrary ring words;
+    use ``trunc`` when no public proof or prior private check supplies it.
+    Shares remain in the original ring, and no intermediate value is opened.
+
+    Adding 2**(bits-2) puts the reconstructed value below the signed midpoint.
+    If its two unsigned pair sums are u,v, their ring wrap is then exactly
+    msb(u) OR msb(v). Absorb both individual MSBs into the arithmetic upper
+    inputs; only the low carry and the product of those MSBs need conversion.
+    """
+    _validate(rt, x, shift)
+    if shift > rt.bits-2:
+        raise ValueError('bounded truncation shift must not exceed bits-2')
+    if shift == 0 or x.parts[0].numel() == 0:
+        return x
+    offset = 1 << (rt.bits-2)
+    shifted = rt.add(x, rt.public(offset, like=x))
+    pair = rt._normalize(shifted.parts[1] + shifted.parts[2 if rt.party % 2 == 0 else 0])
+    high_mask = (1 << (rt.bits-shift))-1
+    upper = ((pair >> shift) & high_mask) - (((pair >> (rt.bits-1)) & 1) << (rt.bits-shift))
+    high_a, high_b = rt.joint_input_batch(
+        [(0,1,3,2,upper if rt.party<2 else None),
+         (2,3,1,0,upper if rt.party>=2 else None)],
+        x.shape, False, x.device)
+    if x.device.type == 'cuda':
+        from .bounded_exact_truncation_gpu import low_carry_and_top_product
+        from .compact_conversion_gpu import weighted_b2a_gpu
+        low, top = low_carry_and_top_product(rt, pair, x.shape, shift)
+        convert = weighted_b2a_gpu
+    else:
+        # The CPU path is an integer-protocol reference; the GPU path packs
+        # only the required bits before sharing and prunes the carry tree.
+        a,b = rt.joint_input_batch(
+            [(0,1,3,2,pair if rt.party<2 else None),
+             (2,3,1,0,pair if rt.party>=2 else None)],
+            x.shape, True, x.device)
+        _, generate = _binary_add_carries(rt, a, b)
+        low = _map(generate, lambda part: (part >> (shift-1)) & 1)
+        top = rt.mul(_map(a, lambda part: (part >> (rt.bits-1)) & 1),
+                     _map(b, lambda part: (part >> (rt.bits-1)) & 1))
+        convert = weighted_b2a
+    weight = 1 << (rt.bits-shift)
+    if weight == 1 << 63:
+        weight = -(1 << 63)
+    correction = convert(rt, _stack([low, top]), [1, weight])
+    result = rt.add(rt.add(high_a, high_b), correction)
+    return rt.sub(result, rt.public(offset >> shift, like=result))
+
+
 def trunc_relu(rt, x, shift, *, carry_impl=None, convert_impl=None):
     """Exact signed floor division followed by ReLU, with three B2A bits."""
     _validate(rt, x, shift)

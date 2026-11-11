@@ -1,0 +1,39 @@
+{
+  "security_reviewed": false,
+  "dependencies": [
+    {
+      "name": "vole-labs",
+      "path": ".",
+      "url": "https://github.com/vole-labs/vole.git",
+      "commit": "e266595c1811692a6b2df87a4b4d13d3a86ef80f"
+    },
+    {
+      "name": "emp-ot",
+      "path": "thirdparty/emp-ot",
+      "url": "https://github.com/carlweng/emp-ot.git",
+      "commit": "b947fe8088cac120c23910f5d9699c2b443cdcc1"
+    },
+    {
+      "name": "emp-tool",
+      "path": "thirdparty/emp-tool",
+      "url": "https://github.com/emp-toolkit/emp-tool.git",
+      "commit": "2ea73a31c54091bd15979ff884e24fa77c3f9673"
+    }
+  ],
+  "source_files_sha256": {
+    "vole/base_svole.h": "00bad7e4f24498e910bc8866190da110a85889fcf210be6452d32135dc3be6bf",
+    "vole/cope.h": "1b9cfa0e4712e08d499fa32e0fb194ea52970e4f7d647dbe0d66ed8679225d5d",
+    "vole/base_cot.h": "998f22746c61ec1f3a557ed11c886c83495cd9e9406391eac84655254ed8f3e5",
+    "vole/preot.h": "21250f0739b7107023f517f5a61c8c8f1c4f09040805a4b33556efe743b54501",
+    "vole/spfss_sender.h": "7116ade0d75e6243fd556477ebbdc5cb5b53a79a9aecdc62769b3f5888e3dcc7",
+    "vole/spfss_recver.h": "2ca32d2224a8f486208ccdaf2d5beea9cf2acd03dd216142e238702bc0efbd2c",
+    "vole/twokeyprp.h": "e7fcf9cb56ab54de8176e54cc730816486d583f28e35abf88e0569191e7ebd38",
+    "vole/fields/fp61.h": "2110941cba0dddbd9fe1f219408b02d50c650a302b691269c2444e090f558b48",
+    "vole/fields/fp61x2.h": "f8ac4c4652bacc421f83b212f05fb17f11ceb2f22c7afbbd26bb0500b35dc84b",
+    "vole/fields/utils.h": "ecb284b54d53139d0a53b6c7599c90769edaf7620f27cdae77a5445fc021f266",
+    "thirdparty/emp-ot/emp-ot/ot.h": "17f282c3a6588445e4244de4855c5ce27abf189916531802f808e2789777ab13",
+    "thirdparty/emp-ot/emp-ot/ot_extension/ot_extension.h": "e468a0aec43a890657ca32831152b3cdfac4ad53ba701e84f51c27a24dbaebdc",
+    "thirdparty/emp-ot/emp-ot/ot_extension/softspoken/softspoken.h": "0228d836d715c23156b555d65a1a221332a0eed7b461e482ac62ba7d2321ab02",
+    "thirdparty/emp-tool/emp-tool/runtime/io/io_channel.h": "987d43b8b60853c5096561d209111b3d23b1db5e5d492176da3ee0ac68465bd6"
+  }
+}

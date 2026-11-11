@@ -107,7 +107,10 @@ def open_device(rt,x):
                         block_tree=getattr(rt,'hash_block_tree',True))
     checks = _exchange(rt,{sender:tags[0]},{receiver:32})
     actual = _validate_frame(checks,receiver,32,device)
-    if not torch.equal(actual,tags[1]):
+    verify = getattr(rt, '_verify_tags', None)
+    if verify is not None:
+        verify(actual, tags[1], 'device opening BLAKE3 component hash mismatch')
+    elif not torch.equal(actual,tags[1]):
         error = ValueError('device opening BLAKE3 component hash mismatch')
         abort = getattr(rt.transport,'abort',None)
         if abort is not None:

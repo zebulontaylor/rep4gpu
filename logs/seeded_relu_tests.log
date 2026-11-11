@@ -1,0 +1,16 @@
+.......................                                                  [100%]
+=============================== warnings summary ===============================
+tests/test_seeded_relu_simulation.py::test_signed_boundaries_fresh_masks_and_exact_payload[0-tee_relu-True]
+tests/test_seeded_relu_simulation.py::test_signed_boundaries_fresh_masks_and_exact_payload[0-tee_trunc-True]
+tests/test_seeded_relu_simulation.py::test_signed_boundaries_fresh_masks_and_exact_payload[14-tee_relu-True]
+tests/test_seeded_relu_simulation.py::test_signed_boundaries_fresh_masks_and_exact_payload[14-tee_trunc-True]
+tests/test_seeded_relu_simulation.py::test_signed_boundaries_fresh_masks_and_exact_payload[31-tee_relu-True]
+tests/test_seeded_relu_simulation.py::test_signed_boundaries_fresh_masks_and_exact_payload[31-tee_trunc-True]
+tests/test_seeded_relu_simulation.py::test_helper_output_can_feed_checked_mpc[True]
+tests/test_seeded_relu_simulation.py::test_corrupt_missing_component_or_hash_rejected[1-True]
+tests/test_seeded_relu_simulation.py::test_corrupt_missing_component_or_hash_rejected[2-True]
+  /home/zeb/.pyenv/versions/3.10.13/lib/python3.10/site-packages/torch/cuda/graphs.py:169: UserWarning: The CUDA Graph is empty. This usually means that the graph was attempted to be captured on wrong device or stream. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/cuda/CUDAGraph.cpp:210.)
+    super().capture_end()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+23 passed, 9 warnings in 7.82s

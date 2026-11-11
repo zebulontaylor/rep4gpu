@@ -15,32 +15,18 @@ def _supports_tuned(device):
 
 
 def local_products_tuned(x0,x1,x2,y0,y1,y2,bits=64):
-    """Use the tuned ring32 compact-weight tile for prefill-sized batches.
+    """Use exact ring32 modular-add reconstruction for SM 8.9 prefill batches.
 
-    This changes only the tile and pipeline depth of the existing exact kernel.
-    The tile is tested on an RTX 4060 Laptop GPU (SM 8.9). Other CUDA
-    architectures, input formats, rings and batches below 16 rows use
-    ``local_products`` with its baseline tile.
+    Compact ring32 weights and at least sixteen rows select the 32/128/32
+    tile. Other devices, rings, formats, and smaller batches retain the
+    baseline local-products route.
     """
     xs=(x0,x1,x2)
     ys=(y0,y1,y2)
     if bits!=32 or not all(isinstance(y,CompactWeight) for y in ys) or x0.ndim!=2 or x0.shape[0]<16 or not _supports_tuned(x0.device):
         return local_products(*xs,*ys,bits)
-    if any(x.dtype!=torch.int64 or x.ndim!=2 or not x.is_cuda or x.shape!=x0.shape or x.device!=x0.device for x in xs):
-        raise ValueError("input shares must be matching int64 CUDA matrices")
-    if any(y.shape!=y0.shape or y.device!=x0.device for y in ys) or x0.shape[1]!=y0.shape[0]:
-        raise ValueError("weight shapes and devices must match matrix dimensions")
-    m,k=x0.shape
-    n=y0.shape[1]
-    out=torch.empty((3,m,n),device=x0.device,dtype=torch.int64)
-    if m and n and k:
-        with torch.cuda.device(x0.device):
-            _local_products[(triton.cdiv(m,32),triton.cdiv(n,128),3)](
-                *(x.contiguous() for x in xs),*(y.words for y in ys),out,m,n,k,32,32,128,64,False,
-                num_warps=4,num_stages=1)
-    elif k==0:
-        out.zero_()
-    return out.unbind(0)
+    from .ring32_opaque import local_products_opaque
+    return local_products_opaque(*xs,*ys,tile=(32,128,32))
 
 
 

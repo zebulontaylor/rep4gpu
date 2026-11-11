@@ -273,3 +273,30 @@ def test_device_live_ffn_mixed_paths(bits,bridge,prg_batch):
     with ThreadPoolExecutor(4) as pool:
         actual = list(pool.map(work,range(4)))
     assert all(torch.equal(value,expected) for value in actual)
+
+
+def test_device_product_batches_independent_digests(monkeypatch):
+    if not torch.cuda.is_available():
+        pytest.skip('CUDA required')
+    pytest.importorskip('cryptography')
+    pytest.importorskip('blake3')
+    from rep4gpu import gpu_hash
+    seeds, shares, outgoing, incoming, _, expected = _product_fixture(32,32,False,False)
+    batch_sizes = []
+    original = gpu_hash.digest_batch
+
+    def record(data, **kwargs):
+        batch_sizes.append(data.shape[0])
+        return original(data, **kwargs)
+
+    monkeypatch.setattr(gpu_hash, 'digest_batch', record)
+    saw_multiple = False
+    for party in range(4):
+        batch_sizes.clear()
+        runtime = DeviceParty(party,_Replay(outgoing[party],incoming[party]),
+                              {e:s for e,s in seeds.items() if e != party},bits=32,binary_bits=32)
+        result = runtime.mul(*shares(party))
+        assert all(torch.equal(a.cpu(),b) for a,b in zip(result.parts,expected[party]))
+        assert len(batch_sizes) == 2
+        saw_multiple |= max(batch_sizes) > 1
+    assert saw_multiple

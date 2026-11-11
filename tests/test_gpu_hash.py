@@ -128,3 +128,35 @@ def test_context_guard_restores_absent_worker_context():
         assert previous.value is None
     with ThreadPoolExecutor(1) as pool:
         pool.submit(worker).result(timeout=10)
+
+
+@pytest.mark.parametrize('chunks', range(1, 33))
+@pytest.mark.parametrize('batch', [1, 3, 5])
+def test_small_full_chunk_tree(chunks, batch):
+    source = np.random.default_rng(chunks).integers(0, 256, (batch, chunks*1024), dtype=np.uint8)
+    actual = digest_batch(torch.from_numpy(source).cuda(), block_tree=True).cpu().numpy()
+    for row, expected in zip(actual, source):
+        assert row.tobytes() == blake3(expected.tobytes()).digest()
+
+
+@pytest.mark.parametrize('length', [8192, 18432])
+def test_small_full_chunk_tree_graph_reads_fresh_input(length):
+    data = torch.zeros((2, length), device='cuda', dtype=torch.uint8)
+    digest_batch(data, block_tree=True)
+    graph = torch.cuda.CUDAGraph()
+    with torch.cuda.graph(graph):
+        result = digest_batch(data, block_tree=True)
+    for value in (17, 219):
+        data.fill_(value)
+        graph.replay()
+        actual = result.cpu().numpy()
+        expected = blake3(bytes([value])*length).digest()
+        assert all(row.tobytes() == expected for row in actual)
+
+
+def test_small_full_chunk_tree_unaligned_input():
+    source = np.arange(2*8192+1, dtype=np.uint8)
+    data = torch.from_numpy(source).cuda()[1:].reshape(2, 8192)
+    actual = digest_batch(data, block_tree=True).cpu().numpy()
+    for row, expected in zip(actual, source[1:].reshape(2, 8192)):
+        assert row.tobytes() == blake3(expected.tobytes()).digest()

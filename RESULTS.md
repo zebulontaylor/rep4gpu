@@ -70,6 +70,320 @@ Exact prefill sends 352.72 MB of application payload globally in 25 rounds;
 probabilistic prefill sends 239.60 MB in 20 rounds. Actual network bandwidth and
 round latency remain additional deployment costs.
 
+### Prepared inference graphs
+
+Prepared local graphs, batched message hashes, direct receive buffers, and a
+shorter post-truncation sign circuit reduce the measured probabilistic Q14
+cost. The **less than 10× FP16 target remains unmet** for both workloads.
+These runs use the same resident 2048 → 8192 ReLU → 2048 block, compact ring32
+weights, and checked final opening as the eager GPU variant above.
+
+| Workload | Eager before optimization | Prepared graphs | Versus FP16 graph | Host-staged estimate | Measured four roles on one GPU |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Decode, batch 1 | 9.51 ms | 3.57 ms | 12.8× | 4.44 ms | 16.88 ms |
+| Prefill, batch 128 | 28.20 ms | 23.78 ms | 63.8× | 41.46 ms | 100.11 ms |
+
+The [before measurement](results/rep4_opt_baseline.json) uses five samples;
+the [final measurement](results/rep4_opt_final_verified.json) uses nine.
+Absolute latency improves by 2.66× for decode and 1.19× for prefill. A separate
+[nine-sample run](results/rep4_opt_final.json) measured 3.34 ms and 23.31 ms;
+the table uses the final run rather than selecting the fastest result. FP16
+denominators are measured in each run and vary, especially for prefill.
+
+Both estimates exclude network latency and bandwidth. Device replay loads
+recorded messages into the graphs' receive buffers before timing, matching its
+already-delivered GPU assumption. Host replay includes transfers directly into
+those buffers. Every timed replay still generates masks, hashes payloads,
+checks received tags, and reproduces its recorded output. Fresh live samples
+use advancing counters and agree at all four parties. Graph preparation is
+reported separately as setup.
+
+The shortened sign circuit preserves the probabilistic rounding contract and
+reduces prefill traffic to 216.01 MB globally, with 20 rounds unchanged.
+Graph execution can check tags immediately or allow local private scratch work
+until the next send boundary. The reported run uses the latter option; all
+pending checks finish before any dependent message or output is released.
+The [device protocol guide](docs/device-protocol.md#prepared-inference-graphs)
+defines the API, constraints, and reproduction command.
+
+The optional [five-product prefill run](results/rep4_opt_five_prefill.json)
+takes 23.54 ms and increases retained weight storage across four roles from
+1.61 GB to 2.68 GB. It does not establish an end-to-end advantage. Paired
+measurements also rejected [full-K accumulation](artifacts/fast_ring_compare.json),
+[fused five-product preparation](artifacts/five_fused_compare.json),
+[decode split-K/tile changes](artifacts/decode_split_compare.json), and
+[four-lane hashing](artifacts/hash_four_lanes_compare.json); their slower
+implementations are not selected or retained.
+
+The focused regression passes **464 tests**, including private FFN transcript
+equivalence, fresh nonces, malformed frames, tampered messages, graph failure
+handling, range endpoints, trained inference, and separate-process socket
+execution. See the [validation log](logs/rep4_opt_validation_final.log).
+
+### Coalesced cryptography and activation fusion
+
+Contiguous ChaCha20 stores, vectorized BLAKE3 loads, and four-byte joint-input
+masks reduce memory traffic. The bounded carry circuit now computes its final
+carry with one packed AND, without computing an unused propagate bit. Sign
+extraction shares a kernel with conversion pair preparation. Truncation and
+conversion also omit reads of components that their joint-input routes define
+as public zeros. Graph plans cache their nonce schedules and combine multiple
+pending check verdicts at each send boundary.
+
+The [nine-sample measurement](results/rep4_next_final.json) retains the same
+2048 → 8192 ReLU → 2048 model, ring32 Q14 precision, fresh online masks,
+checked output opening, and GPU-delivered replay assumptions. The **less than
+10× FP16 target remains unmet** for both workloads.
+
+| Workload | Previous estimate | Current estimate | Versus FP16 graph | Host-staged estimate | Measured four roles on one GPU |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Decode, batch 1 | 3.572 ms | 3.455 ms | 12.36× | 4.333 ms | 17.872 ms |
+| Prefill, batch 128 | 23.780 ms | 20.357 ms | 55.40× | 39.125 ms | 89.622 ms |
+
+These point estimates reduce decode latency by 3.3% and prefill latency by
+14.4% relative to the prior verified run. The current FP16 graph baselines are
+0.2796 ms and 0.3674 ms, measured in the same run. Both replay estimates exclude
+network latency and bandwidth; the colocated column includes contention among
+four roles on one GPU. See the [comparison summary](results/rep4_next_summary.json).
+
+The two prefill phases containing the matrix products account for 9.67 ms,
+including their local protocol work, against a 3.67 ms budget for the entire
+block to reach 10× FP16. Persistent accumulators, uint32 MMA barriers, and
+cuBLAS limb products did not improve both layer shapes, so the existing
+matrix kernel remains selected. The retained
+[accumulator experiments](artifacts/prefill_persistent_accumulators.json) and
+[concatenated cuBLAS experiments](artifacts/prefill_cublas_concat.json) record
+the comparisons and exact-output checks.
+
+The protocol still takes 20 rounds. Prefill payload falls from 216.01 MB to
+215.22 MB globally because the final carry multiplication uses half as many
+packed words. All fresh outputs agree across parties and satisfy the original
+rounding bounds; every replay exactly reproduces its recorded output. Maximum
+absolute log-probability error is 0.00245 for decode and 0.00291 for prefill.
+The focused regression passes **542 tests**, covering CPU cryptographic
+oracles, exact transcripts, fresh graph nonces, boundary carries, tampering,
+trained inference, and socket execution. The
+[validation log](logs/rep4_next_validation.log) and
+[exit status](logs/rep4_next_validation.status) retain the results.
+
+### Packed activation messages and small-message hashing
+
+The bounded sign path packs its consumed bits before joint sharing and keeps
+the packed shares through carry evaluation and sign conversion. Ring32 Q14
+uses 18 bits per activation in the initial Boolean exchanges instead of 32.
+Aligned full-chunk BLAKE3 messages up to 32 KiB use coalesced shared-memory
+loads and a warp-local parent tree. Graphs also capture verdict transfers into
+retained pinned host buffers; checks still finish before dependent sends.
+
+The [nine-sample measurement](results/rep4_packed_final.json) keeps the same
+model, precision, fresh masks, checked output opening, and timing boundaries.
+The **less than 10× FP16 target remains unmet** for both workloads.
+
+| Workload | GPU-delivered estimate | FP16 graph baseline | Slowdown | Host-staged estimate | Measured four roles on one GPU |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Decode, batch 1 | 3.007 ms | 0.2797 ms | 10.75× | 3.953 ms | 16.951 ms |
+| Prefill, batch 128 | 19.535 ms | 0.4039 ms | 48.36× | 35.667 ms | 86.888 ms |
+
+The [paired comparison](results/rep4_packed_paired.json), before the final hash
+specialization, measured prefill at 20.483 ms before packing and 19.454 ms
+afterward, a 5.0% reduction. Decode measured 3.015 ms and 3.071 ms; packing did
+not establish a decode latency gain. The retained hash kernel separately
+reduces batch-two graph timings from 12.48 to 10.39 µs for 8 KiB messages and
+13.98 to 12.25 µs for 18 KiB messages in an
+[alternating kernel comparison](artifacts/hash_small_retained_compare.jsonl).
+
+FP16 prefill timings vary between runs. Using the previous report's 0.3674 ms
+denominator, the new prefill estimate is 53.17×. The change from 55.40× to
+48.36× therefore includes baseline variation. Both replay estimates exclude
+network latency and bandwidth; physical GPUDirect networking remains absent.
+
+Prefill sends 200.54 MB globally instead of 215.22 MB, a 6.8% reduction, with
+20 rounds unchanged. Fresh outputs agree across all parties and satisfy the
+same propagated rounding bounds; every replay reproduces its recorded output.
+Maximum absolute log-probability error is 0.00251 for decode and 0.00290 for
+prefill. The two prefill matrix-product phases still total 9.83 ms, against a
+4.04 ms budget for the entire inference to reach 10× the current FP16 baseline.
+The [comparison summary](results/rep4_packed_summary.json) retains these values.
+
+The focused regression passes **611 tests**, including every small-message
+hash chunk count from 1 through 32, mixed binary word widths, packed carry
+boundaries, fresh graph inputs and nonces, failed checks before sends, trained
+inference, and socket execution. See the
+[validation log](logs/rep4_packed_validation.log) and
+[exit status](logs/rep4_packed_validation.status).
+
+## Sparse products and activation experiments
+
+The optional `sparse_products=True` path removes two public-zero contributions
+from selected truncation, bounded-sign, and conversion products. Its balanced
+four-contribution route preserves the existing Rep4 sharing model and the
+rounding contract. It reduces prefill traffic from 200.54 MB to **176.95 MB**
+with 20 rounds unchanged. A [nine-sample ReLU run](results/activation_inference.json)
+measures 3.242 ms decode and 19.031 ms prefill. The earlier packed run measured
+3.007 and 19.535 ms; these separate runs establish no decode latency gain.
+The [protocol description](docs/device-protocol.md#products-with-public-zero-components)
+specifies the public support invariant and altered mask schedule.
+
+The activation experiments use the same 2048 → 8192 → 2048 secret-weight
+fixture, Q14 ring32, prepared GPU graphs, fresh masks, and checked output
+opening. No TEE was used. The table reports GPU-delivered isolated-party
+estimates; all network latency and bandwidth are excluded.
+
+| Activation path | Decode | Prefill | Rounds | Prefill traffic | Prefill logit RMSE | Prefill top-1 agreement |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Private ReLU with sparse products | 3.242 ms | 19.031 ms | 20 | 176.95 MB | 0.000633 | 100% |
+| Private local quadratic GELU | 2.929 ms | 17.718 ms | 14 | 155.19 MB | 0.023282 | 89.84% |
+| Private local quadratic SiLU | 3.009 ms | 17.784 ms | 14 | 155.19 MB | 0.011026 | 92.19% |
+| Public-fixture helper simulation, ReLU | 2.611 ms | 14.085 ms | 9 | 79.69 MB | 0.000633 | 100% |
+
+Accuracy compares each case with its original floating activation. These are
+synthetic FFN outputs, not trained language-model accuracy. The two local
+polynomials are `x/2 + 3*x*x/8` for GELU and `x/2 + x*x/4` for SiLU. They
+need one secret square and avoid secure comparisons, but change the network
+function. On a dense `[-4,4]` grid their maximum activation errors are 4.00013
+and 2.07195 respectively. They work better near zero and do not clip tails.
+The earlier uniform quadratics give much poorer fixture quality: prefill top-1
+agreement is 35.94% for GELU and 56.25% for SiLU. See the
+[activation API and contracts](docs/activations.md),
+[uniform measurements](results/activation_inference.json), and
+[local measurements](results/activation_local_inference.json).
+
+The [helper simulation](results/activation_simulated_inference.json) executes
+two ordinary GPU helpers that reconstruct the activation, floor-rescale it,
+apply ReLU, and create fresh full four-component output shares. It includes
+actual masks, hashes, reconstruction, and resharing. It provides **no enclave
+isolation or activation privacy**. This changed trust model cannot be reported
+as a faster private Rep4 implementation. Its activation route costs eight
+ring words per element globally plus 128 tag bytes in two exchanges; the
+complete inference retains the later private rescaling and checked opening.
+The [simulation guide](docs/activation-helper-simulation.md) describes the route
+and its limitations.
+
+Against each run's original-activation FP16 graph baseline, the simulation is
+9.34× for decode and 32.10× for prefill. Local quadratic GELU is 10.47× and
+45.04×; local quadratic SiLU is 10.67× and 35.10×. FP16 prefill timing varies
+between runs, so latency and quality columns are more useful than comparing
+these ratios directly. The simulated ReLU latency is 19.5% lower for decode
+and 26.0% lower for prefill than the sparse ReLU measurement. The **less than
+10× target for both workloads remains unmet**.
+
+### Blinding and duplicated helpers
+
+The [public blinding experiments](artifacts/activation_blinding_public_gpu.json)
+expose the limits of shift, scale, and permutation masking. Softmax shift and
+permutation preserve sorted gaps and the probability multiset. Large shifts
+can also lose floating-point precision: the FP16 offset example changes a
+probability by 0.332. RMS scaling preserves normalized ratios; fixed epsilon
+breaks exact invariance, while revealing scaled epsilon can disclose the
+scale. Permutation and padding leave actual GELU inputs visible within a
+larger multiset. These transformations do not hide all activation information
+from a compromised helper.
+
+Duplicate deterministic execution and matching output hashes detect some
+inconsistent results, but cannot detect identical errors or establish privacy.
+The public replica experiment enforces fresh nonces and rejects independent
+corruption; it implements no enclave or attestation. Slalom's
+[TEE-assisted design](https://www.floriantramer.com/docs/papers/iclr19slalom.pdf)
+places the remaining network computation inside its trusted environment and
+outsources linear layers; it does not establish that these blinding transforms
+protect activations from a compromised TEE. For a pure MPC direction,
+[Compact](https://petsymposium.org/popets/2024/popets-2024-0065.php) studies
+input-distribution-aware piecewise polynomials. Its reported model quality
+does not validate the quadratics used here.
+
+The [phase-deletion counterfactual](results/activation_cost_bounds.json)
+puts prefill at 10.46 ms even if the first activation stage were free. Its two
+matrix phases alone total 9.66 ms. These estimates delete existing phases and
+are not measurements of a replacement protocol, but they show why activation
+work alone does not close the prefill gap. The
+[combined summary](results/activation_summary.json) retains measured results,
+quality metrics, source hashes, and evidence links.
+
+The combined regression passes **738 tests** in 137.52 seconds, including
+fresh-mask integer oracles, full-width sparse products, phase-graph replay,
+corruption rejection, trained fixtures, and socket execution. The 12 warnings
+are empty CUDA graph segments for roles without local work between exchanges.
+See the [validation log](logs/activation_full_validation.log) and
+[successful exit status](logs/activation_full_validation.status).
+
+## Exact Strassen products and narrower truncation corrections
+
+The private ReLU path now has two exact matrix improvements and an optional
+smaller truncation correction. The SM89 compact-weight kernel uses explicit
+modular additions and a `32/128/32` tile. The optional `strassen32` format adds
+one level of batched matrix Strassen with cached static weight combinations.
+Neither matrix change alters the local ring products, rounding, wire bytes,
+or cryptographic checks. `narrow_products=True` changes selected correction
+messages to 16-bit arithmetic while preserving the probabilistic rounding law.
+The [kernel guide](docs/kernel-arithmetic.md) and
+[truncation contract](docs/device-protocol.md#narrow-truncation-correction-products)
+explain the identities and input requirements.
+
+| Workload and storage | GPU-delivered estimate | FP16 graph baseline | Slowdown | Host-staged estimate | Four roles on one GPU |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Decode, `words32`, narrow corrections | 3.354 ms | 0.2796 ms | 12.00× | 4.183 ms | 16.803 ms |
+| Prefill, `words32`, modular-add kernel | 17.642 ms | 0.3736 ms | 47.22× | 33.006 ms | 79.119 ms |
+| Prefill, `strassen32`, modular-add kernel | **16.432 ms** | 0.3542 ms | **46.39×** | 31.160 ms | 71.536 ms |
+
+These [nine-sample compact-weight measurements](results/rep4_narrow_opaque.json)
+and [Strassen measurement](results/rep4_strassen_narrow.json) include narrow
+corrections, fresh masks, checked output opening, and the original private
+ReLU activation. All outputs agree across parties and remain inside the same
+public Q14 rounding bounds. Maximum log-probability error is 0.002512 for
+decode and 0.002906 for prefill, with 100% top-1 agreement on the synthetic
+fixture. No polynomial substitution or trusted-helper reconstruction is used.
+
+Compared with the earlier sparse-product run at 19.031 ms, Strassen prefill
+latency is 13.7% lower. These are separate runs; their FP16 baselines also vary.
+The current decode run establishes no latency gain over the earlier 3.007 ms
+packed configuration. The less than 10× target remains unmet for both
+workloads. The current Strassen matrix phases alone total 7.529 ms, above the
+3.542 ms budget for the entire prefill block to meet 10× its FP16 baseline.
+
+The [alternating modular-add comparison](artifacts/opaque_ring32_paired.json)
+measures 5.271 → 4.738 ms and 5.510 → 4.969 ms for the two local matrix shapes,
+about 10% lower each. The [alternating Strassen comparison](artifacts/rep4_strassen_opaque_paired.json)
+then measures 4.732 → 3.796 ms and 4.794 → 4.019 ms relative to that optimized
+kernel. Every measured full-ring output matches exactly. Separate contribution
+launches regressed; two Strassen levels also regressed the down projection.
+Neither is selected by inference dispatch.
+
+Strassen increases retained model storage from 402,653,184 to 704,643,072 bytes
+per party, or 1.75 times the compact format. The four colocated roles retain
+2,818,572,288 weight bytes. All query-dependent input sums and output joins
+remain inside inference timing; only static weight sums are prepared once.
+Single-row decode uses `words32`; the Strassen format requires even batch and
+matrix dimensions.
+
+Narrow correction products reduce prefill payload from 176,949,760 to
+166,464,000 bytes globally, a 5.93% reduction, with 20 rounds unchanged. They
+use separate mask domains and full 32-byte tags. For a correction multiplied
+by `-2**(bits-shift)`, a lift error divisible by `2**16` vanishes in the full
+ring whenever `shift <= 16`. Larger shifts keep the full-width route.
+
+Reproduce the Strassen prefill case from the repository root:
+
+```sh
+python -m benchmarks.device_inference --batch 128 --width 2048 \
+  --bits 32 --binary-bits 32 --fractional-bits 14 \
+  --prepared --weight-storage strassen32 --optimized --gpu-open \
+  --rounding probabilistic --bounded-sign --phase-graphs \
+  --graph-check-at-send --sparse-products --narrow-products --repeats 9 \
+  --output results/rep4_strassen_narrow.json
+```
+
+The [combined report](results/rep4_strassen_narrow_summary.json) retains source
+hashes, phase estimates, storage costs, and validation evidence.
+
+The final regression passes **895 tests** in 91.65 seconds. It includes
+full-width integer matrix oracles, the saturation regression, Strassen
+transcript parity, independent ChaCha20/BLAKE3 narrow-product oracles,
+corrupted-message rejection, fresh graph inputs, trained fixtures, and socket
+execution. The 12 warnings are empty CUDA graph segments for roles with no
+local work between exchanges. See the
+[validation log](logs/rep4_strassen_narrow_validation_final.log) and
+[exit status](logs/rep4_strassen_narrow_validation_final.status).
+
 ## Matrix multiplication
 
 For a secret `(1, 4096) @ (4096, 4096)` product in ring32, the checked

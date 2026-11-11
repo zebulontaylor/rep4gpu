@@ -1,0 +1,36 @@
+{
+  "methodology": "One-token SwiGLU FFN width4096 hidden14336, ring64 Q24 exact floor, optimized CUDA sparse corrections. Directly measures multiplication and truncation payload for14336 and4096 outputs. General matmul uses the same six-joint output resharing schedule as elementwise mul; matrix inner dimension affects local compute, not these payload sizes. This is a communication decomposition, not a full FFN execution or latency benchmark. Activations use the existing measured witness fixture. Excludes input/weight distribution, final output opening, RMSNorm and attention.",
+  "source_sha256": {
+    "/home/zeb/Desktop/SIV/benchmarks/ffn_communication.py": "3fe05b734d3ff8d09d56a04b9ccd14a167bf358c14ae848dba98950b1e7e2424",
+    "results/carry_prefix_layer_shapes.json": "fcb7f044ea4ac3bb0b9e5233e9e78758e5a96d34f1868e697c6b6f09cf87ed9a",
+    "rep4gpu/device_inference.py": "94e65b9c223f95263ad16f90b11831baba018ced25e9aae8b420248c1d44ac9f",
+    "rep4gpu/device_runtime.py": "0ab4b767103dfd462acd595856197645432753941805b8c179bbefdbf1bde324",
+    "rep4gpu/carry_tree_swar.py": "5c813aaf3a2a95e7a5a4d95cd2ce07db350daa1d962d909086d959bf73542d2f",
+    "rep4gpu/exact_truncation.py": "346d94088c90cac0f229dc79956309a37089117510a085cb868d75301883f245",
+    "rep4gpu/compact_conversion_gpu.py": "98986a38547612efd6c279d23e8ca85a5a8acaf3b933adcfc5165877d0b10663"
+  },
+  "output_costs": {
+    "14336": {
+      "elements": 14336,
+      "multiplication_bytes": 688320,
+      "truncation_bytes": 4338496,
+      "total_bytes": 5026816
+    },
+    "4096": {
+      "elements": 4096,
+      "multiplication_bytes": 196800,
+      "truncation_bytes": 1240896,
+      "total_bytes": 1437696
+    }
+  },
+  "component_bytes": {
+    "gate_projection": 5026816,
+    "up_projection": 5026816,
+    "gate_product": 5026816,
+    "down_projection": 1437696,
+    "silu_with_witness_checks": 125101744
+  },
+  "total_bytes": 141619888,
+  "activation_fraction": 0.8833628226001704,
+  "activation_to_other_ratio": 7.573595677577336
+}

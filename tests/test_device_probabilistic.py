@@ -26,7 +26,7 @@ def components(x,bits):
     return [p&0xffffffff for p in parts] if bits==32 else parts
 
 
-def run_four(x,bits,shift,gpu=False,residues=False,injected=True):
+def run_four(x,bits,shift,gpu=False,residues=False,injected=True,sparse=False):
     network=IdealNetwork(timeout=10)
     seeds=make_seeds()
     parts=components(x,bits)
@@ -41,10 +41,12 @@ def run_four(x,bits,shift,gpu=False,residues=False,injected=True):
             else:
                 transport=RecordingTransport(endpoint)
                 runtime=Party(party,transport,{e:s for e,s in seeds.items() if e!=party},bits=bits,binary_bits=bits)
-            def controlled(excluded,shape,device,binary=False):
+            runtime.sparse_products=sparse
+            def controlled(excluded,shape,device,binary=False,*,packed=False):
                 counter=runtime.counters[excluded]
                 runtime.counters[excluded]+=1
-                return draw(excluded,counter,shape,bits,residues).to(device)
+                value=draw(excluded,counter,shape,bits,residues).to(device)
+                return value.to(torch.uint32) if packed and bits==32 else value
             if injected: runtime._random=controlled
             value=Share(tuple(parts[(party+j+1)%4].to(runtime.device) for j in range(3)))
             result=(trunc_pr if gpu else cpu_trunc)(runtime,value,shift)
@@ -176,3 +178,17 @@ def test_fresh_device_prg_with_batched_product_masks(bits):
     assert torch.all((actual==floor)|(actual==floor+((x&4095)!=0).long()))
     for excluded in range(4):
         assert len({result[p][3][excluded] for p in range(4) if p!=excluded})==1
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(),reason='CUDA required')
+@pytest.mark.parametrize('bits',[32,64])
+@pytest.mark.parametrize('shift',[1,14])
+def test_sparse_truncation_preserves_exact_rounding(bits,shift):
+    limit=1<<(bits-2)
+    x=torch.tensor([-limit+1,-4097,-16,-1,0,1,16,4097,limit-1])
+    result=run_four(x,bits,shift,gpu=True,sparse=True)
+    mask=draw(2,0,x.shape,bits)+draw(3,0,x.shape,bits)
+    expected=(x+(mask&((1<<shift)-1)))>>shift
+    assert torch.equal(reconstruct(result,bits),expected)
+    assert all(len(role[1])==3 for role in result)
+    assert all(role[2]==1 for role in result)

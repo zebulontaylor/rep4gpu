@@ -85,10 +85,14 @@ def phase_estimate(samples):
 
 def matmul_backend(batch,bits,prepared,storage,optimized,capability):
     """Describe the selected validated local-product route for these inputs."""
+    if prepared and storage=='strassen32':
+        return dict(route='one-level batched exact ring32 Strassen local products',
+                    levels=1,static_weight_storage_factor=1.75,opaque_modular_adds=optimized,
+                    tile_mnk=[32 if batch>=64 else 16,128,32 if optimized else 64])
     if prepared and storage=='five32':
         return dict(route='five exact ring32 GEMMs with cached combinations')
     if optimized and bits==32 and prepared and storage=='words32' and batch>=16 and tuple(capability)==(8,9):
-        return dict(route='SM89 tuned six-product local kernel',tile_mnk=[32,128,64],
+        return dict(route='SM89 ring32 local kernel with explicit modular adds',tile_mnk=[32,128,32],
                     num_warps=4,num_stages=1)
     if batch==1:
         return dict(route='baseline packed decode' if prepared and storage=='limbs' else 'baseline direct decode')
@@ -137,17 +141,24 @@ def phase_payloads(records):
 
 def run_case(batch,width,hidden,out,device='cuda',repeats=5,bits=32,
              binary_bits=32,fractional_bits=12,prepared=False,
-             weight_storage='limbs',staging='device',optimized=False,gpu_open=False,rounding='floor'):
+             weight_storage='limbs',staging='device',optimized=False,gpu_open=False,rounding='floor',
+             phase_graphs=False,bounded_sign=False,graph_check_at_send=False,sparse_products=False,
+             activation='relu',activation_bound=4.,activation_profile='uniform',narrow_products=False):
+    if activation not in ('relu','quadratic_relu','quadratic_gelu','quadratic_silu','simulated_relu'):
+        raise ValueError('unsupported activation experiment')
+    bounded_sign = bounded_sign and activation == 'relu'
     if rounding not in ('floor','probabilistic'):
         raise ValueError('rounding must be floor or probabilistic')
     if rounding=='probabilistic' and not 0 <= fractional_bits < bits-1:
         raise ValueError('probabilistic fractional_bits must be in [0, bits-2]')
     if repeats < 1:
         raise ValueError('repeats must be positive')
-    if weight_storage not in ('limbs','words32','five32'):
-        raise ValueError('weight_storage must be limbs, words32 or five32')
-    if weight_storage == 'five32' and (bits != 32 or not prepared):
-        raise ValueError('five32 requires bits=32 and prepared=True')
+    if weight_storage not in ('limbs','words32','five32','strassen32'):
+        raise ValueError('weight_storage must be limbs, words32, five32 or strassen32')
+    if weight_storage in ('five32','strassen32') and (bits != 32 or not prepared):
+        raise ValueError(f'{weight_storage} requires bits=32 and prepared=True')
+    if weight_storage=='strassen32' and any(size%2 for size in (batch,width,hidden,out)):
+        raise ValueError('strassen32 requires even batch and matrix dimensions; use words32 for decode')
     if staging not in ('device','host'):
         raise ValueError('staging must be device or host')
     if torch.device(device).type != 'cuda':
@@ -158,20 +169,53 @@ def run_case(batch,width,hidden,out,device='cuda',repeats=5,bits=32,
     if device.index is None:
         device=torch.device('cuda',torch.cuda.current_device())
     floats,integers,expected=fixture(batch,width,hidden,out,fractional_bits)
-    bounds,lower,upper=fixture_bounds(integers,bits,fractional_bits,rounding)
+    evaluate, forward = infer, plain
+    if activation in ('relu','simulated_relu'):
+        bounds,lower,upper=fixture_bounds(integers,bits,fractional_bits,rounding)
+    else:
+        from benchmarks.activation_common import (activation_reference, infer_quadratic,
+                                                   quadratic_fixture_bounds)
+        kind = activation.removeprefix('quadratic_')
+        bounds,lower,upper=quadratic_fixture_bounds(integers,bits,fractional_bits,rounding,
+                                                   kind,activation_bound,activation_profile)
+        expected = lower
+        evaluate = lambda p,v,f: infer_quadratic(p,v,f,kind,activation_bound,activation_profile)
+        if kind != 'relu':
+            forward = lambda v: activation_reference(v,kind)
     backend=matmul_backend(batch,bits,prepared,weight_storage,optimized,torch.cuda.get_device_capability(device))
-    reference=plain(floats)
+    reference=forward(floats)
     fresh_accuracy=[]
     party_type=DeviceInferenceParty
+    if phase_graphs:
+        if not gpu_open:
+            raise ValueError('phase graphs require device output opening')
+        from rep4gpu.phase_graph import PhaseGraphParty
+        party_type=PhaseGraphParty
+    elif graph_check_at_send:
+        raise ValueError('graph check-at-send requires phase graphs')
+    if activation == 'simulated_relu':
+        import secrets
+        from benchmarks.simulated_activation import simulated_activation_party
+        party_type = simulated_activation_party(secrets.token_bytes(32))
+    def prepare_plan(role, values):
+        # The resident model and biases stay fixed; only the input share changes.
+        return role.prepare_inference(
+            lambda x:evaluate(role,[x,*values[1:]],fractional_bits), values[0],
+            check_at_send=graph_check_at_send)
     network,seeds=IdealNetwork(),make_seeds()
     adapter=DeviceIdealEndpoint if staging=='device' else DeviceByteBridge
     parties=[party_type(p,adapter(network.endpoint(p),device),{i:s for i,s in seeds.items() if i!=p},
-                        device=device,bits=bits,binary_bits=binary_bits,optimized=optimized,gpu_open=gpu_open,rounding=rounding) for p in range(4)]
+                        device=device,bits=bits,binary_bits=binary_bits,optimized=optimized,gpu_open=gpu_open,
+                        rounding=rounding,bounded_sign=bounded_sign,sparse_products=sparse_products,narrow_products=narrow_products) for p in range(4)]
     def check(outputs):
         actual=validate_outputs(outputs,lower,upper,expected if rounding=='floor' else None)
         decoded=actual.float()/(1 << fractional_bits)
+        log_probs, reference_log_probs = decoded.log_softmax(-1), reference.log_softmax(-1)
         fresh_accuracy.append(dict(max_logit_error=float((decoded-reference).abs().max()),
-                                   max_logprob_error=float((decoded.log_softmax(-1)-reference.log_softmax(-1)).abs().max())))
+                                   max_logprob_error=float((log_probs-reference_log_probs).abs().max()),
+                                   logit_rmse=float((decoded-reference).square().mean().sqrt()),
+                                   top1_agreement=float((decoded.argmax(-1)==reference.argmax(-1)).float().mean()),
+                                   mean_kl_from_reference=float((reference_log_probs.exp()*(reference_log_probs-log_probs)).sum(-1).mean())))
     with ThreadPoolExecutor(4) as pool:
         def run_parties(function):
             def guarded(party):
@@ -192,12 +236,16 @@ def run_case(batch,width,hidden,out,device='cuda',repeats=5,bits=32,
         shares=run_parties(distribute)
         synchronize(device)
         retained_weight_bytes=[weight_storage_bytes((values[1],values[3])) for values in shares]
+        plans=([prepare_plan(p,shares[p.party])
+                for p in parties] if phase_graphs else None)
+        def execute(p):
+            return plans[p.party].run(shares[p.party][0]) if plans else evaluate(p,shares[p.party],fractional_bits)
         setup_ms=(time.perf_counter()-start)*1000
-        check(run_parties(lambda p:infer(p,shares[p.party],fractional_bits)))
+        check(run_parties(execute))
         live_samples=[]
         for _ in range(repeats):
             start=time.perf_counter()
-            outputs=run_parties(lambda p:infer(p,shares[p.party],fractional_bits))
+            outputs=run_parties(execute)
             synchronize(device)
             live_samples.append((time.perf_counter()-start)*1000)
             check(outputs)
@@ -207,29 +255,37 @@ def run_case(batch,width,hidden,out,device='cuda',repeats=5,bits=32,
         records=[DeviceRecorder(p.transport) for p in parties]
         for p,recorder in zip(parties,records):
             p.transport=recorder
-        outputs=run_parties(lambda p:infer(p,shares[p.party],fractional_bits))
+        outputs=run_parties(execute)
         synchronize(device)
         check(outputs)
         recorded_output=outputs[0].cpu().clone()
         for p,recorder in zip(parties,records):
             p.transport=recorder.underlying
+    plans=None
     replay_modes={}
     for replay_staging in ('device','host'):
         phase_samples,party_samples=[],[]
         for p in parties:
             phases,times=[],[]
+            local=party_type(p.party,p.transport,p.seeds,device=p.device,bits=bits,binary_bits=binary_bits,
+                             optimized=optimized,gpu_open=gpu_open,rounding=rounding,bounded_sign=bounded_sign,
+                             sparse_products=sparse_products,narrow_products=narrow_products)
+            local._device_keys=p._device_keys
+            local._batch_keys=p._batch_keys
+            plan=(prepare_plan(local,shares[p.party])
+                  if phase_graphs else None)
             for repeat in range(repeats+1):
                 replay=DeviceReplay(records[p.party].transcript,device=p.device,
-                                    check_outgoing=repeat==0,staging=replay_staging)
-                local=party_type(p.party,replay,p.seeds,device=p.device,bits=bits,binary_bits=binary_bits,
-                                 optimized=optimized,gpu_open=gpu_open,rounding=rounding)
+                                    check_outgoing=repeat==0,staging=replay_staging,
+                                    incoming_buffers=(plan.receive_buffers if plan and replay_staging=='device' else None))
+                local.transport=replay
                 local.counters=dict(starts[p.party])
                 # Domain-key setup belongs to setup, as in the warmed live run.
                 # Keys are immutable; ChaCha20 draws still execute each replay.
                 local._device_keys=p._device_keys
                 local._batch_keys=p._batch_keys
                 replay.start(synchronize=lambda:synchronize(device))
-                output=infer(local,shares[p.party],fractional_bits)
+                output=plan.run(shares[p.party][0]) if plan else evaluate(local,shares[p.party],fractional_bits)
                 replay.finish()
                 replay.assert_consumed()
                 validate_outputs([output],lower,upper,recorded_output)
@@ -243,22 +299,44 @@ def run_case(batch,width,hidden,out,device='cuda',repeats=5,bits=32,
                                          replay_phase_samples_seconds=phase_samples)
     estimate=replay_modes['device']['ideal_network_phase_max_ms']
     host_estimate=replay_modes['host']['ideal_network_phase_max_ms']
-    baseline,baseline_errors=baselines(floats,device,repeats)
+    baseline,baseline_errors=baselines(floats,device,repeats,forward=forward)
     frames=records[0].transcript
     return dict(**bounds,**phase_payloads(records),
                 live_transport='colocated IdealNetwork role harness',physical_gpudirect=False,
                 batch=batch,width=width,hidden=hidden,out=out,device=str(device),
+                activation=activation,activation_profile=activation_profile,activation_bound=activation_bound if activation.startswith('quadratic_') else None,
+                tee_executed=False,
+                activation_privacy=('none: public-fixture helper simulation reconstructs activations'
+                                    if activation=='simulated_relu' else 'existing Rep4 sharing model'),
+                baseline_activation='relu' if activation in ('relu','simulated_relu') else kind,
                 ring_bits=bits,binary_bits=binary_bits,fractional_bits=fractional_bits,
                 optimized=optimized,
+                phase_graphs=phase_graphs,bounded_sign=bounded_sign,graph_check_at_send=graph_check_at_send,
+                sparse_products=sparse_products,narrow_products=narrow_products,
                 local_matmul_backend=backend,
-                optimized_components=(['batched CUDA ChaCha20','SWAR carry extraction','fused weighted B2A',
+                optimized_components=(['batched CUDA ChaCha20 with coalesced stores','SWAR carry extraction','fused weighted B2A',
                                        'SM89 compact-weight prefill tile dispatch with validated fallback'] if optimized else []) +
+                                     ['vectorized BLAKE3 loads','coalesced small-message BLAKE3',
+                                      'width-matched joint-input mask storage'] +
                                      (['five-GEMM prepared ring32 matmul'] if weight_storage=='five32' else []) +
+                                     (['one-level exact Strassen with cached static weight sums'] if weight_storage=='strassen32' else []) +
                                      (['GPU checked output opening'] if gpu_open else []) +
-                                     (['device probabilistic truncation'] if rounding=='probabilistic' else []),
+                                     (['device probabilistic truncation'] if rounding=='probabilistic' else []) +
+                                     (['bounded quadratic with one secret square'] if activation.startswith('quadratic_') else []) +
+                                     (['public-fixture simulated helpers with checked full resharing'] if activation=='simulated_relu' else []) +
+                                     (['four-joint products for complementary component supports'] if sparse_products else []) +
+                                     (['16-bit coefficient-annihilated truncation products'] if narrow_products and rounding=='probabilistic' else []) +
+                                     (['bounded post-truncation sign circuit',
+                                       'packed bounded sign inputs and carry leaves',
+                                       'fused sign and conversion pair preparation'] if bounded_sign else []) +
+                                     (['segmented CUDA inference graphs with fresh nonces',
+                                       'captured integrity verdict transfers to pinned host buffers'] if phase_graphs else []) +
+                                     (['host integrity checks before every dependent send'] if graph_check_at_send else []),
                 gpu_open=gpu_open,
                 weight_storage_bytes_per_party=retained_weight_bytes,
                 weight_storage_bytes_all_parties=sum(retained_weight_bytes),
+                activation_truncation='exact signed floor' if activation=='simulated_relu' else rounding,
+                output_truncation=rounding,
                 rounding=rounding,truncation='compact exact floor' if rounding=='floor' else 'probabilistic floor/ceil',
                 prepared_weights=prepared,weight_storage=weight_storage,
                 prg='CUDA ChaCha20 with SHA256 domain-key derivation',online_hash='CUDA BLAKE3',
@@ -270,6 +348,9 @@ def run_case(batch,width,hidden,out,device='cuda',repeats=5,bits=32,
                 fresh_accuracy_sample_order=['warmup']+[f'live_{i}' for i in range(repeats)]+['recording'],
                 max_logit_error=max(sample['max_logit_error'] for sample in fresh_accuracy),
                 max_logprob_error=max(sample['max_logprob_error'] for sample in fresh_accuracy),
+                max_logit_rmse=max(sample['logit_rmse'] for sample in fresh_accuracy),
+                minimum_top1_agreement=min(sample['top1_agreement'] for sample in fresh_accuracy),
+                maximum_mean_kl_from_reference=max(sample['mean_kl_from_reference'] for sample in fresh_accuracy),
                 setup_all_parties_ms=setup_ms,local_four_party_ms=statistics.median(live_samples),
                 local_samples_ms=live_samples,recording_included_in_live_timing=False,
                 replay_modes=replay_modes,ideal_network_phase_max_ms=estimate,
@@ -284,7 +365,7 @@ def run_case(batch,width,hidden,out,device='cuda',repeats=5,bits=32,
                 baseline_samples=max(20,repeats),baseline_warmups=3,baseline_graph_device_replays=100,
                 ideal_timing_kind='estimate: sum of per-phase maxima of isolated-party median times',
                 timing_boundary='inference entry through checked output opening and final CUDA synchronization; setup excluded',
-                methodology='Experimental Rep4 variant; ChaCha20 masks and BLAKE3 integrity checks execute during every online/replay run. Not byte compatible with MP-SPDZ/reference masks or tags. Device replay assumes peer payloads already delivered to GPU; host replay includes outgoing/incoming host staging. Both exclude network latency/bandwidth. Fresh unrecorded live timings and a separate untimed transcript; outgoing bytes checked during replay warmup. Domain keys, input sharing and static weight preparation are setup. Floor outputs match the exact integer fixture; probabilistic outputs agree across parties and obey propagated rounding intervals. Every replay exactly matches the recorded output. Reported errors are worst-case over fresh warmup, live and recorded runs.')
+                methodology=('simulated_relu reconstructs public fixture activations in ordinary GPU helpers; no TEE or activation privacy. ' if activation=='simulated_relu' else '') + 'Experimental Rep4 variant; ChaCha20 masks and BLAKE3 integrity checks execute during every online/replay run. Not byte compatible with MP-SPDZ/reference masks or tags. Device replay assumes peer payloads already delivered to GPU; host replay includes outgoing/incoming host staging. Both exclude network latency/bandwidth. Fresh unrecorded live timings and a separate untimed transcript; outgoing bytes checked during replay warmup. Domain keys, input sharing and static weight preparation are setup. Floor outputs match the exact integer fixture; probabilistic outputs agree across parties and obey propagated rounding intervals. Every replay exactly matches the recorded output. Reported errors are worst-case over fresh warmup, live and recorded runs.')
 
 
 def main():
@@ -300,7 +381,16 @@ def main():
     parser.add_argument('--optimized',action='store_true',help='enable batched PRG, SWAR carries and fused B2A')
     parser.add_argument('--rounding',choices=['floor','probabilistic'],default='floor')
     parser.add_argument('--gpu-open',action='store_true',help='use the optional BLAKE3 checked GPU output opening')
-    parser.add_argument('--weight-storage',choices=['limbs','words32','five32'],default='limbs')
+    parser.add_argument('--phase-graphs',action='store_true',help='capture local inference phases with fresh nonces and checked exchanges')
+    parser.add_argument('--bounded-sign',action='store_true',help='use the proved post-truncation range for probabilistic ReLU sign extraction')
+    parser.add_argument('--sparse-products',action='store_true',help='omit public-zero product contributions in truncation and bit conversion')
+    parser.add_argument('--narrow-products',action='store_true',help='use 16-bit probabilistic truncation correction products for shifts up to 16')
+    parser.add_argument('--activation',choices=['relu','quadratic_relu','quadratic_gelu','quadratic_silu','simulated_relu'],default='relu',
+                        help='bounded quadratic substitutes are experiments and change the network function')
+    parser.add_argument('--activation-profile',choices=['uniform','local'],default='uniform')
+    parser.add_argument('--activation-bound',type=float,default=4.,help='public bound for quadratic preactivations')
+    parser.add_argument('--graph-check-at-send',action='store_true',help='allow private graph scratch work before checking tags at the next send boundary')
+    parser.add_argument('--weight-storage',choices=['limbs','words32','five32','strassen32'],default='limbs')
     parser.add_argument('--staging',choices=['device','host'],default='device')
     parser.add_argument('--repeats',type=int,default=5)
     parser.add_argument('--output',type=Path,default=Path('results/device_inference.json'))
@@ -316,7 +406,9 @@ def main():
     args.output.parent.mkdir(parents=True,exist_ok=True)
     for b,w,h,n in cases:
         row=run_case(b,w,h,n,args.device,args.repeats,args.bits,args.binary_bits,
-                     args.fractional_bits,args.prepared,args.weight_storage,args.staging,args.optimized,args.gpu_open,args.rounding)
+                     args.fractional_bits,args.prepared,args.weight_storage,args.staging,args.optimized,args.gpu_open,args.rounding,
+                     args.phase_graphs,args.bounded_sign,args.graph_check_at_send,args.sparse_products,
+                     args.activation,args.activation_bound,args.activation_profile,args.narrow_products)
         report['results'].append(row)
         args.output.write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps({key:row[key] for key in

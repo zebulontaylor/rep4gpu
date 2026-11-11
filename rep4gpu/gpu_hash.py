@@ -72,18 +72,32 @@ extern "C" __global__ void chunks(const U8* data,U32* cvs,U8* result,U64 length,
             int remaining=chunk_len-block*64;
             U32 len=remaining<64 ? remaining : 64;
             U32 m[16];
-            #pragma unroll
-            for(int word=0;word<16;word++) {
-                int byte=word*4;
-                U64 offset=row*length+begin+block*64+byte;
-                U32 value=0;
-                if(aligned && ((row*length)&3)==0 && byte+4<=len) {
-                    value=((const U32*)data)[offset/4];
-                } else {
-                    #pragma unroll
-                    for(int j=0;j<4;j++) if(byte+j<len) value|=(U32)data[offset+j]<<(8*j);
+            U64 block_offset=row*length+begin+block*64;
+            if(len==64 && (((U64)data+block_offset)&15)==0) {
+                // Each lane hashes a different chunk. Vector loads consume half
+                // a memory sector per instruction instead of one eighth.
+                #pragma unroll
+                for(int vector=0;vector<4;vector++) {
+                    const U8* source=data+block_offset+vector*16;
+                    asm volatile("ld.global.v4.u32 {%0,%1,%2,%3}, [%4];"
+                        : "=r"(m[vector*4]), "=r"(m[vector*4+1]),
+                          "=r"(m[vector*4+2]), "=r"(m[vector*4+3])
+                        : "l"(source));
                 }
-                m[word]=value;
+            } else {
+                #pragma unroll
+                for(int word=0;word<16;word++) {
+                    int byte=word*4;
+                    U64 offset=block_offset+byte;
+                    U32 value=0;
+                    if(aligned && ((row*length)&3)==0 && byte+4<=len) {
+                        value=((const U32*)data)[offset/4];
+                    } else {
+                        #pragma unroll
+                        for(int j=0;j<4;j++) if(byte+j<len) value|=(U32)data[offset+j]<<(8*j);
+                    }
+                    m[word]=value;
+                }
             }
             U32 flags=(block==0 ? 1 : 0) | (block==blocks-1 ? 2 : 0);
             if(count==1 && block==blocks-1) flags|=8;
@@ -162,11 +176,68 @@ def _check(status, operation):
         raise RuntimeError(f'{operation} failed with CUDA status {status}')
 
 
+
+_SMALL_CHUNKS = r'''
+extern "C" __global__ void chunks(const U8* data,U32* cvs,U8* result,U64 ignored_length,U64 ignored_count,int batch,int aligned,int tree) {
+    const int count=SMALL_COUNT, length=count*1024;
+    // Consecutive lanes load consecutive words before each lane hashes a chunk.
+    // An odd row stride keeps the chunk columns in different shared banks.
+    __shared__ U32 words[256][SMALL_STRIDE];
+    for(int index=threadIdx.x;index<count*256;index+=128)
+        words[index%256][index/256]=((const U32*)(data+(U64)blockIdx.x*length))[index];
+    __syncthreads();
+    U32 cv[8];
+    #pragma unroll
+    for(int i=0;i<8;i++)cv[i]=IV[i];
+    if(threadIdx.x<count) {
+        for(int block=0;block<16;block++) {
+            U32 m[16];
+            #pragma unroll
+            for(int word=0;word<16;word++)m[word]=words[block*16+word][threadIdx.x];
+            U32 flags=(block==0 ? 1:0)|(block==15 ? 2:0);
+            if(count==1 && block==15)flags|=8;
+            compress(cv,m,threadIdx.x,64,flags);
+        }
+    }
+    // All lanes in the first warp take part, including unused chunk lanes.
+    if(threadIdx.x<32) {
+        #pragma unroll
+        for(int stride=1;stride<count;stride*=2) {
+            U32 m[16];
+            #pragma unroll
+            for(int i=0;i<8;i++) {
+                m[i]=cv[i];
+                m[i+8]=__shfl_down_sync(0xffffffff,cv[i],stride);
+            }
+            if(threadIdx.x%(2*stride)==0 && threadIdx.x+stride<count) {
+                #pragma unroll
+                for(int i=0;i<8;i++)cv[i]=IV[i];
+                compress(cv,m,0,64,4|((stride*2>=count) ? 8:0));
+            }
+        }
+        if(threadIdx.x==0) {
+            #pragma unroll
+            for(int i=0;i<8;i++)cvs[(U64)blockIdx.x*8+i]=cv[i];
+            write_digest(result+(U64)blockIdx.x*32,cv);
+        }
+    }
+}
+'''
+
+
+def _small_source(length):
+    count = length//1024
+    prefix = _SOURCE[:_SOURCE.index('extern "C" __global__ void chunks')]
+    parents = _SOURCE[_SOURCE.index('extern "C" __global__ void parents'):]
+    chunks = _SMALL_CHUNKS.replace('SMALL_COUNT', str(count)).replace('SMALL_STRIDE', str(count | 1))
+    return prefix+chunks+parents
+
+
 @lru_cache(None)
-def _compile(major, minor):
+def _compile(major, minor, length=0):
     nvrtc = ct.CDLL(ct.util.find_library('nvrtc') or '/usr/local/cuda/lib64/libnvrtc.so')
     program = ct.c_void_p()
-    _check(nvrtc.nvrtcCreateProgram(ct.byref(program), _SOURCE.encode(), b'blake3.cu', 0, None, None), 'nvrtcCreateProgram')
+    _check(nvrtc.nvrtcCreateProgram(ct.byref(program), (_small_source(length) if length else _SOURCE).encode(), b'blake3.cu', 0, None, None), 'nvrtcCreateProgram')
     options = (ct.c_char_p*2)(f'--gpu-architecture=compute_{major}{minor}'.encode(), b'--std=c++17')
     status = nvrtc.nvrtcCompileProgram(program, 2, options)
     size = ct.c_size_t()
@@ -199,14 +270,14 @@ def _current_context(driver, context):
 
 
 @lru_cache(None)
-def _module(device):
+def _module(device, length=0):
     with torch.cuda.device(device):
         driver = ct.CDLL(ct.util.find_library('cuda') or 'libcuda.so.1')
         context = ct.c_void_p()
         _check(driver.cuDevicePrimaryCtxRetain(ct.byref(context),ct.c_int(device)), 'cuDevicePrimaryCtxRetain')
         with _current_context(driver,context):
             torch.cuda.current_stream()
-            ptx = ct.create_string_buffer(_compile(*torch.cuda.get_device_capability(device)))
+            ptx = ct.create_string_buffer(_compile(*torch.cuda.get_device_capability(device), length))
             module = ct.c_void_p()
             _check(driver.cuModuleLoadData(ct.byref(module), ptx), 'cuModuleLoadData')
             functions = {}
@@ -247,7 +318,9 @@ def digest_batch(data, *, block_tree=False):
     if not batch:
         return result
     with torch.cuda.device(data.device):
-        driver, _, functions, context = _module(data.device.index)
+        # Full chunks up to one warp use a coalesced shared-memory preload.
+        small_length = length if block_tree and 0<length<=32768 and length%1024==0 and data.data_ptr()%16==0 else 0
+        driver, _, functions, context = _module(data.device.index, small_length)
         reduced_count=(count+127)//128 if block_tree else count
         cvs = torch.empty((batch,reduced_count,8),dtype=torch.uint32,device=data.device)
         blocks=batch*reduced_count if block_tree else (batch*count+127)//128

@@ -103,7 +103,7 @@ def test_probability_intervals_do_not_replace_agreement_or_exact_replay():
 def test_local_matmul_route_metadata_matches_validated_dispatch():
     from benchmarks.device_inference import matmul_backend
     tuned=matmul_backend(128,32,True,'words32',True,(8,9))
-    assert tuned['tile_mnk']==[32,128,64] and tuned['num_stages']==1
+    assert tuned['tile_mnk']==[32,128,32] and tuned['num_stages']==1
     assert matmul_backend(1,32,True,'words32',True,(8,9))['route']=='baseline direct decode'
     assert matmul_backend(1,64,True,'limbs',True,(8,9))['route']=='baseline packed decode'
     for batch,bits,storage,optimized,capability in [(8,32,'words32',True,(8,9)),

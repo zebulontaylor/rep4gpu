@@ -1,0 +1,30 @@
+.F...................................................................... [ 98%]
+.                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_dense_direct_claim_accuracy_and_nearest_identity _____________
+
+    def test_dense_direct_claim_accuracy_and_nearest_identity():
+        torch.set_num_threads(1)
+        encoded = torch.round(torch.linspace(-16, 16, 65537, dtype=torch.float64)*SCALE).long()
+        output = numerical_witnesses('silu', {'x': encoded})['output']
+        reduced = -encoded.abs() >> 4
+        exponential = torch.full_like(reduced, EXP_REMEZ6_Q24[-1])
+        for coefficient in reversed(EXP_REMEZ6_Q24[:-1]):
+            exponential = (exponential*reduced >> 24)+coefficient
+        for _ in range(4):
+            exponential = (exponential*exponential+SCALE//2) >> 24
+        denominator = SCALE+exponential
+        numerator = encoded*torch.where(encoded < 0, exponential, SCALE)
+        error = output*denominator-numerator
+>       assert bool((2*error.abs() <= denominator).all())
+E       assert False
+E        +  where False = bool(tensor(False))
+E        +    where tensor(False) = <built-in method all of Tensor object at 0x7fd8e9d48400>()
+E        +      where <built-in method all of Tensor object at 0x7fd8e9d48400> = (2 * tensor([   64, 16448, 32832,  ..., 32832, 16448,    64])) <= tensor([16777218, 16777218, 16777218,  ..., 16777218, 16777218, 16777218]).all
+E        +        where tensor([   64, 16448, 32832,  ..., 32832, 16448,    64]) = <built-in method abs of Tensor object at 0x7fd8e9d49990>()
+E        +          where <built-in method abs of Tensor object at 0x7fd8e9d49990> = tensor([   -64, -16448, -32832,  ..., -32832, -16448,    -64]).abs
+
+tests/test_silu_output_witness.py:72: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_silu_output_witness.py::test_dense_direct_claim_accuracy_and_nearest_identity
+1 failed, 72 passed in 81.26s (0:01:21)

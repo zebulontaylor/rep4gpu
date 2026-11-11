@@ -13,6 +13,11 @@ from .runtime import Share, SCHEDULE
 from .fused_runtime import FusedParty, _masked, _assemble
 
 
+# The four nonzero cross-pair products keep their two knowledgeable holders.
+# Orient their routes so every party sends and receives one payload and tag.
+_SPARSE_SCHEDULE = ((2,1,0,3), (3,0,1,2), (0,2,3,1), (1,3,2,0))
+
+
 def mask_domain(bits, binary_bits, binary, excluded):
     """Canonical public domain for one excluded party's correlated masks."""
     width = binary_bits if binary else bits
@@ -80,7 +85,7 @@ class DeviceParty(FusedParty):
         self._device_keys = {excluded: DomainKeys(seed, self.device)
                              for excluded, seed in self.seeds.items()}
 
-    def _random(self, excluded, shape, device, binary=False):
+    def _random(self, excluded, shape, device, binary=False, *, packed=False):
         if torch.device(device) != self.device:
             raise ValueError('DeviceParty masks must stay on its CUDA device')
         from .gpu_prg import generate
@@ -88,32 +93,47 @@ class DeviceParty(FusedParty):
         counter = self._reserve_nonces((excluded,))[0]
         domain = mask_domain(self.bits, self.binary_bits, binary, excluded)
         key = self._device_keys[excluded].key(domain)
-        result = generate(key, counter, count, bits=self._wire_bits(binary))
+        if packed and self._wire_bits(binary) == 32:
+            from .gpu_prg_batch import generate_rows
+            result = generate_rows((key,), (counter,), count, bits=32, packed=True)[0]
+        else:
+            result = generate(key, counter, count, bits=self._wire_bits(binary))
         return result.reshape(shape)
 
     def _random_bytes(self, excluded, shape, binary=False):
         raise RuntimeError('DeviceParty generates masks directly on CUDA')
 
-    def _mask_batch(self, shape, binary, device):
+    def _mask_batch(self, shape, binary, device, *, schedule=SCHEDULE):
         count = math.prod(shape)
         if self.prg_batch:
             from .gpu_prg_batch import generate_rows
-            excluded = tuple(receiver for _, _, receiver, _ in SCHEDULE if self.party != receiver)
+            excluded = tuple(receiver for _, _, receiver, _ in schedule if self.party != receiver)
             reservations = iter(self._reserve_nonces(excluded))
             nonces = tuple(None if self.party == receiver else next(reservations)
-                           for _, _, receiver, _ in SCHEDULE)
-            cache_key = (self.bits, self.binary_bits, bool(binary))
+                           for _, _, receiver, _ in schedule)
+            cache_key = (self.bits, self.binary_bits, bool(binary), schedule)
             if cache_key not in self._batch_keys:
                 self._batch_keys[cache_key] = tuple(
                     None if self.party == receiver else self._device_keys[receiver].key(
                         mask_domain(self.bits, self.binary_bits, binary, receiver))
-                    for _, _, receiver, _ in SCHEDULE)
+                    for _, _, receiver, _ in schedule)
             return generate_rows(self._batch_keys[cache_key], nonces, count,
                                  bits=self._wire_bits(binary), packed=True).reshape(-1)
         masks = [torch.zeros(count, dtype=torch.int64, device=device) if self.party == receiver
                  else self._random(receiver, (count,), device, binary)
-                 for _, _, receiver, _ in SCHEDULE]
+                 for _, _, receiver, _ in schedule]
         return torch.stack(masks).reshape(-1)
+
+    def _exchange_device(self, outgoing, incoming_sizes):
+        return self.transport.exchange_device(outgoing, incoming_sizes)
+
+    def _verify_tags(self, actual, wanted, message='device Rep4 joint input BLAKE3 hash mismatch'):
+        if not torch.equal(actual, wanted):
+            error = ValueError(message)
+            abort = getattr(self.transport, 'abort', None)
+            if abort is not None:
+                abort(error)
+            raise error
 
     def _exchange_joint_wires(self, entries, shape, binary, *, prepared_outgoing=None):
         """Send masked payloads and backup tags, then verify every received tag.
@@ -124,27 +144,36 @@ class DeviceParty(FusedParty):
         A graph backend can supply its already-computed outgoing buffers;
         incoming validation and digest checks still execute here.
         """
-        from .gpu_hash import digest
-        hash_payload = lambda data: digest(data, block_tree=self.hash_block_tree)
+        from .gpu_hash import digest_batch
+
+        def hash_payloads(payloads):
+            # Every joint in this exchange has the same public wire size.
+            rows = payloads[0].unsqueeze(0) if len(payloads) == 1 else torch.stack(payloads)
+            return digest_batch(rows, block_tree=self.hash_block_tree)
         count = math.prod(shape)
         size = count*(self._wire_bits(binary)//8)
         payloads, hashes = {}, {}
+        backup_payloads = []
         incoming_sizes = {}
         for sender, backup, receiver, data in entries:
             if self.party == sender and prepared_outgoing is None:
                 payloads.setdefault(receiver, []).append(data)
             if self.party == backup and prepared_outgoing is None:
-                hashes.setdefault(receiver, []).append((sender, hash_payload(data)))
+                backup_payloads.append((receiver, sender, data))
             if self.party == receiver:
                 incoming_sizes[sender] = incoming_sizes.get(sender, 0)+size
                 incoming_sizes[backup] = incoming_sizes.get(backup, 0)+32
+        if backup_payloads:
+            tags = hash_payloads([data for _, _, data in backup_payloads])
+            for (receiver, sender, _), tag in zip(backup_payloads, tags.unbind(0)):
+                hashes.setdefault(receiver, []).append((sender, tag))
         outgoing = prepared_outgoing
         if outgoing is None:
             outgoing = {}
             for receiver in set(payloads) | set(hashes):
                 pieces = payloads.get(receiver, []) + [tag for _, tag in sorted(hashes.get(receiver, []), key=lambda item: item[0])]
                 outgoing[receiver] = pieces[0] if len(pieces) == 1 else torch.cat(pieces)
-        incoming = self.transport.exchange_device(outgoing, incoming_sizes)
+        incoming = self._exchange_device(outgoing, incoming_sizes)
         if set(incoming) != set(incoming_sizes) or any(
                 incoming[p].numel() != n or incoming[p].dtype != torch.uint8
                 or incoming[p].device != self.device or incoming[p].ndim != 1
@@ -158,51 +187,78 @@ class DeviceParty(FusedParty):
                 data = incoming[sender][start:start+size]
                 offsets[sender] += size
                 received[k] = data
-                expected.append((backup, sender, hash_payload(data)))
-        wanted, actual = [], []
-        for backup, sender, tag in sorted(expected, key=lambda item: item[:2]):
+                expected.append((backup, sender, data))
+        expected.sort(key=lambda item: item[:2])
+        wanted = hash_payloads([data for _, _, data in expected]) if expected else None
+        actual = []
+        for backup, sender, _ in expected:
             start = offsets[backup]
             actual.append(incoming[backup][start:start+32])
-            wanted.append(tag)
             offsets[backup] += 32
-        if actual and not torch.equal(torch.stack(actual), torch.stack(wanted)):
-            error = ValueError('device Rep4 joint input BLAKE3 hash mismatch')
-            abort = getattr(self.transport, 'abort', None)
-            if abort is not None:
-                abort(error)
-            raise error
+        if actual:
+            self._verify_tags(torch.stack(actual), wanted)
         if any(offsets[p] != incoming[p].numel() for p in incoming):
             raise ValueError('unexpected trailing device Rep4 message bytes')
         return received
 
-    def _fused_product(self, local, binary, device, pointwise=None):
+    def _fused_product(self, local, binary, device, pointwise=None, *, joints=tuple(range(6)), schedule=None):
         shape, count = local[0].shape, local[0].numel()
         if not count:
             raise ValueError('device multiplication requires a nonempty tensor')
         width = self._wire_bits(binary)
         dtype = torch.uint32 if width == 32 else torch.int64
-        local_joints = tuple(k for k, (s, b, _, _) in enumerate(SCHEDULE) if self.party in (s, b))
-        columns = tuple(0 if k == (self.party-1)%4 else 1 if k == self.party else 2 for k in local_joints)
-        receive_joints = tuple(k for k, (_, _, r, _) in enumerate(SCHEDULE) if self.party == r)
-        masks = self._mask_batch(shape, binary, device)
-        masked = torch.empty((3, count), dtype=dtype, device=device)
+        schedule = tuple(SCHEDULE[k] for k in joints) if schedule is None else schedule
+        local_joints = tuple(k for k, (s, b, _, _) in enumerate(schedule) if self.party in (s, b))
+        columns = tuple(0 if joints[k] == (self.party-1)%4 else 1 if joints[k] == self.party else 2 for k in local_joints)
+        receive_joints = tuple(k for k, (_, _, r, _) in enumerate(schedule) if self.party == r)
+        masks = self._mask_batch(shape, binary, device, schedule=schedule)
+        masked = torch.empty((len(local_joints), count), dtype=dtype, device=device)
         args = (*local, *(local if pointwise is None else pointwise))
         _masked[(triton.cdiv(count, 256),)](*args, masks, masked, count, binary, width,
                                           pointwise is not None, local_joints, columns, 256)
         wires = {k: masked[j].view(torch.uint8) for j, k in enumerate(local_joints)}
-        entries = [(s, b, r, wires.get(k)) for k, (s, b, r, _) in enumerate(SCHEDULE)]
+        entries = [(s, b, r, wires.get(k)) for k, (s, b, r, _) in enumerate(schedule)]
         received = self._exchange_joint_wires(entries, shape, binary)
-        incoming = torch.cat([received[k] for k in receive_joints]).view(dtype)
+        incoming = (torch.cat([received[k] for k in receive_joints]).view(dtype)
+                    if receive_joints else torch.empty(0, dtype=dtype, device=device))
         result = torch.empty((3, *shape), dtype=torch.int64, device=device)
-        mask_slots = tuple(-1 if self.party == r else (r-self.party-1)%4 for _, _, r, _ in SCHEDULE)
-        outside_slots = tuple(-1 if self.party == o else (o-self.party-1)%4 for _, _, _, o in SCHEDULE)
-        local_ids = tuple(local_joints.index(k) if k in local_joints else -1 for k in range(6))
-        receive_ids = tuple(receive_joints.index(k) if k in receive_joints else -1 for k in range(6))
+        mask_slots = tuple(-1 if self.party == r else (r-self.party-1)%4 for _, _, r, _ in schedule)
+        outside_slots = tuple(-1 if self.party == o else (o-self.party-1)%4 for _, _, _, o in schedule)
+        local_ids = tuple(local_joints.index(k) if k in local_joints else -1 for k in range(len(schedule)))
+        receive_ids = tuple(receive_joints.index(k) if k in receive_joints else -1 for k in range(len(schedule)))
         _assemble[(triton.cdiv(count, 256),)](masks, masked, incoming, result, count, binary, width,
                                             mask_slots, outside_slots, local_ids, receive_ids, 256)
-        self.joint_inputs += 6
+        self.joint_inputs += len(schedule)
         self.multiplications += 1
         return Share(tuple(result.unbind(0)), binary)
+
+    def _reshare_product_selected(self, contributions, binary, device, joints=(1,3,4,5)):
+        """Reshare complementary-support products, omitting public zero terms.
+
+        The caller must establish that global contributions 0 and 2 are zero.
+        Each retained term keeps its two knowledgeable holders; balanced routes
+        give each party one payload and one integrity tag in each direction.
+        """
+        if tuple(joints) != (1,3,4,5):
+            raise ValueError('selected products require joint indices (1,3,4,5)')
+        local = tuple(contributions[k].contiguous() for k in ((self.party-1)%4,self.party,4))
+        if not local[0].numel():
+            return self.public(0, like=Share(local, binary), binary=binary)
+        return self._fused_product(local, binary, device, joints=tuple(joints), schedule=_SPARSE_SCHEDULE)
+
+    def _mul_sparse_pairs(self, x, y):
+        """Multiply shares supported on complementary component pairs {0,1}/{2,3}.
+
+        This internal operation relies on support established by joint-input
+        construction, not on inspecting secret tensor values.
+        """
+        if x.binary != y.binary or x.shape != y.shape or x.device != y.device or x.device != self.device:
+            raise ValueError('sparse pairs require matching shares on the party device')
+        if not x.parts[0].numel():
+            return self.public(0, like=x)
+        return self._fused_product(tuple(t.contiguous() for t in x.parts), x.binary, x.device,
+                                   tuple(t.contiguous() for t in y.parts), joints=(1,3,4,5),
+                                   schedule=_SPARSE_SCHEDULE)
 
     def joint_input_batch(self, specs, shape=None, binary=False, device=None):
         device = self.device if device is None else torch.device(device)
@@ -218,7 +274,7 @@ class DeviceParty(FusedParty):
             output = torch.empty((3, *shape), dtype=torch.int64, device=device)
             wire = None
             if self.party != receiver:
-                mask = self._random(receiver, shape, device, binary).reshape(-1)
+                mask = self._random(receiver, shape, device, binary, packed=True).reshape(-1)
                 has_value = self.party in (sender, backup)
                 wire = torch.empty(count if has_value else 0, dtype=dtype, device=device)
                 source = value.contiguous().reshape(-1) if has_value else mask

@@ -1,0 +1,188 @@
+{
+  "elements": 14336,
+  "total_bytes": 39558448,
+  "max_abs_error": 4.653137699595078e-07,
+  "production_total_bytes": 39558448,
+  "baseline_total_bytes": 60792176,
+  "saved_bytes": 21233728,
+  "methodology": "Semantic expansion of current numerical_program(silu). Total measured bytes and exact opened outputs are asserted against a separate full production execution using the same seeds and fixture. Global payloads include tags; input x sharing and final output opening are excluded.",
+  "fixture_domain": [
+    -4,
+    4
+  ],
+  "verified_input_domain": [
+    -16,
+    16
+  ],
+  "fractional_bits": 24,
+  "counts_per_coordinate": {
+    "exponential_secret_products": 7,
+    "exponential_public_coefficient_products": 4,
+    "exponential_shift4_floors": 1,
+    "exponential_q24_floors": 8,
+    "output_relation_secret_products": 2,
+    "sign_selection_secret_products": 2,
+    "note": "Input clamp, sign circuits and aggregate acceptance have additional internal products."
+  },
+  "formula": "T=floor(-abs(X)/16); U=floor(T*T/S); H=degree6 quadratic Horner with four Q24 floors; repeat E=floor((E*E+S/2)/S) four times; D=S+E; M=-E if X<0 else S; require 0<=Y+S<32*S and |X|<=16*S; R=2*(Y*D-|X|*M); require 0<=R+D<8*S and D-R>=0",
+  "source_sha256": {
+    "benchmarks/silu_accounting.py": "48e2f377aa9dc9486c4618d6c368b240104076ef69f4fdecb66a813dff030c4a",
+    "rep4gpu/numerical.py": "f3c1829237182b413480e61b3114d90630b8a606b528d42637e0050fa2962d5a",
+    "rep4gpu/witness_activations.py": "3a2df8ddfd871152f5918bd675bb4ecf0d2af210c0b25c0c76bdf15986206cce",
+    "rep4gpu/silu_exp.py": "a66d3f2d44a5e3d790b1d7bb16166a89ab31f733c6a0b55083f2b980ad6e53b4",
+    "rep4gpu/bounded_activation.py": "d915f47b7f65a7df3552f1a647884916ae06f767f57af452e02ffc72b92102a5",
+    "rep4gpu/witness_prover.py": "cc96b59ae984f5bf679cfddddfd7fd64e76541d777bd61f13c9db68df787fb8d",
+    "rep4gpu/carry_tree_swar.py": "5c813aaf3a2a95e7a5a4d95cd2ce07db350daa1d962d909086d959bf73542d2f",
+    "rep4gpu/compact_conversion_gpu.py": "98986a38547612efd6c279d23e8ca85a5a8acaf3b933adcfc5165877d0b10663",
+    "rep4gpu/upper_zero.py": "42b3baf324cf447cfa9336909cde2e3acd066bc367f6a4b1242e390378362d22",
+    "rep4gpu/exact_truncation.py": "69f746f0dc9b6ac55ef942939a0a1d63c0b8104c385863a19caf54cfad07d769",
+    "rep4gpu/bounded_exact_truncation_gpu.py": "d4cb1727e8dbe98d21e5a4020629cc867d2adb333ea275244930fa3cf501bb15"
+  },
+  "stages": {
+    "witness_input": {
+      "bytes": 229504,
+      "bytes_per_coordinate": 16.008928571428573,
+      "ring64_word_equivalents_per_coordinate": 2.0011160714285716
+    },
+    "witness_upper_zero_width29": {
+      "bytes": 3246336,
+      "bytes_per_coordinate": 226.44642857142858,
+      "ring64_word_equivalents_per_coordinate": 28.305803571428573
+    },
+    "input_sign_absolute_and_clamp": {
+      "bytes": 7300608,
+      "bytes_per_coordinate": 509.25,
+      "ring64_word_equivalents_per_coordinate": 63.65625
+    },
+    "exp_reduce_shift4": {
+      "bytes": 1255232,
+      "bytes_per_coordinate": 87.55803571428571,
+      "ring64_word_equivalents_per_coordinate": 10.944754464285714
+    },
+    "exp_reduced_square_product": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "exp_horner_floor_1": {
+      "bytes": 1900928,
+      "bytes_per_coordinate": 132.59821428571428,
+      "ring64_word_equivalents_per_coordinate": 16.574776785714285
+    },
+    "exp_horner_public_product_c5": {
+      "bytes": 0,
+      "bytes_per_coordinate": 0.0,
+      "ring64_word_equivalents_per_coordinate": 0.0
+    },
+    "exp_horner_public_product_c6": {
+      "bytes": 0,
+      "bytes_per_coordinate": 0.0,
+      "ring64_word_equivalents_per_coordinate": 0.0
+    },
+    "exp_horner_floor_2": {
+      "bytes": 1900928,
+      "bytes_per_coordinate": 132.59821428571428,
+      "ring64_word_equivalents_per_coordinate": 16.574776785714285
+    },
+    "exp_horner_public_product_c3": {
+      "bytes": 0,
+      "bytes_per_coordinate": 0.0,
+      "ring64_word_equivalents_per_coordinate": 0.0
+    },
+    "exp_horner_product_3": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "exp_horner_floor_3": {
+      "bytes": 1900928,
+      "bytes_per_coordinate": 132.59821428571428,
+      "ring64_word_equivalents_per_coordinate": 16.574776785714285
+    },
+    "exp_horner_public_product_c1": {
+      "bytes": 0,
+      "bytes_per_coordinate": 0.0,
+      "ring64_word_equivalents_per_coordinate": 0.0
+    },
+    "exp_horner_product_4": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "exp_horner_floor_4": {
+      "bytes": 1900928,
+      "bytes_per_coordinate": 132.59821428571428,
+      "ring64_word_equivalents_per_coordinate": 16.574776785714285
+    },
+    "exp_square_product_1": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "exp_square_nearest_floor_1": {
+      "bytes": 1900928,
+      "bytes_per_coordinate": 132.59821428571428,
+      "ring64_word_equivalents_per_coordinate": 16.574776785714285
+    },
+    "exp_square_product_2": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "exp_square_nearest_floor_2": {
+      "bytes": 1900928,
+      "bytes_per_coordinate": 132.59821428571428,
+      "ring64_word_equivalents_per_coordinate": 16.574776785714285
+    },
+    "exp_square_product_3": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "exp_square_nearest_floor_3": {
+      "bytes": 1900928,
+      "bytes_per_coordinate": 132.59821428571428,
+      "ring64_word_equivalents_per_coordinate": 16.574776785714285
+    },
+    "exp_square_product_4": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "exp_square_nearest_floor_4": {
+      "bytes": 1900928,
+      "bytes_per_coordinate": 132.59821428571428,
+      "ring64_word_equivalents_per_coordinate": 16.574776785714285
+    },
+    "numerator_sign_select": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "numerator_raw_product": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "output_denominator_raw_product": {
+      "bytes": 688320,
+      "bytes_per_coordinate": 48.013392857142854,
+      "ring64_word_equivalents_per_coordinate": 6.001674107142857
+    },
+    "output_lower_upper_zero_width27": {
+      "bytes": 3289344,
+      "bytes_per_coordinate": 229.44642857142858,
+      "ring64_word_equivalents_per_coordinate": 28.680803571428573
+    },
+    "output_upper_sign_width28": {
+      "bytes": 2144640,
+      "bytes_per_coordinate": 149.59821428571428,
+      "ring64_word_equivalents_per_coordinate": 18.699776785714285
+    },
+    "aggregate_acceptance": {
+      "bytes": 2160,
+      "bytes_per_coordinate": 0.15066964285714285,
+      "ring64_word_equivalents_per_coordinate": 0.018833705357142856
+    }
+  }
+}

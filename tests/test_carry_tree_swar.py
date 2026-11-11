@@ -57,20 +57,26 @@ print('all CPU-interpreted node and gate buffers match')
 
 
 @pytest.mark.parametrize('bits,binary_bits,shift', [(32,32,14), (64,64,14), (32,64,12)])
-def test_gpu_swar_matches_cpu_protocol_transcript(bits, binary_bits, shift):
+def test_gpu_swar_carry_bits_match_cpu_protocol_transcript(bits, binary_bits, shift):
     if not torch.cuda.is_available():
         pytest.skip('CUDA required')
     pytest.importorskip('cryptography')
     from test_carry_tree_gpu import _reference
     from rep4gpu import carry_tree_swar
     from rep4gpu.fused_runtime import FusedParty
+    from rep4gpu.runtime import Share
     from rep4gpu.transport import ReplayTransport
     seeds, transports, shares, expected = _reference(bits, binary_bits, (), shape=(33,), shift=shift)
     for party in range(4):
         replay = ReplayTransport(transports[party].transcript)
         runtime = FusedParty(party, replay, {e:s for e,s in seeds.items() if e != party},
                              device='cuda', bits=bits, binary_bits=binary_bits, prg='aes')
-        actual = carry_tree_swar.truncation_bits(runtime, *shares(party, 'cuda'), shift)
+        a, b = shares(party, 'cuda')
+        low, high, before = carry_tree_swar.carry_bits(runtime, a, b,
+                                                       (shift, bits, bits-1))
+        sign = Share(tuple(((left >> (bits-1)) & 1) ^ ((right >> (bits-1)) & 1) ^ carry
+                           for left, right, carry in zip(a.parts, b.parts, before.parts)), True)
+        actual = low, high, sign
         for result, reference in zip(actual, expected[party][0]):
             assert all(torch.equal(a.cpu(), b) for a,b in zip(result.parts,reference.parts))
         assert runtime.counters == expected[party][1]
