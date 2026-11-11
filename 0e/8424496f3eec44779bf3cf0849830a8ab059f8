@@ -1,0 +1,541 @@
+docs/experiments/activation-approximation-evaluation.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-69
+  s_2b71d7cd063311::t_8b134236092971 3-4
+src/rep4gpu/models/device_inference.py
+  s_2b71d7cd063311::t_738594f7778093 1-109
+tests/unit/proofs/test_witness_activations_gpu.py
+  s_2b71d7cd063311::t_738594f7778093 1-6,11-13,15-21,24-69
+  s_2b71d7cd063311::t_3046bb50f959d4 7-10,14,22-23
+tests/unit/protocol/test_binary_aggregation.py
+  s_2b71d7cd063311::t_738594f7778093 1-6,11-40,42-69,72-94,96-110,112-121
+  s_2b71d7cd063311::t_3046bb50f959d4 7-10,41,70-71,95,111
+tests/unit/gpu/test_five_product.py
+  s_2b71d7cd063311::t_738594f7778093 1-3,6-30
+  s_2b71d7cd063311::t_3046bb50f959d4 4-5
+experiments/benchmarks/inference/activation_inference.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-76
+experiments/benchmarks/inference/numerical_inference_common.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-120
+experiments/benchmarks/kernels/opaque_ring32_experiment.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-68
+docs/protocol/protocol.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-67,69-93
+  s_2b71d7cd063311::t_8b134236092971 3-4,68
+tests/integration/test_toy_next_token.py
+  s_2b71d7cd063311::t_738594f7778093 1-3,5-30
+  s_2b71d7cd063311::t_3046bb50f959d4 4
+tests/benchmarks/test_numerical_inference.py
+  s_2b71d7cd063311::t_3046bb50f959d4 5,11-14
+  s_2b71d7cd063311::t_738594f7778093 1-4,6-10,15-37
+experiments/benchmarks/activations/numerical_primitives.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-166,168-177
+  s_2b71d7cd063311::t_684a28086f9e1c 167
+tests/unit/arithmetic/test_carry_tree.py
+  s_2b71d7cd063311::t_738594f7778093 1-7,12-132
+  s_2b71d7cd063311::t_3046bb50f959d4 8-11
+tests/unit/proofs/test_ristretto.py
+  s_2b71d7cd063311::t_738594f7778093 1-5,7-76
+  s_2b71d7cd063311::t_3046bb50f959d4 6
+experiments/examples/README.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-63
+experiments/examples/toy_next_token.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-166
+tests/integration/test_socket_inference.py
+  s_2b71d7cd063311::t_738594f7778093 1-9,11-54,56-66
+  s_2b71d7cd063311::t_3046bb50f959d4 10,55
+tests/fixtures/mpspdz/toy_ffn_report.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-24
+src/rep4gpu/gpu/bits/carry_tree_swar.py
+  s_2b71d7cd063311::t_738594f7778093 1-348
+tests/fixtures/mpspdz/trunc_pr_report.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-32
+tests/integration/test_rep4_oracle.py
+  s_2b71d7cd063311::t_70d1ce4550aca8 8
+  s_2b71d7cd063311::t_738594f7778093 1-7,10-36
+  s_2b71d7cd063311::t_3046bb50f959d4 9
+experiments/benchmarks/inference/socket_inference.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-199,201-281
+  s_2b71d7cd063311::t_de6f1e79b0a197 200
+experiments/benchmarks/proofs/silu_rational34_quality.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-60
+src/rep4gpu/models/__init__.py
+  s_2b71d7cd063311::t_738594f7778093 1
+tests/unit/proofs/test_silu_product_witness.py
+  s_2b71d7cd063311::t_738594f7778093 1-4,6-7,10-81
+  s_2b71d7cd063311::t_3046bb50f959d4 5,8-9
+tests/unit/arithmetic/test_truncation_shared_prefix.py
+  s_2b71d7cd063311::t_738594f7778093 1-7,10-14,16-23,26-62,66-92,96-116
+  s_2b71d7cd063311::t_3046bb50f959d4 8-9,15,24-25,63-65,93-95
+src/rep4gpu/gpu/crypto/gpu_prg_graph.py
+  s_2b71d7cd063311::t_738594f7778093 1-56
+.gitignore
+  s_2b71d7cd063311::t_cd69c847e1ae15 8
+tests/benchmarks/test_seeded_tee_simulation.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-10,195-197
+  s_2b71d7cd063311::t_738594f7778093 1-6,11-194,198-221
+experiments/benchmarks/proofs/silu_accounting.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-137
+tests/unit/gpu/test_carry_tree_swar.py
+  s_2b71d7cd063311::t_8b134236092971 17
+  s_2b71d7cd063311::t_de6f1e79b0a197 65
+  s_2b71d7cd063311::t_738594f7778093 1-16,18-53,55-64,69-83
+  s_2b71d7cd063311::t_70d1ce4550aca8 54
+  s_2b71d7cd063311::t_3046bb50f959d4 66-68
+src/rep4gpu/gpu/bits/__init__.py
+  s_2b71d7cd063311::t_738594f7778093 1
+experiments/benchmarks/kernels/gpu_prg_batch_bench.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-50
+experiments/benchmarks/kernels/large_crypto_experiment.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-18,20-229
+  s_2b71d7cd063311::t_de6f1e79b0a197 19
+docs/arithmetic/numerical-forward.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-64
+  s_2b71d7cd063311::t_8b134236092971 3-4
+docs/experiments/witness-activations.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-512
+  s_2b71d7cd063311::t_8b134236092971 3-4
+tests/unit/arithmetic/test_conversion.py
+  s_2b71d7cd063311::t_3046bb50f959d4 6-9
+  s_2b71d7cd063311::t_738594f7778093 1-5,10-74
+tools/validation/golden_toy_ffn.py
+  s_2b71d7cd063311::t_bab52c3c46385f 83-85,88,90
+  s_2b71d7cd063311::t_3046bb50f959d4 1-13,15-50,52-82,86-87,89,91-165
+  s_2b71d7cd063311::t_de6f1e79b0a197 14,51
+tests/unit/inference/test_device_open.py
+  s_2b71d7cd063311::t_3046bb50f959d4 6,130-131
+  s_2b71d7cd063311::t_de6f1e79b0a197 7
+  s_2b71d7cd063311::t_738594f7778093 1-5,8-129,132-165
+tests/unit/proofs/test_witness_rms_reduction.py
+  s_2b71d7cd063311::t_738594f7778093 1-6,11-86,89-114
+  s_2b71d7cd063311::t_3046bb50f959d4 7-10,87-88
+tests/unit/gpu/test_weighted_kernels.py
+  s_2b71d7cd063311::t_738594f7778093 1-3,5-58
+  s_2b71d7cd063311::t_3046bb50f959d4 4
+tests/unit/inference/test_device_runtime.py
+  s_2b71d7cd063311::t_738594f7778093 1-5,8-199,202-228,230-232,234-243,247-282,284-302
+  s_2b71d7cd063311::t_3046bb50f959d4 6-7,200-201,229,233,244-246
+  s_2b71d7cd063311::t_de6f1e79b0a197 283
+tests/unit/proofs/test_product_witness.py
+  s_2b71d7cd063311::t_738594f7778093 1-4,7-82
+  s_2b71d7cd063311::t_3046bb50f959d4 5-6
+docs/experiments/proof-activations.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-148
+  s_2b71d7cd063311::t_8b134236092971 3-4
+src/rep4gpu/proofs/__init__.py
+  s_2b71d7cd063311::t_738594f7778093 1
+tests/unit/gpu/test_ring32.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-9
+  s_2b71d7cd063311::t_738594f7778093 1-6,10-105
+src/rep4gpu/arithmetic/silu_exp.py
+  s_2b71d7cd063311::t_3046bb50f959d4 12
+src/rep4gpu/proofs/silu_rational.py
+  s_2b71d7cd063311::t_738594f7778093 1-121
+src/rep4gpu/gpu/crypto/__init__.py
+  s_2b71d7cd063311::t_738594f7778093 1
+tests/unit/arithmetic/test_compact_conversion_sparse.py
+  s_2b71d7cd063311::t_738594f7778093 1-10,15-53,56-128
+  s_2b71d7cd063311::t_3046bb50f959d4 11-14,54-55
+tests/unit/gpu/test_tuned_kernels.py
+  s_2b71d7cd063311::t_3046bb50f959d4 4-5,45-46
+  s_2b71d7cd063311::t_738594f7778093 1-3,6-44,47-59
+tests/unit/gpu/test_compact_conversion_gpu.py
+  s_2b71d7cd063311::t_738594f7778093 1-5,11-71
+  s_2b71d7cd063311::t_3046bb50f959d4 6-10
+tests/unit/inference/test_nn.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-9
+  s_2b71d7cd063311::t_738594f7778093 1-6,10-96
+tests/unit/arithmetic/test_numerical_protocol.py
+  s_2b71d7cd063311::t_738594f7778093 1-4,6-14
+  s_2b71d7cd063311::t_3046bb50f959d4 5
+docs/arithmetic/activations.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-184,186-337
+  s_2b71d7cd063311::t_684a28086f9e1c 185
+  s_2b71d7cd063311::t_8b134236092971 3-4
+docs/protocol/device-protocol.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-303
+  s_2b71d7cd063311::t_8b134236092971 3-4
+tests/benchmarks/test_simulated_activation.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-10
+  s_2b71d7cd063311::t_738594f7778093 1-6,11-110
+tests/integration/test_setup.py
+  s_2b71d7cd063311::t_738594f7778093 1-2,5-75,78-154
+  s_2b71d7cd063311::t_3046bb50f959d4 3-4,76-77
+experiments/benchmarks/inference/device_inference.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-423
+tests/unit/arithmetic/test_private_lut.py
+  s_2b71d7cd063311::t_738594f7778093 1-7,11-23,26-139
+  s_2b71d7cd063311::t_3046bb50f959d4 8-10,24-25
+tests/unit/gpu/test_gpu_prg.py
+  s_2b71d7cd063311::t_738594f7778093 1-6,8-124
+  s_2b71d7cd063311::t_3046bb50f959d4 7
+experiments/benchmarks/activations/witness_activations.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-270
+tools/validation/golden_trunc_pr.py
+  s_2b71d7cd063311::t_bab52c3c46385f 96-98,101,103
+  s_2b71d7cd063311::t_de6f1e79b0a197 15,44
+  s_2b71d7cd063311::t_3046bb50f959d4 1-14,16-43,45-95,99-100,102,104-189
+experiments/benchmarks/activations/private_lut.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-130,139-165
+  s_2b71d7cd063311::t_ea0fe3f858763a 131-138
+tests/README.md
+  s_2b71d7cd063311::t_a2e2d6bc56c18f 1-19
+tests/benchmarks/test_primitives.py
+  s_2b71d7cd063311::t_738594f7778093 1-3,5-28,30-41,43-52
+  s_2b71d7cd063311::t_3046bb50f959d4 4,29,42
+experiments/benchmarks/proofs/ffn_communication.py
+  s_2b71d7cd063311::t_bab52c3c46385f 82-89
+  s_2b71d7cd063311::t_3046bb50f959d4 1-81,90-118
+tests/unit/gpu/test_kernels.py
+  s_2b71d7cd063311::t_738594f7778093 1-4,6-47,49-65,67-79,81-94,96-107,109-118,120-136,138-145
+  s_2b71d7cd063311::t_3046bb50f959d4 5,48,66,80,95,108,119,137
+experiments/benchmarks/kernels/kernel_bench.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-53
+experiments/benchmarks/proofs/silu_proof.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-129
+experiments/benchmarks/activations/seeded_tee_simulation.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-133
+tests/unit/arithmetic/test_numerical_bounded_sign.py
+  s_2b71d7cd063311::t_738594f7778093 1-6,12-23,26-107
+  s_2b71d7cd063311::t_3046bb50f959d4 7-11,24-25
+experiments/benchmarks/activations/simulated_activation.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-111
+tests/unit/inference/test_device_probabilistic.py
+  s_2b71d7cd063311::t_738594f7778093 1-7,12-36,39-133,135-152,154-194
+  s_2b71d7cd063311::t_3046bb50f959d4 8-11,37-38,134,153
+experiments/benchmarks/kernels/strassen_opaque_compare.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-43
+docs/experiments/seeded-tee-simulation.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-110
+  s_2b71d7cd063311::t_8b134236092971 3-4
+src/rep4gpu/gpu/__init__.py
+  s_2b71d7cd063311::t_738594f7778093 1
+tests/unit/inference/test_inference_runtime.py
+  s_2b71d7cd063311::t_738594f7778093 1-5,10-33
+  s_2b71d7cd063311::t_3046bb50f959d4 6-9
+experiments/benchmarks/proofs/silu_minimax_quality.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-200
+tests/unit/gpu/test_gpu_prg_graph.py
+  s_2b71d7cd063311::t_738594f7778093 1-3,6-36
+  s_2b71d7cd063311::t_3046bb50f959d4 4-5
+src/rep4gpu/proofs/witness_activations.py
+  s_2b71d7cd063311::t_738594f7778093 1-492
+tests/unit/proofs/test_silu_denominator_bound.py
+  s_2b71d7cd063311::t_738594f7778093 1-4,6-25
+  s_2b71d7cd063311::t_3046bb50f959d4 5
+tests/unit/proofs/test_silu_exp.py
+  s_2b71d7cd063311::t_738594f7778093 1-8,11-90
+  s_2b71d7cd063311::t_3046bb50f959d4 9-10
+experiments/benchmarks/proofs/silu_product_witness.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-105
+src/rep4gpu/proofs/witness_prover.py
+  s_2b71d7cd063311::t_738594f7778093 1-143
+experiments/benchmarks/kernels/local_kernel_bench.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-53
+experiments/benchmarks/kernels/primitives.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-219,221-246
+  s_2b71d7cd063311::t_684a28086f9e1c 220
+tests/unit/arithmetic/test_activations.py
+  s_2b71d7cd063311::t_738594f7778093 1-7,9-136
+  s_2b71d7cd063311::t_3046bb50f959d4 8
+tests/unit/arithmetic/test_compact_conversion.py
+  s_2b71d7cd063311::t_3046bb50f959d4 6-9
+  s_2b71d7cd063311::t_738594f7778093 1-5,10-76
+tests/unit/proofs/test_proof_activation.py
+  s_2b71d7cd063311::t_3046bb50f959d4 4,28,46,49,85,101,105-106,143
+  s_2b71d7cd063311::t_738594f7778093 1-3,5-27,29-45,47-48,50-84,86-100,102-104,107-142,144-148
+experiments/benchmarks/inference/numerical_inference.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-115
+docs/protocol/native-mama-sacrifice.md
+  s_2b71d7cd063311::t_8b134236092971 3-4
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-51
+tools/validation/golden_rep4.py
+  s_2b71d7cd063311::t_de6f1e79b0a197 1-89
+src/rep4gpu/__init__.py
+  s_2b71d7cd063311::t_738594f7778093 1-15
+src/rep4gpu/arithmetic/__init__.py
+  s_2b71d7cd063311::t_738594f7778093 1
+tests/integration/test_runtime_golden.py
+  s_2b71d7cd063311::t_70d1ce4550aca8 13
+  s_2b71d7cd063311::t_738594f7778093 1-9,12,14-100
+  s_2b71d7cd063311::t_3046bb50f959d4 10-11
+tests/unit/arithmetic/test_numerical_zero_coefficients.py
+  s_2b71d7cd063311::t_738594f7778093 1-4,7-91
+  s_2b71d7cd063311::t_3046bb50f959d4 5-6
+src/rep4gpu/gpu/bits/carry_prefix_gpu.py
+  s_2b71d7cd063311::t_738594f7778093 1-187
+src/rep4gpu/gpu/matmul/__init__.py
+  s_2b71d7cd063311::t_738594f7778093 1
+src/rep4gpu/proofs/proof_activation.py
+  s_2b71d7cd063311::t_738594f7778093 1-294
+src/rep4gpu/protocol/__init__.py
+  s_2b71d7cd063311::t_738594f7778093 1
+tests/unit/inference/test_device_inference.py
+  s_2b71d7cd063311::t_738594f7778093 1-3,9-113
+  s_2b71d7cd063311::t_3046bb50f959d4 4-8
+tests/unit/proofs/test_silu_rational.py
+  s_2b71d7cd063311::t_3046bb50f959d4 5,8
+  s_2b71d7cd063311::t_738594f7778093 1-4,6-7,9-87
+tests/unit/protocol/test_field_group_runtime.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-10,125
+  s_2b71d7cd063311::t_738594f7778093 1-6,11-124,126-159
+experiments/benchmarks/activations/activation_approximation_quality.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-188
+experiments/benchmarks/kernels/strassen_local.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-37
+src/rep4gpu/gpu/crypto/gpu_prg.py
+  s_2b71d7cd063311::t_738594f7778093 1-199
+docs/experiments/activation-helper-simulation.md
+  s_2b71d7cd063311::t_8b134236092971 3-4
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-102
+docs/README.md
+  s_2b71d7cd063311::t_8b134236092971 1-30
+experiments/benchmarks/proofs/silu_rational_quality.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-122
+tools/README.md
+  s_2b71d7cd063311::t_a2e2d6bc56c18f 1-17
+src/rep4gpu/models/nn.py
+  s_2b71d7cd063311::t_738594f7778093 1-116,118-164
+  s_2b71d7cd063311::t_3046bb50f959d4 117
+tests/unit/gpu/test_narrow_product_gpu.py
+  s_2b71d7cd063311::t_738594f7778093 1-10,13-81,85-115,118-156,159-201,205-231,235-278
+  s_2b71d7cd063311::t_3046bb50f959d4 11-12,82-84,116-117,157-158,202-204,232-234
+experiments/benchmarks/activations/activation_common.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-89
+tests/unit/protocol/test_nonce_reservation.py
+  s_2b71d7cd063311::t_3046bb50f959d4 6-7,17,30,56,68,76,97,119
+  s_2b71d7cd063311::t_738594f7778093 1-5,8-16,18-29,31-55,57-67,69-75,77-96,98-118,120-133
+tests/unit/gpu/test_strassen_kernels.py
+  s_2b71d7cd063311::t_738594f7778093 1-3,6-28,30-40
+  s_2b71d7cd063311::t_3046bb50f959d4 4-5,29
+tests/unit/arithmetic/test_probabilistic.py
+  s_2b71d7cd063311::t_3046bb50f959d4 6-8
+  s_2b71d7cd063311::t_738594f7778093 1-5,9-87
+docs/arithmetic/numerical-primitives.md
+  s_2b71d7cd063311::t_684a28086f9e1c 133,137,148-150
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-132,134-136,138-147
+  s_2b71d7cd063311::t_8b134236092971 3-4
+tests/benchmarks/test_device_inference_benchmark.py
+  s_2b71d7cd063311::t_738594f7778093 1-3,6-33,36-52,54-59,61-75,77-83,85-90,92-103,105-112
+  s_2b71d7cd063311::t_3046bb50f959d4 4-5,34-35,53,60,76,84,91,104
+experiments/benchmarks/kernels/five_product_bench.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-45
+src/rep4gpu/proofs/field_group_runtime.py
+  s_2b71d7cd063311::t_738594f7778093 1-361
+experiments/benchmarks/inference/inference.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-68,71-336
+  s_2b71d7cd063311::t_de6f1e79b0a197 69-70
+experiments/benchmarks/kernels/tune_kernel.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-45
+tests/unit/inference/test_device_transport.py
+  s_2b71d7cd063311::t_3046bb50f959d4 10,19,21,75
+  s_2b71d7cd063311::t_738594f7778093 1-9,11-18,20,22-74,76-267
+tests/unit/gpu/test_ring32_opaque.py
+  s_2b71d7cd063311::t_3046bb50f959d4 6-7
+  s_2b71d7cd063311::t_738594f7778093 1-5,8-72
+src/rep4gpu/gpu/bits/bounded_exact_truncation_gpu.py
+  s_2b71d7cd063311::t_738594f7778093 1-139
+tests/unit/arithmetic/test_exact_truncation.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-9
+  s_2b71d7cd063311::t_de6f1e79b0a197 6
+  s_2b71d7cd063311::t_738594f7778093 1-5,10-63
+src/rep4gpu/models/graph_runtime.py
+  s_2b71d7cd063311::t_738594f7778093 1-134
+tests/benchmarks/test_activation_approximation_quality.py
+  s_2b71d7cd063311::t_738594f7778093 1-6,8-9,11-60
+  s_2b71d7cd063311::t_3046bb50f959d4 7,10
+tools/plots/plot_performance.py
+  s_2b71d7cd063311::t_de6f1e79b0a197 1-51
+experiments/README.md
+  s_2b71d7cd063311::t_a2e2d6bc56c18f 1-40
+tests/unit/inference/test_graph_runtime.py
+  s_2b71d7cd063311::t_3046bb50f959d4 6,27-29,58-62,112-116,161-166
+  s_2b71d7cd063311::t_738594f7778093 1-5,7-26,30-57,63-111,117-160,167-221
+experiments/benchmarks/kernels/graph_product.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-74
+tests/unit/gpu/test_sparse_products.py
+  s_2b71d7cd063311::t_3046bb50f959d4 8-9,132-133,177-178
+  s_2b71d7cd063311::t_738594f7778093 1-7,10-131,134-176,179-201
+tests/integration/test_trained_device.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-13,16
+  s_2b71d7cd063311::t_738594f7778093 1-6,14-15,17-91
+src/rep4gpu/gpu/crypto/gpu_prg_batch.py
+  s_2b71d7cd063311::t_738594f7778093 1-123
+tests/benchmarks/test_activation_fixture.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-8
+  s_2b71d7cd063311::t_738594f7778093 1-6,9-62
+tests/unit/protocol/test_prg.py
+  s_2b71d7cd063311::t_3046bb50f959d4 6-8,84
+  s_2b71d7cd063311::t_738594f7778093 1-5,9-83,85-112
+experiments/benchmarks/activations/activation_polynomial_protocol.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-161
+tests/unit/gpu/test_carry_tree_gpu.py
+  s_2b71d7cd063311::t_3046bb50f959d4 4-6
+  s_2b71d7cd063311::t_738594f7778093 1-3,8-78
+  s_2b71d7cd063311::t_de6f1e79b0a197 7
+tests/unit/inference/test_fused_runtime.py
+  s_2b71d7cd063311::t_738594f7778093 1-3,7-111
+  s_2b71d7cd063311::t_3046bb50f959d4 4-6
+experiments/benchmarks/inference/seeded_relu_inference.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-192,194-214
+  s_2b71d7cd063311::t_ea0fe3f858763a 193
+tests/benchmarks/test_numerical_inference_common.py
+  s_2b71d7cd063311::t_738594f7778093 1-4,7-55,57-59
+  s_2b71d7cd063311::t_3046bb50f959d4 5-6,56
+tests/unit/proofs/test_witness_check_optimization.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-9,52-53
+  s_2b71d7cd063311::t_738594f7778093 1-6,10-51,54-120
+experiments/benchmarks/activations/seeded_relu_simulation.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-129
+tests/unit/gpu/test_carry_prefix_gpu.py
+  s_2b71d7cd063311::t_3046bb50f959d4 5-7,46,69-73,104
+  s_2b71d7cd063311::t_738594f7778093 1-4,8-45,47-68,74-103,105-122
+tests/unit/inference/test_phase_graph.py
+  s_2b71d7cd063311::t_3046bb50f959d4 11-15,51-54,78-81,110-113,138-141,163-168,224-227,251-254,288-291
+  s_2b71d7cd063311::t_738594f7778093 1-10,16-50,55-77,82-109,114-137,142-162,169-223,228-250,255-287,292-313
+tests/unit/gpu/test_gpu_hash.py
+  s_2b71d7cd063311::t_738594f7778093 1-5,7-103,105-117,119-162
+  s_2b71d7cd063311::t_3046bb50f959d4 6,104,118
+docs/results.md
+  s_2b71d7cd063311::t_684a28086f9e1c 260
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-259,261-360
+  s_2b71d7cd063311::t_8b134236092971 3-4
+experiments/benchmarks/inference/seeded_tee_inference.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-173
+experiments/benchmarks/proofs/silu_denominator_bound.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-105
+tests/unit/gpu/test_upper_zero.py
+  s_2b71d7cd063311::t_738594f7778093 1-5,9-74,76-89
+  s_2b71d7cd063311::t_3046bb50f959d4 6-8,75
+tests/fixtures/mpspdz/report.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-18,20-37
+  s_2b71d7cd063311::t_ea0fe3f858763a 19
+tests/benchmarks/test_activation_polynomial_protocol.py
+  s_2b71d7cd063311::t_738594f7778093 1-4,7-43
+  s_2b71d7cd063311::t_3046bb50f959d4 5-6
+tests/unit/gpu/test_bounded_exact_truncation.py
+  s_2b71d7cd063311::t_3046bb50f959d4 8-10,23-24
+  s_2b71d7cd063311::t_738594f7778093 1-7,11-22,25-125
+pyproject.toml
+  s_2b71d7cd063311::t_cd69c847e1ae15 17,22
+src/rep4gpu/gpu/bits/compact_conversion_gpu.py
+  s_2b71d7cd063311::t_738594f7778093 1-200
+tests/unit/proofs/test_witness_activations.py
+  s_2b71d7cd063311::t_738594f7778093 1-6,10-127,129-202,204-227,229-239,243-273,275-300,302-319,322-345,347-376,379-390
+  s_2b71d7cd063311::t_3046bb50f959d4 7-9,128,203,228,240-242,274,301,320-321,346,377-378
+experiments/results/transport/socket_inference_report.md
+  s_2b71d7cd063311::t_3046bb50f959d4 1-60
+experiments/benchmarks/kernels/strassen_ring.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-54
+src/rep4gpu/gpu/bits/device_probabilistic.py
+  s_2b71d7cd063311::t_738594f7778093 1-132
+tests/unit/proofs/test_silu_output_witness.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-11,27-28,198
+  s_2b71d7cd063311::t_738594f7778093 1-6,12-26,29-197,199-201
+src/rep4gpu/gpu/crypto/gpu_hash.py
+  s_2b71d7cd063311::t_738594f7778093 1-346
+src/rep4gpu/proofs/product_witness.py
+  s_2b71d7cd063311::t_738594f7778093 1-101
+experiments/benchmarks/kernels/tuned_product_bench.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-20,22-43
+  s_2b71d7cd063311::t_2ed4ea21eb19bd 21
+tests/benchmarks/test_activation_blinding.py
+  s_2b71d7cd063311::t_738594f7778093 1-6,8-62
+  s_2b71d7cd063311::t_3046bb50f959d4 7
+tests/unit/gpu/test_gpu_prg_batch.py
+  s_2b71d7cd063311::t_3046bb50f959d4 6-8
+  s_2b71d7cd063311::t_738594f7778093 1-5,9-64
+tests/benchmarks/test_inference_benchmark.py
+  s_2b71d7cd063311::t_738594f7778093 1-4,6-23
+  s_2b71d7cd063311::t_3046bb50f959d4 5
+src/native/silu_proof/README.md
+  s_2b71d7cd063311::t_2ed4ea21eb19bd 45-46,72
+  s_2b71d7cd063311::t_3046bb50f959d4 1-44,47-71,73-80
+src/rep4gpu/gpu/bits/bounded_activation.py
+  s_2b71d7cd063311::t_738594f7778093 1-89
+src/rep4gpu/models/phase_graph.py
+  s_2b71d7cd063311::t_738594f7778093 1-315
+src/rep4gpu/proofs/silu_product_witness.py
+  s_2b71d7cd063311::t_738594f7778093 1-89
+src/rep4gpu/proofs/ristretto.py
+  s_2b71d7cd063311::t_738594f7778093 1-151
+tests/unit/protocol/test_runtime.py
+  s_2b71d7cd063311::t_3046bb50f959d4 3-4,51,157-158,196,213,238
+  s_2b71d7cd063311::t_738594f7778093 1-2,5-50,52-156,159-195,197-212,214-237,239-247
+experiments/benchmarks/kernels/compact_weight_bench.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-47
+tools/validation/golden_mpspdz.py
+  s_2b71d7cd063311::t_de6f1e79b0a197 26
+  s_2b71d7cd063311::t_3046bb50f959d4 1-25,27-93
+experiments/benchmarks/activations/numerical_quality.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-30
+docs/experiments/product-witnesses.md
+  s_2b71d7cd063311::t_8b134236092971 3-4
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-127
+docs/arithmetic/kernel-arithmetic.md
+  s_2b71d7cd063311::t_8b134236092971 3-4
+  s_2b71d7cd063311::t_3046bb50f959d4 1-2,5-136
+tests/integration/test_transport_limits.py
+  s_2b71d7cd063311::t_3046bb50f959d4 10,89,119
+  s_2b71d7cd063311::t_738594f7778093 1-9,11-88,90-118,120-126
+tests/unit/arithmetic/test_bounded_quadratic.py
+  s_2b71d7cd063311::t_738594f7778093 1-7,11-105,108-214
+  s_2b71d7cd063311::t_3046bb50f959d4 8-10,106-107
+experiments/benchmarks/activations/activation_blinding.py
+  s_2b71d7cd063311::t_3046bb50f959d4 1-211
+src/rep4gpu/models/inference.py
+  s_2b71d7cd063311::t_738594f7778093 1-38
+tests/benchmarks/test_seeded_relu_simulation.py
+  s_2b71d7cd063311::t_3046bb50f959d4 7-10,169
+  s_2b71d7cd063311::t_738594f7778093 1-6,11-168,170-194
+tests/unit/arithmetic/test_numerical.py
+  s_2b71d7cd063311::t_3046bb50f959d4 8
+  s_2b71d7cd063311::t_738594f7778093 1-7,9-123
+README.md
+  s_2b71d7cd063311::t_ea0fe3f858763a 171
+  s_2b71d7cd063311::t_3046bb50f959d4 8,15,18,22,73,80-81,87,93,95,97,100,126,153-154,156,159,161,168-170,176
+  s_2b71d7cd063311::t_b0af7371ab2954 29-57
+src/rep4gpu/arithmetic/binary_aggregation.py
+  s_2b71d7cd063311::t_e8ab5947b87fd2 5,19
+src/rep4gpu/arithmetic/compact_conversion.py
+  s_2b71d7cd063311::t_caa3549ae691e1 6,48
+src/rep4gpu/arithmetic/conversion.py
+  s_2b71d7cd063311::t_b125ef5034e4a7 9
+src/rep4gpu/arithmetic/exact_truncation.py
+  s_2b71d7cd063311::t_b97dec220a74c5 7,12,27,99,158-159
+src/rep4gpu/arithmetic/numerical.py
+  s_2b71d7cd063311::t_1e2f339dbc44ca 62
+src/rep4gpu/arithmetic/probabilistic.py
+  s_2b71d7cd063311::t_868a0227cdc5b4 8
+src/rep4gpu/arithmetic/upper_zero.py
+  s_2b71d7cd063311::t_b5de107c51aca5 7,58,135,155
+src/rep4gpu/gpu/bits/carry_tree.py
+  s_2b71d7cd063311::t_b1cddeb5753cf0 14
+src/rep4gpu/gpu/bits/carry_tree_gpu.py
+  s_2b71d7cd063311::t_3ea1effb11066b 11
+src/rep4gpu/gpu/matmul/five_product.py
+  s_2b71d7cd063311::t_0e2435504ac924 6
+src/rep4gpu/gpu/matmul/narrow_product_gpu.py
+  s_2b71d7cd063311::t_2221f2387d65a7 8-10
+src/rep4gpu/protocol/device_open.py
+  s_2b71d7cd063311::t_0f048ace616d19 87
+src/rep4gpu/protocol/device_runtime.py
+  s_2b71d7cd063311::t_b096d4e025bbe5 79,91,97,109,147
+src/rep4gpu/protocol/runtime.py
+  s_2b71d7cd063311::t_09d235b9943b6c 62,283,293,297,301,305
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0e8424496f3eec44779bf3cf0849830a8ab059f8",
+  "prompts": {},
+  "sessions": {
+    "s_2b71d7cd063311": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1c8a4-2680-7fa0-ae78-891bf2280bf3",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Zeb Taylor <zceboys@gmail.com>"
+    }
+  }
+}
