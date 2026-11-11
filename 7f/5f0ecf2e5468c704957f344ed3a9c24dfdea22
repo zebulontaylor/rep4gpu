@@ -1,0 +1,28 @@
+docs/native-mama-sacrifice.md
+  s_68ebafd6ccd078::t_63b3700a28d97e 33,41
+  s_68ebafd6ccd078::t_d70eed53ac9788 1,3-5
+  s_68ebafd6ccd078::t_135d7e520da279 25
+docs/witness-activations.md
+  s_68ebafd6ccd078::t_d70eed53ac9788 276-280,313,493,495,498-510
+  s_68ebafd6ccd078::t_63b3700a28d97e 283-284
+README.md
+  s_68ebafd6ccd078::t_d70eed53ac9788 21-23,41
+RESULTS.md
+  s_68ebafd6ccd078::t_d70eed53ac9788 8,70,72-76,348-353,356-358
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7f5f0ecf2e5468c704957f344ed3a9c24dfdea22",
+  "prompts": {},
+  "sessions": {
+    "s_68ebafd6ccd078": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1c894-20ab-7f50-9343-738ab1124d11",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Zeb Taylor <zceboys@gmail.com>"
+    }
+  }
+}
