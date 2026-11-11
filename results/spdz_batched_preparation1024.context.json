@@ -1,9 +1,0 @@
-{
-  "cpu_affinity": [
-    7,
-    15
-  ],
-  "background_native_preprocessing": true,
-  "batch_preparation_state": "cold first-use; may include shape JIT compilation",
-  "measurement_limit": "Actual four-role preparation wall time mixed with isolated replay query; not a full perfect-network pipeline estimate. Secure preprocessing not measured."
-}

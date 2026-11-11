@@ -1,9 +1,0 @@
-{
-  "operation": "sum of squares and exact-floor truncation, inputs already shared, output opening excluded",
-  "runtime": "four CPU Party roles, ring64 Q24",
-  "rows": 2,
-  "width": 512,
-  "before_global_bytes": 6785280,
-  "after_global_bytes": 15552,
-  "reduction_percent": 99.77079796264856
-}

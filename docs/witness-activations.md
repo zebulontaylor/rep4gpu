@@ -273,25 +273,15 @@ comparison uses the narrower signed range established above.
 
 ## Current SiLU communication
 
-The [four-step comparison](../results/silu_four_step.json) uses 14,336 inputs
-on the same `[-4,4]` fixture, four optimized CUDA roles, and ring64/Q24.
-Global bytes include witness ingestion, verification, and acceptance, excluding
-initial activation sharing and the output opening used for validation.
-
-| Implementation | Global bytes | Bytes per coordinate |
-| --- | ---: | ---: |
-| Original reciprocal recipe | 125,101,744 | 8,726.41 |
-| Denominator check removed | 113,465,712 | 7,914.74 |
-| Direct output witness | 107,749,104 | 7,515.98 |
-| Degree-six Remez with nearest squares | 87,649,008 | 6,113.91 |
-| Bounded exact floors | 60,792,176 | 4,240.53 |
-| Sign-first input, unsigned ranges, quadratic Horner | 39,558,448 | 2,759.38 |
-| Binary rejection aggregation and shared high-bit target | 37,300,080 | 2,601.85 |
+The current CUDA measurement uses 14,336 inputs on `[-4,4]`, four optimized
+roles, and ring64/Q24. Global bytes include witness ingestion, verification,
+and acceptance, excluding initial activation sharing and the validation output
+opening. The production path sends **37,300,080 bytes**, or **2,601.85 bytes
+per coordinate**.
 
 The [current accounting](../results/silu_binary_acceptance_accounting.json)
-measures a 5.71% reduction from the preceding 39,558,448-byte stage. Its semantic
-expansion matches a separate run of the production program in both exact
-outputs and total bytes. The measured maximum absolute error remains
+includes a semantic expansion that matches a separate run of the production
+program in both exact outputs and total bytes. The measured maximum absolute error remains
 `4.65314e-7` on this fixture. Traffic remains above 10 MB.
 
 A bare secret multiplication costs 688,320 bytes for this batch. One bounded
@@ -319,11 +309,8 @@ python -m benchmarks.silu_minimax_quality --exhaustive \
   --output results/silu_quadratic_horner_quality.json
 ```
 
-The preserved `results/silu_next_accounting.json` records the preceding
-quadratic-Horner stage; `results/silu_exact_accounting.json` records the earlier
-bounded-floor stage.
 
-## Initial communication and accuracy comparison
+## Reference communication and accuracy comparison
 
 The figures in this section describe the initial witness implementation,
 before the check, polynomial, and RMS reduction improvements below. Run the
@@ -445,53 +432,6 @@ provide about 6.94% detection, and 294,729 are needed for 99%. The claimed
 64-fold layer-slicing reduction does not preserve that assurance under this
 attack model.
 
-## Historical communication reductions
-
-This checkpoint removed quantized-zero leading Horner coefficients,
-reuses signs when checking public interval bounds, and uses direct sign
-extraction for nonnegative expressions. Softmax reuses the fact that shifted
-inputs are nonpositive when checking for a maximum. These changes preserve the
-encoded numerical results. RMSNorm additionally reduces squares before
-resharing in bounded tiles; that changes its rounding schedule and can improve
-accuracy. Its prover helper follows the same schedule.
-
-The [before/after report](../results/witness_optimization.json) runs preserved
-baseline source and the source at that checkpoint on the same four-party runtime. It includes
-witness ingestion, constraints, and acceptance opening, and excludes the final
-output opening used to check results. The CUDA path uses optimized
-`DeviceInferenceParty` with exact-floor arithmetic; it is not a distributed
-latency benchmark.
-
-| Function and fixture | CUDA global bytes before | After | Reduction |
-| --- | ---: | ---: | ---: |
-| SiLU, 257 elements | 3,931,104 | 2,712,928 | 31.0% |
-| GELU, 257 elements | 4,913,280 | 3,695,104 | 24.8% |
-| RMSNorm, 2 × 256 | 1,333,552 | 672,896 | 49.5% |
-| Softmax, 2 × 256 | 6,159,472 | 4,555,680 | 26.0% |
-| SiLU, 14,336 elements | 215,828,976 | 148,581,040 | 31.2% |
-| Softmax, 32 × 1,024 | 388,800,064 | 288,090,912 | 25.9% |
-
-All measured fixtures retain their maximum absolute error. The report
-also contains reference-CPU measurements; those should not be substituted for
-optimized CUDA protocol prices. The [layer-shape report](../results/witness_optimization_layer_shapes.json)
-measures 14,336 SiLU inputs and 32 softmax rows of width 1,024. Neither report
-includes the remaining transformer layers or projects activation costs into a
-complete model without measuring those operations.
-
-Run the comparison harness from the repository root; current-source results
-can differ from this historical checkpoint:
-
-```sh
-python -m benchmarks.witness_optimization
-python -m benchmarks.witness_optimization --backend cuda --kind silu softmax \
-  --elements 14336 --width 1024 --rows 32 \
-  --output results/witness_optimization_layer_shapes.json
-```
-
-The Taylor exponential at this checkpoint skipped two zero-coefficient stages
-at Q24, and three at Q20. This saves their secret multiplications and rescalings without
-changing the quantized polynomial. It remains more than a single lookup.
-
 ## Private LUTs and recurring preprocessing
 
 The static public activation table is reusable and costs no MPC communication
@@ -550,77 +490,21 @@ shares is not secure truncation: it loses carries between share components.
 Using a narrower comparison window requires a proved range and a correct
 rescaling protocol; typical observed activation magnitudes are insufficient.
 
-## Historical Boolean packing and exact-rescaling audit
+## Boolean packing and exact rescaling
 
-The measurements in this section precede the direct-output SiLU and bounded
-exact-floor changes. That SiLU path used one exponential polynomial, four
-squarings, a reciprocal witness, and sign selection; softmax used the same
-exponential on shifted inputs. Neither path evaluated a piecewise spline. There is no
-`K-1` interval search to replace with an interval witness. The earlier removed
-coefficients were high-order Taylor coefficients that quantized to zero, not
-coefficients of outer spline pieces.
-
-The CUDA carry implementation already packs Boolean gates. In
-[`carry_tree_swar.py`](../rep4gpu/carry_tree_swar.py), each round allocates
+In [`carry_tree_swar.py`](../rep4gpu/carry_tree_swar.py), each round allocates
 `ceil(gate_count/binary_bits)` words and evaluates the gates with binary Rep4
 multiplication. Each 64-bit word carries 64 AND gates, including gates from
-different coordinates as trees shrink. Intermediate sign tensors may use int64
-storage, but that does not make every Boolean carry gate an eight-byte wire.
-Arithmetic conversion of a sign is a separate operation with arithmetic shares.
+different coordinates as trees shrink. Arithmetic conversion of a sign is a
+separate operation with arithmetic shares.
 
-Before the shared-prefix improvement, exact truncations account for 64.5% of
-the SiLU fixture's traffic and 71.5% of softmax's. Those costs cannot be inferred
-as three or four expensive interval comparisons simply by dividing the total
-by the number of activation coordinates.
+Exact truncation computes the carry into the sign bit once, deriving the ring
+carry with two final packed AND gates per coordinate. After bounds are
+established, internal absolute-value signs use `f+4` bits, and the softmax zero
+check uses `f+5` bits. At Q24 these are 28 and 29 bits. Original untrusted input
+and witness checks remain full-width, so arbitrary high ring bits cannot alias
+into an accepted narrow-domain value.
 
-Two changes produced this historical checkpoint:
-
-1. Exact truncation computes the carry into the sign bit once, deriving the
-   ring carry with two final packed AND gates per coordinate. It no longer
-   builds separate almost-identical carry trees for positions 63 and 64.
-2. After bounds are established, internal absolute-value signs use `f+4` bits,
-   and the softmax zero check uses `f+5` bits. At Q24 these are 28 and 29 bits.
-   Original untrusted input and witness checks remain full-width, so arbitrary
-   high ring bits cannot alias into an accepted narrow-domain value.
-
-Narrowing uses the existing modular carry protocol, not a local right shift
-of arithmetic share components. High-bit alias tests check the rejection path.
-The plaintext prover, including CUDA tensors, retains its plaintext sign
-operation rather than invoking the MPC narrowing protocol.
-
-The [shared-prefix comparison](../results/carry_prefix_optimization.json)
-measures these changes against the preceding optimized implementation, using
-identical fixtures and exact-floor Q24 arithmetic:
-
-| Function and fixture | Global bytes before | After | Exchange rounds before → after |
-| --- | ---: | ---: | ---: |
-| SiLU, 257 values | 2,712,928 | 2,295,808 | 288 → 304 |
-| GELU, 257 values | 3,695,104 | 3,065,056 | 392 → 417 |
-| Softmax, 2 × 256 | 4,555,680 | 3,767,648 | 312 → 327 |
-| RMSNorm, 2 × 256 | 672,896 | 625,616 | 127 → 131 |
-| SiLU, 14,336 values | 148,581,040 | 125,101,744 | 288 → 304 |
-| Softmax, 32 × 1,024 | 288,090,912 | 237,475,424 | 312 → 327 |
-
-The extra dependent final gates reduce bandwidth but add a protocol step per
-truncation. These figures do not establish a WAN latency improvement. The
-[model-shape comparison](../results/carry_prefix_layer_shapes.json) uses 14,336
-SiLU values and 32 softmax rows of length 1,024.
-
-```sh
-python -m benchmarks.carry_prefix_optimization
-python -m benchmarks.carry_prefix_optimization --kind silu softmax \
-  --elements 14336 --rows 32 --width 1024 \
-  --output results/carry_prefix_layer_shapes.json
-```
-
-Two interpretation errors also matter: a `2 × 256` RMS fixture contains two
-normalizations, each over 256 coordinates, not 512 normalizations. And any two
-distinct Rep4 roles collectively hold all four components; privacy assumes the
-supported corruption threshold, not that an arbitrary pair still lacks a
-component.
-
-If a future activation uses piecewise coefficients, an interval witness must
-be bound to the approved coefficient and endpoint table. Merely checking that
-two index bits are Boolean, or accepting prover-supplied coefficients and
-nonnegative distances, does not establish that the selected polynomial is the
-approved one or that the input lies in its interval.
+Narrowing uses the modular carry protocol. Locally shifting arithmetic share
+components does not implement the same operation. High-bit alias tests check
+the rejection path.

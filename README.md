@@ -18,13 +18,13 @@ consistency digests on the GPU; physical GPUDirect networking is not implemented
 [Activation experiments](RESULTS.md#sparse-products-and-activation-experiments)
 include optional private quadratics and a public-fixture helper simulation.
 No TEE is required or measured; the simulated helper path reconstructs
-activations and does not preserve Rep4 activation privacy.
+activations and does not preserve Rep4 activation privacy. The
+[seeded ring64 helper](docs/seeded-tee-simulation.md) also supports SwiGLU and
+optional helper-based down-projection rescaling.
 
 Rep4 tolerates one malicious party among four. Two colluding parties can
 reconstruct the secrets. This differs from the all-but-one privacy target in
 the [project design](https://docs.google.com/document/d/192TcAOZ43OQI1E3Q01Mxw7hRUGCXEL74rriaW2aI4ko/edit).
-The [malicious-majority experiment](docs/malicious-majority.md) has separate
-trust assumptions and a separate large-prime MASCOT preprocessing bridge.
 
 ## Run locally
 
@@ -38,8 +38,7 @@ python -m pip install -e '.[test,crypto]'
 python -m pytest -q
 ```
 
-The tensor-core kernels use Triton. The optional SIMT experiment uses the CUDA
-driver and NVRTC libraries. The working environment has an RTX 4060 Laptop GPU
+The tensor-core kernels use Triton. The working environment has an RTX 4060 Laptop GPU
 with 8 GB of VRAM; benchmark JSON files record package versions and source
 fingerprints.
 The [kernel arithmetic guide](docs/kernel-arithmetic.md) explains exact limb
@@ -174,58 +173,3 @@ deployment. Its privacy assumptions require independent party isolation,
 authenticated confidential channels and fresh randomness. Pending internal
 checks complete before unmasked output shares are broadcast; the final output
 check completes before acceptance.
-
-## Malicious-majority GPU prototype
-
-The separate prime-field implementation supports authenticated matrix products,
-elementwise products, and square activations with up to three malicious roles
-out of four, under its [preprocessing and channel assumptions](docs/malicious-majority.md).
-Each online worker loads only its own material. The original small-field MAMA
-producer has a confirmed [mask-privacy limitation](docs/native-mama-sacrifice.md#mask-privacy-limitation):
-its successful correctness checks do not establish 128-bit-private preprocessing.
-Its bundles remain functional test material. The replacement large-prime
-[MASCOT bridge](docs/mascot-preprocessing.md), with a fresh sacrifice challenge
-after authentication, has passed native correlation and malformed-input
-checks and completed one fresh trained-model inference. Its field conversion
-is too expensive for the performance target. The [direct native-field
-path](docs/direct-field-preprocessing.md) removes that conversion and cuts
-fresh toy preprocessing from 22.35 minutes to 0.416 seconds; its complete
-online runtime uses CPU big-integer checks with optional GPU products for
-fixed-model evaluation.
-
-Separate [exact q256 tensor-core kernels](docs/large-prime-kernels.md) support
-prepared local weights. The [matrix-correlation expansion helper](docs/matrix-pcg-linear.md)
-combines raw local terms before applying their public linear map. Both are
-isolated arithmetic components; neither supplies complete preprocessing.
-The [F127 kernels](docs/field-fp127.md) also prepare fixed left operands for
-the public linear maps used by experimental matrix-correlation generators.
-
-The malicious-majority target includes amortized fresh cryptographic
-preprocessing and is **not met**. Online-only timing improvements do not
-establish that target. Both native paths remove the central randomness dealer. The direct path is
-much faster, but fresh preprocessing still dominates its measured cost.
-
-[Model-dependent preparation](docs/prepared-model.md) moves the weight-mask
-opening and part of each matrix product before the query. Every query consumes
-fresh correlations. Deferred internal checks finish before output shares are
-sent; small outputs use full-vector checks and larger outputs use independent
-per-key random projections.
-
-A prepared matrix batch can be partitioned into disjoint one-use query handles.
-This shares the fixed-model preparation across the batch while preserving a
-fresh input mask for each query; it does not reuse a query's correlations.
-
-The trained examples use bounded integer square MLPs with public scale decoding.
-They do not implement general fixed-point transformer inference. See
-[the measured timings](RESULTS.md) for the clear-model comparators, network
-assumptions, and separate preprocessing costs, and the
-[direct-field execution guide](docs/direct-field-preprocessing.md) to run without a dealer.
-
-```sh
-python -m examples.spdz_square_toy
-python -m scripts.run_spdz_distributed --device cuda --m 128 --k 256 --n 256 \
-  --output results/spdz_distributed.json
-```
-
-The commands above use explicit trusted-dealer test fixtures. The native guide
-uses distributed preprocessing and consumes each role's bundle once.

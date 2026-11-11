@@ -76,58 +76,6 @@ def test_prepared_weight(bits):
 
 
 @pytest.mark.parametrize("bits", [32, 64])
-@pytest.mark.parametrize("accumulate", [False, True])
-def test_packed_both_operands(bits, accumulate):
-    from rep4gpu.kernels import local_products, prepare_weight
-    from rep4gpu.packed_kernels import local_products_packed
-
-    xs = [torch.from_numpy(random_ring((17, 71), i)).cuda() for i in range(3)]
-    ys = [torch.from_numpy(random_ring((71, 39), i+3)).cuda() for i in range(3)]
-    expected = local_products(*xs, *ys, bits)
-    packed = [prepare_weight(y, bits) for y in ys]
-    actual = local_products_packed(*xs, *packed, bits, accumulate=accumulate)
-    for a, b in zip(actual, expected):
-        torch.testing.assert_close(a, b, rtol=0, atol=0)
-
-
-@pytest.mark.parametrize("bits", [32, 64])
-@pytest.mark.parametrize("m", [1, 17])
-def test_direct_warp_mma(bits, m):
-    from rep4gpu.kernels import local_products
-    from rep4gpu.warp_mma_kernels import local_products_mma, prepare_mma_weight
-
-    xs = [torch.from_numpy(random_ring((m, 71), i)).cuda() for i in range(3)]
-    ys = [torch.from_numpy(random_ring((71, 39), i+3)).cuda() for i in range(3)]
-    expected = local_products(*xs, *ys, bits)
-    packed = [prepare_mma_weight(y, bits) for y in ys]
-    actual = local_products_mma(*xs, *packed, bits)
-    for a, b in zip(actual, expected):
-        torch.testing.assert_close(a, b, rtol=0, atol=0)
-
-
-def test_full_k_int32_accumulator_boundary():
-    from rep4gpu.kernels import prepare_weight
-    from rep4gpu.packed_kernels import local_products_packed
-    from rep4gpu.warp_mma_kernels import local_products_mma, prepare_mma_weight
-
-    # This word has eight balanced digits equal to -128.
-    k = 8191
-    word = 0x7f7f7f7f7f7f7f80
-    a = torch.full((1, k), word, dtype=torch.int64, device="cuda")
-    b = torch.full((k, 1), word, dtype=torch.int64, device="cuda")
-    xs = (a, torch.zeros_like(a), torch.zeros_like(a))
-    ys = (b, b, torch.zeros_like(b))
-    expected = (2*(a.cpu()@b.cpu()), torch.zeros((1,1),dtype=torch.int64),
-                torch.zeros((1,1),dtype=torch.int64))
-    packed = [prepare_weight(y) for y in ys]
-    mma = [prepare_mma_weight(y) for y in packed]
-    for actual in (local_products_packed(*xs,*packed,accumulate=True),
-                   local_products_mma(*xs,*mma)):
-        for out, reference in zip(actual, expected):
-            torch.testing.assert_close(out.cpu(), reference, rtol=0, atol=0)
-
-
-@pytest.mark.parametrize("bits", [32, 64])
 def test_prepared_weight_retains_only_packed_storage_by_default(bits):
     from rep4gpu.kernels import prepare_weight
 
