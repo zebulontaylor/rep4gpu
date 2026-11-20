@@ -26,7 +26,7 @@ CUDA graph capture layer, and multi-process transport stack:
    - Fixed-shape CUDA graph capture across checked communication boundaries with
      fresh atomic nonce uploads per inference call.
 
-2. **Odd-prime byte-lane CRT Rep4 ($\prod_\ell \mathbb{F}_{p_\ell}$)** —
+2. **Odd-prime byte-lane CRT Rep4 ($`\prod_\ell \mathbb{F}_{p_\ell}`$)** —
    [`CrtPhaseGraphParty`](src/rep4gpu/protocol/crt_runtime.py),
    [`crt_conv.py`](src/rep4gpu/gpu/matmul/crt_conv.py), and
    [`crt_relu_gpu.py`](src/rep4gpu/gpu/bits/crt_relu_gpu.py):
