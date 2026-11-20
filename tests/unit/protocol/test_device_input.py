@@ -3,11 +3,11 @@ from concurrent.futures import ThreadPoolExecutor
 import pytest
 import torch
 
-from rep4gpu.models.device_inference import DeviceInferenceParty
+from rep4gpu.protocol.ring_inference import DeviceInferenceParty
 from rep4gpu.protocol.device_input import DeviceInputMixin
-from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+from rep4gpu.transports.device import DeviceIdealEndpoint
 from rep4gpu.protocol.runtime import make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 class InputParty(DeviceInputMixin, DeviceInferenceParty):

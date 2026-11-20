@@ -38,22 +38,3 @@ def test_saturating_fusion_regression():
               (xc[0]@yc[2]+xc[2]@yc[0])&0xffffffff]
     for actual,want in zip(local_products_tuned(*xs,*ys,32),expected):
         torch.testing.assert_close(actual.cpu(),want,rtol=0,atol=0)
-
-
-@pytest.mark.parametrize("shape",[(1,71,39),(17,71,39),(128,71,39),(128,128,128)])
-def test_tuned_five_against_cpu(shape):
-    from rep4gpu.gpu.matmul.five_product import prepare_five_weights
-    from rep4gpu.gpu.matmul.tuned_kernels import local_products_five_tuned
-
-    m,k,n=shape
-    torch.manual_seed(0x5a000+m+k+n)
-    xc=[torch.randint(-2**63,2**63-1,(m,k),dtype=torch.int64) for _ in range(3)]
-    yc=[torch.randint(-2**63,2**63-1,(k,n),dtype=torch.int64) for _ in range(3)]
-    xs=[x.cuda() for x in xc]
-    ys=[prepare_weight(y.cuda(),32,storage="words32") for y in yc]
-    weights=prepare_five_weights(*ys)
-    expected=[((xc[0]+xc[1])@yc[0]+xc[0]@yc[1])&0xffffffff,
-              ((xc[1]+xc[2])@yc[1]+xc[1]@yc[2])&0xffffffff,
-              (xc[0]@yc[2]+xc[2]@yc[0])&0xffffffff]
-    for actual,want in zip(local_products_five_tuned(xs,weights),expected):
-        torch.testing.assert_close(actual.cpu(),want,rtol=0,atol=0)

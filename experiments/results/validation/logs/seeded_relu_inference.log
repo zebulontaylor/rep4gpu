@@ -1,4 +1,0 @@
-{"batch": 1, "tee_down": false, "payload_bytes_per_token": 443168.0, "rounds": 9, "ideal_network_phase_max_ms": 2.510311038349755, "max_logit_error": 0.0024373680353164673}
-{"batch": 1, "tee_down": true, "payload_bytes_per_token": 401984.0, "rounds": 8, "ideal_network_phase_max_ms": 2.3717480071354657, "max_logit_error": 0.0024373680353164673}
-{"batch": 128, "tee_down": false, "payload_bytes_per_token": 442374.25, "rounds": 9, "ideal_network_phase_max_ms": 10.779736985568888, "max_logit_error": 0.0028875768184661865}
-{"batch": 128, "tee_down": true, "payload_bytes_per_token": 401412.5, "rounds": 8, "ideal_network_phase_max_ms": 10.576553991995752, "max_logit_error": 0.0028265416622161865}

@@ -9,8 +9,10 @@ import traceback
 import pytest
 import torch
 
-from experiments.benchmarks.inference.socket_inference import (
-    MeteredTransport, certificates, reserve_addresses,
+from examples._mtls import (
+    MeteredSocketTransport as MeteredTransport,
+    mtls_certificates as certificates,
+    reserve_addresses,
 )
 
 
@@ -26,7 +28,7 @@ class ControlOnlyMesh(MeteredTransport):
 
 
 def _ipc_worker(rank, addresses, ca, identity, results):
-    from rep4gpu.protocol.cuda_ipc_transport import CudaIpcTransport
+    from rep4gpu.transports.cuda_ipc import CudaIpcTransport
 
     try:
         server = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
@@ -102,8 +104,8 @@ def test_ipc_payloads_and_reused_mailboxes_on_alternating_streams(tmp_path):
 
 
 def test_ipc_handles_require_authenticated_control_mesh():
-    from rep4gpu.protocol.cuda_ipc_transport import CudaIpcTransport
-    from rep4gpu.protocol.transport import IdealNetwork
+    from rep4gpu.transports.cuda_ipc import CudaIpcTransport
+    from rep4gpu.transports.byte import IdealNetwork
 
     with pytest.raises(ValueError, match='authenticated control mesh'):
         CudaIpcTransport(IdealNetwork().endpoint(0))

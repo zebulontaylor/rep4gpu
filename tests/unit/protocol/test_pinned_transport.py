@@ -1,7 +1,7 @@
 import pytest
 import torch
 
-from rep4gpu.protocol.pinned_transport import PinnedDeviceByteBridge
+from rep4gpu.transports.pinned import PinnedDeviceByteBridge
 
 
 class Echo:

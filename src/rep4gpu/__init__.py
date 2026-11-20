@@ -1,15 +1,51 @@
-"""GPU kernels and checked Rep4 operations for fixed-point inference."""
+"""GPU-accelerated four-party Rep4 MPC for private neural network inference."""
 
 from .arithmetic.activations import FixedPoint
-from .arithmetic.numerical import NumericalFixedPoint
-from .protocol.runtime import Party, Share
-from .proofs.witness_activations import (
-    InvalidWitness, WitnessProgram, WitnessSession, input_witnesses,
-    numerical_program, rmsnorm_program, softmax_program,
+from .gpu.bits.crt_relu_gpu import crt_trunc_relu
+from .nn import SharedSequential, sequential_spec, share_sequential
+from .protocol import (
+    CrtPhaseGraphParty,
+    DeviceInferenceParty,
+    DeviceInputMixin,
+    DeviceParty,
+    InferencePlan,
+    Party,
+    PhaseGraphParty,
+    Share,
+    correlated_seeds,
+    make_seeds,
 )
-from .proofs.witness_prover import numerical_witnesses, rmsnorm_witnesses, softmax_witnesses
+from .transports import (
+    CudaIpcTransport,
+    DeviceByteBridge,
+    DeviceIdealEndpoint,
+    IdealNetwork,
+    NcclDeviceTransport,
+    PinnedDeviceByteBridge,
+    SocketTransport,
+)
 
-__all__ = ['FixedPoint', 'NumericalFixedPoint', 'Party', 'Share',
-           'InvalidWitness', 'WitnessProgram', 'WitnessSession', 'input_witnesses',
-           'numerical_program', 'rmsnorm_program', 'softmax_program',
-           'numerical_witnesses', 'rmsnorm_witnesses', 'softmax_witnesses']
+__all__ = [
+    'Share',
+    'Party',
+    'DeviceParty',
+    'DeviceInputMixin',
+    'DeviceInferenceParty',
+    'PhaseGraphParty',
+    'InferencePlan',
+    'CrtPhaseGraphParty',
+    'FixedPoint',
+    'crt_trunc_relu',
+    'SharedSequential',
+    'sequential_spec',
+    'share_sequential',
+    'correlated_seeds',
+    'make_seeds',
+    'IdealNetwork',
+    'SocketTransport',
+    'DeviceIdealEndpoint',
+    'DeviceByteBridge',
+    'PinnedDeviceByteBridge',
+    'CudaIpcTransport',
+    'NcclDeviceTransport',
+]

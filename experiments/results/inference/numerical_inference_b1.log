@@ -1,3 +1,0 @@
-{"kind": "silu", "batch": 1, "width": 2048, "live_four_party_median_ms": 73.3660800033249, "ideal_network_phase_max_ms": 15.38537596934475, "max_error": 1.5614750817349865e-06, "rmse": 4.840837025612735e-07, "peak_cuda_allocated_bytes": 3759085568}
-{"kind": "gelu", "batch": 1, "width": 2048, "live_four_party_median_ms": 86.97314700111747, "ideal_network_phase_max_ms": 18.015486966760363, "max_error": 1.7280005337322324e-06, "rmse": 5.177054577865812e-07, "peak_cuda_allocated_bytes": 3918862336}
-{"kind": "swiglu", "batch": 1, "width": 2048, "live_four_party_median_ms": 87.89386400167132, "ideal_network_phase_max_ms": 17.706762097077444, "max_error": 8.980464071689509e-07, "rmse": 2.741775464042938e-07, "peak_cuda_allocated_bytes": 5546711040}

@@ -1,19 +1,13 @@
-# Tests
+# Test Suite
 
-From the repository root, install the test dependencies and run the suite:
+Run all tests from the repository root:
 
 ```sh
-python -m pip install -e '.[test,crypto]'
 python -m pytest -q
 ```
 
-`unit/` groups protocol, arithmetic, GPU, inference, and proof checks.
-`integration/` covers multi-party execution, transports, model inference, and
-golden transcripts. `benchmarks/` checks benchmark fixtures and accounting.
-Tests that require unavailable GPU or native proof support skip those cases.
-
-Run one area with `python -m pytest tests/unit/arithmetic -q`. The
-[`fixtures/mpspdz/`](fixtures/mpspdz/) directory holds reference programs,
-transcripts, and native execution evidence; its test code lives in
-`integration/test_rep4_oracle.py` and `integration/test_runtime_golden.py`.
-Golden generators are under [`tools/validation/`](../tools/validation/).
+Layout:
+- `tests/unit/protocol/`: Rep4 ring runtimes (`Party`, `FusedParty`, `DeviceParty`, `DeviceInferenceParty`, `PhaseGraphParty`), odd-prime CRT runtime (`CrtPhaseGraphParty`, `crt_trunc_relu`), transports, PRG, nonce reservation, and PyTorch `Sequential` sharing (`rep4gpu.nn`).
+- `tests/unit/arithmetic/`: Fixed-point operations (`FixedPoint`), exact carry-based truncation, probabilistic truncation, and compact bit conversions.
+- `tests/unit/gpu/`: Exact ring8/16/32/64 Triton matmul kernels, SM89 modular-add & Strassen ring32 kernels, GPU ChaCha20 PRG, GPU BLAKE3-256, SWAR/prefix carry trees, sparse & narrow products.
+- `tests/integration/`: Multi-process mTLS (`SocketTransport`), `CudaIpcTransport`, `NcclDeviceTransport` routing, commit/reveal `correlated_seeds` setup, transport limits, and end-to-end trained MLP inference.

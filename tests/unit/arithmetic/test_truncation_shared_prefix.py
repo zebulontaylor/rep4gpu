@@ -6,7 +6,7 @@ import pytest
 import torch
 
 from rep4gpu.protocol.runtime import Share, make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 pytestmark = pytest.mark.skipif(not torch.cuda.is_available(), reason='CUDA required')
 
@@ -21,8 +21,8 @@ def legacy_truncation_bits(rt, a, b, shift):
 
 
 def run_four(bits, work, binary_bits=None):
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     torch.set_num_threads(1)
     network, seeds = IdealNetwork(timeout=180), make_seeds()
     device = torch.device('cuda:0')

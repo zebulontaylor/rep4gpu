@@ -6,7 +6,7 @@ import torch
 from rep4gpu.arithmetic.activations import FixedPoint
 from rep4gpu.arithmetic.conversion import a2b, b2a, signed_lt
 from rep4gpu.protocol.runtime import Party, make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 def run_four(fn, device='cpu'):

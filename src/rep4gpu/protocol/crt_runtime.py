@@ -22,7 +22,7 @@ import struct
 import numpy as np
 import torch
 
-from ..models.phase_graph import PhaseGraphParty
+from .phase_graph import PhaseGraphParty
 from .runtime import SCHEDULE, Share
 from ..gpu.crypto.gpu_hash import digest, digest_batch
 from ..gpu.matmul.crt_conv import (

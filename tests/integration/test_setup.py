@@ -1,7 +1,7 @@
 import concurrent.futures
 import pytest
 from rep4gpu.protocol.setup import SetupError, correlated_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 def _run_setup(tamper=None):
@@ -74,7 +74,7 @@ def _tls_setup_worker(party, addresses, certificate_files, queue):
     import ssl
     import torch
     from rep4gpu.protocol.runtime import Party
-    from rep4gpu.protocol.transport import SocketTransport
+    from rep4gpu.transports.byte import SocketTransport
     ca, identities = certificate_files
     certificate, key = identities[party]
     server = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)

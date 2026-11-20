@@ -1,67 +1,78 @@
-# Rep4 GPU inference
+# rep4gpu
 
-This prototype evaluates secret-weight feed-forward networks with four-party
-replicated sharing. It provides exact 16-bit, 32-bit and 64-bit ring matmuls, fixed-point
-arithmetic, ReLU, and polynomial GELU/SiLU approximations. Inputs, weights, and
-intermediate activations remain shared until an explicit output opening.
+GPU-accelerated four-party replicated secret sharing (Rep4) for private neural
+network inference with active security against one malicious party (with abort).
 
-The [performance and validation report](docs/results.md) records a private prefill
-estimate of 16.43 ms, or 46.39× FP16, using optional exact Strassen products
-and 1.75 times the compact weight storage. The best earlier decode estimate is
-3.007 ms, or 10.75× FP16. These use prepared inference graphs, bounded
-probabilistic Q14 rounding, and zero-network GPU delivery. Complete inference
-has not reached 10× FP16. A checked matrix-vector product reaches 8.29× FP16.
-Actual colocated timings are reported separately. The optional
-[CUDA cryptography variant](docs/protocol/device-protocol.md) generates masks and
-consistency digests on the GPU. The classifier supports
-[CUDA IPC on one GPU](docs/experiments/text-classifier.md#keep-classifier-messages-on-the-gpu)
-and [NCCL across four GPUs](docs/experiments/nccl-classifier.md). The single-GPU
-measurements do not establish physical GPUDirect RDMA performance.
+Inputs, model weights, and intermediate activations remain secret-shared across
+four parties until an explicit checked output opening.
 
-[Activation experiments](docs/results.md#sparse-products-and-activation-experiments)
-include optional private quadratics and a public-fixture helper simulation.
-No TEE is required or measured; the simulated helper path reconstructs
-activations and does not preserve Rep4 activation privacy. The
-[seeded ring64 helper](docs/experiments/seeded-tee-simulation.md) also supports SwiGLU and
-optional helper-based down-projection rescaling.
+## What is implemented
 
-Rep4 tolerates one malicious party among four. Two colluding parties can
-reconstruct the secrets. This differs from the all-but-one privacy target in
-the [project design](https://docs.google.com/document/d/192TcAOZ43OQI1E3Q01Mxw7hRUGCXEL74rriaW2aI4ko/edit).
+Two complementary GPU-native Rep4 execution engines share one unified runtime,
+CUDA graph capture layer, and multi-process transport stack:
+
+1. **Ring Rep4 ($\mathbb{Z}/2^k$, $k \in \{8, 16, 32, 64\}$)** —
+   [`DeviceInferenceParty`](src/rep4gpu/protocol/ring_inference.py) and
+   [`PhaseGraphParty`](src/rep4gpu/protocol/phase_graph.py):
+   - Exact Triton ring matrix multiplication (`words32`, `strassen32`, `limbs`,
+     SM89 modular-add tiles) — no floating-point approximation of ring values.
+   - GPU-resident ChaCha20 correlated masks and official BLAKE3-256 integrity
+     tags ([`gpu/crypto/`](src/rep4gpu/gpu/crypto/)).
+   - Exact carry-based floor truncation and bounded small-gap probabilistic
+     truncation with optional sparse (4-joint) and narrow (16-bit) correction
+     products and bounded-sign ReLU.
+   - Polynomial GELU/SiLU approximations and `torch.nn.Sequential` model sharing
+     via [`share_sequential`](src/rep4gpu/nn.py).
+   - Fixed-shape CUDA graph capture across checked communication boundaries with
+     fresh atomic nonce uploads per inference call.
+
+2. **Odd-prime byte-lane CRT Rep4 ($\prod_\ell \mathbb{F}_{p_\ell}$)** —
+   [`CrtPhaseGraphParty`](src/rep4gpu/protocol/crt_runtime.py),
+   [`crt_conv.py`](src/rep4gpu/gpu/matmul/crt_conv.py), and
+   [`crt_relu_gpu.py`](src/rep4gpu/gpu/bits/crt_relu_gpu.py):
+   - 3-of-4 replicated shares stored as `uint8` prime lanes (e.g. 3-lane
+     `251, 241, 239` or 4-lane `251, 241, 239, 233`).
+   - 1-product quadratic polynomial gates (`crt_matmul`, `crt_conv1d`,
+     `crt_square_sum_pool`) using INT8 Tensor Cores and a 2-collector active-security
+     third-difference + BLAKE3 broadcast.
+   - Active-secure GPU CRT probabilistic truncation fused with exact ReLU
+     (`crt_trunc_relu`) and private bit-sliced sign extraction.
+
+3. **Transports** ([`src/rep4gpu/transports/`](src/rep4gpu/transports/)):
+   - `SocketTransport`: mutually authenticated TLS mesh across processes/hosts.
+   - `CudaIpcTransport`: direct CUDA IPC transfers between 4 local processes on
+     one Linux GPU with mTLS control.
+   - `NcclDeviceTransport`: direct GPU-to-GPU transfers across 4 NCCL GPUs.
+   - `PinnedDeviceByteBridge` / `DeviceByteBridge`: pinned or standard host
+     staging over any byte transport.
+   - `IdealNetwork` / `DeviceIdealEndpoint`: in-process test harness.
 
 ## Repository layout
 
 ```text
-src/
-  rep4gpu/
-    protocol/          Party runtimes, transports, seed setup, and PRG
-    arithmetic/        Fixed-point operations, conversions, and truncation
-    gpu/               Matmul, bit-operation, and cryptography kernels
-    models/            Model sharing and inference graph execution
-    proofs/            Witness checks and activation proofs
-  native/              Rust proof backend and MP-SPDZ patches
-experiments/
-  benchmarks/          Inference, activation, kernel, and proof experiments
-  examples/            Runnable synthetic next-token example
-  results/             Saved measurements and logs grouped by subject
-tests/
-  unit/                Protocol, arithmetic, GPU, inference, and proof tests
-  integration/         Multi-party, model, and golden-transcript tests
-  benchmarks/          Benchmark correctness tests
-  fixtures/            MP-SPDZ reference programs and recorded evidence
-docs/                  Protocol guides, arithmetic contracts, and results report
-tools/                 Golden-fixture generators and plotting utilities
+src/rep4gpu/
+  transports/          mTLS sockets, CUDA IPC, NCCL, pinned host bridge, ideal harness
+  gpu/
+    crypto/            CUDA ChaCha20 PRG (single, batched, graph) and BLAKE3-256
+    matmul/            Exact ring8/16/32/64 Triton matmul, Strassen, and CRT kernels
+    bits/              SWAR/prefix carry trees, probabilistic truncation, CRT ReLU
+  arithmetic/          FixedPoint API, A2B/B2A conversions, exact & probabilistic truncation
+  protocol/            Rep4 runtime stack: Party -> FusedParty -> DeviceParty
+                       -> DeviceInferenceParty -> PhaseGraphParty -> CrtPhaseGraphParty
+  nn.py                torch.nn.Sequential sharing and private forward execution
+examples/              Self-contained demos and benchmarks (ring FFN, mTLS, CRT MLP/CNN)
+docs/                  Architecture, ring protocol, and CRT protocol guides
+tests/                 Unit and multi-process integration tests
 ```
 
-Start with the [documentation index](docs/README.md) for implementation details
-or the [experiment guide](experiments/README.md) for runnable measurements and
-saved results. Run Python module commands from the repository root after the
-editable installation below.
+See [docs/architecture.md](docs/architecture.md) for the layered design,
+[docs/ring-protocol.md](docs/ring-protocol.md) for the $\mathbb{Z}/2^k$ protocol,
+and [docs/crt-protocol.md](docs/crt-protocol.md) for the odd-prime CRT protocol.
 
-## Run locally
+## Quick start
 
-Use Linux with a CUDA-capable NVIDIA GPU and a CUDA-enabled PyTorch installation.
-The CPU protocol tests also run without a GPU. From this directory:
+Requires Linux with an NVIDIA CUDA GPU and CUDA-enabled PyTorch (CPU protocol
+tests also run without a GPU):
 
 ```sh
 python -m venv --system-site-packages .venv
@@ -70,151 +81,65 @@ python -m pip install -e '.[test,crypto]'
 python -m pytest -q
 ```
 
-The tensor-core kernels use Triton. The working environment has an RTX 4060 Laptop GPU
-with 8 GB of VRAM; benchmark JSON files record package versions and source
-fingerprints.
-The [kernel arithmetic guide](docs/arithmetic/kernel-arithmetic.md) explains exact limb
-products, compact weights, and the accumulator bounds required by tensor cores.
-
-Run a complete toy network in four separate processes with mutual TLS and
-distributed seed setup:
+### Run the examples
 
 ```sh
-python -m experiments.benchmarks.inference.socket_inference --help
-python -m experiments.benchmarks.inference.socket_inference --device cpu --bits 64 --batch 1
+# 1. End-to-end private PyTorch Sequential MLP (CUDA graphs + floor/probabilistic)
+python -m examples.mlp_demo
+
+# 2. Four separate OS processes over mTLS + CUDA IPC (or pinned-tls / cpu-tls)
+python -m examples.mtls_inference --transport cuda-ipc
+
+# 3. Ring Rep4 FFN benchmark (width -> 4*width ReLU -> width)
+python -m examples.ring_ffn_benchmark --quick
+
+# 4. Active-secure 4-process CRT ReLU MLP and 1D CNN benchmarks
+python -m examples.crt_benchmark --workload mlp --quick
+python -m examples.crt_benchmark --workload cnn --quick
 ```
 
-The launcher creates temporary per-party certificates and private input files,
-checks every party's output, and retains summaries, logs, and exit codes. It
-removes the temporary keys and private input files after the processes finish.
-See the [socket inference report](experiments/results/transport/socket_inference_report.md) for the
-retained CPU and CUDA runs.
-
-For GPU performance measurements with secret weights already resident:
-
-```sh
-python -m experiments.benchmarks.inference.inference --device cuda --bits 32 --fused --prg aes \
-  --truncation compact --batch 16 --width 512 --repeats 5 \
-  --output experiments/results/inference/inference-local.json
-
-python -m experiments.benchmarks.inference.device_inference --bits 32 --binary-bits 32 \
-  --optimized --gpu-open --rounding probabilistic --fractional-bits 14 \
-  --prepared --weight-storage words32 --batch 1 128 --width 2048 --repeats 5 \
-  --output experiments/results/inference/device-local.json
-```
-
-`compact` uses exact carry-based truncation. `probabilistic` selects MP-SPDZ's
-masked rounding protocol and validates its input range on the public test
-fixture. `reference` retains the original full-bit conversion for comparison.
-Use `--bits 64 --binary-bits 64` when the 32-bit accumulator range is insufficient. The benchmark
-rejects fixtures that violate the selected ring and truncation bounds.
-
-The benchmark reports fresh-mask four-party execution on one machine and an
-ideal-network estimate from isolated-party replay. Replay is only a timing
-fixture: it reuses a recorded transcript and must never handle live inputs.
-The reference estimate includes local PRG, hashing, host staging, and computation.
-The device benchmark separately reports GPU-delivered and host-staged estimates.
-Both exclude network latency and bandwidth. CPU NumPy, eager GPU PyTorch, and CUDA-graph
-PyTorch baselines appear separately. Model sharing and setup are reported
-outside the resident-model inference timer.
-
-## Use the operations
-
-Each `Party` holds three replicated components and only its three correlated
-randomness seeds. All parties must execute the same public sequence of calls.
-Only the input owner supplies the plaintext tensor:
+## Minimal API example
 
 ```python
-from rep4gpu import FixedPoint
-from rep4gpu.models.inference import InferenceParty
+from rep4gpu import (
+    FixedPoint,
+    PhaseGraphParty,
+    share_sequential,
+    sequential_spec,
+)
 
-party = InferenceParty(party_id, transport, local_seeds, bits=64)
-fp = FixedPoint(party, fractional_bits=12)
-x = party.input(0, encoded_input if party.party == 0 else None, input_shape)
-w = party.input(1, encoded_weights if party.party == 1 else None, weight_shape)
-y = fp.matmul(x, w)
-y = fp.relu(y)
-opened = party.open(y)
+# Each party holds only its 3 correlated seeds (derived via correlated_seeds on mTLS).
+party = PhaseGraphParty(
+    party_id, transport, local_seeds,
+    bits=32, binary_bits=32,
+    gpu_open=True, rounding='probabilistic',
+    bounded_sign=True, sparse_products=True, narrow_products=True,
+)
+
+# Share a PyTorch Sequential model once (only model_owner passes the module).
+shared_model = share_sequential(
+    party, spec, model if party_id == 1 else None,
+    owner=1, fractional_bits=12, weight_storage='words32',
+)
+
+# Share private inputs and capture a fixed-shape CUDA phase graph.
+x = party.input(0, encoded_x if party_id == 0 else None, input_shape)
+plan = party.prepare_inference(lambda inp: party.open(shared_model(inp)), x, check_at_send=True)
+opened_logits = plan.run(x)
 ```
 
-`encoded_input` and `encoded_weights` are integer tensors scaled by `2**12`.
-`InferenceParty` defaults to exact floor rescaling and AES-256-CTR masks. Set
-`rounding='probabilistic'` only after establishing its stronger signed range
-contract. The lower-level `Party` retains the full-bit conversion reference.
-Keep the party instance and its counters for the lifetime of a session. A new
-instance needs newly generated correlated seeds; restarting counters with old
-seeds reuses masks and can expose relationships between private inputs.
-`FixedPoint.encode` provides nearest-even plaintext encoding; `decode` accepts
-an explicitly opened tensor. Matmul accumulates ring products before rescaling.
-The caller must choose a precision and ring width that contain the signed
-accumulators. Ring arithmetic wraps; it does not saturate or privately validate
-input ranges.
+## Security scope and assumptions
 
-Use `SocketTransport` with distinct verified mutual-TLS identities and
-`setup.correlated_seeds` for separate parties. Plain TCP and `IdealNetwork` are
-local test transports. `make_seeds` is a trusted test fixture, not distributed
-seed provisioning. The [protocol mapping](docs/protocol/protocol.md) describes component
-ownership, masked messages, and checks. The [activation guide](docs/arithmetic/activations.md)
-defines rounding and approximation behavior.
-The [layer commitment runtime](docs/protocol/layer-commitments.md) commits prover
-hidden states to a Merkle root and reconstructs requested layers from sparse
-checkpoints, with authenticated plaintext openings for a verifier.
-The [prover/verifier setup](docs/protocol/prover-verifier.md) runs separate TLS
-processes with a public integer model, fresh challenges, and full or sampled
-transition checks. It includes a local launcher and commands for two servers.
-For verification without plaintext intermediate openings, use the
-[private Rep4 audit](docs/protocol/private-rep4-audit.md). An external prover
-sends authenticated replicated trace shares to four verifier processes. Each
-verifier holds secret-shared weights and biases provisioned by the model owner.
-They check the selected transitions in Rep4 and open only acceptance and the
-final output; the input remains public. The demo reports online application
-traffic separately from model-share provisioning sizes.
-The [witness activation guide](docs/experiments/witness-activations.md) describes checked
-prover intermediates, custom recomputation recipes, and communication comparisons.
-
-The [trained next-token example](experiments/examples/README.md) fits a small synthetic MLP,
-then checks private inference against both floating-point and integer outputs.
-Its CPU and CUDA logits also match the [whole-network MP-SPDZ golden](tests/fixtures/mpspdz/toy_ffn_report.md).
-The same example guide shows how to share a supported `torch.nn.Sequential`
-model once with `share_sequential` and run private inputs through it.
-
-## Validate against MP-SPDZ
-
-```sh
-python tools/validation/golden_rep4.py --output tests/fixtures/mpspdz/rep4_transcripts.json
-python tools/validation/golden_mpspdz.py --help
-python tools/validation/golden_mpspdz.py
-python -m pytest tests/integration/test_rep4_oracle.py tests/integration/test_runtime_golden.py -q
-```
-
-The golden harness uses the installed MP-SPDZ tree by default and runs its
-compiler and four-party executable in an isolated working directory. The
-[golden report](tests/fixtures/mpspdz/report.md) records actual executions, source and
-binary hashes, and the native 32-bit build. Deterministic masks also let the
-tests compare each runtime message and digest byte-for-byte against an
-independent oracle.
-
-Core multiplication, input, and opening follow MP-SPDZ's message layout.
-The socket transport uses its own length-prefixed frames; it is not a binary
-interoperability layer for MP-SPDZ. Golden comparisons cover application
-payloads, recipients, and protocol phases, excluding transport framing.
-Activation circuits include explicit protocol changes, so matching arithmetic
-does not imply identical whole-program communication. The carry-based exact
-truncation converts three carry/sign bits instead of every output bit. The
-32-bit golden uses generic per-bit conversion because the installed snapshot's
-optimized binary-to-arithmetic path fails the retained 32-bit boundary fixture.
-
-## Scope
-
-The inference fixtures are generated dense feed-forward networks, not trained
-language models. They measure arithmetic and communication costs and compare
-toy logits and log-probabilities. Attention, tokenization, full transformer
-execution, authenticated datacenter records, model binding for trained networks, and a validated
-model-substitution detection threshold are not implemented.
-
-The implementation is a research prototype with checked transcripts and
-fault-injection tests, not a formally verified or independently audited MPC
-deployment. Its privacy assumptions require independent party isolation,
-authenticated confidential channels and fresh randomness. Pending internal
-checks complete before unmasked output shares are broadcast; the final output
-check completes before acceptance.
+- **Threat model**: Honest supermajority (3-of-4) with active security against
+  at most one malicious party (security with abort). Two colluding parties can
+  reconstruct secrets.
+- **Channel & randomness requirements**: Live deployments require independent
+  party isolation, mutually authenticated confidential channels (`SocketTransport`
+  with mTLS, or a protected NCCL fabric for `NcclDeviceTransport`), and fresh
+  session seeds from `correlated_seeds`. Keep party instances and their monotonic
+  nonce counters alive for the session; never reuse seeds with reset counters.
+- **Accumulator bounds**: Ring and CRT arithmetic wraps modulo $2^k$ or $M = \prod p_\ell$;
+  the runtime does not privately range-check arbitrary models. Callers must verify
+  accumulator headroom for their chosen ring width / CRT modulus and precision.
+- **Research status**: Covered by unit, fault-injection, and multi-process
+  integration tests, but not formally verified or independently audited.

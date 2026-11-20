@@ -9,7 +9,7 @@ import pytest
 import torch
 
 from rep4gpu.protocol.runtime import Share,make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 ROUTES=((2,1,0,3),(3,0,1,2),(0,2,3,1),(1,3,2,0))
@@ -79,8 +79,8 @@ requires_gpu=pytest.mark.skipif(not torch.cuda.is_available(),reason='CUDA requi
 @pytest.mark.parametrize('bits',[32,64])
 @pytest.mark.parametrize('count',[0,1,2,17,257])
 def test_product16_matches_cpu_masks_shares_frames_and_fresh_counters(bits,count):
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceByteBridge,DeviceRecorder
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceByteBridge,DeviceRecorder
     from rep4gpu.gpu.matmul.narrow_product_gpu import product16
     x,y=inputs(bits,count)
     network,seeds=IdealNetwork(timeout=120),make_seeds()
@@ -113,8 +113,8 @@ def test_product16_matches_cpu_masks_shares_frames_and_fresh_counters(bits,count
 @pytest.mark.parametrize('bits',[32,64])
 @pytest.mark.parametrize('shift',[1,14,16,17])
 def test_narrow_truncation_two_fresh_calls_match_rounding_oracle(bits,shift):
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     network,seeds=IdealNetwork(timeout=120),make_seeds()
     limit=1<<(bits-2)
     x=torch.tensor([-limit+1,-4097,-17,-1,0,1,17,4097,limit-1])
@@ -154,8 +154,8 @@ def test_narrow_truncation_two_fresh_calls_match_rounding_oracle(bits,shift):
 @requires_gpu
 @pytest.mark.parametrize('bits',[32,64])
 def test_narrow_truncation_graph_uses_fresh_domains_and_preserves_outputs(bits):
-    from rep4gpu.models.phase_graph import PhaseGraphParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.phase_graph import PhaseGraphParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     network,seeds=IdealNetwork(timeout=120),make_seeds()
     roles=[PhaseGraphParty(p,DeviceIdealEndpoint(network.endpoint(p)),
         {e:s for e,s in seeds.items() if e!=p},bits=bits,narrow_products=True,
@@ -199,8 +199,8 @@ class CorruptFrame:
 @pytest.mark.parametrize('joint',range(4))
 @pytest.mark.parametrize('source',['sender','backup'])
 def test_product16_checks_every_sender_and_backup_frame(joint,source):
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     from rep4gpu.gpu.matmul.narrow_product_gpu import product16
     x,y=inputs(32,17)
     network,seeds=IdealNetwork(timeout=30),make_seeds()
@@ -230,8 +230,8 @@ def test_product16_checks_every_sender_and_backup_frame(joint,source):
 @pytest.mark.parametrize('bits',[32,64])
 def test_narrow_tiny_ffn_graph_keeps_fresh_masks_and_checked_relu_chain(bits):
     from rep4gpu.arithmetic.activations import FixedPoint
-    from rep4gpu.models.phase_graph import PhaseGraphParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.phase_graph import PhaseGraphParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     f,scale=14,1<<14
     x=torch.tensor([[2,-1,1],[-1,0,2]])*(scale//4)
     w1=torch.tensor([[1,0,-1,1],[-1,1,1,0],[1,-1,0,1]])*(scale//4)

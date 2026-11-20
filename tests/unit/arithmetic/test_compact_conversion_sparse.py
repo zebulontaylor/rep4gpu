@@ -11,7 +11,7 @@ import torch
 from rep4gpu.arithmetic.compact_conversion import weighted_b2a
 from rep4gpu.gpu.bits.compact_conversion_gpu import weighted_b2a_gpu
 from rep4gpu.protocol.runtime import Party, Share, bytes_tensor, make_seeds
-from rep4gpu.protocol.transport import IdealNetwork, RecordingTransport
+from rep4gpu.transports.byte import IdealNetwork, RecordingTransport
 
 
 _SPARSE_TERMS = (1, 3, 4, 5)
@@ -51,8 +51,8 @@ def _run(components, weights, bits, seeds, gpu):
         try:
             transport = network.endpoint(party)
             if gpu:
-                from rep4gpu.models.device_inference import DeviceInferenceParty
-                from rep4gpu.protocol.device_transport import DeviceByteBridge, DeviceRecorder
+                from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+                from rep4gpu.transports.device import DeviceByteBridge, DeviceRecorder
                 transport = DeviceRecorder(DeviceByteBridge(transport, 'cuda'))
                 rt = DeviceInferenceParty(party, transport,
                     {e:seed for e,seed in seeds.items() if e!=party}, bits=bits,

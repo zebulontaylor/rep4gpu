@@ -25,12 +25,12 @@ def run_roles(network, fn):
 @pytest.mark.parametrize('captured', [False, True])
 @pytest.mark.parametrize('prepared', [False, True])
 def test_packed_full_ring_matches_wide_shares_and_transcripts(captured, prepared):
-    from rep4gpu.models.phase_graph import PhaseGraphParty
-    from rep4gpu.models.text_classifier import nonnegative_label
+    from rep4gpu.protocol.phase_graph import PhaseGraphParty
+    from rep4gpu.arithmetic.conversion import a2b
     from rep4gpu.protocol.device_input import DeviceInputMixin
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint, DeviceRecorder
-    from rep4gpu.protocol.runtime import make_seeds
-    from rep4gpu.protocol.transport import IdealNetwork
+    from rep4gpu.transports.device import DeviceIdealEndpoint, DeviceRecorder
+    from rep4gpu.protocol.runtime import Share, make_seeds
+    from rep4gpu.transports.byte import IdealNetwork
 
     class Runtime(DeviceInputMixin, PhaseGraphParty):
         pass
@@ -73,7 +73,8 @@ def test_packed_full_ring_matches_wide_shares_and_transcripts(captured, prepared
             def evaluate(a, weight, b, r=r):
                 score = r.sub(r.add(r.matmul(a, weight), b), r.mul_public(b, -3))
                 square = r.mul(score, score)
-                labels = nonnegative_label(r, a)
+                sign_bin = r.rshift(a2b(r, Share(tuple(t.to(torch.int64) for t in a.parts), False)), 15)
+                labels = r.xor(r.public(1, like=sign_bin, binary=True), sign_bin)
                 sign, truncated = r.sign_bit(a), r.trunc(a, 3)
                 return (score, square, sign, truncated, labels, r.open(score),
                         r.open(square), r.open(sign), r.open(truncated), r.open(labels))
@@ -118,11 +119,11 @@ def test_packed_full_ring_matches_wide_shares_and_transcripts(captured, prepared
 
 @pytest.mark.parametrize('operation', ['input', 'product'])
 def test_packed_rejects_corrupted_frames(operation):
-    from rep4gpu.models.device_inference import DeviceInferenceParty
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
     from rep4gpu.protocol.device_input import DeviceInputMixin
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     from rep4gpu.protocol.runtime import make_seeds
-    from rep4gpu.protocol.transport import IdealNetwork
+    from rep4gpu.transports.byte import IdealNetwork
 
     class Runtime(DeviceInputMixin, DeviceInferenceParty):
         pass
@@ -165,10 +166,10 @@ def test_packed_rejects_corrupted_frames(operation):
 
 
 def test_packed_storage_rejects_invalid_domains():
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     from rep4gpu.protocol.runtime import Share, make_seeds
-    from rep4gpu.protocol.transport import IdealNetwork
+    from rep4gpu.transports.byte import IdealNetwork
 
     seed = make_seeds()
     for bits, device in ((32, 'cuda'), (64, 'cuda'), (16, 'cpu')):
@@ -189,10 +190,10 @@ def test_packed_storage_rejects_invalid_domains():
 @pytest.mark.parametrize('bits', [16, 32, 64])
 @pytest.mark.parametrize('gpu_open', [False, True])
 def test_disabled_or_wrong_ring_rejects_packed_operands_before_protocol(bits, gpu_open):
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     from rep4gpu.protocol.runtime import Share, make_seeds
-    from rep4gpu.protocol.transport import IdealNetwork
+    from rep4gpu.transports.byte import IdealNetwork
 
     seeds = make_seeds()
     endpoint = DeviceIdealEndpoint(IdealNetwork(timeout=1).endpoint(0))
@@ -213,10 +214,10 @@ def test_disabled_or_wrong_ring_rejects_packed_operands_before_protocol(bits, gp
 
 
 def test_packed_shift_fallbacks_match_wide_components():
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     from rep4gpu.protocol.runtime import Share, make_seeds
-    from rep4gpu.protocol.transport import IdealNetwork
+    from rep4gpu.transports.byte import IdealNetwork
 
     seeds = make_seeds()
     available = {e: s for e, s in seeds.items() if e}
@@ -235,24 +236,17 @@ def test_packed_shift_fallbacks_match_wide_components():
     assert endpoint.messages_sent == 0
 
 
-@pytest.mark.parametrize('prepared_graph', [False, True])
-def test_packed_empty_product_and_square_contraction(prepared_graph):
-    from rep4gpu.models.graph_runtime import GraphDeviceParty
-    from rep4gpu.models.square_sum import signed_square_sum
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+def test_packed_empty_product():
+    from rep4gpu.protocol.phase_graph import PhaseGraphParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     from rep4gpu.protocol.runtime import make_seeds
-    from rep4gpu.protocol.transport import IdealNetwork
+    from rep4gpu.transports.byte import IdealNetwork
 
     network = IdealNetwork(timeout=60)
     seeds = make_seeds()
-    roles = [GraphDeviceParty(p, DeviceIdealEndpoint(network.endpoint(p)),
-                              {e: s for e, s in seeds.items() if e != p}, bits=16,
-                              packed_arithmetic=True, gpu_open=True) for p in range(4)]
-    if prepared_graph:
-        for role in roles:
-            role.prepare_product((3, 1))
-    values = torch.tensor([[65535, 32768, 123], [7, 8, 9], [0, 32767, 65534]])
-    signs = (1, -1, 1)
+    roles = [PhaseGraphParty(p, DeviceIdealEndpoint(network.endpoint(p)),
+                             {e: s for e, s in seeds.items() if e != p}, bits=16,
+                             packed_arithmetic=True, gpu_open=True) for p in range(4)]
 
     def compute(p):
         role = roles[p]
@@ -260,16 +254,8 @@ def test_packed_empty_product_and_square_contraction(prepared_graph):
         product = role.mul(empty, role.public(torch.ones(3, dtype=torch.int64, device='cuda')))
         assert product.shape == (0, 3)
         assert all(part.dtype == torch.uint16 for part in product.parts)
-        results = []
-        for offset in (0, 37):
-            x = role.public((values + offset).to('cuda'))
-            result = signed_square_sum(role, x, signs)
-            assert all(part.dtype == torch.uint16 for part in result.parts)
-            results.append(role.open(result).cpu())
-        return results
+        return role.open(product).cpu()
 
     outputs = run_roles(network, compute)
-    for results in outputs:
-        for actual, offset in zip(results, (0, 37)):
-            expected = signed16(((values+offset).square()*torch.tensor(signs)).sum(1, keepdim=True))
-            torch.testing.assert_close(actual, expected, rtol=0, atol=0)
+    for out in outputs:
+        assert out.shape == (0, 3)

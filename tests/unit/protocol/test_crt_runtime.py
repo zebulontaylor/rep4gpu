@@ -8,9 +8,9 @@ import torch
 import torch.nn.functional as F
 
 from rep4gpu.protocol.crt_runtime import CrtPhaseGraphParty
-from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+from rep4gpu.transports.device import DeviceIdealEndpoint
 from rep4gpu.protocol.runtime import make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 pytestmark = pytest.mark.skipif(not torch.cuda.is_available(), reason='CUDA required')

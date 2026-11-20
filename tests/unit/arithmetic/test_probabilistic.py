@@ -5,7 +5,7 @@ import torch
 
 from rep4gpu.arithmetic.probabilistic import trunc_pr
 from rep4gpu.protocol.runtime import Party, make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 def run_four(fn, bits=64):

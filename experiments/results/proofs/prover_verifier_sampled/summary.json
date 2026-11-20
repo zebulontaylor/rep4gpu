@@ -1,8 +1,0 @@
-{
-  "passed": true,
-  "exit_codes": {
-    "prover": 0,
-    "verifier": 0
-  },
-  "error": null
-}

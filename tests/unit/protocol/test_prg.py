@@ -5,7 +5,7 @@ import pytest
 import torch
 from rep4gpu.protocol.prg import random_bytes
 from rep4gpu.protocol.runtime import Party, make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 def test_shake_reference_bytes():

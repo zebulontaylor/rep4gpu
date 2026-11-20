@@ -1,7 +1,7 @@
 import concurrent.futures
 import torch
 from rep4gpu.protocol.runtime import Party, make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 def run_four(function, device="cpu"):
@@ -48,7 +48,7 @@ def test_public_broadcast():
 
 
 def _socket_worker(party, addresses, seeds, queue, tls_files=None):
-    from rep4gpu.protocol.transport import SocketTransport
+    from rep4gpu.transports.byte import SocketTransport
     options = {}
     if tls_files is not None:
         import ssl
@@ -152,19 +152,49 @@ def test_joint_input_tamper_rejected():
 
 def test_joint_transcript_matches_independent_oracle():
     import hashlib
-    import importlib.util
-    from pathlib import Path
-    from rep4gpu.protocol.runtime import Share
-    spec = importlib.util.spec_from_file_location('golden_rep4', Path(__file__).resolve().parents[3] / 'tools/validation/golden_rep4.py')
-    oracle = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(oracle)
+    from rep4gpu.protocol.runtime import SCHEDULE, Share
     mask64 = (1 << 64) - 1
+
     def signed(value):
         return value if value < 1 << 63 else value - (1 << 64)
+
+    def oracle_multiply(xparts, yparts, binary):
+        op = (lambda a, b: a ^ b) if binary else (lambda a, b: (a + b) & mask64)
+        sub = (lambda a, b: a ^ b) if binary else (lambda a, b: (a - b) & mask64)
+        mul = (lambda a, b: a & b) if binary else (lambda a, b: (a * b) & mask64)
+        contribs = [
+            op(mul(op(xparts[2], xparts[3]), yparts[2]), mul(xparts[2], yparts[3])),
+            op(mul(op(xparts[3], xparts[0]), yparts[3]), mul(xparts[3], yparts[0])),
+            op(mul(op(xparts[0], xparts[1]), yparts[0]), mul(xparts[0], yparts[1])),
+            op(mul(op(xparts[1], xparts[2]), yparts[1]), mul(xparts[1], yparts[2])),
+            op(mul(xparts[1], yparts[3]), mul(xparts[3], yparts[1])),
+            op(mul(xparts[0], yparts[2]), mul(xparts[2], yparts[0])),
+        ]
+        out_components = [0, 0, 0, 0]
+        payloads, hashes = {}, {}
+        for k, (s, b, r, o) in enumerate(SCHEDULE):
+            m = int.from_bytes(hashlib.blake2b(f'mask/{binary}/{k}'.encode(), digest_size=32).digest()[:8], 'little')
+            masked = sub(contribs[k], m)
+            out_components[r] = op(out_components[r], m)
+            out_components[o] = op(out_components[o], masked)
+            raw = masked.to_bytes(8, 'little')
+            payloads.setdefault((s, r), []).append(raw)
+            hashes.setdefault((b, r), []).append((s, hashlib.blake2b(raw, digest_size=32).digest()))
+        edges = []
+        for s in range(4):
+            for r in range(4):
+                if (s, r) in payloads or (s, r) in hashes:
+                    frame = b''.join(payloads.get((s, r), ())) + b''.join(h for _, h in sorted(hashes.get((s, r), ())))
+                    edges.append({'sender': s, 'receiver': r, 'hex': frame.hex()})
+        return {
+            'edges': edges,
+            'output_shares': [[out_components[(p + j + 1) % 4] for j in range(3)] for p in range(4)],
+        }
+
     for binary in (False, True):
         xparts = [mask64, 7, 0, 3]
         yparts = [11, 0, 1 << 63, 9]
-        expected = oracle.multiply(xparts, yparts, binary)
+        expected = oracle_multiply(xparts, yparts, binary)
         def work(p):
             calls = {0: 0, 1: 0, 2: 0, 3: 0}
             schedule_indices = {0: (1,), 1: (2,), 2: (3, 5), 3: (0, 4)}
@@ -210,7 +240,7 @@ def test_cuda_fused_and_prepared_matmul():
 
 def test_recording_and_replay():
     import pytest
-    from rep4gpu.protocol.transport import RecordingTransport, ReplayTransport
+    from rep4gpu.transports.byte import RecordingTransport, ReplayTransport
     seeds = make_seeds()
     network = IdealNetwork()
     recordings = [RecordingTransport(network.endpoint(p)) for p in range(4)]
@@ -235,7 +265,7 @@ def test_recording_and_replay():
 
 
 def test_replay_phase_timing():
-    from rep4gpu.protocol.transport import ReplayTransport
+    from rep4gpu.transports.byte import ReplayTransport
     ticks = iter([10.0, 10.2, 11.0, 11.4, 12.0, 12.8])
     synchronized = []
     replay = ReplayTransport([({}, {}), ({}, {})])

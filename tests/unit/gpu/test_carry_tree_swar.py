@@ -61,23 +61,24 @@ def test_gpu_swar_carry_bits_match_cpu_protocol_transcript(bits, binary_bits, sh
     if not torch.cuda.is_available():
         pytest.skip('CUDA required')
     pytest.importorskip('cryptography')
-    from tests.unit.gpu.test_carry_tree_gpu import _reference
+    from tests.unit.gpu.test_carry_tree_gpu import _run_gpu_reference
     from rep4gpu.gpu.bits import carry_tree_swar
     from rep4gpu.protocol.fused_runtime import FusedParty
     from rep4gpu.protocol.runtime import Share
-    from rep4gpu.protocol.transport import ReplayTransport
-    seeds, transports, shares, expected = _reference(bits, binary_bits, (), shape=(33,), shift=shift)
+    from rep4gpu.transports.byte import ReplayTransport
+    seeds, transports, shares, expected, _, _ = _run_gpu_reference(
+        bits, binary_bits, (), shape=(33,), shift=shift, open_outputs=False)
     for party in range(4):
         replay = ReplayTransport(transports[party].transcript)
-        runtime = FusedParty(party, replay, {e:s for e,s in seeds.items() if e != party},
+        runtime = FusedParty(party, replay, {e: s for e, s in seeds.items() if e != party},
                              device='cuda', bits=bits, binary_bits=binary_bits, prg='aes')
         a, b = shares(party, 'cuda')
         low, high, before = carry_tree_swar.carry_bits(runtime, a, b,
-                                                       (shift, bits, bits-1))
-        sign = Share(tuple(((left >> (bits-1)) & 1) ^ ((right >> (bits-1)) & 1) ^ carry
+                                                       (shift, bits, bits - 1))
+        sign = Share(tuple(((left >> (bits - 1)) & 1) ^ ((right >> (bits - 1)) & 1) ^ carry
                            for left, right, carry in zip(a.parts, b.parts, before.parts)), True)
         actual = low, high, sign
         for result, reference in zip(actual, expected[party][0]):
-            assert all(torch.equal(a.cpu(), b) for a,b in zip(result.parts,reference.parts))
-        assert runtime.counters == expected[party][1]
+            assert all(torch.equal(a.cpu(), b.cpu()) for a, b in zip(result.parts, reference.parts))
+        assert runtime.counters == expected[party][2]
         replay.assert_consumed()

@@ -50,12 +50,11 @@ def test_ring16_local_products_full_word_inputs(shape, prepared):
 @pytest.mark.parametrize('captured', [False, True])
 @pytest.mark.parametrize('binary_bits', [32, 64])
 def test_ring16_checked_products_sign_and_input(captured, binary_bits):
-    from rep4gpu.models.phase_graph import PhaseGraphParty
-    from rep4gpu.models.text_classifier import nonnegative_label
+    from rep4gpu.protocol.phase_graph import PhaseGraphParty
     from rep4gpu.protocol.device_input import DeviceInputMixin
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     from rep4gpu.protocol.runtime import make_seeds
-    from rep4gpu.protocol.transport import IdealNetwork
+    from rep4gpu.transports.byte import IdealNetwork
 
     class Runtime(DeviceInputMixin, PhaseGraphParty):
         pass
@@ -79,7 +78,9 @@ def test_ring16_checked_products_sign_and_input(captured, binary_bits):
     for r in roles:
         def evaluate(a, b, r=r):
             z = r.matmul(a, b)
-            return (r.open(z), r.open(nonnegative_label(r, z)), r.open(r.sign_bit(z)),
+            sign = r.sign_bit(z)
+            labels = r.sub(r.public(1, like=z), sign)
+            return (r.open(z), r.open(labels), r.open(sign),
                     r.open(r.mul(z, z)), r.open(r.trunc(z, 3)))
         functions.append(evaluate)
     plans = [r.prepare_inference(fn, *args, check_at_send=True) for r, fn, args in zip(roles, functions, values)] if captured else None
@@ -103,10 +104,10 @@ def test_ring16_checked_products_sign_and_input(captured, binary_bits):
 
 
 def test_ring16_product_rejects_corrupted_wire():
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     from rep4gpu.protocol.runtime import make_seeds
-    from rep4gpu.protocol.transport import IdealNetwork
+    from rep4gpu.transports.byte import IdealNetwork
     seeds, network = make_seeds(), IdealNetwork(timeout=10)
     roles = [DeviceInferenceParty(p, DeviceIdealEndpoint(network.endpoint(p)),
                                   {e: s for e, s in seeds.items() if e != p},

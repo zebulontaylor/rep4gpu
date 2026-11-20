@@ -7,9 +7,9 @@ import torch
 
 from rep4gpu.gpu.bits.crt_relu_gpu import crt_elem_mul, crt_joint_input_pair, crt_trunc_relu
 from rep4gpu.protocol.crt_runtime import CrtPhaseGraphParty
-from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+from rep4gpu.transports.device import DeviceIdealEndpoint
 from rep4gpu.protocol.runtime import make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 PRIMES_3 = (251, 241, 239)

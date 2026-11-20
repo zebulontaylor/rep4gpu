@@ -3,7 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 import pytest
 import torch
 from rep4gpu.protocol.runtime import Party, make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 from rep4gpu.gpu.bits.carry_prefix_gpu import carry_power_plus_one
 
 
@@ -70,7 +70,7 @@ def test_sign_conversion_exact_transcript(bits,sign_bits):
     from rep4gpu.gpu.bits.compact_conversion_gpu import sign_b2a_gpu
     from rep4gpu.protocol.fused_runtime import FusedParty
     from rep4gpu.protocol.runtime import Share
-    from rep4gpu.protocol.transport import RecordingTransport, ReplayTransport
+    from rep4gpu.transports.byte import RecordingTransport, ReplayTransport
     generator=torch.Generator().manual_seed(432)
     components=[torch.randint(0,1<<60,(4,257),generator=generator) for _ in range(2)]
     carry=torch.randint(0,2,(4,257),generator=generator)

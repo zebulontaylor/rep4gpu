@@ -6,7 +6,7 @@ import torch
 from functools import reduce
 
 from rep4gpu.protocol.runtime import Party, Share, make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 RETAINED = (1, 3, 4, 5)
@@ -129,8 +129,8 @@ def test_sparse_oracle_detects_each_retained_frame_fault(index,source):
 @pytest.mark.parametrize('reverse',[False,True])
 @pytest.mark.parametrize('binary',[False,True])
 def test_gpu_sparse_matches_independent_oracle(bits,count,reverse,binary):
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     network,seeds = IdealNetwork(timeout=120),make_seeds()
     x,y = components(bits,count)
     if reverse:
@@ -174,8 +174,8 @@ class CorruptDeviceFrame:
 @pytest.mark.parametrize('index',RETAINED)
 @pytest.mark.parametrize('source',['sender','backup'])
 def test_gpu_sparse_detects_each_retained_frame_fault(index,source):
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     network,seeds = IdealNetwork(timeout=30),make_seeds()
     x,y = components(32,31)
     sender,backup,receiver,_ = SPARSE_SCHEDULE[RETAINED.index(index)]

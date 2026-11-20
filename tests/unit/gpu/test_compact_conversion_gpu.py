@@ -7,7 +7,7 @@ from rep4gpu.arithmetic.compact_conversion import weighted_b2a
 from rep4gpu.gpu.bits.compact_conversion_gpu import weighted_b2a_gpu
 from rep4gpu.protocol.fused_runtime import FusedParty
 from rep4gpu.protocol.runtime import Party, Share, make_seeds
-from rep4gpu.protocol.transport import IdealNetwork, RecordingTransport, ReplayTransport
+from rep4gpu.transports.byte import IdealNetwork, RecordingTransport, ReplayTransport
 
 
 @pytest.mark.parametrize('bits', [32,64])

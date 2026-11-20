@@ -5,10 +5,9 @@ import pytest
 import torch
 
 from rep4gpu.arithmetic.conversion import a2b, b2a
-from rep4gpu.models.text_classifier import nonnegative_label
 from rep4gpu.protocol.prg import random_bytes
 from rep4gpu.protocol.runtime import Party, bytes_tensor, make_seeds, tensor_bytes
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 def signed16(value):
@@ -57,7 +56,8 @@ def test_full_width_inputs_products_and_sign_labels(owner, binary_bits):
         product_bytes = rt.transport.bytes_sent - before
         for value in (a, b, product, rt.mul_public(a, -100000)):
             assert all(bool(torch.all((part >= 0) & (part <= 0xffff))) for part in value.parts)
-        return (rt.open(a), rt.open(product), rt.open(nonnegative_label(rt, a)),
+        labels = rt.sub(rt.public(1, like=a), rt.sign_bit(a))
+        return (rt.open(a), rt.open(product), rt.open(labels),
                 input_bytes, product_bytes)
 
     outputs = run_four(work, binary_bits, 'aes' if owner % 2 else 'shake')
@@ -108,7 +108,7 @@ def test_wire_encoding_and_configuration_validation():
     assert encoded == x.numpy().astype('<u2').tobytes()
     assert torch.equal(bytes_tensor(encoded, x.shape, 'cpu', 16), x & 0xffff)
     assert bytes_tensor(b'', (0, 7), 'cpu', 16).shape == (0, 7)
-    for invalid in (8, 24, 128):
+    for invalid in (24, 128):
         with pytest.raises(ValueError, match='wire bits'):
             tensor_bytes(x, invalid)
         with pytest.raises(ValueError, match='wire bits'):

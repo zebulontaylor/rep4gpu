@@ -7,7 +7,7 @@ import torch
 
 from rep4gpu.arithmetic.activations import FixedPoint,quadratic_plan
 from rep4gpu.protocol.runtime import Share,make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 OFFSETS = {'relu':1/4,'gelu':951/4096,'silu':427/4096}
@@ -103,8 +103,8 @@ def test_plaintext_numerator_helper_checks_declared_range():
 @pytest.mark.parametrize('kind',OFFSETS)
 @pytest.mark.parametrize('rounding',['floor','probabilistic'])
 def test_device_quadratic_two_fresh_calls_match_exact_integer_oracle(bits,kind,rounding,fused=False,profile='uniform'):
-    from rep4gpu.models.device_inference import DeviceInferenceParty
-    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+    from rep4gpu.transports.device import DeviceIdealEndpoint
     network,seeds=IdealNetwork(timeout=120),make_seeds()
     f=14
     scale=1<<f

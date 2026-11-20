@@ -7,7 +7,7 @@ import time
 
 import pytest
 
-from rep4gpu.protocol.transport import IdealNetwork, NetworkAbortedError, _receive_frame
+from rep4gpu.transports.byte import IdealNetwork, NetworkAbortedError, _receive_frame
 
 
 def test_oversized_frame_is_rejected_before_reading_payload():
@@ -86,7 +86,7 @@ def test_ideal_empty_exchange_remains_a_valid_round():
 
 
 def test_socket_exchange_aborts_other_workers_on_oversized_frame():
-    from rep4gpu.protocol.transport import SocketTransport
+    from rep4gpu.transports.byte import SocketTransport
     first, malicious = socket.socketpair()
     second, stalled = socket.socketpair()
     transport = SocketTransport.__new__(SocketTransport)
@@ -116,7 +116,7 @@ def test_socket_exchange_aborts_other_workers_on_oversized_frame():
 
 
 def test_socket_exchange_rejects_oversized_outgoing_frame():
-    from rep4gpu.protocol.transport import SocketTransport
+    from rep4gpu.transports.byte import SocketTransport
     transport = SocketTransport.__new__(SocketTransport)
     transport.closed = False
     transport.max_frame_bytes = 3

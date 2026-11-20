@@ -5,9 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "rep4gpu"
 version = "0.1.0"
-description = "Exact GPU ring kernels and a four-party Rep4 inference prototype"
+description = "GPU-accelerated four-party Rep4 MPC for private neural network inference (ring Z/2^k and odd-prime CRT)"
+readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["numpy>=1.24", "torch>=2.5", "triton>=3.1", "threadpoolctl>=3", "blake3>=1.0"]
+dependencies = [
+    "numpy>=1.24",
+    "torch>=2.5",
+    "triton>=3.1",
+    "blake3>=1.0",
+]
 
 [project.optional-dependencies]
 crypto = ["cryptography>=45"]

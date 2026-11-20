@@ -7,7 +7,7 @@ import torch
 
 from rep4gpu.arithmetic.exact_truncation import trunc_bounded
 from rep4gpu.protocol.runtime import Party, make_seeds
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 
 def run_four(bits, device, work, *, binary_bits=None, sparse=True):
@@ -20,8 +20,8 @@ def run_four(bits, device, work, *, binary_bits=None, sparse=True):
             if device=='cpu':
                 rt=Party(role,endpoint,keys,bits=bits,binary_bits=binary_bits or bits)
             else:
-                from rep4gpu.models.device_inference import DeviceInferenceParty
-                from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+                from rep4gpu.protocol.ring_inference import DeviceInferenceParty
+                from rep4gpu.transports.device import DeviceIdealEndpoint
                 rt=DeviceInferenceParty(role,DeviceIdealEndpoint(endpoint,'cuda:0'),keys,
                     device='cuda:0',bits=bits,binary_bits=binary_bits or bits,
                     optimized=True,gpu_open=True,rounding='floor',sparse_products=sparse)

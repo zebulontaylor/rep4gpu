@@ -6,7 +6,7 @@ import torch
 
 from rep4gpu.arithmetic.conversion import a2b, b2a, signed_lt
 from rep4gpu.protocol.runtime import Party, make_seeds, tensor_bytes, bytes_tensor
-from rep4gpu.protocol.transport import IdealNetwork
+from rep4gpu.transports.byte import IdealNetwork
 
 VALUES = torch.tensor([-(1 << 31), -(1 << 31)+1, -4097, -2049, -2048, -1, 0, 1, 2048, 4096, (1 << 31)-1])
 
