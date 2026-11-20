@@ -115,7 +115,7 @@ def test_invalid_parameters_and_counter_limits():
     with pytest.raises(ValueError,match="nonnegative"):
         generate(key,0,-1)
     with pytest.raises(ValueError,match="bits"):
-        generate(key,0,1,16)
+        generate(key,0,1,8)
     with pytest.raises(ValueError,match=r"2\*\*32"):
         generate(key,0,2**32*8,64)
     with pytest.raises(ValueError,match="counter"):

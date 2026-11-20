@@ -31,11 +31,11 @@ def _reconstruct(MISSING, A, B, C, OUT, N: tl.constexpr,
         value = value ^ a ^ b ^ c
     else:
         value = value+a+b+c
-    if WIDTH == 32:
+    if WIDTH < 64:
         if BINARY:
-            result = value.to(tl.uint32).to(tl.int64)
+            result = (value & ((1 << WIDTH)-1)).to(tl.int64)
         else:
-            result = value.to(tl.int32).to(tl.int64)
+            result = value.to(tl.int8 if WIDTH == 8 else tl.int16 if WIDTH == 16 else tl.int32).to(tl.int64)
     else:
         result = value.to(tl.int64)
     tl.store(OUT+i,result,i < N)
@@ -63,7 +63,7 @@ def _finish(x, missing, width):
     result = torch.empty(x.shape,dtype=torch.int64,device=x.device)
     count = math.prod(x.shape)
     if count:
-        dtype = torch.uint32 if width == 32 else torch.int64
+        dtype = {8: torch.uint8, 16: torch.uint16, 32: torch.uint32, 64: torch.int64}[width]
         # Device frames may start at an arbitrary byte-buffer offset.
         if missing.storage_offset() % (width//8):
             missing = missing.clone()
@@ -76,7 +76,7 @@ def _finish(x, missing, width):
 def open_device(rt,x):
     """Reveal one Rep4 share after two GPU BLAKE3-checked protocol rounds.
 
-    Arithmetic ring32 results are signed; binary32 results are canonical words
+    Arithmetic narrow-ring results are signed; binary32 results are canonical words
     in [0,2**32). The function consumes no PRG draws. Empty public shapes retain
     both rounds, including an explicit empty clockwise payload and a 32-byte
     counterclockwise BLAKE3 tag. Byte transports must preserve that public
@@ -87,13 +87,13 @@ def open_device(rt,x):
     from ..gpu.crypto.gpu_hash import digest_batch
     count = math.prod(x.shape)
     width = rt._wire_bits(x.binary)
-    if width not in (32,64):
-        raise ValueError('device opening requires 32-bit or 64-bit words')
+    if width not in (8,16,32,64):
+        raise ValueError('device opening requires 8-bit, 16-bit, 32-bit, or 64-bit words')
     device = x.device
     first = x.parts[0].contiguous().reshape(-1)
     backup = x.parts[2].contiguous().reshape(-1)
-    if width == 32:
-        encoded = torch.empty((2,count),dtype=torch.uint32,device=device)
+    if width < 64:
+        encoded = torch.empty((2,count),dtype={8: torch.uint8, 16: torch.uint16, 32: torch.uint32}[width],device=device)
         if count:
             _encode32[(triton.cdiv(count,256),)](first,backup,encoded,count,256)
         payload, backup_wire = (part.view(torch.uint8) for part in encoded.unbind(0))

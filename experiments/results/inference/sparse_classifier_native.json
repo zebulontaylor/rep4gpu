@@ -1,0 +1,40 @@
+{
+  "batch": 8192,
+  "features": 512,
+  "hidden": 328,
+  "nonzeros_per_hidden": 4,
+  "checkpoint": "experiments/results/examples/ring16_text_classifier/model_pruned.npz",
+  "checkpoint_sha256": "5162e1f120168a10cdc876f87d069e1fbf0563b10b7d35b76ef8c4230ab33d83",
+  "script_sha256": "2a638c3c91ee9e09cd33131f71745d59578e4e1aa16660f4490f1a30608b6341",
+  "cpp_source_sha256": "0db802804703d3d93664caf36c4845b73d579acad79faf38c545962ddc58b2fb",
+  "torch_version": "2.13.0+cu130",
+  "cuda_device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "repeats": 10,
+  "graph_calls": 16,
+  "cpu_ms": {
+    "cpp_sparse_int32_threads1": 7.41423,
+    "cpp_sparse_int32_threads8": 1.0895,
+    "torch_dense_float32_threads1": 26.99110950004524,
+    "torch_dense_float32_threads8": 6.464478499992765
+  },
+  "cuda_ms": {
+    "triton_sparse_int32_graph": 0.056526406250156924,
+    "torch_dense_float32_graph": 0.4743918312499318,
+    "torch_dense_float16_graph": 0.15018808124978023
+  },
+  "dense_cuda_agreement": {
+    "float32": {
+      "exact_scores": true,
+      "exact_labels": true
+    },
+    "float16": {
+      "exact_scores": true,
+      "exact_labels": true
+    }
+  },
+  "sparse_cpu_exact": true,
+  "sparse_cuda_exact": true,
+  "fastest_cpu_ms": 1.0895,
+  "fastest_cuda_ms": 0.056526406250156924,
+  "scope": "Native plaintext only. Learned sparse indices are available to this baseline; MPC must keep them private. Packing, compilation, and model loading excluded. CUDA graphs contain multiple calls to measure saturated resident throughput."
+}

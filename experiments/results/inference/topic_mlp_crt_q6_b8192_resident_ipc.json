@@ -1,0 +1,135 @@
+{
+  "passed": false,
+  "all_parties_agree": false,
+  "interval_valid": false,
+  "floor_label_agreement": 0.0,
+  "architecture": "topic_mlp_relu_crt",
+  "primes": [
+    233,
+    211
+  ],
+  "shift": 6,
+  "device_transport": "cuda-ipc",
+  "phase_graphs": true,
+  "resident_inputs": true,
+  "batch": 8192,
+  "input_shape": [
+    8192,
+    4096
+  ],
+  "weight_shapes": {
+    "w1": [
+      4096,
+      1024
+    ],
+    "b1": [
+      1024
+    ],
+    "w2": [
+      1024,
+      512
+    ],
+    "b2": [
+      512
+    ],
+    "w3": [
+      512,
+      1
+    ],
+    "b3": [
+      1
+    ]
+  },
+  "total_parameters": 4720641,
+  "repeats": 5,
+  "warmup": 2,
+  "checkpoint": "/home/zeb/Desktop/SIV/experiments/results/examples/topic_mlp_classifier/model.npz",
+  "hardware": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "full_test_q_metrics": {
+    "accuracy": 0.9265789473684211,
+    "precision": 0.8630952380952381,
+    "recall": 0.8394736842105263,
+    "f1": 0.8511205976520811,
+    "false_positives": 253,
+    "false_negatives": 305
+  },
+  "native_ms": {
+    "fp32_notf32_eager": 8.780852380004944,
+    "fp32_notf32_graph": 8.847564660100034,
+    "fp32_tf32_eager": 5.632456160092261,
+    "fp32_tf32_graph": 5.665313710051123,
+    "fp16_eager": 2.824430069886148,
+    "fp16_graph": 2.8135082800872624,
+    "bf16_eager": 2.7997979600331746,
+    "bf16_graph": 2.7920480200555176,
+    "sparse_l1_fp32_eager": 6.448599569994258,
+    "sparse_l1_fp16_eager": 5.443235129932873
+  },
+  "fastest_native_key": "bf16_graph",
+  "fastest_native_ms": 2.7920480200555176,
+  "range_bounds": {
+    "primes": [
+      233,
+      211
+    ],
+    "crt_modulus": 49163,
+    "shift": 6,
+    "trunc_limit": 12288,
+    "half_limit": 24581,
+    "raw1_max_abs": 6397,
+    "raw2_max_abs": 8763,
+    "raw3_max_abs": 6140,
+    "ambiguous_sign_examples": 1632
+  },
+  "return_codes": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "timed_out": false,
+  "parties": [
+    {
+      "party": 0,
+      "passed": false,
+      "error": "SSLError: [SYS] unknown error (_ssl.c:2578)"
+    },
+    {
+      "party": 1,
+      "passed": false,
+      "error": "RuntimeError: num_active_captures_ > 0 INTERNAL ASSERT FAILED at \"/__w/pytorch/pytorch/c10/cuda/CUDACachingAllocator.cpp\":3211, please report a bug to PyTorch. markCaptureEnd called with no captures in progress"
+    },
+    {
+      "party": 2,
+      "passed": false,
+      "error": "SSLError: [SYS] unknown error (_ssl.c:2578)"
+    },
+    {
+      "party": 3,
+      "passed": false,
+      "error": "SSLError: [SYS] unknown error (_ssl.c:2578)"
+    }
+  ],
+  "isolated_party_gpu_estimate": {
+    "per_party_ms": {
+      "party0": 29.058879852294922,
+      "party1": 30.608640670776367,
+      "party2": 29.85430335998535,
+      "party3": 28.961503982543945
+    },
+    "bottleneck_party_ms": 30.608640670776367,
+    "sum_4_parties_ms": 118.48332786560059,
+    "phase_max_sum_ms": 34.560767970979214,
+    "rounds": 26,
+    "global_inference_payload_bytes": 946981984,
+    "per_party_peak_vram_mb": {
+      "party0": 1362.1865234375,
+      "party1": 1446.18505859375,
+      "party2": 1418.18701171875,
+      "party3": 1335.1904296875
+    },
+    "slowdown_phase_max_vs_fastest_native": 12.378285660821836,
+    "slowdown_phase_max_vs_fp32_notf32_graph": 3.906246441672059,
+    "throughput_texts_per_second": 237031.76986341414
+  }
+}

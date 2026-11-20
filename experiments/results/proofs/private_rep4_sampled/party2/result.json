@@ -1,0 +1,45 @@
+{
+  "accepted": true,
+  "protocol": "rep4-private-audit-v1",
+  "model_id": "sha256:8bb2843811b481c6f8252da3543dad4ba933a19bf8f29cb3a29d5e4ecedcf49e",
+  "run_id": "69534e18938ed23e02a06d90cc8d14e835e7561e02263701be83deb2d8a36138",
+  "commitment": {
+    "version": 1,
+    "scheme": "rep4-salted-components-v1",
+    "model_id": "sha256:8bb2843811b481c6f8252da3543dad4ba933a19bf8f29cb3a29d5e4ecedcf49e",
+    "run_id": "69534e18938ed23e02a06d90cc8d14e835e7561e02263701be83deb2d8a36138",
+    "layer_names": [
+      "affine_relu_0",
+      "affine_relu_1",
+      "affine_relu_2",
+      "affine_relu_3"
+    ],
+    "shape": [
+      1,
+      4
+    ],
+    "roots": [
+      "bafed64f5201aa0c84c2a34f9e66c7ffd5396d68fc6b7879b3081dd4243e14f9",
+      "27790de1ed94206f4251e84c396328f6e85af6b44d6032d0fe1c02caa11ef3fb",
+      "805a1e0414c445877d3867c8cfe2da14b7a3ffa031cd658f79c54fcce50b9a3f",
+      "7df1544335bc46f8664f7077647dfad8c7c8da9ea05854d3727d99fa5be77768"
+    ]
+  },
+  "checked_transitions": [
+    0,
+    2
+  ],
+  "total_transitions": 4,
+  "verification_mode": "sampled",
+  "output": {
+    "x": [
+      [
+        91,
+        0,
+        0,
+        2
+      ]
+    ]
+  },
+  "privacy": "The prover knows its trace. Each verifier receives three replicated components, never plaintext intermediate states. Public information includes model, input, shapes, sampled indices, acceptance, and accepted output. Rep4 tolerates at most one malicious verifier; two colluding verifiers can reconstruct the trace."
+}

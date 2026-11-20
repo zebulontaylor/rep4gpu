@@ -21,8 +21,10 @@ class Share:
     def __post_init__(self):
         if len(self.parts) != 3:
             raise ValueError('a Rep4 party stores exactly three components')
-        if any(t.dtype != torch.int64 for t in self.parts):
-            raise TypeError('share components must use torch.int64')
+        dtype = self.parts[0].dtype
+        narrow = dtype in (torch.uint8, torch.uint16) and not self.binary and self.parts[0].is_cuda
+        if (dtype != torch.int64 and not narrow) or any(t.dtype != dtype for t in self.parts):
+            raise TypeError('share components require matching int64 or CUDA arithmetic uint8/uint16 storage')
         if any(t.shape != self.parts[0].shape or t.device != self.parts[0].device for t in self.parts):
             raise ValueError('share components must have matching shape and device')
 
@@ -68,16 +70,31 @@ SCHEDULE = ((0, 1, 3, 2), (1, 2, 0, 3), (2, 3, 1, 0),
 
 
 def tensor_bytes(value, bits=64):
-    dtype = '<u4' if bits == 32 else '<i8'
+    if bits not in (8, 16, 32, 64):
+        raise ValueError('wire bits must be 8, 16, 32, or 64')
+    dtype = {8: 'u1', 16: '<u2', 32: '<u4', 64: '<i8'}[bits]
+    if bits in (8, 16, 32) and value.is_cuda:
+        # Narrow before staging so each wire word crosses PCIe at its ring
+        # width, including when arithmetic shares use int64 device storage.
+        value = value.to({8: torch.uint8, 16: torch.uint16, 32: torch.uint32}[bits])
     return value.detach().contiguous().cpu().numpy().astype(dtype, copy=False).tobytes()
 
 
 def bytes_tensor(data, shape, device, bits=64):
     # bytearray gives torch a writable, owned buffer before the device copy.
+    if bits not in (8, 16, 32, 64):
+        raise ValueError('wire bits must be 8, 16, 32, or 64')
+    if len(data) != math.prod(shape) * (bits // 8):
+        raise ValueError('wire byte count does not match tensor shape')
     if math.prod(shape) == 0:
         return torch.empty(shape, dtype=torch.int64, device=device)
-    dtype = torch.uint32 if bits == 32 else torch.int64
-    return torch.frombuffer(bytearray(data), dtype=dtype).to(dtype=torch.int64).clone().reshape(shape).to(device)
+    dtype = {8: torch.uint8, 16: torch.uint16, 32: torch.uint32, 64: torch.int64}[bits]
+    packed = torch.frombuffer(bytearray(data), dtype=dtype)
+    if bits in (8, 16, 32) and torch.device(device).type == 'cuda':
+        # The blocking device copy owns its storage before the temporary host
+        # bytearray is released. Widen on device to avoid a doubled host copy.
+        return packed.to(device).to(torch.int64).reshape(shape)
+    return packed.to(dtype=torch.int64).clone().reshape(shape).to(device)
 
 
 def make_seeds():
@@ -97,11 +114,15 @@ class Party:
     not make concurrent protocol operations a supported execution schedule.
     """
     def __init__(self, party, transport, seeds, device='cpu', bits=64, prg='shake', binary_bits=64):
-        if bits not in (32, 64):
-            raise ValueError('ring bits must be 32 or 64')
+        if bits not in (8, 16, 32, 64):
+            raise ValueError('ring bits must be 8, 16, 32, or 64')
+        if bits == 8 and (torch.device(device).type != 'cuda' or not getattr(self, '_supports_ring8_cuda', False)):
+            raise ValueError('ring8 requires a CUDA device runtime')
+        if bits == 16 and torch.device(device).type != 'cpu' and not getattr(self, '_supports_ring16_cuda', False):
+            raise ValueError('ring16 currently supports CPU parties only')
         self.bits = bits
-        if binary_bits not in (32, 64) or (binary_bits == 32 and bits != 32):
-            raise ValueError('32-bit binary words require the 32-bit ring')
+        if binary_bits not in (32, 64) or (binary_bits == 32 and bits not in (8, 16, 32)):
+            raise ValueError('32-bit binary words require an 8-bit, 16-bit, or 32-bit ring')
         self.binary_bits = binary_bits
         if prg not in ('shake', 'aes'):
             raise ValueError('PRG backend must be shake or aes')
@@ -121,10 +142,30 @@ class Party:
         self.multiplications = self.joint_inputs = 0
 
     def _normalize(self, value, binary=False):
-        return value & 0xffffffff if self._wire_bits(binary) == 32 else value
+        if value.dtype in (torch.uint8, torch.uint16):
+            expected = {8: torch.uint8, 16: torch.uint16}.get(self.bits)
+            if binary or value.dtype != expected or not getattr(self, 'packed_arithmetic', False):
+                raise ValueError('narrow arithmetic storage must match the active packed ring')
+            return value
+        width = self._wire_bits(binary)
+        return value & ((1 << width) - 1) if width < 64 else value
+
+    def _storage_dtype(self, binary=False):
+        if getattr(self, 'packed_arithmetic', False) and not binary:
+            return {8: torch.uint8, 16: torch.uint16}[self.bits]
+        return torch.int64
+
+    def _validate_share_storage(self, *shares):
+        for share in shares:
+            if isinstance(share, Share) and share.parts[0].dtype in (torch.uint8, torch.uint16):
+                dtype = share.parts[0].dtype
+                expected = {8: torch.uint8, 16: torch.uint16}.get(self.bits)
+                if dtype != expected or not getattr(self, 'packed_arithmetic', False) or share.binary:
+                    name = str(dtype).removeprefix('torch.')
+                    raise ValueError(f'{name} shares require packed arithmetic on a matching ring runtime')
 
     def _share(self, parts, binary=False):
-        return Share(tuple(self._normalize(t, binary) for t in parts), binary)
+        return Share(tuple(self._normalize(t, binary).to(self._storage_dtype(binary)) for t in parts), binary)
 
     def _wire_bits(self, binary):
         return self.binary_bits if binary else self.bits
@@ -365,6 +406,7 @@ class Party:
         result = bytes_tensor(missing, x.shape, x.device, self._wire_bits(x.binary))
         for part in x.parts:
             result = result ^ part if x.binary else result + part
-        if self.bits == 32 and not x.binary:
-            result = ((result & 0xffffffff) ^ 0x80000000) - 0x80000000
+        if self.bits < 64 and not x.binary:
+            sign = 1 << (self.bits - 1)
+            result = ((result & ((1 << self.bits) - 1)) ^ sign) - sign
         return result

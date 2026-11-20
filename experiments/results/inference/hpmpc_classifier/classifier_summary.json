@@ -1,0 +1,361 @@
+{
+  "commit": "f0160d92dd497b117d999293b3410e3d4c9bad27",
+  "batch": 8192,
+  "bits": 16,
+  "scale": 32,
+  "protocol": "Quad 4PC CV_FIX=1 PRE=0",
+  "security_scope": "Public deterministic seed fixture; plaintext loopback TCP. Not a privacy-preserving deployment.",
+  "repeats": [
+    {
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "parties": [
+        {
+          "party": 0,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 45.021,
+          "input_ms": 19.75,
+          "matmul_ms": 19.05,
+          "sign_ms": 1.107,
+          "reveal_ms": 0.2257
+        },
+        {
+          "party": 1,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 46.247,
+          "input_ms": 23.94,
+          "matmul_ms": 15.78,
+          "sign_ms": 1.478,
+          "reveal_ms": 0.2097
+        },
+        {
+          "party": 2,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 43.282000000000004,
+          "input_ms": 34.57,
+          "matmul_ms": 1.302,
+          "sign_ms": 1.552,
+          "reveal_ms": 0.2895
+        },
+        {
+          "party": 3,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 42.674,
+          "input_ms": 19.19,
+          "matmul_ms": 1.426,
+          "sign_ms": 1.187,
+          "reveal_ms": 16.24
+        }
+      ]
+    },
+    {
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "parties": [
+        {
+          "party": 0,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 23.879,
+          "input_ms": 18.25,
+          "matmul_ms": 2.457,
+          "sign_ms": 1.075,
+          "reveal_ms": 0.1353
+        },
+        {
+          "party": 1,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 23.142,
+          "input_ms": 18.36,
+          "matmul_ms": 1.583,
+          "sign_ms": 1.111,
+          "reveal_ms": 0.1429
+        },
+        {
+          "party": 2,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 24.268,
+          "input_ms": 19.39,
+          "matmul_ms": 1.874,
+          "sign_ms": 0.8845,
+          "reveal_ms": 0.1752
+        },
+        {
+          "party": 3,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 23.133999999999997,
+          "input_ms": 5.936,
+          "matmul_ms": 1.535,
+          "sign_ms": 0.3821,
+          "reveal_ms": 13.56
+        }
+      ]
+    },
+    {
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "parties": [
+        {
+          "party": 0,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.878,
+          "input_ms": 17.23,
+          "matmul_ms": 2.231,
+          "sign_ms": 0.6746,
+          "reveal_ms": 0.1943
+        },
+        {
+          "party": 1,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.873,
+          "input_ms": 17.7,
+          "matmul_ms": 1.696,
+          "sign_ms": 0.7298,
+          "reveal_ms": 0.167
+        },
+        {
+          "party": 2,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 23.499,
+          "input_ms": 19.36,
+          "matmul_ms": 1.75,
+          "sign_ms": 0.6718,
+          "reveal_ms": 0.1512
+        },
+        {
+          "party": 3,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 24.188000000000002,
+          "input_ms": 5.014,
+          "matmul_ms": 1.723,
+          "sign_ms": 0.2593,
+          "reveal_ms": 15.68
+        }
+      ]
+    },
+    {
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "parties": [
+        {
+          "party": 0,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.434,
+          "input_ms": 16.61,
+          "matmul_ms": 2.285,
+          "sign_ms": 0.8053,
+          "reveal_ms": 0.1709
+        },
+        {
+          "party": 1,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.558999999999997,
+          "input_ms": 17.48,
+          "matmul_ms": 1.53,
+          "sign_ms": 0.813,
+          "reveal_ms": 0.1763
+        },
+        {
+          "party": 2,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.551000000000002,
+          "input_ms": 17.49,
+          "matmul_ms": 1.494,
+          "sign_ms": 0.7837,
+          "reveal_ms": 0.2224
+        },
+        {
+          "party": 3,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.392000000000003,
+          "input_ms": 4.755,
+          "matmul_ms": 1.096,
+          "sign_ms": 0.2378,
+          "reveal_ms": 13.83
+        }
+      ]
+    },
+    {
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "parties": [
+        {
+          "party": 0,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.262,
+          "input_ms": 15.75,
+          "matmul_ms": 3.117,
+          "sign_ms": 0.6482,
+          "reveal_ms": 0.1308
+        },
+        {
+          "party": 1,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.206,
+          "input_ms": 16.43,
+          "matmul_ms": 2.352,
+          "sign_ms": 0.6838,
+          "reveal_ms": 0.139
+        },
+        {
+          "party": 2,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.116,
+          "input_ms": 16.41,
+          "matmul_ms": 2.203,
+          "sign_ms": 0.723,
+          "reveal_ms": 0.1736
+        },
+        {
+          "party": 3,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.05,
+          "input_ms": 4.893,
+          "matmul_ms": 1.873,
+          "sign_ms": 0.2433,
+          "reveal_ms": 12.49
+        }
+      ]
+    },
+    {
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "parties": [
+        {
+          "party": 0,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.269,
+          "input_ms": 16.77,
+          "matmul_ms": 2.308,
+          "sign_ms": 0.6115,
+          "reveal_ms": 0.1736
+        },
+        {
+          "party": 1,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.56,
+          "input_ms": 17.64,
+          "matmul_ms": 1.705,
+          "sign_ms": 0.663,
+          "reveal_ms": 0.1363
+        },
+        {
+          "party": 2,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.617,
+          "input_ms": 17.68,
+          "matmul_ms": 1.674,
+          "sign_ms": 0.7238,
+          "reveal_ms": 0.1168
+        },
+        {
+          "party": 3,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.174,
+          "input_ms": 6.123,
+          "matmul_ms": 2.285,
+          "sign_ms": 0.2456,
+          "reveal_ms": 11.19
+        }
+      ]
+    },
+    {
+      "codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "parties": [
+        {
+          "party": 0,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.922,
+          "input_ms": 15.71,
+          "matmul_ms": 3.214,
+          "sign_ms": 1.188,
+          "reveal_ms": 0.1377
+        },
+        {
+          "party": 1,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 21.94,
+          "input_ms": 16.6,
+          "matmul_ms": 2.618,
+          "sign_ms": 0.8969,
+          "reveal_ms": 0.1549
+        },
+        {
+          "party": 2,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 22.294,
+          "input_ms": 17.18,
+          "matmul_ms": 2.058,
+          "sign_ms": 1.2,
+          "reveal_ms": 0.2075
+        },
+        {
+          "party": 3,
+          "exact": true,
+          "checks_pass": true,
+          "total_ms": 22.438,
+          "input_ms": 4.398,
+          "matmul_ms": 1.731,
+          "sign_ms": 0.2355,
+          "reveal_ms": 14.56
+        }
+      ]
+    }
+  ],
+  "native": "native_int16_avx512_ms 0.087184"
+}

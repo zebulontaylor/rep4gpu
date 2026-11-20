@@ -1,0 +1,188 @@
+{
+  "passed": true,
+  "exact_integer_match": true,
+  "architecture": "fixed_square_head",
+  "fractional_bits": 0,
+  "range_bounds": {
+    "first_accumulator": 509,
+    "square_accumulator": 669124,
+    "second_accumulator": 11155034,
+    "output": 8502772
+  },
+  "packed_arithmetic": false,
+  "pinned_staging": true,
+  "device_input": true,
+  "device": "cuda",
+  "generic_kernel": false,
+  "phase_graphs": true,
+  "batch": 8,
+  "features": 512,
+  "bits": 32,
+  "repeats": 1,
+  "warmup": 1,
+  "checkpoint": "/home/zeb/Desktop/SIV/experiments/results/examples/fixed_head_text_classifier/model_h32.npz",
+  "method": "Four processes colocated on one host; mutual TLS; distributed seeds; private weights and features; only classes opened.",
+  "hardware": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "native_dense_ms": {
+    "float32_eager": 0.03284870000243245,
+    "float32_graph": 0.01325486000496312,
+    "float16_eager": 0.03507878000164055,
+    "float16_graph": 0.018753870008367812
+  },
+  "native_sparse_ms": {},
+  "native_ms": {
+    "float32_eager": 0.03284870000243245,
+    "float32_graph": 0.01325486000496312,
+    "float16_eager": 0.03507878000164055,
+    "float16_graph": 0.018753870008367812
+  },
+  "native_scope": "Resident features and weights; full dense floating-point classifier plus threshold; one CPU thread; eager and CUDA graph GPU. Fastest measured baseline defines slowdown; eligible sparse integer models also use a validated sparse native baseline.",
+  "deployment_scope": "Loopback TLS, four parties share one device. Does not measure independent hosts or WAN.",
+  "security": "Rep4, at most one corrupt party; two colluding parties can reconstruct secrets.",
+  "torch_version": "2.13.0+cu130",
+  "numpy_version": "2.2.6",
+  "benchmark_sha256": "b617a2ea6e7d4fc5fcf8e53287ef8f24a144b66c8e5d0a6c19e69317d6427c36",
+  "model_adapter_sha256": "6f00b988d609a4227c680b209a74822b55f1d5e0a9b4981667834c4dcb54ac33",
+  "checkpoint_sha256": "0d4c410bfdcaee5b831d6f78bb1dab3bf9ed0320e1666d920942ff239d04d1b2",
+  "range_bound": 11155034,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "timed_out": false,
+  "parties": [
+    {
+      "party": 0,
+      "passed": true,
+      "setup_ms": 1948.9070529998571,
+      "measurements": [
+        {
+          "start_monotonic": 4159.756841972,
+          "end_monotonic": 4159.767297287,
+          "prediction_sha256": "4beba5e9bb868f0bde0b9f79d3c64f482d8fd5c320dc08565768ec0480a25593",
+          "input_ms": 2.221194999947329,
+          "checked_inference_ms": 8.2341199995426,
+          "online_ms": 10.455314999489929,
+          "input_payload_bytes": 32768,
+          "payload_bytes": 35424,
+          "inference_payload_bytes": 2656,
+          "rounds": 14
+        }
+      ],
+      "predictions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "authenticated_tls": true
+    },
+    {
+      "party": 1,
+      "passed": true,
+      "setup_ms": 1945.6046500008597,
+      "measurements": [
+        {
+          "start_monotonic": 4159.757185726,
+          "end_monotonic": 4159.767364012,
+          "prediction_sha256": "4beba5e9bb868f0bde0b9f79d3c64f482d8fd5c320dc08565768ec0480a25593",
+          "input_ms": 2.2788329997638357,
+          "checked_inference_ms": 7.899453000391077,
+          "online_ms": 10.178286000154912,
+          "input_payload_bytes": 64,
+          "payload_bytes": 2720,
+          "inference_payload_bytes": 2656,
+          "rounds": 14
+        }
+      ],
+      "predictions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "authenticated_tls": true
+    },
+    {
+      "party": 2,
+      "passed": true,
+      "setup_ms": 1940.0969419993999,
+      "measurements": [
+        {
+          "start_monotonic": 4159.757254916,
+          "end_monotonic": 4159.767432811,
+          "prediction_sha256": "4beba5e9bb868f0bde0b9f79d3c64f482d8fd5c320dc08565768ec0480a25593",
+          "input_ms": 1.9542639993233024,
+          "checked_inference_ms": 8.22363099996437,
+          "online_ms": 10.177894999287673,
+          "input_payload_bytes": 0,
+          "payload_bytes": 1760,
+          "inference_payload_bytes": 1760,
+          "rounds": 14
+        }
+      ],
+      "predictions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "authenticated_tls": true
+    },
+    {
+      "party": 3,
+      "passed": true,
+      "setup_ms": 1941.6464579999229,
+      "measurements": [
+        {
+          "start_monotonic": 4159.757053769,
+          "end_monotonic": 4159.76722971,
+          "prediction_sha256": "4beba5e9bb868f0bde0b9f79d3c64f482d8fd5c320dc08565768ec0480a25593",
+          "input_ms": 2.599344000373094,
+          "checked_inference_ms": 7.576596999570029,
+          "online_ms": 10.175940999943123,
+          "input_payload_bytes": 64,
+          "payload_bytes": 1824,
+          "inference_payload_bytes": 1760,
+          "rounds": 14
+        }
+      ],
+      "predictions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "authenticated_tls": true
+    }
+  ],
+  "input_ms": 2.599344000373094,
+  "checked_inference_ms": 8.2341199995426,
+  "online_ms": 10.455314999489929,
+  "inference_texts_per_second": 971.5670891903926,
+  "online_texts_per_second": 765.161068833439,
+  "slowdown_resident": 621.2151615678653,
+  "slowdown_with_input_sharing": 788.7910544189123,
+  "target_met_resident": false,
+  "global_payload_bytes_per_batch": 41728,
+  "global_input_payload_bytes_per_batch": 32896,
+  "global_inference_payload_bytes_per_batch": 8832
+}

@@ -1,0 +1,32 @@
+{
+  "passed": false,
+  "return_codes": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "timed_out": false,
+  "sessions": 2,
+  "party_processes": 4,
+  "batch_per_session": 4096,
+  "repeats": 30,
+  "warmup": 3,
+  "device": "cuda",
+  "bits": 32,
+  "architecture": "fixed_square_head",
+  "checkpoint": "/home/zeb/Desktop/SIV/experiments/results/examples/fixed_head_text_classifier/model_h32.npz",
+  "checkpoint_sha256": "0d4c410bfdcaee5b831d6f78bb1dab3bf9ed0320e1666d920942ff239d04d1b2",
+  "benchmark_sha256": "1266f9b211d41c8a42421dd76f265c9de7268c04ad18614fb74472f258fba31a",
+  "worker_sha256": "83e4676a21bbbf270b9ab0aaa8650146ee9e9a71aafc98f870f3cbbfd245a972",
+  "native_ms": {
+    "float32_eager": 0.08419355000114592,
+    "float32_graph": 0.07864672999858158,
+    "float16_eager": 0.04966522999893641,
+    "float16_graph": 0.04411811999943893
+  },
+  "native_batch": 8192,
+  "native_texts_per_second": 185683342.81025985,
+  "scope": "Four parties on one host/device; independent checked TLS sessions share each party process and CUDA context.",
+  "timing": "Separate CUDA streams; stream-local synchronization; native baseline precedes all MPC workers."
+}

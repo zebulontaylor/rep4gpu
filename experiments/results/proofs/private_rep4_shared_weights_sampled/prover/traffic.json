@@ -1,0 +1,11 @@
+{
+  "units": "bytes",
+  "includes": "application payloads and framing",
+  "excludes": "TLS records and handshakes, TCP/IP, certificates and file provisioning",
+  "channels": {
+    "prover_links": {
+      "sent": 28644,
+      "received": 6864
+    }
+  }
+}

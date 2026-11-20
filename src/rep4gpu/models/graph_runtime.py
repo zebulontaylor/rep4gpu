@@ -21,8 +21,8 @@ class _ProductPlan:
         self.shape, self.binary, self.pointwise = shape, binary, pointwise
         count = math.prod(shape)
         width = rt._wire_bits(binary)
-        dtype = torch.uint32 if width == 32 else torch.int64
-        self.local = tuple(torch.zeros(shape, dtype=torch.int64, device=rt.device) for _ in range(3))
+        dtype = {8: torch.uint8, 16: torch.uint16, 32: torch.uint32, 64: torch.int64}[width]
+        self.local = tuple(torch.zeros(shape, dtype=rt._storage_dtype(binary), device=rt.device) for _ in range(3))
         self.other = tuple(torch.zeros_like(t) for t in self.local) if pointwise else self.local
         self.host_nonces = torch.zeros(6, dtype=torch.uint64, pin_memory=True)
         self.upload_done = None
@@ -103,13 +103,13 @@ class GraphDeviceParty(DeviceInferenceParty):
         shape = tuple(shape)
         if math.prod(shape) <= 0:
             raise ValueError('product graphs require a nonempty shape')
-        key = (shape, bool(binary), bool(pointwise))
+        key = (shape, bool(binary), bool(pointwise), self.bits, self.binary_bits, self.packed_arithmetic)
         if key not in self._product_graphs:
-            self._product_graphs[key] = _ProductPlan(self, *key)
+            self._product_graphs[key] = _ProductPlan(self, *key[:3])
 
     def _fused_product(self, local, binary, device, pointwise=None):
         shape = tuple(local[0].shape)
-        key = (shape, bool(binary), pointwise is not None)
+        key = (shape, bool(binary), pointwise is not None, self.bits, self.binary_bits, self.packed_arithmetic)
         if key not in self._product_graphs:
             return super()._fused_product(local, binary, device, pointwise)
         plan = self._product_graphs[key]
@@ -119,9 +119,9 @@ class GraphDeviceParty(DeviceInferenceParty):
         # Checks above synchronize and reject all received data before use.
         receive_joints = tuple(k for k, (_, _, r, _) in enumerate(SCHEDULE) if self.party == r)
         count, width = math.prod(shape), self._wire_bits(binary)
-        dtype = torch.uint32 if width == 32 else torch.int64
+        dtype = {8: torch.uint8, 16: torch.uint16, 32: torch.uint32, 64: torch.int64}[width]
         incoming = torch.cat([received[k] for k in receive_joints]).view(dtype)
-        result = torch.empty((3, *shape), dtype=torch.int64, device=device)
+        result = torch.empty((3, *shape), dtype=self._storage_dtype(binary), device=device)
         mask_slots = tuple(-1 if self.party == r else (r-self.party-1)%4 for _, _, r, _ in SCHEDULE)
         outside_slots = tuple(-1 if self.party == o else (o-self.party-1)%4 for _, _, _, o in SCHEDULE)
         local_ids = tuple(plan.local_joints.index(k) if k in plan.local_joints else -1 for k in range(6))

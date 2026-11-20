@@ -73,7 +73,7 @@ def _reduce(A,B,C,Q0,Q1,Q2,R0,R1,R2,W,OUT,
     plane = tl.arange(0,BP)
     offset = plane[:,None]*D+item[None,:]
     mask = (plane[:,None]<P)&(item[None,:]<D)
-    DT:tl.constexpr = tl.uint32 if BITS==32 else tl.uint64
+    DT:tl.constexpr = tl.uint32 if BITS<=32 else tl.uint64
     x0,y0 = _parity_slot(A,Q0,R0,offset,mask,(PARTY+1)%4,DT)
     x1,y1 = _parity_slot(B,Q1,R1,offset,mask,(PARTY+2)%4,DT)
     x2,y2 = _parity_slot(C,Q2,R2,offset,mask,(PARTY+3)%4,DT)
@@ -97,8 +97,8 @@ def _reduce(A,B,C,Q0,Q1,Q2,R0,R1,R2,W,OUT,
             else:
                 value = x2+y2
             total = tl.sum(value*weight,0).to(tl.uint64)
-            if BITS == 32:
-                total &= 0xffffffff
+            if BITS < 64:
+                total &= (1 << BITS)-1
             tl.store(OUT+slot*O*D+dest,total.to(tl.int64),item<D)
 
 
@@ -114,8 +114,8 @@ def _finish(L,A,B,C,OUT,N:tl.constexpr,BITS:tl.constexpr,BLOCK:tl.constexpr):
         else:
             product = tl.load(C+item,item<N,0).to(tl.uint64)
         value = linear-2*product
-        if BITS == 32:
-            value &= 0xffffffff
+        if BITS < 64:
+            value &= (1 << BITS)-1
         tl.store(OUT+slot*N+item,value.to(tl.int64),item<N)
 
 

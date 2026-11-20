@@ -1,0 +1,23 @@
+{
+  "party": 1,
+  "passed": true,
+  "setup_ms": 22.803913999950964,
+  "measurements": [
+    {
+      "prediction_sha256": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0",
+      "input_ms": 1.3940909999519135,
+      "checked_inference_ms": 68.33855700006097,
+      "online_ms": 69.73264800001289,
+      "input_payload_bytes": 64,
+      "payload_bytes": 581268,
+      "inference_payload_bytes": 581204,
+      "rounds": 45
+    }
+  ],
+  "predictions": [
+    0,
+    0,
+    0
+  ],
+  "authenticated_tls": true
+}

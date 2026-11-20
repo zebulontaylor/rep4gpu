@@ -1,0 +1,10 @@
+P3, ONLINE, PID0: Sending to other players:0.1341MB, 6.4e-05MB, 0.1341MB 
+P3, ONLINE, PID0: Receiving from other players:6.4e-05MB, 6.4e-05MB, 0.01638MB 
+P3, PID0: Initialized circuit, waiting for all parties to connect ... 
+P3, PID0: All parties connected sucessfully, starting protocol and timer! 
+PHASE_MS input 3.45 matmul 2.263 sign 1.316 reveal 15.05
+P3, PID0: Checkeqs passed! 
+P3, PID0: Time measured to initialize program: 0.005507s 
+P3, PID0: Time measured to perform computation clock: 0.006722s 
+P3, PID0: Time measured to perform computation getTime: 0.023173s 
+P3, PID0: Time measured to perform computation chrono: 0.023170s 

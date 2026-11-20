@@ -44,6 +44,29 @@ def test_reject_overflow_before_dot():
         runtime.matmul(runtime.public(torch.tensor([[2**40]])), runtime.public(torch.tensor([[2**30]])))
 
 
+@pytest.mark.parametrize('kind', ['silu', 'gelu', 'swiglu'])
+def test_activation_bypass_preserves_affine_and_gate_steps(kind):
+    floats, integers = fixture(kind, 2, 3, 4, 2)
+    x, gate, bias, down, output_bias, *value = integers
+    hidden = (x @ gate >> 24)+bias
+    if kind == 'swiglu':
+        hidden = hidden*((x @ value[0] >> 24)+value[1]) >> 24
+    expected = (hidden @ down >> 24)+output_bias
+    interval, _ = oracle(kind, integers, activation_enabled=False)
+    assert torch.equal(interval.lo, expected)
+    assert torch.equal(interval.hi, expected)
+    probabilistic, _ = oracle(kind, integers, probabilistic=True, activation_enabled=False)
+    assert bool(((expected >= probabilistic.lo) & (expected <= probabilistic.hi)).all())
+
+    x, gate, bias, down, output_bias, *value = floats
+    hidden = x @ gate+bias
+    if kind == 'swiglu':
+        hidden = hidden*(x @ value[0]+value[1])
+    expected_float = hidden @ down+output_bias
+    assert torch.equal(reference(floats, kind, activation_enabled=False), expected_float)
+    assert not torch.equal(reference(floats, kind), expected_float)
+
+
 @pytest.mark.parametrize('kind,index', [('silu', 2), ('swiglu', 6)])
 def test_reject_out_of_domain_projection(kind, index):
     _, values = fixture(kind, 1, 2, 3, 2)

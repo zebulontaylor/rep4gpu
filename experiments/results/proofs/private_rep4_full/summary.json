@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "exit_codes": {
+    "prover": 0,
+    "party0": 0,
+    "party1": 0,
+    "party2": 0,
+    "party3": 0
+  },
+  "error": null
+}

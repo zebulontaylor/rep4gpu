@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "exit_codes": {
+    "prover": 0,
+    "party0": 0,
+    "party1": 0,
+    "party2": 0,
+    "party3": 0
+  },
+  "error": null,
+  "model_provisioning": {
+    "measurement": "serialized file sizes; excludes transport overhead",
+    "verifier_share_files_bytes": {
+      "party0": 3817,
+      "party1": 3817,
+      "party2": 3817,
+      "party3": 3817
+    },
+    "manifest_bytes_per_recipient": 484,
+    "total_to_four_verifiers_bytes": 17204
+  },
+  "traffic": {
+    "units": "bytes",
+    "counting": "global outgoing bytes, each transmission counted once",
+    "includes": "application payloads and framing",
+    "excludes": "TLS records and handshakes, TCP/IP, certificates and file provisioning",
+    "channels": {
+      "prover_links": {
+        "sent": 40724,
+        "received": 40724
+      },
+      "verifier_mesh": {
+        "sent": 98360,
+        "received": 98360
+      },
+      "mesh_identity": {
+        "sent": 6,
+        "received": 6
+      }
+    },
+    "total_sent": 139090,
+    "transition_checks_and_output_sent": 75488,
+    "per_role_sent": {
+      "prover": 33840,
+      "party0": 28167,
+      "party1": 28056,
+      "party2": 24569,
+      "party3": 24458
+    }
+  }
+}

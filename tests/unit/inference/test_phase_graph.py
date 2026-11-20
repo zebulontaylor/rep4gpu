@@ -311,3 +311,34 @@ def test_bound_receive_replay_checks_tampered_payload(staging):
 @pytest.mark.skipif(not torch.cuda.is_available(), reason='CUDA required')
 def test_strassen_private_ffn_graph_matches_eager(rounding):
     test_tiny_private_ffn_transcripts_match_eager(rounding,True,True,True,storage='strassen32')
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason='CUDA required')
+def test_run_releases_caller_inputs_without_cyclic_gc():
+    import gc
+    import weakref
+    from rep4gpu.models.phase_graph import PhaseGraphParty
+    from rep4gpu.protocol.device_transport import DeviceIdealEndpoint
+    from rep4gpu.protocol.runtime import make_seeds
+    from rep4gpu.protocol.transport import IdealNetwork
+
+    network = IdealNetwork(timeout=5)
+    seeds = make_seeds()
+    role = PhaseGraphParty(0, DeviceIdealEndpoint(network.endpoint(0)),
+                           {e:s for e,s in seeds.items() if e != 0}, bits=32)
+    initial = torch.zeros(8, dtype=torch.int64, device=role.device)
+    plan = role.prepare_inference(lambda x: x + 1, initial)
+    enabled = gc.isenabled()
+    gc.disable()
+    try:
+        for n in range(3):
+            value = torch.full_like(initial, n)
+            reference = weakref.ref(value)
+            result = plan.run(value)
+            torch.cuda.synchronize()
+            assert torch.all(result == n + 1)
+            del value
+            assert reference() is None
+    finally:
+        if enabled:
+            gc.enable()

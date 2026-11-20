@@ -36,13 +36,17 @@ class _OfflineTransport:
 
 
 class _Builder:
-    def __init__(self, rt, stream, check_at_send=False):
+    def __init__(self, rt, stream, check_at_send=False, wire_allocator=None):
         self.rt, self.stream = rt, stream
         self.check_at_send = check_at_send
+        self.wire_allocator = wire_allocator
         self.pending = []
         self.capture = False
         self.actions, self.draws = [], []
+        self.mask_specs = []
+        self.wire_buffers = []
         self.draw_index = 0
+        self.wire_index = 0
         self.graph = None
         self.pool = torch.cuda.graph_pool_handle()
         self.check_count = 0
@@ -106,17 +110,49 @@ class _Builder:
                 self.boundary(('verify', (self.stage_check(valid), message)))
                 self.begin()
 
+    def alloc_wire_buffer(self, size: int):
+        """Allocate a persistent direct-export wire buffer before graph capture."""
+        if self.wire_allocator is None:
+            return None
+        if not self.capture:
+            buf = self.wire_allocator(size)
+            self.wire_buffers.append((size, buf))
+        else:
+            saved_size, buf = self.wire_buffers[self.wire_index]
+            if saved_size != size:
+                raise ValueError('inference wire buffer size changed during capture')
+        self.wire_index += 1
+        return buf
+
+    def reserve_nonces_tensor(self, excluded, tag=()):
+        """Return a persistent uint64 CUDA nonce vector for custom graph kernels."""
+        excluded = tuple(excluded)
+        spec = ('raw', tag, excluded)
+        if not self.capture:
+            nonces = torch.zeros(len(excluded), dtype=torch.uint64, device=self.rt.device)
+            host = torch.zeros(len(excluded), dtype=torch.uint64, pin_memory=True)
+            self.draws.append((nonces, host, excluded))
+            self.mask_specs.append(spec)
+        else:
+            nonces, _, saved = self.draws[self.draw_index]
+            if saved != excluded or self.mask_specs[self.draw_index] != spec:
+                raise ValueError('inference draw schedule changed during capture')
+        self.draw_index += 1
+        return nonces
+
     def masks(self, keys, excluded, shape, bits, *, packed=False):
+        spec = (self.rt.bits, self.rt.binary_bits, bits, packed, tuple(shape), excluded)
         if not self.capture:
             nonces = torch.zeros(len(keys), dtype=torch.uint64, device=self.rt.device)
             host = torch.zeros(len(keys), dtype=torch.uint64, pin_memory=True)
             self.draws.append((nonces, host, excluded))
+            self.mask_specs.append(spec)
         else:
             nonces, _, saved = self.draws[self.draw_index]
-            if saved != excluded:
+            if saved != excluded or self.mask_specs[self.draw_index] != spec:
                 raise ValueError('inference draw schedule changed during capture')
         self.draw_index += 1
-        dtype = torch.uint32 if packed and bits == 32 else torch.int64
+        dtype = {8: torch.uint8, 16: torch.uint16, 32: torch.uint32}[bits] if packed and bits < 64 else torch.int64
         output = torch.empty((len(keys), math.prod(shape)), dtype=dtype, device=self.rt.device)
         count = math.prod(shape)
         if count:
@@ -124,7 +160,7 @@ class _Builder:
             padded = tuple(k if k is not None else active for k in keys)
             padded += (active,)*(6-len(keys))
             valid = tuple(k is not None for k in keys)+(False,)*(6-len(keys))
-            blocks = triton.cdiv(count, 16 if bits == 32 else 8)
+            blocks = triton.cdiv(count, 512 // bits)
             if blocks >= 2**32:
                 raise ValueError('a draw must use fewer than 2**32 ChaCha blocks')
             block_size = 256 if packed and bits == 32 and count >= 1024*1024 else 128
@@ -150,7 +186,8 @@ class InferencePlan:
         self.stream = torch.cuda.Stream(device=rt.device)
         self.ready = torch.cuda.Event()
         self.stream.wait_stream(torch.cuda.current_stream(rt.device))
-        builder = _Builder(rt, self.stream, check_at_send)
+        builder = _Builder(rt, self.stream, check_at_send,
+                           wire_allocator=getattr(rt.transport, 'alloc_export_tensor', None))
         counters = (rt.joint_inputs, rt.multiplications)
         transport = rt.transport
         rt.transport = _OfflineTransport()
@@ -176,6 +213,7 @@ class InferencePlan:
                 offset = end
             builder.capture = True
             builder.draw_index = 0
+            builder.wire_index = 0
             builder.host_checks = torch.empty(builder.check_count, dtype=torch.bool, pin_memory=True)
             rt.joint_inputs, rt.multiplications = counters
             with torch.cuda.stream(self.stream):
@@ -217,7 +255,11 @@ class InferencePlan:
                         raise ValueError('inference input structure changed')
                     for key in destination if isinstance(destination, dict) else range(len(destination)):
                         collect(source[key], destination[key])
-            collect(inputs, self.inputs)
+            try:
+                collect(inputs, self.inputs)
+            finally:
+                # Break the recursive closure cycle so input tensors leave scope after this run.
+                del collect
             current = torch.cuda.current_stream(self.rt.device)
             self.stream.wait_stream(current)
             self.stream.wait_event(self.ready)
@@ -231,7 +273,8 @@ class InferencePlan:
                     self.host_nonce_values[:] = values
                     self.nonces.copy_(self.host_nonces, non_blocking=True)
                     for destination, source in pairs:
-                        destination.copy_(source)
+                        if source is not destination:
+                            destination.copy_(source)
                     for kind, value in self.actions:
                         if kind == 'graph':
                             value.replay()

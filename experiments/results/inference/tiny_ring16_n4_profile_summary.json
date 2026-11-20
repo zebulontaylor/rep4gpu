@@ -1,0 +1,91 @@
+{
+  "scope": "Instrumented live TLS; nested buckets are not additive. GPU events include competing role scheduling.",
+  "statistic": "Median of last 5 iterations per party.",
+  "profiler_sha256": "51a12365993f977643f6af8b29b6606730306b20c9878f2773c945cf5c14a85c",
+  "parties": {
+    "0": {
+      "input": {
+        "bridge_calls": 3,
+        "bridge_ms": 213.39496600012353,
+        "input_mask_enqueue_calls": 2,
+        "input_mask_enqueue_ms": 0.3295280002930667,
+        "socket_calls": 3,
+        "socket_ms": 193.90883199957898,
+        "total_ms": 214.23210499960987
+      },
+      "inference": {
+        "bridge_calls": 10,
+        "bridge_ms": 23.884372001703014,
+        "first_matmul_gpu_event_ms": 6.436863899230957,
+        "sign_and_open_gpu_event_ms": 1.7050559967756271,
+        "socket_calls": 10,
+        "socket_ms": 10.906537998380372,
+        "square_sum_gpu_event_ms": 0.3184959888458252,
+        "total_ms": 27.517887000612973
+      }
+    },
+    "1": {
+      "input": {
+        "bridge_calls": 3,
+        "bridge_ms": 213.2382139998299,
+        "input_mask_enqueue_calls": 1,
+        "input_mask_enqueue_ms": 0.1886039999590139,
+        "socket_calls": 3,
+        "socket_ms": 149.74878700104455,
+        "total_ms": 214.21150700007274
+      },
+      "inference": {
+        "bridge_calls": 10,
+        "bridge_ms": 22.610264999457286,
+        "first_matmul_gpu_event_ms": 3.714047908782959,
+        "sign_and_open_gpu_event_ms": 2.474976008757949,
+        "socket_calls": 10,
+        "socket_ms": 7.8902779996496974,
+        "square_sum_gpu_event_ms": 0.2715519964694977,
+        "total_ms": 27.140270000018063
+      }
+    },
+    "2": {
+      "input": {
+        "bridge_calls": 3,
+        "bridge_ms": 213.8076990004265,
+        "input_mask_enqueue_calls": 2,
+        "input_mask_enqueue_ms": 0.36533400088956114,
+        "socket_calls": 3,
+        "socket_ms": 212.47289100028866,
+        "total_ms": 214.428493000014
+      },
+      "inference": {
+        "bridge_calls": 10,
+        "bridge_ms": 22.987393998846528,
+        "first_matmul_gpu_event_ms": 7.825407981872559,
+        "sign_and_open_gpu_event_ms": 2.5347199998795986,
+        "socket_calls": 10,
+        "socket_ms": 10.27208799860091,
+        "square_sum_gpu_event_ms": 0.45344001054763794,
+        "total_ms": 27.44178400007513
+      }
+    },
+    "3": {
+      "input": {
+        "bridge_calls": 3,
+        "bridge_ms": 213.17172999988543,
+        "input_mask_enqueue_calls": 1,
+        "input_mask_enqueue_ms": 0.20305999987613177,
+        "socket_calls": 3,
+        "socket_ms": 148.89873399897624,
+        "total_ms": 214.39868699962972
+      },
+      "inference": {
+        "bridge_calls": 10,
+        "bridge_ms": 23.679950001678662,
+        "first_matmul_gpu_event_ms": 5.070847988128662,
+        "sign_and_open_gpu_event_ms": 1.2348479982465506,
+        "socket_calls": 10,
+        "socket_ms": 9.637912001380755,
+        "square_sum_gpu_event_ms": 0.219200000166893,
+        "total_ms": 27.256928000497282
+      }
+    }
+  }
+}

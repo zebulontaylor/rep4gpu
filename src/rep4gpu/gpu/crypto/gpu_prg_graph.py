@@ -22,7 +22,7 @@ def _rows(K0, K1, K2, K3, K4, K5, NONCES, OUT, COUNT: tl.constexpr,
         words = _block_words(key, nonce, block, BLOCK)
         _store_words(OUT+row*COUNT,block,words,COUNT,BITS)
     else:
-        idx = block[:,None]*(16 if BITS == 32 else 8)+tl.arange(0,16 if BITS == 32 else 8)[None,:]
+        idx = block[:,None]*(512//BITS)+tl.arange(0,512//BITS)[None,:]
         tl.store(OUT+row*COUNT+idx,tl.full(idx.shape,0,tl.int64),idx < COUNT)
 
 
@@ -34,10 +34,11 @@ def generate_rows_into(keys, nonces, output, bits=64):
     function performs no reservations and must never own a live draw counter.
     """
     import torch
-    if len(keys) != 6 or bits not in (32, 64):
-        raise ValueError('six keys and a 32-bit or 64-bit ring are required')
-    if output.ndim != 2 or output.shape[0] != 6 or output.dtype != torch.int64 or not output.is_cuda or not output.is_contiguous():
-        raise ValueError('output must be contiguous CUDA int64 with six rows')
+    if len(keys) != 6 or bits not in (8, 16, 32, 64):
+        raise ValueError('six keys and an 8-bit, 16-bit, 32-bit, or 64-bit ring are required')
+    allowed = (torch.int64, torch.uint8) if bits == 8 else (torch.int64,)
+    if output.ndim != 2 or output.shape[0] != 6 or output.dtype not in allowed or not output.is_cuda or not output.is_contiguous():
+        raise ValueError('output must be contiguous CUDA int64 or ring8 uint8 with six rows')
     if nonces.shape != (6,) or nonces.dtype != torch.uint64 or nonces.device != output.device or not nonces.is_contiguous():
         raise ValueError('nonces must be six contiguous CUDA uint64 values on the output device')
     active = [key for key in keys if key is not None]
@@ -47,7 +48,7 @@ def generate_rows_into(keys, nonces, output, bits=64):
         if key.shape != (8,) or key.dtype != torch.uint32 or key.device != output.device or not key.is_contiguous():
             raise ValueError('keys must be contiguous eight-word CUDA uint32 tensors')
     count = output.shape[1]
-    blocks = triton.cdiv(count, 16 if bits == 32 else 8)
+    blocks = triton.cdiv(count, 512//bits)
     if blocks >= 2**32:
         raise ValueError('a draw must use fewer than 2**32 ChaCha blocks')
     if count:

@@ -1,0 +1,23 @@
+{
+  "units": "bytes",
+  "includes": "application payloads and framing",
+  "excludes": "TLS records and handshakes, TCP/IP, certificates and file provisioning",
+  "channels": {
+    "verifier_mesh": {
+      "sent": 22846,
+      "received": 29342
+    },
+    "mesh_identity": {
+      "sent": 2,
+      "received": 1
+    },
+    "prover_links": {
+      "sent": 1721,
+      "received": 8460
+    }
+  },
+  "transition_checks_and_output": {
+    "sent": 17128,
+    "received": 23624
+  }
+}

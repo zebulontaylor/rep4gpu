@@ -25,6 +25,10 @@ input protocol with equivalent consistency guarantees. A plaintext prover is
 not an additional Rep4 role: an application must deliver its values to an input
 owner or integrate an external sharing protocol. This module does not provide
 an external-prover network service.
+The [private Rep4 audit](../protocol/private-rep4-audit.md) supplies a separate
+external-prover service: salted component commitments authenticate replicated
+shares before `WitnessSession` checks the public integer model's transitions.
+It does not send plaintext intermediates to an input owner.
 
 Range checks retain full-ring semantics for untrusted words. Clamp-based
 recipes replace invalid values privately and retain the violation. Other

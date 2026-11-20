@@ -1,0 +1,30 @@
+{
+  "party": 1,
+  "passed": true,
+  "setup_ms": 1945.6046500008597,
+  "measurements": [
+    {
+      "start_monotonic": 4159.757185726,
+      "end_monotonic": 4159.767364012,
+      "prediction_sha256": "4beba5e9bb868f0bde0b9f79d3c64f482d8fd5c320dc08565768ec0480a25593",
+      "input_ms": 2.2788329997638357,
+      "checked_inference_ms": 7.899453000391077,
+      "online_ms": 10.178286000154912,
+      "input_payload_bytes": 64,
+      "payload_bytes": 2720,
+      "inference_payload_bytes": 2656,
+      "rounds": 14
+    }
+  ],
+  "predictions": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "authenticated_tls": true
+}

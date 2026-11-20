@@ -1,0 +1,614 @@
+{
+  "dataset": {
+    "url": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
+    "citation": "Almeida, T. & Hidalgo, J. (2011). SMS Spam Collection. https://doi.org/10.24432/C5CC84",
+    "sha256": "7d039a24a6083ed9ef0f806ebad56bbb976e3aeb8de05669173bfdc4996c239d",
+    "train_rows": 3285,
+    "validation_rows": 820,
+    "test_rows": 1025
+  },
+  "architecture": "counts/8 -> learned linear encoder -> fixed signed sum of squares + learned bias",
+  "privacy": "All learned encoder weights, encoder biases and output bias remain private. Head signs are fixed architecture constants.",
+  "selection": "Maximum integer validation F1, then precision, then smaller width. Encoder scales selected by ring32 bounds alone.",
+  "seed": 2026,
+  "epochs": 60,
+  "features": 512,
+  "max_tokens": 128,
+  "selected": {
+    "hidden": 128,
+    "selected_epoch": 4,
+    "validation_float": {
+      "accuracy": 0.9792682926829268,
+      "spam_precision": 0.9278350515463918,
+      "spam_recall": 0.9,
+      "false_positives": 7,
+      "false_negatives": 10
+    },
+    "validation_integer": {
+      "accuracy": 0.9792682926829268,
+      "spam_precision": 0.9278350515463918,
+      "spam_recall": 0.9,
+      "false_positives": 7,
+      "false_negatives": 10
+    },
+    "encoder_scale": 128,
+    "output_scale": 1048576,
+    "absolute_bounds": {
+      "first_product": 4096,
+      "encoded": 4418,
+      "squared": 19518724,
+      "sum_absolute_squares": 1724764247,
+      "output": 1725740745,
+      "parameters": 976498
+    },
+    "minimum_signed_ring_bits": 32,
+    "fits_signed_ring16": false,
+    "fits_signed_ring32": true,
+    "scales": [
+      {
+        "scale": 1,
+        "absolute_bounds": {
+          "first_product": 0,
+          "encoded": 3,
+          "squared": 9,
+          "sum_absolute_squares": 401,
+          "output": 461,
+          "parameters": 60
+        },
+        "minimum_signed_ring_bits": 10,
+        "fits_signed_ring16": true,
+        "fits_signed_ring32": true
+      },
+      {
+        "scale": 2,
+        "absolute_bounds": {
+          "first_product": 0,
+          "encoded": 6,
+          "squared": 36,
+          "sum_absolute_squares": 1488,
+          "output": 1726,
+          "parameters": 238
+        },
+        "minimum_signed_ring_bits": 12,
+        "fits_signed_ring16": true,
+        "fits_signed_ring32": true
+      },
+      {
+        "scale": 4,
+        "absolute_bounds": {
+          "first_product": 128,
+          "encoded": 139,
+          "squared": 19321,
+          "sum_absolute_squares": 2317250,
+          "output": 2318204,
+          "parameters": 954
+        },
+        "minimum_signed_ring_bits": 23,
+        "fits_signed_ring16": false,
+        "fits_signed_ring32": true
+      },
+      {
+        "scale": 8,
+        "absolute_bounds": {
+          "first_product": 256,
+          "encoded": 278,
+          "squared": 77284,
+          "sum_absolute_squares": 8620415,
+          "output": 8624229,
+          "parameters": 3814
+        },
+        "minimum_signed_ring_bits": 25,
+        "fits_signed_ring16": false,
+        "fits_signed_ring32": true
+      },
+      {
+        "scale": 16,
+        "absolute_bounds": {
+          "first_product": 512,
+          "encoded": 552,
+          "squared": 304704,
+          "sum_absolute_squares": 26773588,
+          "output": 26788846,
+          "parameters": 15258
+        },
+        "minimum_signed_ring_bits": 26,
+        "fits_signed_ring16": false,
+        "fits_signed_ring32": true
+      },
+      {
+        "scale": 32,
+        "absolute_bounds": {
+          "first_product": 1024,
+          "encoded": 1105,
+          "squared": 1221025,
+          "sum_absolute_squares": 108114227,
+          "output": 108175258,
+          "parameters": 61031
+        },
+        "minimum_signed_ring_bits": 28,
+        "fits_signed_ring16": false,
+        "fits_signed_ring32": true
+      },
+      {
+        "scale": 64,
+        "absolute_bounds": {
+          "first_product": 2048,
+          "encoded": 2209,
+          "squared": 4879681,
+          "sum_absolute_squares": 431679972,
+          "output": 431924096,
+          "parameters": 244124
+        },
+        "minimum_signed_ring_bits": 30,
+        "fits_signed_ring16": false,
+        "fits_signed_ring32": true
+      },
+      {
+        "scale": 128,
+        "absolute_bounds": {
+          "first_product": 4096,
+          "encoded": 4418,
+          "squared": 19518724,
+          "sum_absolute_squares": 1724764247,
+          "output": 1725740745,
+          "parameters": 976498
+        },
+        "minimum_signed_ring_bits": 32,
+        "fits_signed_ring16": false,
+        "fits_signed_ring32": true
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "hidden": 32,
+      "selected_epoch": 6,
+      "validation_float": {
+        "accuracy": 0.9792682926829268,
+        "spam_precision": 0.9368421052631579,
+        "spam_recall": 0.89,
+        "false_positives": 6,
+        "false_negatives": 11
+      },
+      "validation_integer": {
+        "accuracy": 0.9792682926829268,
+        "spam_precision": 0.9368421052631579,
+        "spam_recall": 0.89,
+        "false_positives": 6,
+        "false_negatives": 11
+      },
+      "encoder_scale": 128,
+      "output_scale": 1048576,
+      "absolute_bounds": {
+        "first_product": 4096,
+        "encoded": 4634,
+        "squared": 21473956,
+        "sum_absolute_squares": 625454764,
+        "output": 626636672,
+        "parameters": 1181908
+      },
+      "minimum_signed_ring_bits": 31,
+      "fits_signed_ring16": false,
+      "fits_signed_ring32": true,
+      "scales": [
+        {
+          "scale": 1,
+          "absolute_bounds": {
+            "first_product": 0,
+            "encoded": 4,
+            "squared": 16,
+            "sum_absolute_squares": 238,
+            "output": 310,
+            "parameters": 72
+          },
+          "minimum_signed_ring_bits": 10,
+          "fits_signed_ring16": true,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 2,
+          "absolute_bounds": {
+            "first_product": 0,
+            "encoded": 8,
+            "squared": 64,
+            "sum_absolute_squares": 864,
+            "output": 1153,
+            "parameters": 289
+          },
+          "minimum_signed_ring_bits": 12,
+          "fits_signed_ring16": true,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 4,
+          "absolute_bounds": {
+            "first_product": 128,
+            "encoded": 145,
+            "squared": 21025,
+            "sum_absolute_squares": 611107,
+            "output": 612261,
+            "parameters": 1154
+          },
+          "minimum_signed_ring_bits": 21,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 8,
+          "absolute_bounds": {
+            "first_product": 256,
+            "encoded": 290,
+            "squared": 84100,
+            "sum_absolute_squares": 2444402,
+            "output": 2449019,
+            "parameters": 4617
+          },
+          "minimum_signed_ring_bits": 23,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 16,
+          "absolute_bounds": {
+            "first_product": 512,
+            "encoded": 579,
+            "squared": 335241,
+            "sum_absolute_squares": 9772978,
+            "output": 9791445,
+            "parameters": 18467
+          },
+          "minimum_signed_ring_bits": 25,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 32,
+          "absolute_bounds": {
+            "first_product": 1024,
+            "encoded": 1159,
+            "squared": 1343281,
+            "sum_absolute_squares": 39092096,
+            "output": 39165965,
+            "parameters": 73869
+          },
+          "minimum_signed_ring_bits": 27,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 64,
+          "absolute_bounds": {
+            "first_product": 2048,
+            "encoded": 2317,
+            "squared": 5368489,
+            "sum_absolute_squares": 156355125,
+            "output": 156650602,
+            "parameters": 295477
+          },
+          "minimum_signed_ring_bits": 29,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 128,
+          "absolute_bounds": {
+            "first_product": 4096,
+            "encoded": 4634,
+            "squared": 21473956,
+            "sum_absolute_squares": 625454764,
+            "output": 626636672,
+            "parameters": 1181908
+          },
+          "minimum_signed_ring_bits": 31,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        }
+      ]
+    },
+    {
+      "hidden": 64,
+      "selected_epoch": 5,
+      "validation_float": {
+        "accuracy": 0.9804878048780488,
+        "spam_precision": 0.9468085106382979,
+        "spam_recall": 0.89,
+        "false_positives": 5,
+        "false_negatives": 11
+      },
+      "validation_integer": {
+        "accuracy": 0.9780487804878049,
+        "spam_precision": 0.9361702127659575,
+        "spam_recall": 0.88,
+        "false_positives": 6,
+        "false_negatives": 12
+      },
+      "encoder_scale": 128,
+      "output_scale": 1048576,
+      "absolute_bounds": {
+        "first_product": 4096,
+        "encoded": 4535,
+        "squared": 20566225,
+        "sum_absolute_squares": 1156128978,
+        "output": 1157393178,
+        "parameters": 1264200
+      },
+      "minimum_signed_ring_bits": 32,
+      "fits_signed_ring16": false,
+      "fits_signed_ring32": true,
+      "scales": [
+        {
+          "scale": 1,
+          "absolute_bounds": {
+            "first_product": 0,
+            "encoded": 3,
+            "squared": 9,
+            "sum_absolute_squares": 296,
+            "output": 373,
+            "parameters": 77
+          },
+          "minimum_signed_ring_bits": 10,
+          "fits_signed_ring16": true,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 2,
+          "absolute_bounds": {
+            "first_product": 0,
+            "encoded": 7,
+            "squared": 49,
+            "sum_absolute_squares": 1214,
+            "output": 1523,
+            "parameters": 309
+          },
+          "minimum_signed_ring_bits": 12,
+          "fits_signed_ring16": true,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 4,
+          "absolute_bounds": {
+            "first_product": 128,
+            "encoded": 142,
+            "squared": 20164,
+            "sum_absolute_squares": 1191786,
+            "output": 1193021,
+            "parameters": 1235
+          },
+          "minimum_signed_ring_bits": 22,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 8,
+          "absolute_bounds": {
+            "first_product": 256,
+            "encoded": 283,
+            "squared": 80089,
+            "sum_absolute_squares": 4762165,
+            "output": 4767103,
+            "parameters": 4938
+          },
+          "minimum_signed_ring_bits": 24,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 16,
+          "absolute_bounds": {
+            "first_product": 512,
+            "encoded": 567,
+            "squared": 321489,
+            "sum_absolute_squares": 18793285,
+            "output": 18813038,
+            "parameters": 19753
+          },
+          "minimum_signed_ring_bits": 26,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 32,
+          "absolute_bounds": {
+            "first_product": 1024,
+            "encoded": 1134,
+            "squared": 1285956,
+            "sum_absolute_squares": 73044478,
+            "output": 73123490,
+            "parameters": 79012
+          },
+          "minimum_signed_ring_bits": 28,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 64,
+          "absolute_bounds": {
+            "first_product": 2048,
+            "encoded": 2267,
+            "squared": 5139289,
+            "sum_absolute_squares": 290687168,
+            "output": 291003218,
+            "parameters": 316050
+          },
+          "minimum_signed_ring_bits": 30,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 128,
+          "absolute_bounds": {
+            "first_product": 4096,
+            "encoded": 4535,
+            "squared": 20566225,
+            "sum_absolute_squares": 1156128978,
+            "output": 1157393178,
+            "parameters": 1264200
+          },
+          "minimum_signed_ring_bits": 32,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        }
+      ]
+    },
+    {
+      "hidden": 128,
+      "selected_epoch": 4,
+      "validation_float": {
+        "accuracy": 0.9792682926829268,
+        "spam_precision": 0.9278350515463918,
+        "spam_recall": 0.9,
+        "false_positives": 7,
+        "false_negatives": 10
+      },
+      "validation_integer": {
+        "accuracy": 0.9792682926829268,
+        "spam_precision": 0.9278350515463918,
+        "spam_recall": 0.9,
+        "false_positives": 7,
+        "false_negatives": 10
+      },
+      "encoder_scale": 128,
+      "output_scale": 1048576,
+      "absolute_bounds": {
+        "first_product": 4096,
+        "encoded": 4418,
+        "squared": 19518724,
+        "sum_absolute_squares": 1724764247,
+        "output": 1725740745,
+        "parameters": 976498
+      },
+      "minimum_signed_ring_bits": 32,
+      "fits_signed_ring16": false,
+      "fits_signed_ring32": true,
+      "scales": [
+        {
+          "scale": 1,
+          "absolute_bounds": {
+            "first_product": 0,
+            "encoded": 3,
+            "squared": 9,
+            "sum_absolute_squares": 401,
+            "output": 461,
+            "parameters": 60
+          },
+          "minimum_signed_ring_bits": 10,
+          "fits_signed_ring16": true,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 2,
+          "absolute_bounds": {
+            "first_product": 0,
+            "encoded": 6,
+            "squared": 36,
+            "sum_absolute_squares": 1488,
+            "output": 1726,
+            "parameters": 238
+          },
+          "minimum_signed_ring_bits": 12,
+          "fits_signed_ring16": true,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 4,
+          "absolute_bounds": {
+            "first_product": 128,
+            "encoded": 139,
+            "squared": 19321,
+            "sum_absolute_squares": 2317250,
+            "output": 2318204,
+            "parameters": 954
+          },
+          "minimum_signed_ring_bits": 23,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 8,
+          "absolute_bounds": {
+            "first_product": 256,
+            "encoded": 278,
+            "squared": 77284,
+            "sum_absolute_squares": 8620415,
+            "output": 8624229,
+            "parameters": 3814
+          },
+          "minimum_signed_ring_bits": 25,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 16,
+          "absolute_bounds": {
+            "first_product": 512,
+            "encoded": 552,
+            "squared": 304704,
+            "sum_absolute_squares": 26773588,
+            "output": 26788846,
+            "parameters": 15258
+          },
+          "minimum_signed_ring_bits": 26,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 32,
+          "absolute_bounds": {
+            "first_product": 1024,
+            "encoded": 1105,
+            "squared": 1221025,
+            "sum_absolute_squares": 108114227,
+            "output": 108175258,
+            "parameters": 61031
+          },
+          "minimum_signed_ring_bits": 28,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 64,
+          "absolute_bounds": {
+            "first_product": 2048,
+            "encoded": 2209,
+            "squared": 4879681,
+            "sum_absolute_squares": 431679972,
+            "output": 431924096,
+            "parameters": 244124
+          },
+          "minimum_signed_ring_bits": 30,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        },
+        {
+          "scale": 128,
+          "absolute_bounds": {
+            "first_product": 4096,
+            "encoded": 4418,
+            "squared": 19518724,
+            "sum_absolute_squares": 1724764247,
+            "output": 1725740745,
+            "parameters": 976498
+          },
+          "minimum_signed_ring_bits": 32,
+          "fits_signed_ring16": false,
+          "fits_signed_ring32": true
+        }
+      ]
+    }
+  ],
+  "float": {
+    "accuracy": 0.9746341463414634,
+    "spam_precision": 0.9159663865546218,
+    "spam_recall": 0.872,
+    "false_positives": 10,
+    "false_negatives": 16
+  },
+  "integer": {
+    "accuracy": 0.9746341463414634,
+    "spam_precision": 0.9159663865546218,
+    "spam_recall": 0.872,
+    "false_positives": 10,
+    "false_negatives": 16
+  },
+  "prediction_agreement": 1.0
+}

@@ -80,8 +80,8 @@ def _assemble(MASKS, LOCAL, RECEIVED, OUT, N: tl.constexpr,
                         value ^= term
                     else:
                         value += term
-        if BITS == 32:
-            value &= 0xffffffff
+        if BITS < 64:
+            value &= (1 << BITS)-1
         tl.store(OUT + slot * N + i, value.to(tl.int64), i < N)
 
 
@@ -99,18 +99,18 @@ def _local_operation(A0, A1, A2, B0, B1, B2, OUT,
                 value = tl.full((BLOCK,), 0, tl.int64)
         else:
             if slot == 0:
-                value = tl.load(A0 + i, i < N, 0)
+                value = tl.load(A0 + i, i < N, 0).to(tl.int64)
             elif slot == 1:
-                value = tl.load(A1 + i, i < N, 0)
+                value = tl.load(A1 + i, i < N, 0).to(tl.int64)
             else:
-                value = tl.load(A2 + i, i < N, 0)
+                value = tl.load(A2 + i, i < N, 0).to(tl.int64)
             if OP == 0 or OP == 1:
                 if slot == 0:
-                    other = tl.load(B0 + i, i < N, 0)
+                    other = tl.load(B0 + i, i < N, 0).to(tl.int64)
                 elif slot == 1:
-                    other = tl.load(B1 + i, i < N, 0)
+                    other = tl.load(B1 + i, i < N, 0).to(tl.int64)
                 else:
-                    other = tl.load(B2 + i, i < N, 0)
+                    other = tl.load(B2 + i, i < N, 0).to(tl.int64)
                 if BINARY:
                     value ^= other
                 elif OP == 0:
@@ -126,16 +126,35 @@ def _local_operation(A0, A1, A2, B0, B1, B2, OUT,
                 value = value.to(tl.uint64) << SCALAR
             else:
                 value >>= SCALAR
-        if BITS == 32:
-            value &= 0xffffffff
+        if BITS < 64:
+            value &= (1 << BITS)-1
         tl.store(OUT + slot * N + i, value.to(tl.int64), i < N)
+
+
+@triton.jit
+def _broadcast_local(A, B, OUT, N: tl.constexpr, SHAPE: tl.constexpr,
+                     AS: tl.constexpr, BS: tl.constexpr, SUBTRACT: tl.constexpr,
+                     BLOCK: tl.constexpr):
+    i = tl.program_id(0)*BLOCK + tl.arange(0, BLOCK)
+    remainder = i
+    ai = tl.full((BLOCK,), 0, tl.int64)
+    bi = tl.full((BLOCK,), 0, tl.int64)
+    for dim in tl.static_range(len(SHAPE)-1, -1, -1):
+        coordinate = remainder % SHAPE[dim]
+        remainder //= SHAPE[dim]
+        ai += coordinate*AS[dim]
+        bi += coordinate*BS[dim]
+    a = tl.load(A+ai, i < N, 0).to(tl.int32)
+    b = tl.load(B+bi, i < N, 0).to(tl.int32)
+    tl.store(OUT+i, a-b if SUBTRACT else a+b, i < N)
 
 
 class FusedParty(Party):
     """Reference-compatible Party with fused CUDA online multiplication."""
     def _local_apply(self, x, op, y=None, scalar=0):
+        self._validate_share_storage(x, y)
         count = math.prod(x.shape)
-        result = torch.empty((3, *x.shape), dtype=torch.int64, device=x.device)
+        result = torch.empty((3, *x.shape), dtype=self._storage_dtype(x.binary), device=x.device)
         if count:
             a = tuple(t.contiguous() for t in x.parts)
             b = a if y is None else tuple(t.contiguous() for t in y.parts)
@@ -144,6 +163,9 @@ class FusedParty(Party):
         return Share(tuple(result.unbind(0)), x.binary)
 
     def add(self, x, y):
+        self._validate_share_storage(x, y)
+        if self._storage_dtype(x.binary) in (torch.uint8, torch.uint16) and x.shape != y.shape:
+            return self._packed_broadcast(x, y, False)
         if x.device.type != 'cuda' or x.shape != y.shape:
             return super().add(x, y)
         if x.binary != y.binary:
@@ -153,6 +175,9 @@ class FusedParty(Party):
     xor = add
 
     def sub(self, x, y):
+        self._validate_share_storage(x, y)
+        if self._storage_dtype(x.binary) in (torch.uint8, torch.uint16) and x.shape != y.shape:
+            return self._packed_broadcast(x, y, True)
         if x.device.type != 'cuda' or x.shape != y.shape:
             return super().sub(x, y)
         if x.binary != y.binary:
@@ -160,28 +185,51 @@ class FusedParty(Party):
         return self._local_apply(x, 1, y)
 
     def mul_public(self, x, value):
+        self._validate_share_storage(x)
         if x.device.type == 'cuda' and isinstance(value, int) and -(1 << 63) <= value < (1 << 63):
             return self._local_apply(x, 2, scalar=value)
+        if x.parts[0].dtype in (torch.uint8, torch.uint16):
+            x = Share(tuple(t.to(torch.int64) for t in x.parts), x.binary)
         return super().mul_public(x, value)
 
+    def _packed_broadcast(self, x, y, subtract):
+        if x.binary != y.binary or x.device != y.device:
+            raise ValueError('broadcast operands must have matching sharing and device')
+        shape = torch.broadcast_shapes(x.shape, y.shape)
+        result = torch.empty((3, *shape), dtype=self._storage_dtype(x.binary), device=x.device)
+        count = math.prod(shape)
+        if count:
+            for a, b, out in zip(x.parts, y.parts, result.unbind(0)):
+                a, b = torch.broadcast_to(a, shape), torch.broadcast_to(b, shape)
+                _broadcast_local[(triton.cdiv(count, 256),)](
+                    a, b, out, count, tuple(shape), a.stride(), b.stride(), subtract, 256)
+        return Share(tuple(result.unbind(0)))
+
     def lshift(self, x, bits):
+        self._validate_share_storage(x)
         if x.device.type == 'cuda' and isinstance(bits, int) and 0 <= bits < 64:
             return self._local_apply(x, 3, scalar=bits)
+        if x.parts[0].dtype in (torch.uint8, torch.uint16):
+            x = Share(tuple(t.to(torch.int64) for t in x.parts), x.binary)
         return super().lshift(x, bits)
 
     def rshift(self, x, bits):
+        self._validate_share_storage(x)
         if x.device.type == 'cuda' and isinstance(bits, int) and 0 <= bits < 64:
             return self._local_apply(x, 4, scalar=bits)
+        if x.parts[0].dtype in (torch.uint8, torch.uint16):
+            x = Share(tuple(t.to(torch.int64) for t in x.parts), x.binary)
         return super().rshift(x, bits)
 
     def public(self, value, like=None, binary=None):
+        self._validate_share_storage(like)
         device = self.device if like is None else like.device
         if torch.device(device).type != 'cuda' or not isinstance(value, int) or not -(1 << 63) <= value < (1 << 63):
             return super().public(value, like, binary)
         binary = (like.binary if like is not None else False) if binary is None else binary
         shape = () if like is None else like.shape
         count = math.prod(shape)
-        result = torch.empty((3, *shape), dtype=torch.int64, device=device)
+        result = torch.empty((3, *shape), dtype=self._storage_dtype(binary), device=device)
         if count:
             _local_operation[(triton.cdiv(count, 256),)](result, result, result, result, result, result,
                                                         result, count, 5, value, binary, self._wire_bits(binary), self.party, 256)
@@ -263,12 +311,16 @@ class FusedParty(Party):
         return Share(tuple(result.unbind(0)), binary)
 
     def mul(self, x, y):
+        self._validate_share_storage(x, y)
         if x.device.type != 'cuda':
             return super().mul(x, y)
         if x.binary != y.binary:
             raise ValueError('cannot mix arithmetic and binary shares')
         shape = torch.broadcast_shapes(x.shape, y.shape)
         if math.prod(shape) == 0:
+            if self._storage_dtype(x.binary) in (torch.uint8, torch.uint16):
+                x = Share(tuple(t.to(torch.int64) for t in x.parts), x.binary)
+                y = Share(tuple(t.to(torch.int64) for t in y.parts), y.binary)
             return super().mul(x, y)
         xp = tuple(torch.broadcast_to(t, shape).contiguous() for t in x.parts)
         yp = tuple(torch.broadcast_to(t, shape).contiguous() for t in y.parts)

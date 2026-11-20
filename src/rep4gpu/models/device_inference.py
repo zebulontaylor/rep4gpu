@@ -11,12 +11,19 @@ class DeviceInferenceParty(DeviceParty):
     Floor rescaling is exact over the ring. Probabilistic rescaling requires
     ``abs(signed(x)) < 2**(bits-2)`` for each accumulator and rounds to its floor
     or ceiling. The caller must establish that range before execution.
+    Packed ring16 arithmetic keeps matrix and elementwise operations narrow.
+    Sign and truncation temporarily widen shares for the existing conversion
+    kernels and repack arithmetic results, without opening intermediates.
     """
     def __init__(self, party, transport, seeds, device='cuda', *, bits=64,
                  binary_bits=None, optimized=True, gpu_open=False, rounding='floor',
-                 bounded_sign=False, sparse_products=False, narrow_products=False):
+                 bounded_sign=False, sparse_products=False, narrow_products=False,
+                 packed_arithmetic=False, encoder_pipeline_stages=0):
+        if bits in (8, 16) and rounding == 'probabilistic':
+            raise ValueError('ring16 device inference currently requires exact floor rounding')
         if rounding not in ('floor', 'probabilistic'):
             raise ValueError("rounding must be 'floor' or 'probabilistic'")
+        self.encoder_pipeline_stages = encoder_pipeline_stages
         self.optimized = optimized
         self.gpu_open = gpu_open
         self.rounding = rounding
@@ -24,10 +31,26 @@ class DeviceInferenceParty(DeviceParty):
         self.sparse_products = bool(sparse_products)
         self.narrow_products = bool(narrow_products)
         super().__init__(party, transport, seeds, device=device, bits=bits,
-                         binary_bits=bits if binary_bits is None else binary_bits,
-                         prg_batch=optimized)
+                         binary_bits=(32 if bits in (8, 16) else bits) if binary_bits is None else binary_bits,
+                         prg_batch=optimized, packed_arithmetic=packed_arithmetic)
+
+    def _wide_conversion(self, method, x, *args):
+        """Keep existing bit conversions wide, then restore arithmetic storage.
+
+        Party operations execute sequentially; graph capture records this
+        fixed storage boundary without changing the live nonce schedule.
+        """
+        import torch
+        from ..protocol.runtime import Share
+        self.packed_arithmetic = False
+        try:
+            result = method(Share(tuple(t.to(torch.int64) for t in x.parts), x.binary), *args)
+        finally:
+            self.packed_arithmetic = True
+        return self._share(result.parts, result.binary)
 
     def open(self, x):
+        self._validate_share_storage(x)
         if not self.gpu_open:
             return super().open(x)
         from ..protocol.device_open import open_device
@@ -41,6 +64,9 @@ class DeviceInferenceParty(DeviceParty):
         return dict(carry_impl=truncation_bits, convert_impl=weighted_b2a_gpu)
 
     def trunc(self, x, shift):
+        self._validate_share_storage(x)
+        if self.packed_arithmetic:
+            return self._wide_conversion(self.trunc, x, shift)
         if self.rounding == 'probabilistic':
             from ..gpu.bits.device_probabilistic import trunc_pr
             return trunc_pr(self, x, shift)
@@ -48,6 +74,9 @@ class DeviceInferenceParty(DeviceParty):
         return trunc(self, x, shift, **self._conversion_options())
 
     def trunc_relu(self, x, shift):
+        self._validate_share_storage(x)
+        if self.packed_arithmetic:
+            return self._wide_conversion(self.trunc_relu, x, shift)
         if self.rounding == 'probabilistic':
             result = self.trunc(x, shift)
             if self.bounded_sign and shift > 0:
@@ -60,6 +89,9 @@ class DeviceInferenceParty(DeviceParty):
         return trunc_relu(self, x, shift, **self._conversion_options())
 
     def sign_bit(self, x):
+        self._validate_share_storage(x)
+        if self.packed_arithmetic:
+            return self._wide_conversion(self.sign_bit, x)
         if not self.optimized:
             return super().sign_bit(x)
         from ..arithmetic.exact_truncation import sign_bit_packed
@@ -68,6 +100,13 @@ class DeviceInferenceParty(DeviceParty):
         return sign_bit_packed(self, x, carry_impl=carry_bits, convert_impl=weighted_b2a_gpu)
 
     def prepare_weight_share(self, weight, *, storage='limbs'):
+        self._validate_share_storage(weight)
+        if storage == 'pipelined32':
+            if self.bits != 32 or not self.encoder_pipeline_stages:
+                raise ValueError('pipelined32 weights require ring32 and a positive pipeline depth')
+            from ..gpu.matmul.pipelined_encoder import prepare_pipelined_encoder
+            compact = super().prepare_weight_share(weight, storage='words32')
+            return prepare_pipelined_encoder(*compact.parts)
         if storage == 'strassen32':
             if self.bits != 32 or weight.binary:
                 raise ValueError('strassen32 weights require arithmetic ring32 shares')
@@ -83,9 +122,20 @@ class DeviceInferenceParty(DeviceParty):
         return prepare_five_weights(*weight.parts)
 
     def matmul(self, x, y):
+        self._validate_share_storage(x, y)
         from ..gpu.matmul.five_product import FiveWeights, local_products_five
         from ..gpu.matmul.strassen_kernels import StrassenWeight, local_products_strassen
-        if hasattr(y,'parts') and isinstance(y.parts[0],StrassenWeight):
+        from ..gpu.matmul.pipelined_encoder import PreparedEncoderWeights, local_products_pipelined_prepared
+        if isinstance(y, PreparedEncoderWeights):
+            if self.bits != 32 or x.binary or not self.encoder_pipeline_stages:
+                raise ValueError('prepared encoder requires ring32 arithmetic and a positive pipeline depth')
+            local = local_products_pipelined_prepared(*x.parts, y, stages=self.encoder_pipeline_stages)
+        elif self.bits in (8, 16):
+            if x.binary or y.binary:
+                raise ValueError('binary matrix products are not implemented')
+            from ..gpu.matmul.kernels import local_products
+            local = local_products(*x.parts, *y.parts, bits=self.bits)
+        elif hasattr(y,'parts') and isinstance(y.parts[0],StrassenWeight):
             if self.bits != 32 or x.binary or y.binary:
                 raise ValueError('strassen32 multiplication requires arithmetic ring32 shares')
             local = local_products_strassen(x.parts,y.parts,opaque=self.optimized)
@@ -101,7 +151,8 @@ class DeviceInferenceParty(DeviceParty):
             if x.binary or y.binary:
                 raise ValueError('binary matrix products are not implemented')
             from ..gpu.matmul.tuned_kernels import local_products_tuned
-            local = local_products_tuned(*x.parts, *y.parts, bits=self.bits)
+            local = local_products_tuned(*x.parts, *y.parts, bits=self.bits,
+                                         encoder_pipeline_stages=self.encoder_pipeline_stages)
         else:
             return super().matmul(x, y)
         contributions = [None]*5

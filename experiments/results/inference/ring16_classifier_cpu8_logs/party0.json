@@ -1,0 +1,42 @@
+{
+  "party": 0,
+  "passed": true,
+  "setup_ms": 34.26958099998956,
+  "measurements": [
+    {
+      "start_monotonic": 1642.142509751,
+      "end_monotonic": 1642.165076557,
+      "prediction_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+      "input_ms": 1.321591000078115,
+      "checked_inference_ms": 21.245214999908058,
+      "online_ms": 22.566805999986173,
+      "input_payload_bytes": 16384,
+      "payload_bytes": 37888,
+      "inference_payload_bytes": 21504,
+      "rounds": 14
+    },
+    {
+      "start_monotonic": 1642.165101795,
+      "end_monotonic": 1642.181489213,
+      "prediction_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+      "input_ms": 1.2601849998645775,
+      "checked_inference_ms": 15.127233000157503,
+      "online_ms": 16.38741800002208,
+      "input_payload_bytes": 16384,
+      "payload_bytes": 37888,
+      "inference_payload_bytes": 21504,
+      "rounds": 14
+    }
+  ],
+  "predictions": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "authenticated_tls": true
+}

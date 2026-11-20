@@ -1,0 +1,35 @@
+[W1120 10:53:05.119800952 CUDACachingAllocator.cpp:3933] memory allocation failed with OOM on device 0 while trying to allocate 20971520 bytes (free: 17432576, total: 8238792704).
+[W1120 10:53:05.123551318 CUDACachingAllocator.cpp:3933] memory allocation failed with OOM on device 0 while trying to allocate 20971520 bytes (free: 19529728, total: 8238792704).
+Traceback (most recent call last):
+  File "/home/zeb/Desktop/SIV/src/rep4gpu/models/phase_graph.py", line 222, in __init__
+    self.output = function(*self.inputs)
+  File "/home/zeb/Desktop/SIV/experiments/benchmarks/inference/topic_mlp_crt.py", line 191, in <lambda>
+    plan = rt.prepare_inference(lambda fx_in, prm: _forward_crt_score(rt, fx_in, prm, shift),
+  File "/home/zeb/Desktop/SIV/experiments/benchmarks/inference/topic_mlp_crt.py", line 137, in _forward_crt_score
+    h2 = crt_trunc_relu(rt, z2, shift)
+  File "/home/zeb/Desktop/SIV/src/rep4gpu/gpu/bits/crt_relu_gpu.py", line 1103, in crt_trunc_relu
+    return rt._crt_poly_exchange(h_eval)
+  File "/home/zeb/Desktop/SIV/src/rep4gpu/protocol/crt_runtime.py", line 294, in _crt_poly_exchange
+    r1_in = self._exchange_device(r1_out, r1_sizes)
+  File "/home/zeb/Desktop/SIV/src/rep4gpu/models/phase_graph.py", line 337, in _exchange_device
+    return self._phase_builder.exchange(outgoing, sizes)
+  File "/home/zeb/Desktop/SIV/src/rep4gpu/models/phase_graph.py", line 94, in exchange
+    incoming = {p: torch.zeros(n, dtype=torch.uint8, device=self.rt.device)
+  File "/home/zeb/Desktop/SIV/src/rep4gpu/models/phase_graph.py", line 94, in <dictcomp>
+    incoming = {p: torch.zeros(n, dtype=torch.uint8, device=self.rt.device)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 7.67 GiB of which 18.62 MiB is free. Process 636 has 450.00 MiB memory in use. Process 688 has 2.04 GiB memory in use. Including non-PyTorch memory, this process has 1.67 GiB memory in use. Process 691 has 1.65 GiB memory in use. Process 690 has 1.83 GiB memory in use. Of the allocated memory 1.36 GiB is allocated by PyTorch, with 475.49 MiB allocated in private pools (e.g., CUDA Graphs), and 21.44 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/zeb/Desktop/SIV/experiments/benchmarks/inference/topic_mlp_crt.py", line 191, in child
+    plan = rt.prepare_inference(lambda fx_in, prm: _forward_crt_score(rt, fx_in, prm, shift),
+  File "/home/zeb/Desktop/SIV/src/rep4gpu/models/phase_graph.py", line 331, in prepare_inference
+    return InferencePlan(self, function, inputs, check_at_send)
+  File "/home/zeb/Desktop/SIV/src/rep4gpu/models/phase_graph.py", line 224, in __init__
+    builder.end_segment()
+  File "/home/zeb/Desktop/SIV/src/rep4gpu/models/phase_graph.py", line 86, in end_segment
+    self.graph.capture_end()
+  File "/home/zeb/.pyenv/versions/3.10.13/lib/python3.10/site-packages/torch/cuda/graphs.py", line 169, in capture_end
+    super().capture_end()
+RuntimeError: num_active_captures_ > 0 INTERNAL ASSERT FAILED at "/__w/pytorch/pytorch/c10/cuda/CUDACachingAllocator.cpp":3211, please report a bug to PyTorch. markCaptureEnd called with no captures in progress

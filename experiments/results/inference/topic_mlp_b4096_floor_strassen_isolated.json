@@ -1,0 +1,96 @@
+{
+  "architecture": "topic_mlp_relu",
+  "bits": 32,
+  "fractional_bits": 14,
+  "rounding": "floor",
+  "weight_storage": "strassen32",
+  "device_transport": "isolated_only",
+  "phase_graphs": true,
+  "resident_inputs": false,
+  "batch": 4096,
+  "input_shape": [
+    4096,
+    4096
+  ],
+  "weight_shapes": {
+    "w1": [
+      4096,
+      1024
+    ],
+    "b1": [
+      1024
+    ],
+    "w2": [
+      1024,
+      512
+    ],
+    "b2": [
+      512
+    ],
+    "w3": [
+      512,
+      1
+    ],
+    "b3": [
+      1
+    ]
+  },
+  "total_parameters": 4720641,
+  "repeats": 5,
+  "warmup": 2,
+  "checkpoint": "/home/zeb/Desktop/SIV/experiments/results/examples/topic_mlp_classifier/model.npz",
+  "hardware": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "native_ms": {
+    "fp32_notf32_eager": 4.326566489908146,
+    "fp32_notf32_graph": 4.33057882997673,
+    "fp32_tf32_eager": 2.9861652199178934,
+    "fp32_tf32_graph": 2.880680200032657,
+    "fp16_eager": 1.4078660600353032,
+    "fp16_graph": 1.398436169984052,
+    "bf16_eager": 1.3101474099676125,
+    "bf16_graph": 1.3918732599995565,
+    "sparse_l1_fp32_eager": 3.003352970117703,
+    "sparse_l1_fp16_eager": 2.6236192499345634
+  },
+  "fastest_native_key": "bf16_eager",
+  "fastest_native_ms": 1.3101474099676125,
+  "range_bounds": {
+    "ring_bits": 32,
+    "fractional_bits": 14,
+    "rounding": "floor",
+    "truncation_limit": 2147483648,
+    "signed_ring_limit": 2147483648,
+    "raw1_max_abs": 414172637,
+    "h1_max_abs": 16711,
+    "raw2_max_abs": 534655764,
+    "h2_max_abs": 14973,
+    "raw3_max_abs": 353250036,
+    "max_score_interval_width_q28": 0,
+    "max_score_interval_width_float": 0.0,
+    "ambiguous_sign_examples": 0
+  },
+  "passed": true,
+  "isolated_party_gpu_estimate": {
+    "per_party_ms": {
+      "party0": 132.70944213867188,
+      "party1": 131.52748107910156,
+      "party2": 139.8381805419922,
+      "party3": 143.39056396484375
+    },
+    "bottleneck_party_ms": 143.39056396484375,
+    "phase_max_sum_ms": 145.28809622861445,
+    "rounds": 36,
+    "global_inference_payload_bytes": 1450671744,
+    "per_party_peak_vram_mb": {
+      "party0": 3683.73095703125,
+      "party1": 3699.73486328125,
+      "party2": 3844.73388671875,
+      "party3": 3717.7412109375
+    },
+    "slowdown_phase_max_vs_fastest_native": 110.8944650985541,
+    "slowdown_bottleneck_vs_fastest_native": 109.4461301636191,
+    "slowdown_phase_max_vs_fp32_notf32_graph": 33.54934800468582,
+    "slowdown_phase_max_vs_fp16_graph": 103.89326259365227,
+    "throughput_texts_per_second": 28192.261488200944
+  }
+}

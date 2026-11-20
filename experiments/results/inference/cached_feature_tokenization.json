@@ -1,0 +1,14 @@
+{
+  "batch": 8192,
+  "exact_checkpoint_features": true,
+  "cache_scope": "Per batch; no persistent token or message cache",
+  "milliseconds": [
+    45.10660999994798,
+    43.06718199995885,
+    48.00770600013493,
+    45.30068399981246,
+    42.692197999713244
+  ],
+  "median_ms": 45.10660999994798,
+  "dataset_sha256": "7d039a24a6083ed9ef0f806ebad56bbb976e3aeb8de05669173bfdc4996c239d"
+}

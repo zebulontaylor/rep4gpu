@@ -66,7 +66,7 @@ class ForwardOracle(IntegerOracle):
                         a.hi @ positive + a.lo @ negative)
 
 
-def _forward(runtime, values, fractional_bits, kind, validate=False):
+def _forward(runtime, values, fractional_bits, kind, validate=False, *, activation_enabled=True):
     fixed = NumericalFixedPoint(runtime, fractional_bits)
     x, gate, gate_bias, down, down_bias, *value = values
     def projection(weights, bias):
@@ -76,18 +76,23 @@ def _forward(runtime, values, fractional_bits, kind, validate=False):
             raise ValueError('fixture activation input exceeds [-4,4]')
         return result
     hidden = projection(gate, gate_bias)
-    hidden = fixed.swiglu(hidden, projection(*value)) if kind == 'swiglu' else getattr(fixed, kind)(hidden)
+    if kind == 'swiglu':
+        value_projection = projection(*value)
+        hidden = fixed.swiglu(hidden, value_projection) if activation_enabled else fixed.mul(hidden, value_projection)
+    elif activation_enabled:
+        hidden = getattr(fixed, kind)(hidden)
     return runtime.add(runtime.trunc(runtime.matmul(hidden, down), fractional_bits), down_bias)
 
 
-def infer(party, values, fractional_bits=24, kind='silu'):
+def infer(party, values, fractional_bits=24, kind='silu', *, activation_enabled=True):
     """Evaluate private matrices and activations, opening only the final output."""
-    return party.open(_forward(party, values, fractional_bits, kind))
+    return party.open(_forward(party, values, fractional_bits, kind, activation_enabled=activation_enabled))
 
 
-def oracle(kind, integers, fractional_bits=24, probabilistic=False):
+def oracle(kind, integers, fractional_bits=24, probabilistic=False, *, activation_enabled=True):
     runtime = ForwardOracle(probabilistic)
-    interval = _forward(runtime, [runtime.public(v) for v in integers], fractional_bits, kind, validate=True)
+    interval = _forward(runtime, [runtime.public(v) for v in integers], fractional_bits, kind,
+                        validate=True, activation_enabled=activation_enabled)
     return interval, dict(maximum_pretruncation_abs_bound=runtime.maximum,
                           strict_probabilistic_accumulator_limit=2**62,
                           maximum_rounding_interval_width=int((interval.hi-interval.lo).max()),
@@ -95,15 +100,15 @@ def oracle(kind, integers, fractional_bits=24, probabilistic=False):
                           range_validation='public fixture only; not a private range check')
 
 
-def reference(values, kind, *, preserve_dtype=False):
+def reference(values, kind, *, preserve_dtype=False, activation_enabled=True):
     """Use float64 for error measurement or retain dtype for baseline timing."""
     x, gate, gate_bias, down, down_bias, *value = values if preserve_dtype else [v.double() for v in values]
     hidden = x @ gate + gate_bias
     if kind == 'swiglu':
-        hidden = torch.nn.functional.silu(hidden)*(x @ value[0]+value[1])
-    elif kind == 'gelu':
+        hidden = (torch.nn.functional.silu(hidden) if activation_enabled else hidden)*(x @ value[0]+value[1])
+    elif activation_enabled and kind == 'gelu':
         hidden = torch.nn.functional.gelu(hidden)
-    else:
+    elif activation_enabled:
         hidden = torch.nn.functional.silu(hidden)
     return hidden @ down + down_bias
 

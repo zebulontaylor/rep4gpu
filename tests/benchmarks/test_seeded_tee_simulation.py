@@ -219,3 +219,52 @@ def test_full_ffn_graph_refresh(tee_down):
             if tee_down:
                 assert torch.equal(interval.lo, interval.hi)
                 assert torch.equal(result, interval.lo)
+
+
+@pytest.mark.parametrize('kind', ['relu', 'silu', 'gelu', 'swiglu'])
+@pytest.mark.parametrize('captured', [False, True])
+def test_generic_activation_exact_words_and_payload(kind, captured):
+    network, roles = _roles()
+    scale = 1 << 24
+    # Include signed raw fractions: the boundary floors before evaluation.
+    encoded = torch.tensor([[-4*scale, -scale, -1, 0, 1, scale//8, scale, 4*scale]],
+                           dtype=torch.int64)
+    raw = encoded*scale + torch.tensor([[1, scale-1, 1, 0, scale-1, 17, 31, 0]])
+    value_raw = -raw.flip(-1)
+    gates, values = _shares(raw, roles), _shares(value_raw, roles)
+    def call(role, gate, value):
+        return role.tee_activation(kind, gate, value if kind == 'swiglu' else None)
+    plans = ([role.prepare_inference(lambda a, b, role=role: call(role, a, b),
+                                     gates[p], values[p], check_at_send=True)
+              for p, role in enumerate(roles)] if captured else None)
+    records = [DeviceRecorder(role.transport) for role in roles]
+    for role, record in zip(roles, records):
+        role.transport = record
+    outputs = _parallel(network, roles, lambda role: (
+        plans[role.party].run(gates[role.party], values[role.party]) if captured
+        else call(role, gates[role.party], values[role.party])))
+    assert all(len(record.transcript) == 2 for record in records)
+    assert sum(record.bytes_sent for record in records) == (32 if kind == 'swiglu' else 24)*raw.numel()+32
+    for role, record in zip(roles, records):
+        role.transport = record.underlying
+    actual = _parallel(network, roles, lambda role: role.open(outputs[role.party]))
+    gate = (raw >> 24).double()/scale
+    if kind == 'relu':
+        real = gate.clamp_min(0)
+    elif kind == 'gelu':
+        real = .5*gate*(1+torch.erf(gate/(2**.5)))
+    else:
+        real = gate/(1+torch.exp(-gate))
+        if kind == 'swiglu':
+            real = real*((value_raw >> 24).double()/scale)
+    expected = torch.round(real*scale).long()
+    assert all(torch.equal(output.cpu(), expected) for output in actual)
+
+
+def test_generic_activation_invalid_arity_and_kind():
+    _, roles = _roles()
+    role = roles[0]
+    x = role.public(torch.ones((2, 3), dtype=torch.int64, device=role.device))
+    for kind, value in [('sigmoid', None), ('swiglu', None), ('relu', x), ('gelu', x)]:
+        with pytest.raises(ValueError):
+            role.tee_activation(kind, x, value)

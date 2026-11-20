@@ -70,6 +70,8 @@ class IdealTransport:
 
 def _read(sock, count, deadline=None):
     """Read exactly count bytes within one absolute monotonic deadline."""
+    if not count:
+        return b''
     result = bytearray()
     previous_timeout = sock.gettimeout()
     try:
@@ -88,11 +90,36 @@ def _read(sock, count, deadline=None):
         sock.settimeout(previous_timeout)
 
 
+def _read_fast(sock, count):
+    """Read exactly count bytes using the socket's configured timeout."""
+    if not count:
+        return b''
+    block = sock.recv(min(count, 1 << 20))
+    if len(block) == count:
+        return block
+    if not block:
+        raise ConnectionError('peer closed during protocol exchange')
+    result = bytearray(block)
+    while len(result) < count:
+        chunk = sock.recv(min(count - len(result), 1 << 20))
+        if not chunk:
+            raise ConnectionError('peer closed during protocol exchange')
+        result.extend(chunk)
+    return bytes(result)
+
+
 def _receive_frame(sock, max_frame_bytes, deadline):
     size = struct.unpack('!Q', _read(sock, 8, deadline))[0]
     if size > max_frame_bytes:
         raise ValueError(f'protocol frame length {size} exceeds limit {max_frame_bytes}')
     return _read(sock, size, deadline)
+
+
+def _receive_frame_fast(sock, max_frame_bytes):
+    size = struct.unpack('!Q', _read_fast(sock, 8))[0]
+    if size > max_frame_bytes:
+        raise ValueError(f'protocol frame length {size} exceeds limit {max_frame_bytes}')
+    return _read_fast(sock, size)
 
 
 class SocketTransport:
@@ -172,6 +199,23 @@ class SocketTransport:
             raise ValueError('outgoing protocol frame exceeds configured limit')
         self.bytes_sent += sum(map(len, outgoing.values()))
         self.messages_sent += len(outgoing)
+        # Small frames fit safely inside kernel send buffers without blocking,
+        # allowing direct parallel send-all then receive-all without thread-pool
+        # scheduling or half-duplex serialization across peers.
+        if all(len(data) <= 32768 for data in outgoing.values()):
+            try:
+                for peer, sock in self.peers.items():
+                    data = outgoing.get(peer, b'')
+                    sock.sendall(struct.pack('!Q', len(data)) + data)
+                result = {}
+                for peer, sock in self.peers.items():
+                    body = _receive_frame_fast(sock, self.max_frame_bytes)
+                    if body:
+                        result[peer] = body
+                return result
+            except BaseException:
+                self._close_peers()
+                raise
         def send(peer, sock):
             data = outgoing.get(peer, b'')
             deadline = time.monotonic() + self.timeout

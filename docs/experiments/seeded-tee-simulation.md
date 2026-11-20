@@ -108,3 +108,18 @@ exclude physical network transfers and TEE transitions.
 - [Forward benchmark](../../experiments/benchmarks/inference/seeded_tee_inference.py)
 - [Measured FFN results](../../experiments/results/activations/seeded_tee_inference.json)
 - [Results with helper down rescaling](../../experiments/results/activations/seeded_tee_inference_down.json)
+
+## One-layer bit accuracy
+
+The helper also exposes `tee_activation` for ReLU, SiLU, GELU, and SwiGLU.
+Each call floor-rescales Q48 inputs to Q24, evaluates the activation in float64,
+and returns nearest-even Q24 output shares. The generic entry point also accepts
+Q20 through Q23 with the corresponding doubled input scale. `tee_swiglu`
+retains its existing interface and delegates to this implementation.
+
+The [one-layer bit-accuracy report](../../experiments/results/activations/layer_bit_accuracy_report.md)
+compares these helper outputs with fully private numerical activations, using
+both deterministic floor and probabilistic truncation. It includes dense-layer
+and activation stress fixtures, encoded-bit and ULP differences in FP32, FP16,
+BF16, and two FP8 formats, plus native FP16/BF16 GPU layer baselines. Output
+casting and native low-precision execution are measured separately.

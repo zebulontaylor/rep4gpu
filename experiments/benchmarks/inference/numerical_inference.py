@@ -13,7 +13,7 @@ from experiments.benchmarks.inference.device_inference import phase_estimate, ph
 
 
 def run_case(kind, batch=1, width=2048, hidden=None, out=None, repeats=3,
-             rounding='probabilistic', replay=True):
+             rounding='probabilistic', replay=True, activation_enabled=True):
     from experiments.benchmarks.inference.numerical_inference_common import fixture, oracle, infer, reference, metrics
     from rep4gpu.models.phase_graph import PhaseGraphParty
     from rep4gpu.protocol.device_transport import DeviceIdealEndpoint, DeviceRecorder, DeviceReplay
@@ -22,8 +22,8 @@ def run_case(kind, batch=1, width=2048, hidden=None, out=None, repeats=3,
     hidden, out = hidden or 4*width, out or width
     torch.cuda.empty_cache();torch.cuda.reset_peak_memory_stats()
     floats,integers=fixture(kind,batch,width,hidden,out)
-    interval,proof=oracle(kind,integers,probabilistic=rounding=='probabilistic')
-    truth=reference(floats,kind)
+    interval,proof=oracle(kind,integers,probabilistic=rounding=='probabilistic', activation_enabled=activation_enabled)
+    truth=reference(floats,kind,activation_enabled=activation_enabled)
     network,seeds=IdealNetwork(timeout=600),make_seeds()
     options=dict(device='cuda:0',bits=64,binary_bits=64,optimized=True,gpu_open=True,
                  rounding=rounding,sparse_products=True)
@@ -42,7 +42,7 @@ def run_case(kind, batch=1, width=2048, hidden=None, out=None, repeats=3,
             return list(pool.map(guarded,parties))
         shares=parallel(lambda p:[p.input(0 if i==0 else 1,v if p.party==(0 if i==0 else 1) else None,v.shape) for i,v in enumerate(integers)])
         start=time.perf_counter()
-        plans=[p.prepare_inference(lambda x,p=p:infer(p,[x,*shares[p.party][1:]],kind=kind),shares[p.party][0],check_at_send=True) for p in parties]
+        plans=[p.prepare_inference(lambda x,p=p:infer(p,[x,*shares[p.party][1:]],kind=kind,activation_enabled=activation_enabled),shares[p.party][0],check_at_send=True) for p in parties]
         preparation_ms=(time.perf_counter()-start)*1000
         execute=lambda p:plans[p.party].run(shares[p.party][0])
         check(parallel(execute));samples=[]
@@ -62,7 +62,7 @@ def run_case(kind, batch=1, width=2048, hidden=None, out=None, repeats=3,
         for p in parties:
             local=PhaseGraphParty(p.party,p.transport,p.seeds,**options)
             local._device_keys=p._device_keys;local._batch_keys=p._batch_keys
-            plan=local.prepare_inference(lambda x:infer(local,[x,*shares[p.party][1:]],kind=kind),shares[p.party][0],check_at_send=True)
+            plan=local.prepare_inference(lambda x:infer(local,[x,*shares[p.party][1:]],kind=kind,activation_enabled=activation_enabled),shares[p.party][0],check_at_send=True)
             phases=[]
             for repeat in range(repeats+1):
                 recorded=DeviceReplay(records[p.party].transcript,device=p.device,check_outgoing=repeat==0,staging='device',incoming_buffers=plan.receive_buffers)
@@ -77,11 +77,11 @@ def run_case(kind, batch=1, width=2048, hidden=None, out=None, repeats=3,
     gpu_values=[v.cuda().half() for v in floats]
     for i in range(repeats+3):
         start=torch.cuda.Event(enable_timing=True);end=torch.cuda.Event(enable_timing=True)
-        start.record();reference(gpu_values,kind,preserve_dtype=True);end.record();end.synchronize()
+        start.record();reference(gpu_values,kind,preserve_dtype=True,activation_enabled=activation_enabled);end.record();end.synchronize()
         if i>=3:baseline.append(start.elapsed_time(end))
     from experiments.benchmarks.inference.inference import baselines
-    baseline_times,baseline_errors=baselines(floats,'cuda:0',repeats,forward=lambda v:reference(v,kind,preserve_dtype=True))
-    result=dict(baselines=baseline_times,baseline_errors=baseline_errors,kind=kind,batch=batch,width=width,hidden=hidden,out=out,ring_bits=64,fractional_bits=24,
+    baseline_times,baseline_errors=baselines(floats,'cuda:0',repeats,forward=lambda v:reference(v,kind,preserve_dtype=True,activation_enabled=activation_enabled))
+    result=dict(baselines=baseline_times,baseline_errors=baseline_errors,kind=kind,activation_enabled=activation_enabled,batch=batch,width=width,hidden=hidden,out=out,ring_bits=64,fractional_bits=24,
         rounding=rounding,party_agreement=True,integer_oracle_passed=True,range_proof=proof,
         exact_recorded_replay_passed=replay,only_final_output_opened=True,
         resident_raw_secret_weights=True,preparation_ms=preparation_ms,peak_cuda_allocated_bytes=max(peak,torch.cuda.max_memory_allocated()),
@@ -96,6 +96,7 @@ def run_case(kind, batch=1, width=2048, hidden=None, out=None, repeats=3,
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--kind',nargs='+',default=['silu','gelu','swiglu'])
+    parser.add_argument('--activation-ablation',action='store_true',help='compare each activation with its nonlinearity bypassed; retain SwiGLU gating')
     parser.add_argument('--batch',type=int,nargs='+',default=[1])
     parser.add_argument('--width',type=int,default=2048)
     parser.add_argument('--repeats',type=int,default=3)
@@ -103,13 +104,14 @@ def main():
     parser.add_argument('--output',type=Path,default=Path('experiments/results/inference/numerical_inference.json'))
     args=parser.parse_args();torch.set_num_threads(1)
     torch.backends.cuda.matmul.allow_tf32=False
-    report=dict(gpu=torch.cuda.get_device_name(),torch_version=torch.__version__,methodology='Complete FFN with privately shared input, weights and biases. Fresh masks in live runs; only final output opened. Public integer interval oracle proves accumulator ranges. Checked isolated-party replay excludes network latency and bandwidth. FP16 baseline evaluates the same original floating formulas.',results=[])
+    report=dict(gpu=torch.cuda.get_device_name(),torch_version=torch.__version__,methodology='Complete FFN with privately shared input, weights and biases. Fresh masks in live runs; only final output opened. Public integer interval oracle proves accumulator ranges. Checked isolated-party replay excludes network latency and bandwidth. Floating baselines use the same activation setting. Activation ablation replaces SiLU/GELU with identity and retains the SwiGLU value projection and gate multiplication.',results=[])
     report['source_sha256']={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in ['experiments/benchmarks/inference/numerical_inference.py','experiments/benchmarks/inference/numerical_inference_common.py','src/rep4gpu/arithmetic/numerical.py']}
     for batch in args.batch:
         for kind in args.kind:
-            row=run_case(kind,batch,args.width,repeats=args.repeats,rounding=args.rounding)
-            report['results'].append(row);args.output.parent.mkdir(parents=True,exist_ok=True)
-            args.output.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:row[k] for k in ['kind','batch','width','live_four_party_median_ms','ideal_network_phase_max_ms','max_error','rmse','peak_cuda_allocated_bytes']}),flush=True)
-            gc.collect();torch.cuda.empty_cache()
+            for enabled in ([True,False] if args.activation_ablation else [True]):
+                row=run_case(kind,batch,args.width,repeats=args.repeats,rounding=args.rounding,activation_enabled=enabled)
+                report['results'].append(row);args.output.parent.mkdir(parents=True,exist_ok=True)
+                args.output.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:row[k] for k in ['kind','activation_enabled','batch','width','live_four_party_median_ms','ideal_network_phase_max_ms','max_error','rmse','peak_cuda_allocated_bytes']}),flush=True)
+                gc.collect();torch.cuda.empty_cache()
 
 if __name__=='__main__':main()

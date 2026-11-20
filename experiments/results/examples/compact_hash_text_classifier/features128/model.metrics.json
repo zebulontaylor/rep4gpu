@@ -1,0 +1,24 @@
+{
+  "checkpoint": "experiments/results/examples/compact_hash_text_classifier/features128/model.npz",
+  "checkpoint_sha256": "598d4fd76dda0c06ad92ca5449a4218c9d4cc260946c1248e9c415542f08d2f4",
+  "selection": "Evaluation of a fixed checkpoint; no parameter or threshold selection.",
+  "hidden": 16,
+  "absolute_bounds": {
+    "first_product": 20,
+    "encoded": 20,
+    "squared": 400,
+    "sum_absolute_squares": 4089,
+    "output": 4109,
+    "parameters": 20
+  },
+  "fits_signed_ring16": true,
+  "minimum_signed_ring_bits": 14,
+  "integer": {
+    "accuracy": 0.9590243902439024,
+    "spam_precision": 0.8878504672897196,
+    "spam_recall": 0.76,
+    "false_positives": 12,
+    "false_negatives": 30
+  },
+  "observed_max_absolute_logit": 280
+}

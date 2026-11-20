@@ -1,0 +1,189 @@
+{
+  "dataset": {
+    "url": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
+    "citation": "Almeida, T. & Hidalgo, J. (2011). SMS Spam Collection. https://doi.org/10.24432/C5CC84",
+    "sha256": "7d039a24a6083ed9ef0f806ebad56bbb976e3aeb8de05669173bfdc4996c239d",
+    "train_rows": 3285,
+    "validation_rows": 820,
+    "test_rows": 1025
+  },
+  "architecture": "binary hashed token presence -> sparse integer encoder -> square -> integer head",
+  "privacy": "All learned encoder/head weights, sparsity locations, and biases stay private.",
+  "input_contract": "Binary feature values and at most 128 nonzero features; hash first 128 tokens then clamp counts to one.",
+  "ring_bits": 16,
+  "seed": 2026,
+  "learning_rate": 0.02,
+  "max_epochs": 100,
+  "patience": 20,
+  "training_logit_divisor": 16,
+  "selection": "Maximum validation F1, then precision; all architecture/epoch/threshold choices precede test evaluation.",
+  "selected": {
+    "epoch": 3,
+    "threshold": -6,
+    "validation": {
+      "accuracy": 0.9768292682926829,
+      "spam_precision": 0.9354838709677419,
+      "spam_recall": 0.87,
+      "false_positives": 6,
+      "false_negatives": 13
+    },
+    "absolute_bounds": {
+      "first_product": 4,
+      "encoded": 5,
+      "squared": 25,
+      "last_product": 2166,
+      "output": 2184,
+      "parameters": 18
+    },
+    "fits_signed_ring16": true,
+    "minimum_signed_ring_bits": 13,
+    "hidden": 512,
+    "encoder_nonzeros_per_hidden": 4,
+    "head_limit": 2
+  },
+  "candidates": [
+    {
+      "epoch": 9,
+      "threshold": -5,
+      "validation": {
+        "accuracy": 0.974390243902439,
+        "spam_precision": 0.9540229885057471,
+        "spam_recall": 0.83,
+        "false_positives": 4,
+        "false_negatives": 17
+      },
+      "absolute_bounds": {
+        "first_product": 8,
+        "encoded": 9,
+        "squared": 81,
+        "last_product": 3572,
+        "output": 3553,
+        "parameters": 19
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 13,
+      "hidden": 128,
+      "encoder_nonzeros_per_hidden": 8,
+      "head_limit": 3
+    },
+    {
+      "epoch": 5,
+      "threshold": 3,
+      "validation": {
+        "accuracy": 0.974390243902439,
+        "spam_precision": 0.9540229885057471,
+        "spam_recall": 0.83,
+        "false_positives": 4,
+        "false_negatives": 17
+      },
+      "absolute_bounds": {
+        "first_product": 4,
+        "encoded": 5,
+        "squared": 25,
+        "last_product": 1777,
+        "output": 1750,
+        "parameters": 27
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 12,
+      "hidden": 256,
+      "encoder_nonzeros_per_hidden": 4,
+      "head_limit": 3
+    },
+    {
+      "epoch": 5,
+      "threshold": -6,
+      "validation": {
+        "accuracy": 0.9682926829268292,
+        "spam_precision": 0.9404761904761905,
+        "spam_recall": 0.79,
+        "false_positives": 5,
+        "false_negatives": 21
+      },
+      "absolute_bounds": {
+        "first_product": 4,
+        "encoded": 5,
+        "squared": 25,
+        "last_product": 1013,
+        "output": 995,
+        "parameters": 18
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 11,
+      "hidden": 128,
+      "encoder_nonzeros_per_hidden": 4,
+      "head_limit": 3
+    },
+    {
+      "epoch": 13,
+      "threshold": -7,
+      "validation": {
+        "accuracy": 0.975609756097561,
+        "spam_precision": 0.925531914893617,
+        "spam_recall": 0.87,
+        "false_positives": 7,
+        "false_negatives": 13
+      },
+      "absolute_bounds": {
+        "first_product": 8,
+        "encoded": 9,
+        "squared": 81,
+        "last_product": 4672,
+        "output": 4655,
+        "parameters": 17
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 14,
+      "hidden": 256,
+      "encoder_nonzeros_per_hidden": 8,
+      "head_limit": 1
+    },
+    {
+      "epoch": 3,
+      "threshold": -6,
+      "validation": {
+        "accuracy": 0.9768292682926829,
+        "spam_precision": 0.9354838709677419,
+        "spam_recall": 0.87,
+        "false_positives": 6,
+        "false_negatives": 13
+      },
+      "absolute_bounds": {
+        "first_product": 4,
+        "encoded": 5,
+        "squared": 25,
+        "last_product": 2166,
+        "output": 2184,
+        "parameters": 18
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 13,
+      "hidden": 512,
+      "encoder_nonzeros_per_hidden": 4,
+      "head_limit": 2
+    }
+  ],
+  "test": {
+    "accuracy": 0.9678048780487805,
+    "spam_precision": 0.8898305084745762,
+    "spam_recall": 0.84,
+    "false_positives": 13,
+    "false_negatives": 20
+  },
+  "observed_max_absolute_score": 261,
+  "inference": "H = x @ w1 + b1; score = (H*H) @ w2 + b2; label = score >= 0; no rescaling.",
+  "runtime_scope": "This checkpoint is ring16-safe; a ring16 MPC runtime must be selected separately.",
+  "pruned_hidden": 328,
+  "pruned_bounds": {
+    "absolute_bounds": {
+      "first_product": 4,
+      "encoded": 5,
+      "squared": 25,
+      "last_product": 2166,
+      "output": 2184,
+      "parameters": 18
+    },
+    "fits_signed_ring16": true,
+    "minimum_signed_ring_bits": 13
+  }
+}

@@ -1,4 +1,4 @@
-"""Ring64 seeded SwiGLU helper simulation, colocated with Rep4 role 0.
+"""Ring64 seeded activation helper simulation, colocated with Rep4 role 0.
 
 Ordinary CUDA code reconstructs activations; there is no enclave or protected
 channel. The factory retains every helper seed. This measures a proposed TEE
@@ -17,12 +17,36 @@ _DOMAIN = b'PUBLIC-FIXTURE-SEEDED-SWIGLU-v1'
 _STREAMS = (4, 5, 6)
 
 
+def clear_activation(kind, gate_raw, value_raw=None, fractional_bits=24):
+    """Floor-rescale Q(2f), evaluate in float64, and round to nearest-even Qf.
+
+    Supported functions are ReLU, SiLU, exact-formula GELU, and SwiGLU. The
+    caller supplies signed int64 accumulators whose decoded ranges are valid.
+    """
+    if kind not in ('relu', 'silu', 'gelu', 'swiglu'):
+        raise ValueError('unsupported helper activation')
+    if type(fractional_bits) is not int or not 20 <= fractional_bits <= 24:
+        raise ValueError('fractional_bits must be in [20,24]')
+    if (kind == 'swiglu') != (value_raw is not None):
+        raise ValueError('only SwiGLU requires a value input')
+    if value_raw is not None and gate_raw.shape != value_raw.shape:
+        raise ValueError('gate and value must have matching shape')
+    scale = 1 << fractional_bits
+    gate = (gate_raw >> fractional_bits).double()/scale
+    if kind == 'relu':
+        result = torch.relu(gate)
+    elif kind == 'gelu':
+        result = torch.nn.functional.gelu(gate, approximate='none')
+    else:
+        result = torch.nn.functional.silu(gate)
+        if value_raw is not None:
+            result = result*((value_raw >> fractional_bits).double()/scale)
+    return torch.round(result*scale).to(torch.int64)
+
+
 def clear_swiglu(gate, value, fractional_bits=24):
     """Floor-rescale signed raw accumulators, then return round-to-even Qf."""
-    scale = 1 << fractional_bits
-    gate = (gate >> fractional_bits).double()/scale
-    value = (value >> fractional_bits).double()/scale
-    return torch.round(torch.nn.functional.silu(gate)*value*scale).to(torch.int64)
+    return clear_activation('swiglu', gate, value, fractional_bits)
 
 
 def seeded_tee_party(helper_seed):
@@ -58,23 +82,31 @@ def seeded_tee_party(helper_seed):
                 result = generate_rows(self._tee_keys, nonces, math.prod(shape), bits=64)
             return result.reshape(3, *shape)
 
-        def tee_swiglu(self, gate_raw, value_raw, fractional_bits=24):
-            """Consume Q(2f) shares and return shared Qf SwiGLU in two exchanges.
+        def tee_activation(self, kind, gate_raw, value_raw=None, fractional_bits=24):
+            """Return shared Qf activations from Q(2f) inputs in two exchanges.
 
-            For N coordinates, global payload is 32*N+32 bytes. The missing
-            input component has an independent holder's hash. Output residuals
-            model delivery from a trusted enclave; authenticating that delivery
-            and the colocated host's local inputs requires a real TEE backend.
-            The caller establishes accumulator and activation/output ranges.
+            For N coordinates, global payload is 24*N+32 bytes for unary
+            functions or 32*N+32 for SwiGLU. The caller establishes valid
+            accumulator and output ranges. This is an ordinary CUDA helper,
+            not an enclave or a protected activation implementation.
             """
+            if kind not in ('relu', 'silu', 'gelu', 'swiglu'):
+                raise ValueError('unsupported helper activation')
             if type(fractional_bits) is not int or not 20 <= fractional_bits <= 24:
                 raise ValueError('fractional_bits must be in [20,24]')
-            if any(x.binary or x.device != self.device for x in (gate_raw, value_raw)):
+            if (kind == 'swiglu') != (value_raw is not None):
+                raise ValueError('only SwiGLU requires a value input')
+            inputs = (gate_raw,) if value_raw is None else (gate_raw, value_raw)
+            if any(x.binary or x.device != self.device for x in inputs):
                 raise ValueError('TEE simulation requires matching arithmetic device shares')
-            if gate_raw.shape != value_raw.shape:
+            if value_raw is not None and gate_raw.shape != value_raw.shape:
                 raise ValueError('gate and value must have matching shape')
-            return self._tee_apply((gate_raw, value_raw),
-                                   lambda a, b: clear_swiglu(a, b, fractional_bits))
+            return self._tee_apply(inputs, lambda *values: clear_activation(
+                kind, values[0], values[1] if len(values) == 2 else None, fractional_bits))
+
+        def tee_swiglu(self, gate_raw, value_raw, fractional_bits=24):
+            """Consume raw SwiGLU projections through the seeded helper boundary."""
+            return self.tee_activation('swiglu', gate_raw, value_raw, fractional_bits)
 
         def tee_trunc(self, raw, fractional_bits=24):
             """Floor-rescale inside the helper for 24*N+32 global bytes."""

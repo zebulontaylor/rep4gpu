@@ -65,7 +65,7 @@ def _rows(K0,K1,K2,K3,K4,K5,N0,N1,N2,N3,N4,N5,OUT,COUNT:tl.constexpr,
         words=_block_words(key,nonce,block,BLOCK)
         _store_words(OUT+row*COUNT,block,words,COUNT,BITS)
     else:
-        idx=block[:,None]*(16 if BITS==32 else 8)+tl.arange(0,16 if BITS==32 else 8)[None,:]
+        idx=block[:,None]*(512//BITS)+tl.arange(0,512//BITS)[None,:]
         tl.store(OUT+row*COUNT+idx,tl.full(idx.shape,0,tl.int64),idx<COUNT)
 
 
@@ -77,7 +77,7 @@ def generate_rows(keys,nonces,count,bits=64,*,packed=False):
     Other rows use cached eight-word uint32 CUDA keys and fresh unsigned 64-bit
     nonces. Row order is unchanged; repeated keys still require distinct nonces.
     The caller reserves draw counters in its protocol's public schedule order.
-    ``packed=True`` stores ring32 rows as uint32, halving their memory traffic.
+    ``packed=True`` stores narrow rows as uint8, uint16, or uint32, matching wire width.
     Other cases retain int64 storage; the generated bits are unchanged.
     """
     keys=tuple(keys)
@@ -85,11 +85,11 @@ def generate_rows(keys,nonces,count,bits=64,*,packed=False):
     count=operator.index(count)
     if not 1<=len(keys)<=6 or len(keys)!=len(nonces):
         raise ValueError("provide matching key and nonce rows, with 1–6 rows")
-    if bits not in (32,64):
-        raise ValueError("bits must be 32 or 64")
+    if bits not in (8,16,32,64):
+        raise ValueError("bits must be 8, 16, 32, or 64")
     if count<0:
         raise ValueError("element count must be nonnegative")
-    blocks=triton.cdiv(count,16 if bits==32 else 8)
+    blocks=triton.cdiv(count,512//bits)
     if blocks>=2**32:
         raise ValueError("a draw must use fewer than 2**32 ChaCha blocks")
     active=[key for key in keys if key is not None]
@@ -110,7 +110,7 @@ def generate_rows(keys,nonces,count,bits=64,*,packed=False):
         if not 0<=nonce<2**64:
             raise ValueError("draw nonces must fit in 64 bits")
         checked.append(nonce)
-    dtype=torch.uint32 if packed and bits==32 else torch.int64
+    dtype={8: torch.uint8, 16: torch.uint16, 32: torch.uint32}[bits] if packed and bits<64 else torch.int64
     result=torch.empty((len(keys),count),device=device,dtype=dtype)
     if count:
         launch_keys=tuple(key if key is not None else active[0] for key in keys)

@@ -10,23 +10,36 @@ from .five_product import FiveWeights
 
 @lru_cache(maxsize=None)
 def _supports_tuned(device):
-    # The tile's shared-memory budget and integer MMA code were tested on SM 8.9.
+    # These integer MMA tiles and shared-memory budgets are tested on SM 8.9.
     return torch.cuda.get_device_capability(device)==(8,9)
 
 
-def local_products_tuned(x0,x1,x2,y0,y1,y2,bits=64):
+def local_products_tuned(x0,x1,x2,y0,y1,y2,bits=64, *, encoder_pipeline_stages=0):
     """Use exact ring32 modular-add reconstruction for SM 8.9 prefill batches.
 
-    Compact ring32 weights and at least sixteen rows select the 32/128/32
-    tile. Other devices, rings, formats, and smaller batches retain the
-    baseline local-products route.
+    Compact ring32 weights and at least sixteen rows usually select the
+    32/128/32 tile. Classifiers with 512 input features and at most 64 output
+    coordinates use narrower tiles when they reduce measured work. Other
+    devices, rings, formats, and smaller batches retain the baseline route.
     """
     xs=(x0,x1,x2)
     ys=(y0,y1,y2)
     if bits!=32 or not all(isinstance(y,CompactWeight) for y in ys) or x0.ndim!=2 or x0.shape[0]<16 or not _supports_tuned(x0.device):
         return local_products(*xs,*ys,bits)
+    m,k=x0.shape
+    n=y0.shape[1]
+    if encoder_pipeline_stages and (k, n) == (512, 128):
+        from .pipelined_encoder import local_products_pipelined
+        return local_products_pipelined(*xs, *ys, stages=encoder_pipeline_stages)
+    tile=(32,128,32)
+    if k==512 and n<=32:
+        if m<1024:
+            return local_products(*xs,*ys,bits)
+        tile=(64,32,32) if m<4096 else (32,32,64)
+    elif k==512 and n<=64 and m>=4096:
+        tile=(32,64,32)
     from .ring32_opaque import local_products_opaque
-    return local_products_opaque(*xs,*ys,tile=(32,128,32))
+    return local_products_opaque(*xs,*ys,tile=tile)
 
 
 

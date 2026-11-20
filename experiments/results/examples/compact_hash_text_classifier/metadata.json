@@ -1,0 +1,81 @@
+{
+  "dataset": {
+    "url": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
+    "citation": "Almeida, T. & Hidalgo, J. (2011). SMS Spam Collection. https://doi.org/10.24432/C5CC84",
+    "sha256": "7d039a24a6083ed9ef0f806ebad56bbb976e3aeb8de05669173bfdc4996c239d",
+    "train_rows": 3285,
+    "validation_rows": 820,
+    "test_rows": 1025
+  },
+  "architecture": "binary public hash buckets -> private ternary encoder -> fixed signed sum of squares + private bias",
+  "selection": "Maximum validation F1, then precision, then fewer input buckets and hidden coordinates; held-out metrics do not select the family.",
+  "input_contract": "Hash at most max_tokens public word tokens, then clip each bucket to binary presence.",
+  "max_tokens": 128,
+  "ring_bits": 16,
+  "selected_features": 128,
+  "selected_checkpoint": "experiments/results/examples/compact_hash_text_classifier/features128/model.npz",
+  "candidates": [
+    {
+      "features": 64,
+      "hidden": 16,
+      "encoder_nonzeros": 16,
+      "validation": {
+        "accuracy": 0.9304878048780488,
+        "spam_precision": 0.7128712871287128,
+        "spam_recall": 0.72,
+        "false_positives": 29,
+        "false_negatives": 28
+      },
+      "validation_f1": 0.7164179104477613,
+      "test": {
+        "accuracy": 0.9317073170731708,
+        "spam_precision": 0.7310924369747899,
+        "spam_recall": 0.696,
+        "false_positives": 32,
+        "false_negatives": 38
+      },
+      "absolute_bounds": {
+        "first_product": 15,
+        "encoded": 14,
+        "squared": 196,
+        "sum_absolute_squares": 1690,
+        "output": 1704,
+        "parameters": 14
+      },
+      "checkpoint": "features64/model.npz",
+      "two_recipient_input_payload_bytes_per_row": 256
+    },
+    {
+      "features": 128,
+      "hidden": 16,
+      "encoder_nonzeros": 24,
+      "validation": {
+        "accuracy": 0.9658536585365853,
+        "spam_precision": 0.9186046511627907,
+        "spam_recall": 0.79,
+        "false_positives": 7,
+        "false_negatives": 21
+      },
+      "validation_f1": 0.8494623655913979,
+      "test": {
+        "accuracy": 0.9590243902439024,
+        "spam_precision": 0.8878504672897196,
+        "spam_recall": 0.76,
+        "false_positives": 12,
+        "false_negatives": 30
+      },
+      "absolute_bounds": {
+        "first_product": 20,
+        "encoded": 20,
+        "squared": 400,
+        "sum_absolute_squares": 4089,
+        "output": 4109,
+        "parameters": 20
+      },
+      "checkpoint": "features128/model.npz",
+      "two_recipient_input_payload_bytes_per_row": 512
+    }
+  ],
+  "privacy": "Hashing has no learned parameters. Encoder weights, learned sparsity locations, encoder biases and output bias remain private; signs are fixed architecture constants.",
+  "wire_accounting": "Payload estimate is two corrections per input, two bytes per feature; fixed check tags and TLS framing are additional."
+}

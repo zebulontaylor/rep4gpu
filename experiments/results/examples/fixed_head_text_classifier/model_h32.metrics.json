@@ -1,0 +1,35 @@
+{
+  "checkpoint": "experiments/results/examples/fixed_head_text_classifier/model_h32.npz",
+  "checkpoint_sha256": "0d4c410bfdcaee5b831d6f78bb1dab3bf9ed0320e1666d920942ff239d04d1b2",
+  "selection": "Preselected checkpoint evaluation; no training, scale, or threshold selection.",
+  "hidden": 32,
+  "encoder_scale": 128,
+  "output_scale": 1048576,
+  "absolute_bounds": {
+    "first_product": 4096,
+    "encoded": 4634,
+    "squared": 21473956,
+    "sum_absolute_squares": 625454764,
+    "output": 626636672,
+    "parameters": 1181908
+  },
+  "minimum_signed_ring_bits": 31,
+  "fits_signed_ring16": false,
+  "fits_signed_ring32": true,
+  "float": {
+    "accuracy": 0.9765853658536585,
+    "spam_precision": 0.954954954954955,
+    "spam_recall": 0.848,
+    "false_positives": 5,
+    "false_negatives": 19
+  },
+  "integer": {
+    "accuracy": 0.9765853658536585,
+    "spam_precision": 0.954954954954955,
+    "spam_recall": 0.848,
+    "false_positives": 5,
+    "false_negatives": 19
+  },
+  "prediction_agreement": 1.0,
+  "observed_max_absolute_logit": 52825628
+}

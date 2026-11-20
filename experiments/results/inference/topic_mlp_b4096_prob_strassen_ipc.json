@@ -1,0 +1,105 @@
+{
+  "architecture": "topic_mlp_relu",
+  "bits": 32,
+  "fractional_bits": 14,
+  "rounding": "probabilistic",
+  "weight_storage": "strassen32",
+  "device_transport": "cuda-ipc",
+  "phase_graphs": true,
+  "resident_inputs": false,
+  "batch": 4096,
+  "input_shape": [
+    4096,
+    4096
+  ],
+  "weight_shapes": {
+    "w1": [
+      4096,
+      1024
+    ],
+    "b1": [
+      1024
+    ],
+    "w2": [
+      1024,
+      512
+    ],
+    "b2": [
+      512
+    ],
+    "w3": [
+      512,
+      1
+    ],
+    "b3": [
+      1
+    ]
+  },
+  "total_parameters": 4720641,
+  "repeats": 3,
+  "warmup": 1,
+  "checkpoint": "/home/zeb/Desktop/SIV/experiments/results/examples/topic_mlp_classifier/model.npz",
+  "hardware": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "native_ms": {
+    "fp32_notf32_eager": 4.301043000014033,
+    "fp32_notf32_graph": 4.315839969931403,
+    "fp32_tf32_eager": 2.9354995799076278,
+    "fp32_tf32_graph": 2.856096100003924,
+    "fp16_eager": 1.3674171299498994,
+    "fp16_graph": 1.3911202100280207,
+    "bf16_eager": 1.330043409980135,
+    "bf16_graph": 1.3813224200566765,
+    "sparse_l1_fp32_eager": 2.983884669956751,
+    "sparse_l1_fp16_eager": 2.619964929908747
+  },
+  "fastest_native_key": "bf16_eager",
+  "fastest_native_ms": 1.330043409980135,
+  "range_bounds": {
+    "ring_bits": 32,
+    "fractional_bits": 14,
+    "rounding": "probabilistic",
+    "truncation_limit": 1073741824,
+    "signed_ring_limit": 2147483648,
+    "raw1_max_abs": 414172637,
+    "h1_max_abs": 16712,
+    "raw2_max_abs": 534821079,
+    "h2_max_abs": 14978,
+    "raw3_max_abs": 353594214,
+    "max_score_interval_width_q28": 994592,
+    "max_score_interval_width_float": 0.003705143928527832,
+    "ambiguous_sign_examples": 2
+  },
+  "passed": false,
+  "all_parties_agree": false,
+  "interval_valid": false,
+  "exact_floor_match": false,
+  "return_codes": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "timed_out": false,
+  "parties": [
+    {
+      "party": 0,
+      "passed": false,
+      "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 96.00 MiB. GPU 0 has a total capacity of 7.67 GiB of which 64.62 MiB is free. Process 1011 has 372.00 MiB memory in use. Process 1066 has 1.81 GiB memory in use. Including non-PyTorch memory, this process has 1.88 GiB memory in use. Process 1065 has 1.69 GiB memory in use. Process 1064 has 1.84 GiB memory in use. Of the allocated memory 1.60 GiB is allocated by PyTorch, and 89.42 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)"
+    },
+    {
+      "party": 1,
+      "passed": false,
+      "error": "SSLError: [SYS] unknown error (_ssl.c:2578)"
+    },
+    {
+      "party": 2,
+      "passed": false,
+      "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 96.00 MiB. GPU 0 has a total capacity of 7.67 GiB of which 64.62 MiB is free. Process 1011 has 372.00 MiB memory in use. Process 1066 has 1.78 GiB memory in use. Process 1063 has 1.88 GiB memory in use. Including non-PyTorch memory, this process has 1.69 GiB memory in use. Process 1064 has 1.84 GiB memory in use. Of the allocated memory 1.46 GiB is allocated by PyTorch, and 105.42 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)"
+    },
+    {
+      "party": 3,
+      "passed": false,
+      "error": "SSLError: [SYS] unknown error (_ssl.c:2578)"
+    }
+  ]
+}

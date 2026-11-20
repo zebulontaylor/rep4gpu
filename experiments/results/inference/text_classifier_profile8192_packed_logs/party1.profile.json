@@ -1,0 +1,158 @@
+[
+  {
+    "phase": "input",
+    "input_device_to_host_ms": 5.547842999931163,
+    "input_device_to_host_calls": 1,
+    "socket_ms": 11.714116999996804,
+    "socket_calls": 3,
+    "total_ms": 572.0481070000005
+  },
+  {
+    "phase": "input",
+    "socket_ms": 93.36457500023698,
+    "socket_calls": 3,
+    "input_host_to_device_ms": 10.598052999966967,
+    "input_host_to_device_calls": 1,
+    "total_ms": 128.16967300000215
+  },
+  {
+    "phase": "input",
+    "socket_ms": 47.97786199992515,
+    "socket_calls": 3,
+    "input_host_to_device_ms": 11.040462999972078,
+    "input_host_to_device_calls": 1,
+    "total_ms": 79.95611700005156
+  },
+  {
+    "phase": "inference",
+    "device_to_host_ms": 2.5901410000415126,
+    "device_to_host_calls": 24,
+    "socket_ms": 9.274535999793443,
+    "socket_calls": 10,
+    "host_to_device_ms": 3.3678209999834507,
+    "host_to_device_calls": 10,
+    "bridge_ms": 15.414928000041073,
+    "bridge_calls": 10,
+    "total_ms": 18.394186000023183
+  },
+  {
+    "phase": "input",
+    "socket_ms": 50.613162000217926,
+    "socket_calls": 3,
+    "input_host_to_device_ms": 8.88093999992634,
+    "input_host_to_device_calls": 1,
+    "total_ms": 78.84707499999877
+  },
+  {
+    "phase": "inference",
+    "device_to_host_ms": 4.110052999635627,
+    "device_to_host_calls": 24,
+    "socket_ms": 7.483455999818034,
+    "socket_calls": 10,
+    "host_to_device_ms": 3.2965079996074564,
+    "host_to_device_calls": 10,
+    "bridge_ms": 15.119478000087838,
+    "bridge_calls": 10,
+    "total_ms": 18.303986999967492
+  },
+  {
+    "phase": "input",
+    "socket_ms": 46.747825000124976,
+    "socket_calls": 3,
+    "input_host_to_device_ms": 3.0666359999713677,
+    "input_host_to_device_calls": 1,
+    "total_ms": 69.77841399998397
+  },
+  {
+    "phase": "inference",
+    "device_to_host_ms": 4.555033999849911,
+    "device_to_host_calls": 24,
+    "socket_ms": 7.321525999941514,
+    "socket_calls": 10,
+    "host_to_device_ms": 3.3990480000056777,
+    "host_to_device_calls": 10,
+    "bridge_ms": 15.441901999906804,
+    "bridge_calls": 10,
+    "total_ms": 18.08433399992282
+  },
+  {
+    "phase": "input",
+    "socket_ms": 46.29257999999936,
+    "socket_calls": 3,
+    "input_host_to_device_ms": 3.9247469999281748,
+    "input_host_to_device_calls": 1,
+    "total_ms": 69.41704500002288
+  },
+  {
+    "phase": "inference",
+    "device_to_host_ms": 4.795169000203714,
+    "device_to_host_calls": 24,
+    "socket_ms": 7.470181000030607,
+    "socket_calls": 10,
+    "host_to_device_ms": 3.018364000126894,
+    "host_to_device_calls": 10,
+    "bridge_ms": 15.456943999879513,
+    "bridge_calls": 10,
+    "total_ms": 18.23503699995399
+  },
+  {
+    "phase": "input",
+    "socket_ms": 45.7341720000386,
+    "socket_calls": 3,
+    "input_host_to_device_ms": 4.27058599996144,
+    "input_host_to_device_calls": 1,
+    "total_ms": 69.07997199994043
+  },
+  {
+    "phase": "inference",
+    "device_to_host_ms": 5.118244999607668,
+    "device_to_host_calls": 24,
+    "socket_ms": 6.860017000121843,
+    "socket_calls": 10,
+    "host_to_device_ms": 3.5523580000926813,
+    "host_to_device_calls": 10,
+    "bridge_ms": 15.781559000174639,
+    "bridge_calls": 10,
+    "total_ms": 18.238763999988805
+  },
+  {
+    "phase": "input",
+    "socket_ms": 45.57060500007992,
+    "socket_calls": 3,
+    "input_host_to_device_ms": 4.3579000000590895,
+    "input_host_to_device_calls": 1,
+    "total_ms": 70.69697700001143
+  },
+  {
+    "phase": "inference",
+    "device_to_host_ms": 4.399988999807647,
+    "device_to_host_calls": 24,
+    "socket_ms": 7.314888999871982,
+    "socket_calls": 10,
+    "host_to_device_ms": 3.0885850003414816,
+    "host_to_device_calls": 10,
+    "bridge_ms": 14.953426999795738,
+    "bridge_calls": 10,
+    "total_ms": 17.81033899999329
+  },
+  {
+    "phase": "input",
+    "socket_ms": 45.56518499998674,
+    "socket_calls": 3,
+    "input_host_to_device_ms": 3.6268669999799386,
+    "input_host_to_device_calls": 1,
+    "total_ms": 68.6826660000861
+  },
+  {
+    "phase": "inference",
+    "device_to_host_ms": 3.098804999922322,
+    "device_to_host_calls": 24,
+    "socket_ms": 9.250022999935936,
+    "socket_calls": 10,
+    "host_to_device_ms": 2.7301639998995597,
+    "host_to_device_calls": 10,
+    "bridge_ms": 15.239794999729384,
+    "bridge_calls": 10,
+    "total_ms": 17.90504799998871
+  }
+]

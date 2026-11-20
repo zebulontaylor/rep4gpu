@@ -1,0 +1,222 @@
+{
+  "dataset": {
+    "url": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
+    "citation": "Almeida, T. & Hidalgo, J. (2011). SMS Spam Collection. https://doi.org/10.24432/C5CC84",
+    "sha256": "7d039a24a6083ed9ef0f806ebad56bbb976e3aeb8de05669173bfdc4996c239d",
+    "train_rows": 3285,
+    "validation_rows": 820,
+    "test_rows": 1025
+  },
+  "architecture": "binary token presence -> learned sparse ternary encoder -> fixed signed sum of squares + learned bias",
+  "privacy": "All learned weights, sparsity locations and biases remain private; head signs are architecture constants.",
+  "input_contract": "Binary features with at most 128 active buckets.",
+  "features": 128,
+  "max_tokens": 128,
+  "selection": "Maximum validation F1, then precision, then smaller width; test labels only evaluate the selected model.",
+  "seed": 2026,
+  "learning_rate": 0.02,
+  "epochs": 100,
+  "patience": 25,
+  "selected": {
+    "hidden": 16,
+    "encoder_nonzeros": 24,
+    "epoch": 24,
+    "validation": {
+      "accuracy": 0.9658536585365853,
+      "spam_precision": 0.9186046511627907,
+      "spam_recall": 0.79,
+      "false_positives": 7,
+      "false_negatives": 21
+    },
+    "validation_f1": 0.8494623655913979,
+    "threshold": 10,
+    "absolute_bounds": {
+      "first_product": 20,
+      "encoded": 20,
+      "squared": 400,
+      "sum_absolute_squares": 4089,
+      "output": 4109,
+      "parameters": 20
+    },
+    "fits_signed_ring16": true,
+    "minimum_signed_ring_bits": 14
+  },
+  "selected_checkpoint": "experiments/results/examples/compact_hash_text_classifier/features128/model_h16_k24.npz",
+  "candidates": [
+    {
+      "hidden": 4,
+      "encoder_nonzeros": 32,
+      "epoch": 10,
+      "validation": {
+        "accuracy": 0.9646341463414634,
+        "spam_precision": 0.927710843373494,
+        "spam_recall": 0.77,
+        "false_positives": 6,
+        "false_negatives": 23
+      },
+      "validation_f1": 0.8415300546448088,
+      "threshold": 6,
+      "absolute_bounds": {
+        "first_product": 31,
+        "encoded": 30,
+        "squared": 900,
+        "sum_absolute_squares": 2450,
+        "output": 2466,
+        "parameters": 16
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 13
+    },
+    {
+      "hidden": 4,
+      "encoder_nonzeros": 64,
+      "epoch": 7,
+      "validation": {
+        "accuracy": 0.9597560975609756,
+        "spam_precision": 0.8252427184466019,
+        "spam_recall": 0.85,
+        "false_positives": 18,
+        "false_negatives": 15
+      },
+      "validation_f1": 0.8374384236453202,
+      "threshold": 7,
+      "absolute_bounds": {
+        "first_product": 52,
+        "encoded": 51,
+        "squared": 2601,
+        "sum_absolute_squares": 7271,
+        "output": 7287,
+        "parameters": 16
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 14
+    },
+    {
+      "hidden": 8,
+      "encoder_nonzeros": 32,
+      "epoch": 14,
+      "validation": {
+        "accuracy": 0.9634146341463414,
+        "spam_precision": 0.8888888888888888,
+        "spam_recall": 0.8,
+        "false_positives": 10,
+        "false_negatives": 20
+      },
+      "validation_f1": 0.8421052631578948,
+      "threshold": 6,
+      "absolute_bounds": {
+        "first_product": 30,
+        "encoded": 30,
+        "squared": 900,
+        "sum_absolute_squares": 4043,
+        "output": 4059,
+        "parameters": 16
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 13
+    },
+    {
+      "hidden": 8,
+      "encoder_nonzeros": 48,
+      "epoch": 8,
+      "validation": {
+        "accuracy": 0.9597560975609756,
+        "spam_precision": 0.8383838383838383,
+        "spam_recall": 0.83,
+        "false_positives": 16,
+        "false_negatives": 17
+      },
+      "validation_f1": 0.8341708542713568,
+      "threshold": -6,
+      "absolute_bounds": {
+        "first_product": 39,
+        "encoded": 38,
+        "squared": 1444,
+        "sum_absolute_squares": 7995,
+        "output": 7998,
+        "parameters": 3
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 14
+    },
+    {
+      "hidden": 16,
+      "encoder_nonzeros": 16,
+      "epoch": 4,
+      "validation": {
+        "accuracy": 0.9621951219512195,
+        "spam_precision": 0.896551724137931,
+        "spam_recall": 0.78,
+        "false_positives": 9,
+        "false_negatives": 22
+      },
+      "validation_f1": 0.8342245989304813,
+      "threshold": 12,
+      "absolute_bounds": {
+        "first_product": 16,
+        "encoded": 16,
+        "squared": 256,
+        "sum_absolute_squares": 2812,
+        "output": 2833,
+        "parameters": 21
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 13
+    },
+    {
+      "hidden": 16,
+      "encoder_nonzeros": 24,
+      "epoch": 24,
+      "validation": {
+        "accuracy": 0.9658536585365853,
+        "spam_precision": 0.9186046511627907,
+        "spam_recall": 0.79,
+        "false_positives": 7,
+        "false_negatives": 21
+      },
+      "validation_f1": 0.8494623655913979,
+      "threshold": 10,
+      "absolute_bounds": {
+        "first_product": 20,
+        "encoded": 20,
+        "squared": 400,
+        "sum_absolute_squares": 4089,
+        "output": 4109,
+        "parameters": 20
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 14
+    },
+    {
+      "hidden": 16,
+      "encoder_nonzeros": 32,
+      "epoch": 28,
+      "validation": {
+        "accuracy": 0.9646341463414634,
+        "spam_precision": 0.9176470588235294,
+        "spam_recall": 0.78,
+        "false_positives": 7,
+        "false_negatives": 22
+      },
+      "validation_f1": 0.8432432432432432,
+      "threshold": -5,
+      "absolute_bounds": {
+        "first_product": 27,
+        "encoded": 26,
+        "squared": 676,
+        "sum_absolute_squares": 6603,
+        "output": 6609,
+        "parameters": 6
+      },
+      "fits_signed_ring16": true,
+      "minimum_signed_ring_bits": 14
+    }
+  ],
+  "test": {
+    "accuracy": 0.9590243902439024,
+    "spam_precision": 0.8878504672897196,
+    "spam_recall": 0.76,
+    "false_positives": 12,
+    "false_negatives": 30
+  }
+}

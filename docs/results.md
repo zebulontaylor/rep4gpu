@@ -47,7 +47,8 @@ The GPU BLAKE3 estimate assumes incoming online messages already reside on the
 GPU. For the probabilistic variant, a replay that includes host staging instead
 takes **12.16 ms for decode** and **51.58 ms for prefill**. That prefill result is
 about **149× FP16**, so the GPU-incoming assumption matters to the target.
-Physical GPUDirect networking is not implemented.
+These replay runs do not exercise a physical GPUDirect link. The
+[live NCCL classifier](experiments/nccl-classifier.md) uses a separate transport.
 Both estimates exclude network latency and bandwidth. The measured four-role
 column uses one shared GPU and includes contention between roles.
 

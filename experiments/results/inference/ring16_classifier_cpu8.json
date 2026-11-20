@@ -1,0 +1,225 @@
+{
+  "passed": true,
+  "exact_integer_match": true,
+  "architecture": "square_unscaled",
+  "fractional_bits": 0,
+  "range_bounds": {
+    "first_accumulator": 2,
+    "square_accumulator": 9,
+    "second_accumulator": 520,
+    "output": 200
+  },
+  "pinned_staging": false,
+  "device_input": false,
+  "device": "cpu",
+  "generic_kernel": false,
+  "phase_graphs": false,
+  "batch": 8,
+  "features": 512,
+  "bits": 16,
+  "repeats": 2,
+  "warmup": 1,
+  "checkpoint": "/home/zeb/Desktop/SIV/experiments/results/examples/ring16_text_classifier/model_pruned.npz",
+  "method": "Four processes colocated on one host; mutual TLS; distributed seeds; private weights and features; only classes opened.",
+  "hardware": "CPU",
+  "native_dense_ms": {
+    "float32_eager": 0.04562303000057
+  },
+  "native_scope": "Resident features and weights; full dense floating-point classifier plus threshold; one CPU thread; eager and CUDA graph GPU. Fastest measured baseline defines slowdown; sparse native implementations may be faster.",
+  "deployment_scope": "Loopback TLS, four parties share one device. Does not measure independent hosts or WAN.",
+  "security": "Rep4, at most one corrupt party; two colluding parties can reconstruct secrets.",
+  "torch_version": "2.13.0+cu130",
+  "numpy_version": "2.2.6",
+  "benchmark_sha256": "ecc178b16d4c8cd387539dbbc8f5aaf9035466999678372344d2c0c6614e76d5",
+  "model_adapter_sha256": "ce49a77deda3efc7777c123226a4a9b1e93c2dde5cb6ac2427db182afa90c37c",
+  "checkpoint_sha256": "5162e1f120168a10cdc876f87d069e1fbf0563b10b7d35b76ef8c4230ab33d83",
+  "range_bound": 520,
+  "return_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "timed_out": false,
+  "parties": [
+    {
+      "party": 0,
+      "passed": true,
+      "setup_ms": 34.26958099998956,
+      "measurements": [
+        {
+          "start_monotonic": 1642.142509751,
+          "end_monotonic": 1642.165076557,
+          "prediction_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "input_ms": 1.321591000078115,
+          "checked_inference_ms": 21.245214999908058,
+          "online_ms": 22.566805999986173,
+          "input_payload_bytes": 16384,
+          "payload_bytes": 37888,
+          "inference_payload_bytes": 21504,
+          "rounds": 14
+        },
+        {
+          "start_monotonic": 1642.165101795,
+          "end_monotonic": 1642.181489213,
+          "prediction_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "input_ms": 1.2601849998645775,
+          "checked_inference_ms": 15.127233000157503,
+          "online_ms": 16.38741800002208,
+          "input_payload_bytes": 16384,
+          "payload_bytes": 37888,
+          "inference_payload_bytes": 21504,
+          "rounds": 14
+        }
+      ],
+      "predictions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "authenticated_tls": true
+    },
+    {
+      "party": 1,
+      "passed": true,
+      "setup_ms": 32.72891999995409,
+      "measurements": [
+        {
+          "start_monotonic": 1642.142416036,
+          "end_monotonic": 1642.16505104,
+          "prediction_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "input_ms": 1.4203250000264234,
+          "checked_inference_ms": 21.214678999967873,
+          "online_ms": 22.635003999994296,
+          "input_payload_bytes": 64,
+          "payload_bytes": 21568,
+          "inference_payload_bytes": 21504,
+          "rounds": 14
+        },
+        {
+          "start_monotonic": 1642.165079543,
+          "end_monotonic": 1642.181360782,
+          "prediction_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "input_ms": 1.3077739999971527,
+          "checked_inference_ms": 14.973464999911812,
+          "online_ms": 16.281238999908965,
+          "input_payload_bytes": 64,
+          "payload_bytes": 21568,
+          "inference_payload_bytes": 21504,
+          "rounds": 14
+        }
+      ],
+      "predictions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "authenticated_tls": true
+    },
+    {
+      "party": 2,
+      "passed": true,
+      "setup_ms": 31.54727199989793,
+      "measurements": [
+        {
+          "start_monotonic": 1642.142407189,
+          "end_monotonic": 1642.165148092,
+          "prediction_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "input_ms": 1.38012999991588,
+          "checked_inference_ms": 21.360772999969413,
+          "online_ms": 22.740902999885293,
+          "input_payload_bytes": 0,
+          "payload_bytes": 11184,
+          "inference_payload_bytes": 11184,
+          "rounds": 14
+        },
+        {
+          "start_monotonic": 1642.165187997,
+          "end_monotonic": 1642.181376291,
+          "prediction_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "input_ms": 1.208427999927153,
+          "checked_inference_ms": 14.979866000203401,
+          "online_ms": 16.188294000130554,
+          "input_payload_bytes": 0,
+          "payload_bytes": 11184,
+          "inference_payload_bytes": 11184,
+          "rounds": 14
+        }
+      ],
+      "predictions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "authenticated_tls": true
+    },
+    {
+      "party": 3,
+      "passed": true,
+      "setup_ms": 31.994330000088667,
+      "measurements": [
+        {
+          "start_monotonic": 1642.142459217,
+          "end_monotonic": 1642.165054145,
+          "prediction_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "input_ms": 1.3546019999921555,
+          "checked_inference_ms": 21.24032600022474,
+          "online_ms": 22.594928000216896,
+          "input_payload_bytes": 64,
+          "payload_bytes": 11248,
+          "inference_payload_bytes": 11184,
+          "rounds": 14
+        },
+        {
+          "start_monotonic": 1642.165089331,
+          "end_monotonic": 1642.181395206,
+          "prediction_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+          "input_ms": 1.2993489999644225,
+          "checked_inference_ms": 15.006525999979203,
+          "online_ms": 16.305874999943626,
+          "input_payload_bytes": 64,
+          "payload_bytes": 11248,
+          "inference_payload_bytes": 11184,
+          "rounds": 14
+        }
+      ],
+      "predictions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "authenticated_tls": true
+    }
+  ],
+  "input_ms": 1.364049500011788,
+  "checked_inference_ms": 18.244003000063458,
+  "online_ms": 19.564160499953687,
+  "inference_texts_per_second": 438.50025676778137,
+  "online_texts_per_second": 408.9109778065324,
+  "slowdown_resident": 399.8858252035326,
+  "slowdown_with_input_sharing": 428.82203351485555,
+  "target_met_resident": false,
+  "global_payload_bytes_per_batch": 81888,
+  "global_input_payload_bytes_per_batch": 16512,
+  "global_inference_payload_bytes_per_batch": 65376
+}

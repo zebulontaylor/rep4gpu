@@ -65,11 +65,13 @@ counterclockwise digest round, and reconstructs only after a successful check.
 |---|---|
 | `DeviceIdealEndpoint` | Copies messages into receiver-owned CUDA storage and orders streams with events. Roles share one process and device; this is a colocated test harness without party isolation. |
 | `DeviceByteBridge` | Copies outgoing device messages to host bytes, uses an existing byte transport, then copies received bytes to CUDA. Confidentiality and authentication come from that underlying transport. |
+| `CudaIpcTransport` | Copies CUDA frames across four trusted local processes on one GPU. TLS carries CUDA IPC descriptors. Only dedicated per-peer wire buffers are exported. |
+| `NcclDeviceTransport` | Sends CUDA buffers between four ranks on distinct GPUs. The NCCL data channel requires a protected fabric. |
 | `DeviceReplay` | Replays recorded fixture messages. Device mode assumes peer messages are already delivered to CUDA; host mode retains host/device staging. Both omit network transfer time. |
 
-These adapters do not implement GPUDirect or a distributed GPU transport. For
-real connections, wrap a `SocketTransport` configured with mutual TLS and
-distinct party identities in `DeviceByteBridge`. Obtain fresh seeds through
+For TLS payloads, wrap a `SocketTransport` configured with mutual TLS and
+distinct party identities in `DeviceByteBridge`. The [classifier GPU transports](../experiments/text-classifier.md#keep-classifier-messages-on-the-gpu)
+separate CUDA payloads from the TLS control channel. Obtain fresh seeds through
 `correlated_seeds()` on those authenticated confidential connections before
 constructing the party. Each party receives only its three seeds. The
 `make_seeds()` helper used by local benchmarks is trusted fixture setup.

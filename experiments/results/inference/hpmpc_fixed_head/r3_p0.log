@@ -1,0 +1,10 @@
+P0, ONLINE, PID0: Sending to other players:0.01638MB, 8.413MB, 8.409MB 
+P0, ONLINE, PID0: Receiving from other players:0.1341MB, 0.1423MB, 0.1436MB 
+P0, PID0: Initialized circuit, waiting for all parties to connect ... 
+P0, PID0: All parties connected sucessfully, starting protocol and timer! 
+PHASE_MS input 15.25 matmul 3.139 sign 0.6411 reveal 0.1224
+P0, PID0: Checkeqs passed! 
+P0, PID0: Time measured to initialize program: 0.006963s 
+P0, PID0: Time measured to perform computation clock: 0.019721s 
+P0, PID0: Time measured to perform computation getTime: 0.020482s 
+P0, PID0: Time measured to perform computation chrono: 0.020479s 

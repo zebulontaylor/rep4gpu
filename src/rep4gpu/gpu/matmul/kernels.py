@@ -1,4 +1,4 @@
-"""Exact GPU matrix products in the rings Z/(2**32) and Z/(2**64)."""
+"""Exact GPU matrix products in rings with 8, 16, 32, or 64 bits."""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -36,8 +36,8 @@ def _tensor_mm(A, B, C, M: tl.constexpr, N: tl.constexpr, K: tl.constexpr,
                     bi = (((b >> (8 * (diagonal-i))) & 255).to(tl.int32) - 128).to(tl.int8)
                 acc = tl.dot(ai, bi, acc, out_dtype=tl.int32)
             out += acc.to(tl.int64).to(tl.uint64) << (8 * diagonal)
-    if BITS == 32:
-        out = out & 0xffffffff
+    if BITS < 64:
+        out = out & ((1 << BITS)-1)
     tl.store(C + rows[:, None] * N + cols[None, :], out.to(tl.int64),
              (rows[:, None] < M) & (cols[None, :] < N))
 
@@ -48,7 +48,7 @@ def _decode_mm(A, B, C, M: tl.constexpr, N: tl.constexpr, K: tl.constexpr,
     row = tl.program_id(0)
     cols = tl.program_id(1) * BN + tl.arange(0, BN)
     kk = tl.arange(0, BK)
-    DTYPE: tl.constexpr = tl.uint32 if BITS == 32 else tl.uint64
+    DTYPE: tl.constexpr = tl.uint32 if BITS <= 32 else tl.uint64
     sums = tl.full((BK, BN), 0, DTYPE)
     for start in range(tl.cdiv(K, BK)):
         a = tl.load(A + row*K + start*BK+kk, start*BK+kk < K, 0).to(DTYPE)
@@ -56,8 +56,8 @@ def _decode_mm(A, B, C, M: tl.constexpr, N: tl.constexpr, K: tl.constexpr,
                     (start*BK+kk[:,None]<K)&(cols[None,:]<N), 0).to(DTYPE)
         sums += a[:,None]*b
     out = tl.sum(sums, 0)
-    if BITS == 32:
-        out &= 0xffffffff
+    if BITS < 64:
+        out &= (1 << BITS)-1
     tl.store(C+row*N+cols, out.to(tl.int64), cols<N)
 
 
@@ -116,10 +116,11 @@ def prepare_weight(b: torch.Tensor, bits: int = 64, *, keep_original: bool = Fal
     byte-plane reconstruction in decode and retain no source tensor.
     ``keep_original=True`` also retains raw data with the default limb storage.
     """
-    if bits not in (32,64):
-        raise ValueError("bits must be 32 or 64")
-    if b.ndim != 2 or b.dtype != torch.int64 or not b.is_cuda:
-        raise ValueError("weight must be a two-dimensional int64 CUDA tensor")
+    if bits not in (8,16,32,64):
+        raise ValueError("bits must be 8, 16, 32, or 64")
+    allowed = (torch.int64, {8: torch.uint8, 16: torch.uint16}[bits]) if bits <= 16 else (torch.int64,)
+    if b.ndim != 2 or b.dtype not in allowed or not b.is_cuda:
+        raise ValueError("weight must be a CUDA matrix with int64 storage or matching ring8/16 packed storage")
     if storage not in ("limbs", "words32"):
         raise ValueError("storage must be limbs or words32")
     if storage == "words32":
@@ -138,12 +139,12 @@ def ring_matmul(a: torch.Tensor, b: torch.Tensor | PreparedWeight | CompactWeigh
                 *, backend: str = "auto") -> torch.Tensor:
     """Multiply int64 CUDA matrices exactly modulo ``2**bits``.
 
-    A 64-bit result uses its signed int64 bit pattern. A 32-bit result is
-    canonicalized to [0, 2**32). Inputs may contain any int64 bit pattern.
+    A 64-bit result uses its signed int64 bit pattern. Narrow results are
+    canonicalized to [0, 2**bits). Inputs may contain any int64 bit pattern.
     ``tensor`` uses balanced signed bytes and exact int8 tensor-core products.
     """
-    if bits not in (32, 64):
-        raise ValueError("bits must be 32 or 64")
+    if bits not in (8, 16, 32, 64):
+        raise ValueError("bits must be 8, 16, 32, or 64")
     compact = isinstance(b, CompactWeight)
     if compact:
         if bits != 32:
@@ -152,8 +153,9 @@ def ring_matmul(a: torch.Tensor, b: torch.Tensor | PreparedWeight | CompactWeigh
     prepared = isinstance(b, PreparedWeight)
     if prepared and b.bits != bits:
         raise ValueError("prepared weight ring does not match bits")
-    if a.dtype != torch.int64 or (not prepared and b.dtype != torch.int64 and not compact):
-        raise TypeError("ring_matmul requires int64 inputs")
+    allowed = (torch.int64, torch.uint8) if bits == 8 else (torch.int64,)
+    if a.dtype not in allowed or (not prepared and b.dtype not in allowed and not compact):
+        raise TypeError("ring_matmul requires int64 inputs or ring8 uint8 inputs")
     if a.ndim != 2 or (not prepared and b.ndim != 2) or a.shape[1] != b.shape[0]:
         raise ValueError("expected compatible two-dimensional matrices")
     if not a.is_cuda or (not prepared and not b.is_cuda) or a.device != b.device:
@@ -237,8 +239,8 @@ def _local_products(X0, X1, X2, Y0, Y1, Y2, C, M: tl.constexpr, N: tl.constexpr,
                         bi = (((b >> (8 * (diagonal-i))) & 255).to(tl.int32) - 128).to(tl.int8)
                     acc = tl.dot(ai, bi, acc, out_dtype=tl.int32)
                 out += acc.to(tl.int64).to(tl.uint64) << (8 * diagonal)
-    if BITS == 32:
-        out = out & 0xffffffff
+    if BITS < 64:
+        out = out & ((1 << BITS)-1)
     tl.store(C + tl.program_id(2)*M*N + rows[:, None] * N + cols[None, :], out.to(tl.int64),
              (rows[:, None] < M) & (cols[None, :] < N))
 
@@ -249,7 +251,7 @@ def _local_decode(X0,X1,X2,Y0,Y1,Y2,C,M:tl.constexpr,N:tl.constexpr,K:tl.constex
     row=tl.program_id(0)
     cols=tl.program_id(1)*BN+tl.arange(0,BN)
     kk=tl.arange(0,BK)
-    DT:tl.constexpr=tl.uint32 if BITS==32 else tl.uint64
+    DT:tl.constexpr=tl.uint32 if BITS<=32 else tl.uint64
     s0=tl.full((BK,BN),0,DT)
     s1=tl.full((BK,BN),0,DT)
     s4=tl.full((BK,BN),0,DT)
@@ -271,10 +273,10 @@ def _local_decode(X0,X1,X2,Y0,Y1,Y2,C,M:tl.constexpr,N:tl.constexpr,K:tl.constex
     v0=tl.sum(s0,0).to(tl.uint64)
     v1=tl.sum(s1,0).to(tl.uint64)
     v4=tl.sum(s4,0).to(tl.uint64)
-    if BITS==32:
-        v0&=0xffffffff
-        v1&=0xffffffff
-        v4&=0xffffffff
+    if BITS<64:
+        v0&=(1 << BITS)-1
+        v1&=(1 << BITS)-1
+        v4&=(1 << BITS)-1
     cp=row*N+cols
     tl.store(C+cp,v0.to(tl.int64),cols<N)
     tl.store(C+M*N+cp,v1.to(tl.int64),cols<N)
@@ -288,8 +290,8 @@ def local_products(x0, x1, x2, y0, y1, y2, bits=64):
     ``v1=(x1+x2)@y1+x1@y2`` and ``v4=x0@y2+x2@y0`` in the ring.
     Weight arguments can all be ``PreparedWeight`` objects for the same ring.
     """
-    if bits not in (32,64):
-        raise ValueError("bits must be 32 or 64")
+    if bits not in (8,16,32,64):
+        raise ValueError("bits must be 8, 16, 32, or 64")
     xs = (x0,x1,x2)
     ys = (y0,y1,y2)
     compact = isinstance(y0,CompactWeight)
@@ -303,8 +305,9 @@ def local_products(x0, x1, x2, y0, y1, y2, bits=64):
     prepared = isinstance(y0,PreparedWeight)
     if any(isinstance(y,PreparedWeight)!=prepared for y in ys):
         raise TypeError("weight formats must match")
-    if any(x.dtype!=torch.int64 or x.ndim!=2 or not x.is_cuda for x in xs):
-        raise ValueError("input shares must be two-dimensional int64 CUDA tensors")
+    allowed = (torch.int64, {8: torch.uint8, 16: torch.uint16}[bits]) if bits <= 16 else (torch.int64,)
+    if any(x.dtype not in allowed or x.dtype != x0.dtype or x.ndim!=2 or not x.is_cuda for x in xs):
+        raise ValueError("input shares require matching CUDA matrices with int64 or matching ring8/16 packed storage")
     if any(x.shape!=x0.shape or x.device!=x0.device for x in xs):
         raise ValueError("input share shapes and devices must match")
     if any(y.shape!=y0.shape or y.device!=x0.device for y in ys):
@@ -312,22 +315,29 @@ def local_products(x0, x1, x2, y0, y1, y2, bits=64):
     if prepared:
         if any(y.bits!=bits for y in ys):
             raise ValueError("prepared weight ring does not match bits")
-    elif any((y.dtype!=torch.int64 and not compact) or y.ndim!=2 or not y.is_cuda for y in ys):
-        raise ValueError("weight shares must be two-dimensional int64 CUDA tensors")
+    elif any((y.dtype not in allowed and not compact) or y.dtype != y0.dtype or y.ndim!=2 or not y.is_cuda for y in ys):
+        raise ValueError("weight shares require matching CUDA matrices with int64 or matching ring8/16 packed storage")
     m,k=x0.shape
     n=y0.shape[1]
     if y0.shape[0]!=k:
         raise ValueError("input and weight matrix dimensions do not match")
-    out=torch.empty((3,m,n),device=x0.device,dtype=torch.int64)
+    out=torch.empty((3,m,n),device=x0.device,dtype=x0.dtype)
     if m and n and k:
         xs=tuple(x.contiguous() for x in xs)
         with torch.cuda.device(x0.device):
-            if m==1 and (not prepared or all(y.original is not None for y in ys)):
+            single_column = bits == 16 and n == 1
+            narrow_classifier = bits in (8, 16) and n == 4 and k == 512
+            decode_bn = 1 if single_column else 4 if narrow_classifier else 32
+            decode_bk = (min(1024, max(32, triton.next_power_of_2(k))) if single_column
+                         else 128 if narrow_classifier else 32)
+            # Four-column classifiers reuse input loads across all three local
+            # products and avoid padding each tensor-core output tile to 32 columns.
+            if (m==1 or single_column or narrow_classifier) and (not prepared or all(y.original is not None for y in ys)):
                 raw_ys=tuple(y.original if prepared else y.contiguous() for y in ys)
-                _local_decode[(m,triton.cdiv(n,32))](*xs,*raw_ys,out,m,n,k,bits,32,32,num_warps=4)
-            elif m==1 and prepared:
-                _local_decode_packed[(m,triton.cdiv(n,32))](
-                    *xs,*(y.limbs for y in ys),out,m,n,k,bits,32,32,num_warps=4)
+                _local_decode[(m,triton.cdiv(n,decode_bn))](*xs,*raw_ys,out,m,n,k,bits,decode_bn,decode_bk,num_warps=4)
+            elif (m==1 or single_column or narrow_classifier) and prepared:
+                _local_decode_packed[(m,triton.cdiv(n,decode_bn))](
+                    *xs,*(y.limbs for y in ys),out,m,n,k,bits,decode_bn,decode_bk,num_warps=4)
             else:
                 ys=tuple(y.limbs if prepared else y.contiguous() for y in ys)
                 _local_products[(triton.cdiv(m,16),triton.cdiv(n,32),3)](
@@ -352,7 +362,7 @@ def _local_decode_packed(X0,X1,X2,Y0,Y1,Y2,C,M:tl.constexpr,N:tl.constexpr,K:tl.
     row=tl.program_id(0)
     cols=tl.program_id(1)*BN+tl.arange(0,BN)
     kk=tl.arange(0,BK)
-    DT:tl.constexpr=tl.uint32 if BITS==32 else tl.uint64
+    DT:tl.constexpr=tl.uint32 if BITS<=32 else tl.uint64
     s0=tl.full((BK,BN),0,DT)
     s1=tl.full((BK,BN),0,DT)
     s4=tl.full((BK,BN),0,DT)
@@ -374,10 +384,10 @@ def _local_decode_packed(X0,X1,X2,Y0,Y1,Y2,C,M:tl.constexpr,N:tl.constexpr,K:tl.
     v0=tl.sum(s0,0).to(tl.uint64)
     v1=tl.sum(s1,0).to(tl.uint64)
     v4=tl.sum(s4,0).to(tl.uint64)
-    if BITS==32:
-        v0&=0xffffffff
-        v1&=0xffffffff
-        v4&=0xffffffff
+    if BITS<64:
+        v0&=(1 << BITS)-1
+        v1&=(1 << BITS)-1
+        v4&=(1 << BITS)-1
     cp=row*N+cols
     tl.store(C+cp,v0.to(tl.int64),cols<N)
     tl.store(C+M*N+cp,v1.to(tl.int64),cols<N)

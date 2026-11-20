@@ -40,7 +40,7 @@ def binary_add(rt, a, b):
         generate = rt.add(generate, gp)
         propagate = pp
     result = rt.add(original, rt.lshift(generate, 1))
-    return _map(result, lambda t: t & 0xffffffff) if rt.bits == 32 else result
+    return _map(result, lambda t: t & ((1 << rt.bits) - 1)) if rt.bits < 64 else result
 
 
 def _components(rt, x, binary):
@@ -64,7 +64,7 @@ def a2b(rt, x):
     s, carry = _carry_save(rt, a, b, c)
     s, carry = _carry_save(rt, s, carry, d)
     result = binary_add(rt, s, carry)
-    return _map(result, lambda t: t & 0xffffffff) if rt.bits == 32 else result
+    return _map(result, lambda t: t & ((1 << rt.bits) - 1)) if rt.bits < 64 else result
 
 
 def b2a(rt, x, *, bits=None, signed=True):

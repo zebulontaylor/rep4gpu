@@ -81,14 +81,18 @@ def _quarter(a,b,c,d):
 def _store_words(OUT, block, words, COUNT:tl.constexpr, BITS:tl.constexpr):
     # Join axes encode word indices least-significant bit first. Reverse them
     # so each ChaCha block occupies consecutive output elements.
-    if BITS == 32:
+    if BITS <= 32:
         a=tl.join(tl.join(words[0],words[1]),tl.join(words[2],words[3]))
         b=tl.join(tl.join(words[4],words[5]),tl.join(words[6],words[7]))
         c=tl.join(tl.join(words[8],words[9]),tl.join(words[10],words[11]))
         d=tl.join(tl.join(words[12],words[13]),tl.join(words[14],words[15]))
         values=tl.join(tl.join(a,b),tl.join(c,d)).trans(0,4,3,2,1).reshape((block.shape[0],16))
+        if BITS <= 16:
+            values=tl.join(values & 0xffff, values >> 16).reshape((block.shape[0],32))
+        if BITS == 8:
+            values=tl.join(values & 0xff, values >> 8).reshape((block.shape[0],64))
         values=values.to(tl.uint64).to(tl.int64)
-        idx=block[:,None]*16+tl.arange(0,16)[None,:]
+        idx=block[:,None]*(512//BITS)+tl.arange(0,512//BITS)[None,:]
     else:
         v0=words[0].to(tl.uint64)|(words[1].to(tl.uint64)<<32)
         v1=words[2].to(tl.uint64)|(words[3].to(tl.uint64)<<32)
@@ -150,13 +154,13 @@ def _generate(key_tensor,nonce,count,bits=64,*,block_start=0):
     nonce=operator.index(nonce)
     count=operator.index(count)
     block_start=operator.index(block_start)
-    if bits not in (32,64):
-        raise ValueError("bits must be 32 or 64")
+    if bits not in (8,16,32,64):
+        raise ValueError("bits must be 8, 16, 32, or 64")
     if not 0<=nonce<2**64:
         raise ValueError("draw nonce must fit in 64 bits")
     if not 0<=count<2**63:
         raise ValueError("element count must be nonnegative and fit in 63 bits")
-    blocks=triton.cdiv(count,16 if bits==32 else 8)
+    blocks=triton.cdiv(count,512//bits)
     if not 0<=block_start<2**64 or blocks>2**64-block_start:
         raise ValueError("ChaCha block counter exhausted")
     if not isinstance(key_tensor,torch.Tensor) or key_tensor.dtype!=torch.uint32 or key_tensor.shape!=(8,) or not key_tensor.is_cuda:
@@ -174,7 +178,7 @@ def _generate(key_tensor,nonce,count,bits=64,*,block_start=0):
 def generate(key_tensor,nonce,count,bits=64):
     """Generate a fresh draw directly into an int64 CUDA tensor.
 
-    A 32-bit draw contains canonical unsigned values in [0,2**32); 64-bit
+    Narrow draws contain canonical unsigned values in [0,2**bits); 64-bit
     draws retain signed int64 bit patterns. Serialization is little-endian,
     matching ChaCha20 applied to zeros with IV ``struct.pack('<QQ',0,nonce)``.
     Draws use fewer than 2**32 blocks. This also matches cryptography releases
@@ -183,9 +187,9 @@ def generate(key_tensor,nonce,count,bits=64):
     The caller must never reuse a key/nonce pair for distinct mask draws.
     """
     count=operator.index(count)
-    if bits not in (32,64):
-        raise ValueError("bits must be 32 or 64")
-    if triton.cdiv(count,16 if bits==32 else 8)>=2**32:
+    if bits not in (8,16,32,64):
+        raise ValueError("bits must be 8, 16, 32, or 64")
+    if triton.cdiv(count,512//bits)>=2**32:
         raise ValueError("a draw must use fewer than 2**32 ChaCha blocks")
     return _generate(key_tensor,nonce,count,bits)
 

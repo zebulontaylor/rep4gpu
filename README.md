@@ -1,7 +1,7 @@
 # Rep4 GPU inference
 
 This prototype evaluates secret-weight feed-forward networks with four-party
-replicated sharing. It provides exact 32-bit and 64-bit ring matmuls, fixed-point
+replicated sharing. It provides exact 16-bit, 32-bit and 64-bit ring matmuls, fixed-point
 arithmetic, ReLU, and polynomial GELU/SiLU approximations. Inputs, weights, and
 intermediate activations remain shared until an explicit output opening.
 
@@ -13,7 +13,10 @@ probabilistic Q14 rounding, and zero-network GPU delivery. Complete inference
 has not reached 10× FP16. A checked matrix-vector product reaches 8.29× FP16.
 Actual colocated timings are reported separately. The optional
 [CUDA cryptography variant](docs/protocol/device-protocol.md) generates masks and
-consistency digests on the GPU; physical GPUDirect networking is not implemented.
+consistency digests on the GPU. The classifier supports
+[CUDA IPC on one GPU](docs/experiments/text-classifier.md#keep-classifier-messages-on-the-gpu)
+and [NCCL across four GPUs](docs/experiments/nccl-classifier.md). The single-GPU
+measurements do not establish physical GPUDirect RDMA performance.
 
 [Activation experiments](docs/results.md#sparse-products-and-activation-experiments)
 include optional private quadratics and a public-fixture helper simulation.
@@ -153,6 +156,19 @@ local test transports. `make_seeds` is a trusted test fixture, not distributed
 seed provisioning. The [protocol mapping](docs/protocol/protocol.md) describes component
 ownership, masked messages, and checks. The [activation guide](docs/arithmetic/activations.md)
 defines rounding and approximation behavior.
+The [layer commitment runtime](docs/protocol/layer-commitments.md) commits prover
+hidden states to a Merkle root and reconstructs requested layers from sparse
+checkpoints, with authenticated plaintext openings for a verifier.
+The [prover/verifier setup](docs/protocol/prover-verifier.md) runs separate TLS
+processes with a public integer model, fresh challenges, and full or sampled
+transition checks. It includes a local launcher and commands for two servers.
+For verification without plaintext intermediate openings, use the
+[private Rep4 audit](docs/protocol/private-rep4-audit.md). An external prover
+sends authenticated replicated trace shares to four verifier processes. Each
+verifier holds secret-shared weights and biases provisioned by the model owner.
+They check the selected transitions in Rep4 and open only acceptance and the
+final output; the input remains public. The demo reports online application
+traffic separately from model-share provisioning sizes.
 The [witness activation guide](docs/experiments/witness-activations.md) describes checked
 prover intermediates, custom recomputation recipes, and communication comparisons.
 
@@ -193,7 +209,7 @@ optimized binary-to-arithmetic path fails the retained 32-bit boundary fixture.
 The inference fixtures are generated dense feed-forward networks, not trained
 language models. They measure arithmetic and communication costs and compare
 toy logits and log-probabilities. Attention, tokenization, full transformer
-execution, authenticated datacenter records, model binding, and a validated
+execution, authenticated datacenter records, model binding for trained networks, and a validated
 model-substitution detection threshold are not implemented.
 
 The implementation is a research prototype with checked transcripts and

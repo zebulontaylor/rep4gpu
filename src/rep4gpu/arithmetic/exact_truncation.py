@@ -47,8 +47,8 @@ def _binary_add_carries(rt, a, b):
         generate = rt.add(generate, gp)
         propagate = pp
     result = rt.add(original, rt.lshift(generate, 1))
-    if rt.bits == 32:
-        result = _map(result, lambda t: t & 0xffffffff)
+    if rt.bits < 64:
+        result = _map(result, lambda t: t & ((1 << rt.bits) - 1))
     return result, generate
 
 

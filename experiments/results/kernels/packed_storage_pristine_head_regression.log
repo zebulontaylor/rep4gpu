@@ -1,0 +1,131 @@
+ISOLATED_SOURCE /tmp/packed-storage-head-ynhx23hy/src/rep4gpu/__init__.py
+..FF                                                                     [100%]
+=================================== FAILURES ===================================
+_________ test_optimized_ffn_exact_transcript_and_local_shares[14-32] __________
+
+bits = 32, shift = 14
+
+    @pytest.mark.parametrize('bits',[32,64])
+    @pytest.mark.parametrize('shift',[0,14])
+    def test_optimized_ffn_exact_transcript_and_local_shares(bits,shift):
+>       _ffn_parity(bits,shift,False,True)
+
+tests/unit/inference/test_device_inference.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/unit/inference/test_device_inference.py:65: in _ffn_parity
+    actual = forward(runtime,actual_storage)
+tests/unit/inference/test_device_inference.py:40: in forward
+    hidden = fp.matmul_relu(shared[0],first,shared[2])
+src/rep4gpu/arithmetic/activations.py:166: in matmul_relu
+    return self.runtime.trunc_relu(accumulated, self.fractional_bits)
+src/rep4gpu/models/device_inference.py:60: in trunc_relu
+    return trunc_relu(self, x, shift, **self._conversion_options())
+src/rep4gpu/arithmetic/exact_truncation.py:186: in trunc_relu
+    _trunc_and_sign(rt, x, shift, carry_impl=carry_impl, convert_impl=convert_impl))
+src/rep4gpu/arithmetic/exact_truncation.py:100: in _trunc_and_sign
+    selected = _stack((carry_impl or truncation_bits)(rt, a, b, shift))
+src/rep4gpu/gpu/bits/carry_tree_swar.py:330: in truncation_bits
+    low, before_sign = carry_bits(rt, a, b, (shift, rt.bits-1))
+src/rep4gpu/gpu/bits/carry_tree_swar.py:255: in carry_bits
+    product = rt.mul(Share(tuple(gates[0].unbind(0)), True), Share(tuple(gates[1].unbind(0)), True))
+src/rep4gpu/protocol/fused_runtime.py:275: in mul
+    return self._fused_product(xp, x.binary, x.device, yp)
+src/rep4gpu/protocol/device_runtime.py:221: in _fused_product
+    received = self._exchange_joint_wires(entries, shape, binary)
+src/rep4gpu/protocol/device_runtime.py:176: in _exchange_joint_wires
+    incoming = self._exchange_device(outgoing, incoming_sizes)
+src/rep4gpu/protocol/device_runtime.py:128: in _exchange_device
+    return self.transport.exchange_device(outgoing, incoming_sizes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <rep4gpu.protocol.device_transport.DeviceReplay object at 0x7f52656a4e20>
+outgoing = {2: tensor([112, 112, 197, 156,   4,  68, 225, 114,  21, 173, 114,  68, 176,  88,
+        120, 178,  89, 171, 159, 191...41, 183,  20,  77, 126, 189, 150, 237,  49, 122,  55,
+         39,  77, 249,  77], device='cuda:0', dtype=torch.uint8)}
+incoming_sizes = {1: 212, 2: 32}
+
+    def exchange_device(self, outgoing, incoming_sizes):
+        frame = self._next('device')
+        for value in outgoing.values():
+            _validate_tensor(value, self.device)
+        host_outgoing = None
+        if self.staging == 'host':
+            host_outgoing = {p: _bytes(v) for p, v in outgoing.items()}
+            result = {p: _tensor(v, self.device) for p, v in frame.incoming.items()}
+        else:
+            result = dict(self._incoming_device[self.round])
+        self._mark_phase()
+        if self.check_outgoing:
+            if host_outgoing is None:
+                host_outgoing = {p: _bytes(v) for p, v in outgoing.items()}
+            if host_outgoing != frame.outgoing:
+>               raise ValueError(f'device replay outgoing mismatch at round {self.round}')
+E               ValueError: device replay outgoing mismatch at round 16
+
+src/rep4gpu/protocol/device_transport.py:291: ValueError
+_________ test_optimized_ffn_exact_transcript_and_local_shares[14-64] __________
+
+bits = 64, shift = 14
+
+    @pytest.mark.parametrize('bits',[32,64])
+    @pytest.mark.parametrize('shift',[0,14])
+    def test_optimized_ffn_exact_transcript_and_local_shares(bits,shift):
+>       _ffn_parity(bits,shift,False,True)
+
+tests/unit/inference/test_device_inference.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/unit/inference/test_device_inference.py:65: in _ffn_parity
+    actual = forward(runtime,actual_storage)
+tests/unit/inference/test_device_inference.py:40: in forward
+    hidden = fp.matmul_relu(shared[0],first,shared[2])
+src/rep4gpu/arithmetic/activations.py:166: in matmul_relu
+    return self.runtime.trunc_relu(accumulated, self.fractional_bits)
+src/rep4gpu/models/device_inference.py:60: in trunc_relu
+    return trunc_relu(self, x, shift, **self._conversion_options())
+src/rep4gpu/arithmetic/exact_truncation.py:186: in trunc_relu
+    _trunc_and_sign(rt, x, shift, carry_impl=carry_impl, convert_impl=convert_impl))
+src/rep4gpu/arithmetic/exact_truncation.py:100: in _trunc_and_sign
+    selected = _stack((carry_impl or truncation_bits)(rt, a, b, shift))
+src/rep4gpu/gpu/bits/carry_tree_swar.py:330: in truncation_bits
+    low, before_sign = carry_bits(rt, a, b, (shift, rt.bits-1))
+src/rep4gpu/gpu/bits/carry_tree_swar.py:255: in carry_bits
+    product = rt.mul(Share(tuple(gates[0].unbind(0)), True), Share(tuple(gates[1].unbind(0)), True))
+src/rep4gpu/protocol/fused_runtime.py:275: in mul
+    return self._fused_product(xp, x.binary, x.device, yp)
+src/rep4gpu/protocol/device_runtime.py:221: in _fused_product
+    received = self._exchange_joint_wires(entries, shape, binary)
+src/rep4gpu/protocol/device_runtime.py:176: in _exchange_joint_wires
+    incoming = self._exchange_device(outgoing, incoming_sizes)
+src/rep4gpu/protocol/device_runtime.py:128: in _exchange_device
+    return self.transport.exchange_device(outgoing, incoming_sizes)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <rep4gpu.protocol.device_transport.DeviceReplay object at 0x7f52655063b0>
+outgoing = {2: tensor([152, 194,  68,  53, 106, 129, 236,  33, 140, 173,  41,  50, 180,  83,
+         16,  77, 228, 119,  48,   5...30, 108, 141, 146, 170, 225,  28, 226, 179,  11, 246,
+        186, 216, 156,  77], device='cuda:0', dtype=torch.uint8)}
+incoming_sizes = {1: 352, 2: 32}
+
+    def exchange_device(self, outgoing, incoming_sizes):
+        frame = self._next('device')
+        for value in outgoing.values():
+            _validate_tensor(value, self.device)
+        host_outgoing = None
+        if self.staging == 'host':
+            host_outgoing = {p: _bytes(v) for p, v in outgoing.items()}
+            result = {p: _tensor(v, self.device) for p, v in frame.incoming.items()}
+        else:
+            result = dict(self._incoming_device[self.round])
+        self._mark_phase()
+        if self.check_outgoing:
+            if host_outgoing is None:
+                host_outgoing = {p: _bytes(v) for p, v in outgoing.items()}
+            if host_outgoing != frame.outgoing:
+>               raise ValueError(f'device replay outgoing mismatch at round {self.round}')
+E               ValueError: device replay outgoing mismatch at round 16
+
+src/rep4gpu/protocol/device_transport.py:291: ValueError
+=========================== short test summary info ============================
+FAILED tests/unit/inference/test_device_inference.py::test_optimized_ffn_exact_transcript_and_local_shares[14-32]
+FAILED tests/unit/inference/test_device_inference.py::test_optimized_ffn_exact_transcript_and_local_shares[14-64]
+2 failed, 2 passed, 13 deselected in 5.78s
